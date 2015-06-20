@@ -1,0 +1,14 @@
+doctype html
+html lang="en"
+  head
+    title = content_for(:title)
+    meta charset="utf-8"
+    - if content_for?(:description)
+      meta name="description" content=content_for(:description)
+    meta name="viewport" content="width=device-width, initial-scale=1"
+    meta http-equiv="X-UA-Compatible" content="IE=edge"
+    = csrf_meta_tags
+    = stylesheet_link_tag 'application', media: 'all', data: { turbolinks_track: true }
+    = javascript_include_tag 'application', data: { turbolinks_track: true }
+  body
+    = yield
