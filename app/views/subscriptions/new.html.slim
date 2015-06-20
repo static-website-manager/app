@@ -8,7 +8,7 @@ h1 Subscribe to the Static Website Manager
         li = message
 
 = form_for @subscription, url: :subscribe do |form|
-  = form.fields_for :user_attributes, @subscription.user || User.new do |f|
+  = form.fields_for :user_attributes, @subscription.user do |f|
     div
       => f.label :name, 'Your Name or Nickname'
       = f.text_field :name
@@ -16,7 +16,7 @@ h1 Subscribe to the Static Website Manager
       => f.label :email, 'Email Address'
       = f.email_field :email
   hr
-  = form.fields_for :website_attributes, @subscription.website || Website.new do |f|
+  = form.fields_for :website_attributes, @subscription.website do |f|
     div
       => f.label :name, 'Website Name'
       = f.text_field :name
