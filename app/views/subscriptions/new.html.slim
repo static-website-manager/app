@@ -10,11 +10,17 @@ h1 Subscribe to the Static Website Manager
 = form_for @subscription, url: :subscribe do |form|
   = form.fields_for :user_attributes, @subscription.user do |f|
     div
-      => f.label :name, 'Your Name or Nickname'
+      => f.label :name
       = f.text_field :name
     div
-      => f.label :email, 'Email Address'
+      => f.label :email
       = f.email_field :email
+    div
+      => f.label :password
+      = f.password_field :password
+    div
+      => f.label :password_confirmation, 'Password Confirmation'
+      = f.password_field :password_confirmation
   hr
   = form.fields_for :website_attributes, @subscription.website do |f|
     div

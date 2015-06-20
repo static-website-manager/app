@@ -9,6 +9,7 @@ class SubscriptionsController < ApplicationController
     @subscription = Subscription.new(subscription_params)
 
     if @subscription.save
+      session[:user_id] = @subscription.user.id
       redirect_to [@subscription.website, :setup], notice: 'Welcome to Static Website Manager!'
     else
       flash.now.alert = 'There was a problem subscribing your account.'
@@ -23,6 +24,8 @@ class SubscriptionsController < ApplicationController
       user_attributes: [
         :name,
         :email,
+        :password,
+        :password_confirmation,
       ],
       website_attributes: [
         :name,
