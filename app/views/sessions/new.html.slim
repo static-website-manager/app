@@ -1,0 +1,11 @@
+h1 Sign in to the Static Website Manager
+
+= form_tag :sign_in do
+  div
+    => label_tag :email, 'Email'
+    = email_field_tag :email, params[:email]
+  div
+    => label_tag :password, 'Password'
+    = password_field_tag :password
+  div
+    = button_tag 'Sign In'

@@ -11,4 +11,11 @@ html lang="en"
     = stylesheet_link_tag 'application', media: 'all', data: { turbolinks_track: true }
     = javascript_include_tag 'application', data: { turbolinks_track: true }
   body
+    - if current_user
+      = form_tag :sign_out, method: :delete do
+        = button_tag 'Sign Out'
+    - else
+      p
+        => link_to 'Subscribe', :subscribe
+        = link_to 'Sign In', :sign_in
     = yield
