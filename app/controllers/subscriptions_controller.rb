@@ -1,4 +1,6 @@
 class SubscriptionsController < ApplicationController
+  before_action :require_guest
+
   def new
     @subscription = Subscription.new
   end

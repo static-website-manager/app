@@ -1,5 +1,7 @@
 class SetupsController < ApplicationController
+  before_action :require_user
+
   before_action do
-    @website = Website.find(params[:website_id])
+    @website = current_user.websites.find(params[:website_id])
   end
 end

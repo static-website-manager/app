@@ -1,5 +1,6 @@
 class User < ActiveRecord::Base
   has_many :authorizations, dependent: :destroy
+  has_many :websites, through: :authorizations
 
   has_secure_password
 

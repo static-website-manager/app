@@ -1,10 +1,12 @@
 class WebsitesController < ApplicationController
+  before_action :require_user
+
   def index
-    @websites = Website.all
+    @websites = current_user.websites
   end
 
   def show
-    @website = Website.find(params[:id])
+    @website = current_user.websites.find(params[:id])
 
     if !@website.setup?
       redirect_to [@website, :setup]
