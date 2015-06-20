@@ -9,7 +9,7 @@ class WebsitesController < ApplicationController
     @website = current_user.websites.find(params[:id])
 
     if !@website.setup?
-      redirect_to [@website, :setup]
+      redirect_to [:new, @website, :setup]
     end
   end
 end

@@ -7,7 +7,7 @@ h1 Subscribe to the Static Website Manager
       - model.errors.full_messages.each do |message|
         li = message
 
-= form_for @subscription, url: :subscribe do |form|
+= form_for @subscription do |form|
   = form.fields_for :user_attributes, @subscription.user do |f|
     div
       => f.label :name

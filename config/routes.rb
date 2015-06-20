@@ -1,15 +1,11 @@
 Rails.application.routes.draw do
   root to: 'marketings#root'
 
-  get :subscribe, to: 'subscriptions#new'
-  post :subscribe, to: 'subscriptions#create'
-
-  get :sign_in, to: 'sessions#new'
-  post :sign_in, to: 'sessions#create'
-  delete :sign_out, to: 'sessions#destroy'
+  resource :session, only: %i[new create], path: 'sign-in', path_names: { new: '' }
+  resource :session, only: %i[destroy], path: 'sign-out'
+  resources :subscriptions, only: %i[new create], path: 'subscribe', path_names: { new: '' }
 
   resources :websites, only: %i[index show] do
-    get :setup, to: 'setups#new'
-    post :setup, to: 'setups#create'
+    resource :setup, only: %i[new create], path_names: { new: '' }
   end
 end

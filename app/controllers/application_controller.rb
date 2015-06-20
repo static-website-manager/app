@@ -19,7 +19,7 @@ class ApplicationController < ActionController::Base
 
   def require_user
     unless current_user
-      redirect_to :sign_in
+      redirect_to :new_session
     end
   end
 end
