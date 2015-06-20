@@ -36,11 +36,9 @@ ActiveRecord::Schema.define(version: 3) do
   end
 
   create_table "websites", force: :cascade do |t|
-    t.text     "name",               null: false
-    t.text     "parameterized_name", null: false
-    t.text     "subscription_key",   null: false
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
+    t.text     "name",       null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   add_foreign_key "authorizations", "users"

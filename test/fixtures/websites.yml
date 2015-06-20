@@ -2,10 +2,6 @@
 
 one:
   name: MyText
-  parameterized_name: MyText
-  subscription_key: MyText
 
 two:
   name: MyText
-  parameterized_name: MyText
-  subscription_key: MyText
