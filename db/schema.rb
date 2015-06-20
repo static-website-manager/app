@@ -28,11 +28,12 @@ ActiveRecord::Schema.define(version: 3) do
   add_index "authorizations", ["website_id"], name: "index_authorizations_on_website_id", using: :btree
 
   create_table "users", force: :cascade do |t|
-    t.text     "email",           null: false
+    t.text     "email",                           null: false
     t.text     "password_digest"
     t.text     "name"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.boolean  "confirmed",       default: false, null: false
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
   end
 
   create_table "websites", force: :cascade do |t|
