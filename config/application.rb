@@ -28,5 +28,8 @@ module StaticWebsiteManager
       g.assets false
       g.helper false
     end
+
+    # Use sequential migrations.
+    config.active_record.timestamped_migrations = false
   end
 end
