@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   get :subscribe, to: 'subscriptions#new'
   post :subscribe, to: 'subscriptions#create'
 
-  resources :websites, only: %i[] do
+  resources :websites, only: %i[index] do
     get :setup, to: 'setups#new'
     post :setup, to: 'setups#create'
   end
