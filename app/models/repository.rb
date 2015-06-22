@@ -18,6 +18,12 @@ class Repository
     branch(*args).exist?
   end
 
+  def branches
+    `cd #{directory}; git show-ref --heads`.split("\n").map do |result|
+      Branch.new(*result.split(' '))
+    end
+  end
+
   private
 
   def init!
