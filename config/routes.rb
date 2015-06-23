@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   resources :websites, only: %i[index show] do
     resource :setup, only: %i[new create], path_names: { new: '' }
     resources :branches, only: %i[show], path: '' do
+      resources :collections, only: %i[index]
       resources :pages, only: %i[index]
       resources :posts, only: %i[index]
     end
