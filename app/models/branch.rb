@@ -4,7 +4,8 @@ class Branch
 
   attr_reader :refname
 
-  def initialize(commit_id, refname)
+  def initialize(repository, commit_id, refname)
+    @repository = repository
     @commit_id = commit_id
     @refname = refname.split('/').last
   end
@@ -15,5 +16,15 @@ class Branch
 
   def to_param
     @refname
+  end
+
+  def pages
+    `cd #{@repository.directory}; git ls-tree #@refname`.split("\n").map do |result|
+      mode, type, id, name = result.split(' ')
+
+      if name.to_s.match(/\A[a-zA-Z0-9]/)
+        Page.new(id, type, mode, name)
+      end
+    end.compact
   end
 end

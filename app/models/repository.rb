@@ -20,7 +20,7 @@ class Repository
 
   def branches
     `cd #{directory}; git show-ref --heads`.split("\n").map do |result|
-      Branch.new(*result.split(' '))
+      Branch.new(self, *result.split(' '))
     end
   end
 

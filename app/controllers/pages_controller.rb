@@ -11,5 +11,6 @@ class PagesController < ApplicationController
   end
 
   def index
+    @pages = @branch.pages
   end
 end
