@@ -1,2 +1,6 @@
 = link_to @branch.refname, [@website, @branch]
 h1 Posts
+h2 Drafts
+= render @branch.drafts
+h2 Published Posts
+= render @branch.posts

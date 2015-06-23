@@ -27,4 +27,24 @@ class Branch
       end
     end.compact
   end
+
+  def drafts
+    `cd #{@repository.directory}; git ls-tree #@refname _drafts/`.split("\n").map do |result|
+      mode, type, commit_id, path = result.split(' ')
+
+      if type.to_s == 'blob' && path.present?
+        Post.new(commit_id, path.sub(/\A_drafts\//, ''))
+      end
+    end.compact
+  end
+
+  def posts
+    `cd #{@repository.directory}; git ls-tree #@refname _posts/`.split("\n").map do |result|
+      mode, type, commit_id, path = result.split(' ')
+
+      if type.to_s == 'blob' && path.present?
+        Post.new(commit_id, path.sub(/\A_posts\//, ''))
+      end
+    end.compact
+  end
 end
