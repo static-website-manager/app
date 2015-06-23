@@ -2,4 +2,4 @@ h1 = @website.name
 
 h2 Branches
 - @website.repository.branches.each do |branch|
-  h3 = branch.refname
+  h3 = link_to branch.refname, [@website, branch]
