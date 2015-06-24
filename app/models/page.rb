@@ -1,12 +1,9 @@
 class Page
   include ActiveModel::Conversion
 
-  attr_reader :filename
+  attr_reader :name
 
-  def initialize(commit_id, type, mode, filename)
-    @commit_id = commit_id
-    @type = type
-    @mode = mode
-    @filename = filename + ('/' if type == 'tree').to_s
+  def initialize(repo, name, oid, mode, type)
+    @name = name + ('/' if type == :tree).to_s
   end
 end

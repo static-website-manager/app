@@ -4,7 +4,7 @@ class SetupsController < ApplicationController
   before_action do
     @website = current_user.websites.find(params[:website_id])
 
-    if @website.repository.branch?(:master)
+    if !@website.repository.empty?
       redirect_to @website
     end
   end

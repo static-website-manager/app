@@ -1,10 +1,9 @@
 class Post
   include ActiveModel::Conversion
 
-  attr_reader :filename
+  attr_reader :name
 
-  def initialize(commit_id, filename)
-    @commit_id = commit_id
-    @filename = filename
+  def initialize(repo, name, oid, mode, type)
+    @name = name
   end
 end
