@@ -1,3 +1,22 @@
-h1 Static Website Manager
+.pull-left
+  strong SWM
 
-= link_to 'Subscribe', :new_subscription
+.text-right
+  ul.list-inline
+    li = link_to 'Subscribe', :new_subscription
+    li = link_to 'Sign In', :new_session
+
+.text-center
+  h1 Static Website Manager
+
+.row
+  .col-md-8.col-md-offset-2
+    hr
+    .row
+      .col-sm-6
+        ul
+          li Marketing Point #1
+          li Marketing Point #2
+          li Marketing Point #3
+      .col-sm-6
+        p = link_to 'Subscribe', :new_subscription, class: 'btn btn-lg btn-block btn-success'

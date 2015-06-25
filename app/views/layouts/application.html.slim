@@ -25,8 +25,4 @@ html lang="en"
       - if current_user
         = form_tag :sign_out, method: :delete do
           = button_tag 'Sign Out'
-      - else
-        p
-          => link_to 'Subscribe', :new_subscription
-          = link_to 'Sign In', :new_session
       = yield
