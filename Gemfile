@@ -3,6 +3,7 @@ source 'https://rubygems.org'
 ruby '2.2.2'
 
 gem 'bcrypt'
+gem 'bootstrap-sass'
 gem 'coffee-rails'
 gem 'jbuilder'
 gem 'jquery-rails'
