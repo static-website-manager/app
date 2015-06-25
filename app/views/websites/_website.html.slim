@@ -1,1 +1,4 @@
-h2 = link_to website.name, [website, website.branch(current_user)]
+- if website.repository.setup?
+  h2 = link_to website.name, [website, website.branch(current_user)]
+- else
+  h2 = link_to website.name, [:new, website, :setup]

@@ -1,6 +1,12 @@
 class SetupsController < ApplicationController
   include WebsiteManagementConcern
 
+  before_action do
+    if @website.repository.setup?
+      redirect_to [@website, @website.branch(current_user)]
+    end
+  end
+
   def update
     if @website.update(setups_params)
       redirect_to [:edit, @website, :setup]

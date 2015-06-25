@@ -8,6 +8,10 @@ class WebsitesController < ApplicationController
   def show
     @website = current_user.websites.find(params[:id])
 
-    redirect_to [@website, @website.branch(current_user)]
+    if @website.repository.setup?
+      redirect_to [@website, @website.branch(current_user)]
+    else
+      redirect_to [:new, @website, :setup]
+    end
   end
 end

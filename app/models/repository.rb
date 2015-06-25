@@ -18,6 +18,10 @@ class Repository
     @repository.lookup(oid) if oid.present?
   end
 
+  def setup?
+    !@repository.empty? && !!find_named_branch('master')
+  end
+
   private
 
   def find_or_create_user_branch(user)

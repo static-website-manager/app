@@ -2,8 +2,6 @@ module BranchManagementConcern
   extend ActiveSupport::Concern
 
   included do
-    before_action :require_user
-
     before_action do
       @branch = @website.branch(branch_id)
     end
