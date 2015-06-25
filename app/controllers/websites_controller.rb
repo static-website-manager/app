@@ -8,6 +8,6 @@ class WebsitesController < ApplicationController
   def show
     @website = current_user.websites.find(params[:id])
 
-    redirect_to [@website, @website.repository.branches.find('master')]
+    redirect_to [@website, @website.branch(current_user)]
   end
 end

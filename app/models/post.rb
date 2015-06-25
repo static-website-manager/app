@@ -3,7 +3,7 @@ class Post
 
   attr_reader :name
 
-  def initialize(repo, name, oid, mode, type)
+  def initialize(name, oid, mode, type)
     @name = name
   end
 end

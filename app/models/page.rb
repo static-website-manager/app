@@ -3,7 +3,7 @@ class Page
 
   attr_reader :name
 
-  def initialize(repo, name, oid, mode, type)
+  def initialize(name, oid, mode, type)
     @name = name + ('/' if type == :tree).to_s
   end
 end

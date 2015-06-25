@@ -5,12 +5,10 @@ class Website < ActiveRecord::Base
   validates :name, presence: true
 
   def repository
-    directory = Rails.root.join("repos/#{id}.git")
+    Repository.new(id)
+  end
 
-    if directory.exist?
-      Rugged::Repository.new(directory.to_s)
-    else
-      Rugged::Repository.init_at(directory.to_s, :bare)
-    end
+  def branch(name)
+    Branch.new(repository, name)
   end
 end
