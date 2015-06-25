@@ -22,7 +22,4 @@ html lang="en"
           span.close data-dismiss="alert" aria-label="Close" aria-hidden="true" &times;
           = alert
     .container
-      - if current_user
-        = form_tag :sign_out, method: :delete do
-          = button_tag 'Sign Out'
       = yield

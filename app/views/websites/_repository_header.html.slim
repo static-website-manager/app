@@ -1,0 +1,4 @@
+div style="margin: 0.5em 0 2em"
+  = form_tag :sign_out, method: :delete, class: 'pull-right' do
+    = button_tag 'Sign Out', class: 'btn btn-link', style: 'padding: 0;'
+  span #{link_to 'SWM', :websites} » #{website.name}
