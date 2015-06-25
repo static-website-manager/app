@@ -1,5 +1,6 @@
-h1 = @branch.name
+= render partial: 'branches/header', locals: { website: @website, branch: @branch }
 
-ul
+ul.nav.nav-tabs
+  li.active style="margin-left:1em" = link_to 'Overview', '#'
   li = link_to 'Pages', [@website, @branch, :pages]
   li = link_to 'Posts', [@website, @branch, :posts]
