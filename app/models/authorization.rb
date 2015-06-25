@@ -8,5 +8,7 @@ class Authorization < ActiveRecord::Base
 
   validates :role, presence: true, uniqueness: { scope: [:user, :website] }
   validates :user, presence: true
+  validates :user_id, presence: true
   validates :website, presence: true
+  validates :website_id, presence: true
 end

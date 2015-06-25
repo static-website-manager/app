@@ -12,9 +12,13 @@ class Subscription
   def save
     begin
       ActiveRecord::Base.transaction do
-        @user.save!
-        @website.save!
-        @authorization = Authorization.create!(user: @user, website: @website)
+        @user.save
+        @website.save
+        @authorization = Authorization.create(user: @user, website: @website)
+
+        if [@user, @website, @authorization].any? { |model| model.new_record? || model.errors.any? }
+          raise ActiveRecord::RecordInvalid, self
+        end
       end
 
       true

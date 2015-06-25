@@ -4,7 +4,8 @@ class User < ActiveRecord::Base
 
   has_secure_password
 
-  validates :email, presence: true
+  validates :email, presence: true, format: { with: /\A[^@]+@[^@]+\.[^@]+\z/ }
+  validates :name, presence: true
   validates :password, length: { minimum: 8 }, allow_nil: true
   validates :password_confirmation, presence: true, if: -> { password.present? }
 
