@@ -1,11 +1,11 @@
 h1 Sign in to the Static Website Manager
 
 = form_tag :session do
-  div
-    => label_tag :email, 'Email'
-    = email_field_tag :email, params[:email]
-  div
-    => label_tag :password, 'Password'
-    = password_field_tag :password
-  div
-    = button_tag 'Sign In'
+  .form-group
+    => label_tag :email, 'Email', class: 'control-label'
+    = email_field_tag :email, params[:email], class: 'form-control'
+  .form-group
+    => label_tag :password, 'Password', class: 'control-label'
+    = password_field_tag :password, nil, class: 'form-control'
+  .form-group
+    = button_tag 'Sign In', class: 'btn btn-primary'

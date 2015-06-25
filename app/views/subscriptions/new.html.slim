@@ -8,22 +8,22 @@ h1 Subscribe to the Static Website Manager
 
 = form_for @subscription do |form|
   = form.fields_for :user_attributes, @subscription.user do |f|
-    div
-      => f.label :name
-      = f.text_field :name
-    div
-      => f.label :email
-      = f.email_field :email
-    div
-      => f.label :password
-      = f.password_field :password
-    div
-      => f.label :password_confirmation, 'Password Confirmation'
-      = f.password_field :password_confirmation
+    .form-group
+      => f.label :name, class: 'control-label'
+      = f.text_field :name, class: 'form-control'
+    .form-group
+      => f.label :email, class: 'control-label'
+      = f.email_field :email, class: 'form-control'
+    .form-group
+      => f.label :password, class: 'control-label'
+      = f.password_field :password, class: 'form-control'
+    .form-group
+      => f.label :password_confirmation, 'Password Confirmation', class: 'control-label'
+      = f.password_field :password_confirmation, class: 'form-control'
   hr
   = form.fields_for :website_attributes, @subscription.website do |f|
-    div
-      => f.label :name, 'Website Name'
-      = f.text_field :name
-  div
-    = form.button 'Subscribe'
+    .form-group
+      => f.label :name, 'Website Name', class: 'control-label'
+      = f.text_field :name, class: 'form-control'
+  .form-group
+    = form.button 'Subscribe', class: 'btn btn-lg btn-success'
