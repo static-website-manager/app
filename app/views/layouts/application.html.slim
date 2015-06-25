@@ -11,6 +11,16 @@ html lang="en"
     = stylesheet_link_tag 'application', media: 'all', data: { turbolinks_track: true }
     = javascript_include_tag 'application', data: { turbolinks_track: true }
   body
+    - if notice
+      .alert.alert-dismissible.alert-full-width.alert-success role="alert"
+        .container
+          span.close data-dismiss="alert" aria-label="Close" aria-hidden="true" &times;
+          = notice
+    - if alert
+      .alert.alert-dismissible.alert-full-width.alert-warning role="alert"
+        .container
+          span.close data-dismiss="alert" aria-label="Close" aria-hidden="true" &times;
+          = alert
     .container
       - if current_user
         = form_tag :session, method: :delete do
