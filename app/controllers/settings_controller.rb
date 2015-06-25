@@ -1,9 +1,9 @@
-class SetupsController < ApplicationController
+class SettingsController < ApplicationController
   include WebsiteManagementConcern
 
   def update
-    if @website.update(setups_params)
-      redirect_to [:edit, @website, :setup]
+    if @website.update(settings_params)
+      redirect_to [:edit, @website, :settings]
     else
       render :edit, status: 422
     end
@@ -11,7 +11,7 @@ class SetupsController < ApplicationController
 
   private
 
-  def setups_params
+  def settings_params
     params.require(:website).permit(
     )
   end
