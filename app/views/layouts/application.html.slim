@@ -23,7 +23,7 @@ html lang="en"
           = alert
     .container
       - if current_user
-        = form_tag :session, method: :delete do
+        = form_tag :sign_out, method: :delete do
           = button_tag 'Sign Out'
       - else
         p

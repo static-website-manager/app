@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   root to: 'marketings#root'
 
   resource :session, only: %i[new create], path: 'sign-in', path_names: { new: '' }
-  resource :session, only: %i[destroy], path: 'sign-out'
+  resource :session, only: %i[destroy], path: 'sign-out', as: :sign_out
   resources :subscriptions, only: %i[new create], path: 'subscribe', path_names: { new: '' }
 
   resources :websites, only: %i[index show] do
