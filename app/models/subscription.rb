@@ -14,10 +14,11 @@ class Subscription
       ActiveRecord::Base.transaction do
         @user.save
         @website.save
-        @authorization = Authorization.create(user: @user, website: @website)
 
-        if [@user, @website, @authorization].any? { |model| model.new_record? || model.errors.any? }
+        if [@user, @website].any? { |model| model.new_record? || model.errors.any? }
           raise ActiveRecord::RecordInvalid, self
+        else
+          @authorization = Authorization.create!(user: @user, website: @website)
         end
       end
 
