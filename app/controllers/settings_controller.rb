@@ -4,7 +4,7 @@ class SettingsController < ApplicationController
 
   def update
     if @website.update(settings_params)
-      redirect_to [:edit, @website, :settings]
+      redirect_to [@website, @website.branch(current_user)]
     else
       render :edit, status: 422
     end
@@ -14,6 +14,7 @@ class SettingsController < ApplicationController
 
   def settings_params
     params.require(:website).permit(
+      :name,
     )
   end
 end
