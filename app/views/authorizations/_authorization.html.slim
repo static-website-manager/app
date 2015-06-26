@@ -1,0 +1,8 @@
+tr
+  td = authorization.user.name
+  td = authorization.user.email
+  td = authorization.role
+  td
+    .btn-group.btn-group-sm
+      = link_to icon('pencil', 'Edit'), [:edit, website, authorization], class: 'btn btn-default'
+      = link_to icon('trash', 'Delete'), [website, authorization], method: :delete, class: 'btn btn-danger', data: { confirm: 'Are you sure?' }

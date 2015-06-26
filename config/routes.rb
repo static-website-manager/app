@@ -9,6 +9,7 @@ Rails.application.routes.draw do
     resource :settings, only: %i[edit update], path_names: { edit: '' }
     resource :setup, only: %i[new create], path_names: { new: '' }
     resource :setup_check, only: %i[show]
+    resources :authorizations, only: %i[index new create edit update destroy], path: 'team'
     resources :branches, only: %i[show], path: '' do
       resources :pages, only: %i[index]
       resources :posts, only: %i[index]

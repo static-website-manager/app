@@ -6,6 +6,7 @@
     strong = website.name
   .text-right
     .btn-group
+      = link_to icon('users'), [website, :authorizations], class: 'btn btn-sm btn-default', title: 'Team Members'
       = link_to icon('gears'), [:edit, website, :settings], class: 'btn btn-sm btn-default', title: 'Website Settings'
     .btn-group style="margin-left:1em"
       = form_tag :sign_out, method: :delete do

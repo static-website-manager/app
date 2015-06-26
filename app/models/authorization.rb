@@ -6,9 +6,9 @@ class Authorization < ActiveRecord::Base
     full_access: 0,
   }
 
+  accepts_nested_attributes_for :user, reject_if: :all_blank
+
   validates :role, presence: true, uniqueness: { scope: [:user, :website] }
   validates :user, presence: true
-  validates :user_id, presence: true
   validates :website, presence: true
-  validates :website_id, presence: true
 end

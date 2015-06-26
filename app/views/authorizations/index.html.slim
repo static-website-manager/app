@@ -1,0 +1,21 @@
+.row
+  .col-sm-10.col-sm-offset-1.col-md-8.col-md-offset-2
+    .text-center style="margin-top:4em; margin-bottom:4em"
+      = link_to [@website, @website.branch(current_user)], style: 'color: #000; text-decoration: none' do
+        span.fa.fa-reply> style="position:relative; top:-6px; font-size:1.4em"
+        span.fa.fa-file-text-o.fa-3x style="margin-left:0.1em"
+    h1.h3.text-center Manage Your Website Team
+    br
+    .panel.panel-default
+      .table-responsive
+        table.table.table-bordered.table-striped
+          thead
+            tr
+              th Name
+              th Email
+              th Permissions
+              th Actions
+          tbody
+            = render partial: 'authorization', collection: @authorizations, locals: { website: @website }
+    br
+    p.text-center = link_to icon('plus-circle', 'Invite Someone New'), [:new, @website, :authorization], class: 'btn btn-sm btn-default'
