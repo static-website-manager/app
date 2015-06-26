@@ -1,2 +1,11 @@
-h1 Websites
+.clearfix style="margin-top:1em; margin-bottom:2em"
+  .h4.pull-left style="position:relative; margin:0; padding-left:3.1em; line-height:1"
+    span.fa.fa-file-text-o.fa-3x style="position:absolute; left: 0"
+    strong style="font-size:0.9em" Static <br> Website <br> Manager
+  .text-right
+    .btn-group
+      = form_tag :sign_out, method: :delete do
+        = button_tag icon('sign-out'), class: 'btn btn-sm btn-default', title: 'Sign Out'
+hr
+h1.h4: strong Your Websites
 = render @websites

@@ -1,4 +1,8 @@
 - if website.repository.setup?
-  h2 = link_to website.name, [website, website.branch(current_user)]
+  h2
+    => icon 'cube'
+    span.h3 = link_to website.name, [website, website.branch(current_user)]
 - else
-  h2 = link_to website.name, [:new, website, :setup]
+  h2
+    => icon 'cube'
+    span.h3 = link_to website.name, [:new, website, :setup]

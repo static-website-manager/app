@@ -1,7 +1,7 @@
 = render partial: 'websites/repository_header', locals: { website: @website }
 = render partial: 'branches/header', locals: { website: @website, branch: @branch }
 
-ul.nav.nav-tabs
+ul.nav.nav-tabs style="margin-bottom:1em"
   li style="margin-left:1em" = link_to 'Overview', [@website, @branch]
   li.active = link_to 'Pages', '#'
   li = link_to 'Posts', [@website, @branch, :posts]
