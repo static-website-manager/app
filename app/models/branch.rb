@@ -7,8 +7,12 @@ class Branch
     @branch = @repository.find_branch(name)
   end
 
+  def target
+    @branch.target
+  end
+
   def tree
-    @branch.target.tree
+    target.tree
   end
 
   def drafts_tree

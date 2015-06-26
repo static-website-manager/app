@@ -9,6 +9,12 @@ class Repository
     end
   end
 
+  def branch_names
+    @repository.branches.each_name(:local).to_a.reject do |name|
+      name.match(/\Auser_[\d]+\z/)
+    end
+  end
+
   def find_branch(user_or_name)
     branch = user_or_name.is_a?(User) ? find_or_create_user_branch(user_or_name) : find_named_branch(user_or_name)
     branch or raise ActiveRecord::RecordNotFound
