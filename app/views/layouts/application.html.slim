@@ -21,5 +21,8 @@ html lang="en"
         .container
           span.close data-dismiss="alert" aria-label="Close" aria-hidden="true" &times;
           = alert
-    .container
+    - if @_body_container == false
       = yield
+    - else
+      .container
+        = yield
