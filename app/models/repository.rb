@@ -1,4 +1,6 @@
 class Repository
+  attr_reader :repository
+
   def initialize(path)
     repository_path = Rails.root.join('repos', "#{path}.git")
 

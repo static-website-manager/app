@@ -5,3 +5,6 @@ ul.nav.nav-tabs style="margin-bottom:1em"
   li.active style="margin-left:1em" = link_to 'Overview', '#'
   li = link_to 'Pages', [@website, @branch, :pages]
   li = link_to 'Posts', [@website, @branch, :posts]
+
+ol.list-unstyled
+  = render partial: 'commit', collection: @branch.commits

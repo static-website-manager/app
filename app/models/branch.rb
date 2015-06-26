@@ -7,6 +7,12 @@ class Branch
     @branch = @repository.find_branch(name)
   end
 
+  def commits
+    Rugged::Walker.new(@repository.repository).tap do |walker|
+      walker.push target
+    end.to_a
+  end
+
   def target
     @branch.target
   end

@@ -1,0 +1,5 @@
+li style="padding:0.2em 0.4em; background-color: #{'#ffe' if commit_counter == 0}"
+  span.fa.fa-dot-circle-o>
+  code style="background-color:inherit; color:#000"
+    strong => commit.oid[0..6]
+    = commit.message
