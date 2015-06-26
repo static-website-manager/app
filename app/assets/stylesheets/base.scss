@@ -6,3 +6,7 @@ $font-family-serif: "Book Antiqua", Palatino, "Palatino Linotype", "Palatino LT 
 @import 'font-awesome-sprockets';
 @import 'font-awesome';
 @import 'modules/**/*';
+
+body {
+  margin-bottom: 4em;
+}

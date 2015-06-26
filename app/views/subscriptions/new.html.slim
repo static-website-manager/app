@@ -1,25 +1,35 @@
-h1 Subscribe to the Static Website Manager
-
-= errors_for @subscription.user, @subscription.website
-
-= form_for @subscription do |form|
-  = form.fields_for :user_attributes, @subscription.user do |f|
-    .form-group
-      => f.label :name, class: 'control-label'
-      = f.text_field :name, class: 'form-control'
-    .form-group
-      => f.label :email, class: 'control-label'
-      = f.email_field :email, class: 'form-control'
-    .form-group
-      => f.label :password, class: 'control-label'
-      = f.password_field :password, class: 'form-control'
-    .form-group
-      => f.label :password_confirmation, class: 'control-label'
-      = f.password_field :password_confirmation, class: 'form-control'
-  hr
-  = form.fields_for :website_attributes, @subscription.website do |f|
-    .form-group
-      => f.label :name, class: 'control-label'
-      = f.text_field :name, class: 'form-control'
-  .form-group
-    = form.button 'Subscribe', class: 'btn btn-lg btn-success'
+.row
+  .col-sm-8.col-sm-offset-2.col-md-6.col-md-offset-3
+    .center-block style="width:9em"
+      .h4 style="position:relative; margin-top:2em; margin-bottom: 4em; padding-left:3.1em; line-height:1"
+        = link_to :root, style: 'color: #000; text-decoration: none' do
+          span.fa.fa-file-text-o.fa-3x style="position:absolute; left: 0"
+          strong style="font-size:0.9em" Static <br> Website <br> Manager
+    h1.h3.text-center Subscribe your whole team for just $50/month
+    br
+    .panel.panel-default
+      = form_for @subscription do |form|
+        .panel-body
+          = errors_for @subscription.user, @subscription.website
+          = form.fields_for :user_attributes, @subscription.user do |f|
+            .form-group
+              => f.label :name, class: 'control-label'
+              = f.text_field :name, class: 'form-control'
+            .form-group
+              => f.label :email, class: 'control-label'
+              = f.email_field :email, class: 'form-control'
+            .form-group
+              => f.label :password, class: 'control-label'
+              = f.password_field :password, class: 'form-control'
+            .form-group
+              => f.label :password_confirmation, class: 'control-label'
+              = f.password_field :password_confirmation, class: 'form-control'
+          hr
+          = form.fields_for :website_attributes, @subscription.website do |f|
+            .form-group
+              => f.label :name, class: 'control-label'
+              = f.text_field :name, class: 'form-control'
+        .panel-footer
+          .row
+            .col-sm-8.col-sm-offset-2
+              = form.button 'Subscribe', class: 'btn btn-block btn-lg btn-success'
