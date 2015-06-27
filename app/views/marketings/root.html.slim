@@ -1,44 +1,43 @@
 - @_body_container = false
 
+.container-fluid
+  .header.text-right
+    .logo-large.pull-left
+      => image_tag 'logo-large.png', alt: ''
+      strong Static Website Manager
+    p = link_to content_tag(:strong, 'Sign up for just $50/month'), :new_subscription
+    p Existing User? #{link_to 'Sign In', :new_session}
 .container
-  .clearfix style="margin-top:1em; margin-bottom:4em"
-    .h4.pull-left style="position:relative; margin:0; padding-left:3.1em; line-height:1"
-      span.fa.fa-file-text-o.fa-3x style="position:absolute; left: 0"
-      strong style="font-size:0.9em" Static <br> Website <br> Manager
-    .text-right
-      p style="margin-bottom:2px" #{link_to content_tag(:strong, 'Sign up for just $50/month'), :new_subscription}
-      p Existing User? #{link_to 'Sign In', :new_session}
-  .text-center style="margin-bottom: 3em"
-    h1 style="font-size:3em; font-weight:bold; margin: 0" Easy Website Management for Teams
-    h2 style="margin: 0.2em 0 1em" Tired of making frequent changes to your team’s existing Jekyll website?
+  .marketing-introduction
+    h1 Easy Website Management for Teams
+    h2 Tired of making frequent changes to your team’s existing Jekyll website?
     .row
       .col-md-10.col-md-offset-1
-        p style="font-size:1.2em" The <i>Static Website Manager</i> takes the pain out of website management by giving your non-technical team members <b>powerful tools to make webpage changes</b> and write and edit blog posts.
-        p style="font-size:1.2em" Each team member gets their own working branch and you can <b>create collaborative branches</b> that your whole team has access to. Administrators can deploy branches at any time and team members with less privilege can <b>submit merge requests for team review and approval</b>.
-    .row style="margin-top:2em"
-      .col-sm-7.text-right
-        p = link_to 'Subscribe free for 30 days »', :new_subscription, class: 'btn btn-lg btn-success'
-      .col-sm-5.text-left
-        p.text-muted.small style="margin-top:0.5em"
+        p The <i>Static Website Manager</i> takes the pain out of website management by giving your non-technical team members <b>powerful tools to make webpage changes</b> and write and edit blog posts. Each team member gets their own working branch and you can <b>create collaborative branches</b> that your whole team has access to. Administrators can deploy branches at any time and team members with less privilege can <b>submit merge requests for team review and approval</b>.
+    .row
+      .col-sm-6.text-right
+        = link_to 'Subscribe free for 30 days »', :new_subscription, class: 'btn btn-lg btn-success'
+      .col-sm-6.text-left
+        small.text-muted
           ' No commitments. Cancel Anytime.
           br>
           | Enroll in a yearly plan and save over 15%.
-.jumbotron.text-center style="padding:2em 0"
+.marketing-jumbotron
   .container
     .row
       .col-sm-4
-        span.badge style="font-size:1.5em" 1
+        span.badge 1
         h2.lead The Tech Lead Pushes your Jekyll Website to our Git Server
       .col-sm-4
-        span.badge style="font-size:1.5em" 2
+        span.badge 2
         h2.lead Team Members Write Posts and Edit YAML Front-Matter
       .col-sm-4
-        span.badge style="font-size:1.5em" 3
+        span.badge 3
         h2.lead Submit Deploy Requests for Team Review
 .container
   .row
     .col-md-10.col-md-offset-1
-      .row style="margin-top:2em; margin-bottom:1em"
+      .row
         .col-sm-7
           ul
             li Invite and manage up to <strong>100 team members</strong>
@@ -46,8 +45,8 @@
             li Store up to <strong>1GB of repository data</strong>
             li Connect with <strong>SSL encryption</strong> over <code>http</code> and <code>git</code> protocols
         .col-sm-5
-          p = link_to :new_subscription, class: 'btn btn-block btn-lg btn-success', style: 'font-size:1.5em; padding:0.6em' do
+          p = link_to :new_subscription, class: 'btn btn-block btn-lg btn-success' do
             ' Try the
             strong> Static Website <br> Manager
             | Free for 30 Days
-  hr style="margin-bottom:4em"
+  hr

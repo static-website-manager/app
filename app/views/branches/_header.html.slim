@@ -1,5 +1,8 @@
 - names = website.repository.branch_names
-.well.well-sm
+.branch-header
+  .code.text-info.pull-right
+    strong => branch.target.oid[0..6]
+    = branch.target.message
   span.btn-group>
     span.btn.btn-default.dropdown-toggle type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
       - if branch.name == 'master'
@@ -18,6 +21,3 @@
       li.divider role="separator"
       - (names - %w[master working]).each do |name|
         li class=('active' if branch.name == name) = link_to name, (controller_name == 'branches' ? :id : :branch_id) => website.branch(name)
-  code style="margin-left:0.5em; position:relative; top:0.1em; color:#000"
-    strong => branch.target.oid[0..6]
-    = branch.target.message

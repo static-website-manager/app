@@ -1,0 +1,13 @@
+.header
+  .pull-right
+    - unless defined?(setup) && setup == true
+      .btn-group
+        = link_to icon('users'), [website, :authorizations], class: 'btn btn-sm btn-default', title: 'Team Members'
+        = link_to icon('gears'), [:edit, website, :settings], class: 'btn btn-sm btn-default', title: 'Website Settings'
+    .btn-group
+      = form_tag :sign_out, method: :delete do
+        = button_tag icon('sign-out'), class: 'btn btn-sm btn-default', title: 'Sign Out'
+  => link_to :websites do
+    = image_tag 'logo-small.png', alt: 'Static Website Manager', class: 'logo-small'
+  span.fa.fa-angle-double-right>
+  strong.lead = website.name

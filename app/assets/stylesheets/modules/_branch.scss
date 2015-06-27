@@ -1,0 +1,11 @@
+.branch-header {
+  @extend .well;
+  @extend .well-sm;
+  li.active a .text-muted {
+    color: rgba(255,255,255,0.9);
+  }
+  .code.pull-right {
+    font-size: 0.9em;
+    margin-top: 0.5em;
+  }
+}

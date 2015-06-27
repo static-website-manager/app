@@ -1,19 +1,10 @@
-.clearfix style="margin-top:1em; margin-bottom:2em"
-  .h4.pull-left style="margin:0; line-height:1"
-    => link_to :websites, style: 'color:#000; position: relative; top: 2px' do
-      span.fa.fa-file-text-o style="font-size:1.5em"
-    span.fa.fa-angle-double-right.text-muted> style="margin-left:0.3em; margin-right:0.2em; font-size:0.8em;"
-    strong = @website.name
-  .text-right
-    .btn-group style="margin-left:1em"
-      = form_tag :sign_out, method: :delete do
-        = button_tag icon('sign-out'), class: 'btn btn-sm btn-default', title: 'Sign Out'
+= render partial: 'websites/header', locals: { website: @website, setup: true }
 hr
 .text-center.text-muted
   div style="margin:4em 0"
     span.fa.fa-spinner.fa-spin.fa-4x
   p.lead Waiting for your <b>master</b> branch to be pushed to the our git repository at <code>/#{@website.id}.git</code>
-  hr
+
 javascript:
   var repositorySetupCheck = function() {
     $.get("#{url_for([@website, :setup_check])}", function(data) {
