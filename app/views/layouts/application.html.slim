@@ -13,12 +13,12 @@ html lang="en"
   body
     - if notice
       .alert.alert-dismissible.alert-full-width.alert-success role="alert"
-        .container
+        .container-fluid
           span.close data-dismiss="alert" aria-label="Close" aria-hidden="true" &times;
           = notice
     - if alert
       .alert.alert-dismissible.alert-full-width.alert-warning role="alert"
-        .container
+        .container-fluid
           span.close data-dismiss="alert" aria-label="Close" aria-hidden="true" &times;
           = alert
     - if @_body_container == false

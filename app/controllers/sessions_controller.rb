@@ -7,14 +7,15 @@ class SessionsController < ApplicationController
 
     if user && user.confirmed? && user.authenticate(params[:password])
       session[:user_id] = user.id
-      redirect_to :websites
+      redirect_to :websites, notice: 'Welcome back!'
     else
+      flash.now.alert = 'We could not find anyone with those credentials.'
       render :new
     end
   end
 
   def destroy
     reset_session
-    redirect_to :root
+    redirect_to :root, notice: 'Goodbye, and thanks for your business.'
   end
 end

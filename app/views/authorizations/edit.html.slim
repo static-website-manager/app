@@ -19,5 +19,5 @@
           .form-group
             => f.label :role, class: 'control-label'
             = f.select :role, options_for_select(Authorization.roles.keys.map { |k| [k.humanize, k] }), {}, class: 'form-control'
-        .panel-footer
+        .panel-footer.text-center
           = f.button 'Save Changes', class: 'btn btn-primary'
