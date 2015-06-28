@@ -1,6 +1,6 @@
 class SettingsController < ApplicationController
   include WebsiteManagementConcern
-  include WebsiteMasterManagementConcern
+  include WebsiteSetupManagementConcern
 
   def update
     if @website.update(settings_params)

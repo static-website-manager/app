@@ -5,7 +5,11 @@ class SessionsController < ApplicationController
   def create
     user = User.find_by_email(params[:email])
 
-    if user && user.confirmed? && user.authenticate(params[:password])
+    if user && !user.confirmed?
+      @_user_confirmation_alert = true
+      flash.now.alert = 'We found your account, but need you to confirm your email address first.'
+      render :new
+    elsif user && user.confirmed? && user.authenticate(params[:password])
       session[:user_id] = user.id
       redirect_to :websites, notice: 'Welcome back!'
     else

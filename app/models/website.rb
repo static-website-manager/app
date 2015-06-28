@@ -11,4 +11,8 @@ class Website < ActiveRecord::Base
   def branch(name)
     Branch.new(repository, name)
   end
+
+  def setup?
+    repository.setup?
+  end
 end

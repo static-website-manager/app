@@ -1,5 +1,9 @@
 - title 'Sign In'
 
+- if @_user_confirmation_alert
+  - content_for :alert do
+    = link_to 'Resend Confirmation Email', '#', class: 'btn btn-xs btn-success'
+
 .header.header-center
   = link_to :root, class: 'logo-large logo-back' do
     span.fa.fa-reply>

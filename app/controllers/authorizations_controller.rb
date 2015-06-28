@@ -1,11 +1,19 @@
 class AuthorizationsController < ApplicationController
   include WebsiteManagementConcern
-  include WebsiteMasterManagementConcern
+  include WebsiteSetupManagementConcern
 
+  # Initialize a new authorization with user.
+  before_action only: %i[new create] do
+    @authorization = @website.authorizations.new
+    @authorization.build_user
+  end
+
+  # Set the authorization.
   before_action only: %i[edit update destroy] do
     @authorization = @website.authorizations.find(params[:id])
   end
 
+  # Prevent users from removing their own authorization.
   before_action only: %i[destroy] do
     if @authorization.user == current_user
       redirect_to [@website, :authorizations], alert: 'You cannot remove yourself.'
@@ -16,14 +24,8 @@ class AuthorizationsController < ApplicationController
     @authorizations = @website.authorizations
   end
 
-  def new
-    @authorization = @website.authorizations.new
-    @authorization.build_user unless @authorization.user
-  end
-
   def create
-    @authorization = @website.authorizations.new(authorization_user_params)
-    @authorization.build_user unless @authorization.user
+    @authorization.assign_attributes(authorization_user_params)
 
     if existing_user = User.find_by_email(@authorization.user.email)
       @authorization.user = existing_user

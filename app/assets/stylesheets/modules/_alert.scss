@@ -11,3 +11,12 @@
     }
   }
 }
+
+.alert-text {
+  font-size: 1.25em;
+  .btn {
+    margin-left: 0.4em;
+    position: relative;
+    top: -0.1em;
+  }
+}

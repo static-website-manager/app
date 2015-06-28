@@ -15,12 +15,12 @@ html lang="en"
       .alert.alert-dismissible.alert-full-width.alert-success role="alert"
         .container-fluid
           span.close data-dismiss="alert" aria-label="Close" aria-hidden="true" &times;
-          = notice
+          .alert-text = notice
     - if alert
       .alert.alert-dismissible.alert-full-width.alert-warning role="alert"
         .container-fluid
           span.close data-dismiss="alert" aria-label="Close" aria-hidden="true" &times;
-          = alert
+          .alert-text #{alert} #{content_for(:alert)}
     - if @_body_container == false
       = yield
     - else

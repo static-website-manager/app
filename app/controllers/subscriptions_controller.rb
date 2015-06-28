@@ -1,12 +1,13 @@
 class SubscriptionsController < ApplicationController
   before_action :require_guest
 
-  def new
+  # Initialize a new subscription.
+  before_action only: %i[new create] do
     @subscription = Subscription.new
   end
 
   def create
-    @subscription = Subscription.new(subscription_params)
+    @subscription.assign_attributes(subscription_params)
 
     if @subscription.save
       session[:user_id] = @subscription.user.id

@@ -2,6 +2,7 @@ module BranchManagementConcern
   extend ActiveSupport::Concern
 
   included do
+    # Set the current branch.
     before_action do
       @branch = @website.branch(branch_id)
     end
@@ -9,8 +10,9 @@ module BranchManagementConcern
 
   private
 
+  # Pass along the current user as a proxy for the "working" branch.
   def branch_id
-    branch_param == 'working' ? "user_#{current_user.id}" : branch_param
+    branch_param == 'working' ? current_user : branch_param
   end
 
   def branch_param
