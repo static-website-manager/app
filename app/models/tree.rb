@@ -6,9 +6,13 @@ class Tree
   def pages
     @rugged_tree.map do |object|
       if object[:name].match(/\A[a-zA-Z0-9]+/)
-        Page.new(*object.values)
+        object
       end
-    end.compact
+    end.compact.sort do |a, b|
+      [a[:type] == :tree ? 0 : 1, a[:name]] <=> [b[:type] == :tree ? 0 : 1, b[:name]]
+    end.map do |object|
+      Page.new(*object.values)
+    end
   end
 
   def posts
@@ -21,7 +25,7 @@ class Tree
     if @rugged_tree['_drafts']
       @rugged_tree.repo.lookup(@rugged_tree['_drafts'][:oid]).map do |object|
         if object[:type] == :blob && object[:name].match(/.+\.(html|markdown|md)\z/)
-          Post.new(*object.values)
+          Post.new(*object.values, draft: true)
         end
       end.compact
     else []
