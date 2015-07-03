@@ -8,9 +8,4 @@ ul.nav.nav-tabs
   li = link_to 'Pages', [@website, @branch, :pages]
   li.active = link_to 'Posts', [@website, @branch, :posts]
 
-.well.well-sm
-  = render @branch.drafts
-
-hr
-
-= render @branch.posts
+= render @posts

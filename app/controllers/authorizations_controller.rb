@@ -1,6 +1,5 @@
 class AuthorizationsController < ApplicationController
   include WebsiteManagementConcern
-  include WebsiteSetupManagementConcern
 
   # Initialize a new authorization with user.
   before_action only: %i[new create] do

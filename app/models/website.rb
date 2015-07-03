@@ -5,14 +5,6 @@ class Website < ActiveRecord::Base
   validates :name, presence: true
 
   def repository
-    Repository.new(id)
-  end
-
-  def branch(name)
-    Branch.new(repository, name)
-  end
-
-  def setup?
-    repository.setup?
+    Repository.new(id) if persisted?
   end
 end

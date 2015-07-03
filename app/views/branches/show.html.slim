@@ -9,4 +9,4 @@ ul.nav.nav-tabs
   li = link_to 'Posts', [@website, @branch, :posts]
 
 ol.list-unstyled
-  = render partial: 'commit', collection: @branch.commits
+  = render partial: 'commit', collection: @commits

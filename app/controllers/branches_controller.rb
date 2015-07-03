@@ -1,5 +1,8 @@
 class BranchesController < ApplicationController
   include WebsiteManagementConcern
-  include WebsiteSetupManagementConcern
   include BranchManagementConcern
+
+  def show
+    @commits = @branch.commits
+  end
 end

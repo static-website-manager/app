@@ -1,23 +1,22 @@
-- names = website.repository.branch_names
 .branch-header
   .code.text-info.pull-right
-    strong => branch.target.oid[0..6]
-    = branch.target.message
+    strong => branch.commit.short_id
+    = branch.commit.message
   span.btn-group>
     span.btn.btn-default.dropdown-toggle type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-      - if branch.name == 'master'
+      - if branch.master?
         ' Master
         span.small.text-muted> Read-only
-      - elsif branch.name == 'working'
+      - elsif branch.working?
         ' Your Working Branch
       - else
         => branch.name
       span.caret
     ul.dropdown-menu
-      li class=('active' if branch.name == 'working') = link_to 'Your Working Branch', (controller_name == 'branches' ? :id : :branch_id) => website.branch(current_user)
-      li class=('active' if branch.name == 'master') = link_to (controller_name == 'branches' ? :id : :branch_id) => website.branch('master') do
+      li class=('active' if branch.working?) = link_to 'Your Working Branch', (controller_name == 'branches' ? :id : :branch_id) => website.repository.branch(current_user)
+      li class=('active' if branch.master?) = link_to (controller_name == 'branches' ? :id : :branch_id) => website.repository.branch('master') do
         ' Master
         span.small.text-muted Read-only
       li.divider role="separator"
-      - (names - %w[master working]).each do |name|
-        li class=('active' if branch.name == name) = link_to name, (controller_name == 'branches' ? :id : :branch_id) => website.branch(name)
+      - website.repository.custom_branch_names.each do |name|
+        li class=('active' if branch.name == name) = link_to name, (controller_name == 'branches' ? :id : :branch_id) => website.repository.branch(name)

@@ -1,5 +1,8 @@
 class PagesController < ApplicationController
   include WebsiteManagementConcern
-  include WebsiteSetupManagementConcern
   include BranchManagementConcern
+
+  def index
+    @pages = @tree.pages
+  end
 end

@@ -1,42 +1,20 @@
 class Repository
-  attr_reader :repository
-
   def initialize(path)
-    repository_path = Rails.root.join('repos', "#{path}.git")
-
-    if repository_path.exist?
-      @repository = Rugged::Repository.new(repository_path.to_s)
-    else
-      @repository = Rugged::Repository.init_at(repository_path.to_s, :bare)
-    end
+    @pathname = Rails.root.join('repos', "#{path}.git")
+    @rugged_repository = Rugged::Repository.send(@pathname.exist? ? :new : :init, @pathname.to_s)
   end
 
-  def branch_names
-    @repository.branches.each_name(:local).to_a.reject do |name|
-      name.match(/\Auser_[\d]+\z/)
-    end
+  def branch(name_or_user)
+    Branch.new(@rugged_repository, name_or_user)
   end
 
-  def find_branch(user_or_name)
-    branch = user_or_name.is_a?(User) ? find_or_create_user_branch(user_or_name) : find_named_branch(user_or_name)
-    branch or raise ActiveRecord::RecordNotFound
-  end
-
-  def lookup(oid)
-    @repository.lookup(oid) if oid.present?
+  def custom_branch_names
+    @rugged_repository.branches.each_name(:local).sort.map do |name|
+      name unless name == 'master' || name.match(/\Auser_\d+\z/)
+    end.compact
   end
 
   def setup?
-    !@repository.empty? && !!find_named_branch('master')
-  end
-
-  private
-
-  def find_or_create_user_branch(user)
-    @repository.branches["user_#{user.id}"] || @repository.branches.create("user_#{user.id}", 'master')
-  end
-
-  def find_named_branch(name)
-    @repository.branches[name]
+    !@rugged_repository.empty? && branch('master')
   end
 end

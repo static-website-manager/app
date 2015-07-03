@@ -1,5 +1,8 @@
 class PostsController < ApplicationController
   include WebsiteManagementConcern
-  include WebsiteSetupManagementConcern
   include BranchManagementConcern
+
+  def index
+    @posts = @tree.posts
+  end
 end

@@ -8,8 +8,4 @@ class User < ActiveRecord::Base
   validates :name, presence: true
   validates :password, length: { minimum: 8 }, allow_nil: true
   validates :password_confirmation, presence: true, if: -> { password.present? }
-
-  def branch_id
-    "user_#{id}"
-  end
 end
