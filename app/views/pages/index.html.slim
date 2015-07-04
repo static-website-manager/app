@@ -8,4 +8,6 @@ ul.nav.nav-tabs
   li.active = link_to 'Pages', '#'
   li = link_to 'Posts', [@website, @branch, :posts]
 
-= render @pages
+.table-responsive
+  table.table
+    = render @pages

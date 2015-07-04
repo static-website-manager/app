@@ -5,7 +5,7 @@ class Repository
   end
 
   def branch(name_or_user)
-    Branch.new(@rugged_repository, name_or_user)
+    Branch.find(@rugged_repository, name_or_user)
   end
 
   def custom_branch_names

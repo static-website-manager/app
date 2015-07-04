@@ -1,6 +1,17 @@
 class Commit
-  def initialize(rugged_commit)
+  include ActiveModel::Conversion
+
+  def initialize(rugged_repository, rugged_commit)
+    @rugged_repository = rugged_repository
     @rugged_commit = rugged_commit
+  end
+
+  def author_name
+    @rugged_commit.author[:name]
+  end
+
+  def author_email
+    @rugged_commit.author[:email]
   end
 
   def id
@@ -15,7 +26,11 @@ class Commit
     @rugged_commit.message
   end
 
+  def time
+    @rugged_commit.time
+  end
+
   def tree
-    Tree.new(@rugged_commit.tree)
+    Tree.new(@rugged_repository, @rugged_commit.tree)
   end
 end

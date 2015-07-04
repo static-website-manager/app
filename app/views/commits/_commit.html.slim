@@ -1,0 +1,12 @@
+li
+  span.pull-left>
+    span.fa.fa-dot-circle-o
+  span.pull-right>
+    code.code-text.pull-right>
+      strong = commit.short_id
+    br>
+    small.text-muted #{commit.time.strftime('%D')}
+  p
+    span => commit.message
+    br>
+    small.text-muted #{commit.author_name} authored #{time_ago_in_words commit.time} ago

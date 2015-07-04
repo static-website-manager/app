@@ -1,5 +1,6 @@
 class Tree
-  def initialize(rugged_tree)
+  def initialize(rugged_repository, rugged_tree)
+    @rugged_repository = rugged_repository
     @rugged_tree = rugged_tree
   end
 
@@ -11,7 +12,7 @@ class Tree
     end.compact.sort do |a, b|
       [a[:type] == :tree ? 0 : 1, a[:name]] <=> [b[:type] == :tree ? 0 : 1, b[:name]]
     end.map do |object|
-      Page.new(*object.values)
+      Page.new(@rugged_repository, *object.values)
     end
   end
 
@@ -25,7 +26,7 @@ class Tree
     if @rugged_tree['_drafts']
       @rugged_tree.repo.lookup(@rugged_tree['_drafts'][:oid]).map do |object|
         if object[:type] == :blob && object[:name].match(/.+\.(html|markdown|md)\z/)
-          Post.new(*object.values, draft: true)
+          Post.new(@rugged_repository, *object.values, draft: true)
         end
       end.compact
     else []
@@ -36,7 +37,7 @@ class Tree
     if @rugged_tree['_posts']
       @rugged_tree.repo.lookup(@rugged_tree['_posts'][:oid]).map do |object|
         if object[:type] == :blob && object[:name].match(/.+\.(html|markdown|md)\z/)
-          Post.new(*object.values)
+          Post.new(@rugged_repository, *object.values)
         end
       end.compact
     else []

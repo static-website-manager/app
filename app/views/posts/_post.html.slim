@@ -1,3 +1,10 @@
-div
-  span.fa.fa-file-text-o>
-  = post.name
+tr
+  td.cell-icon: span.fa.fa-file-text-o
+  td.cell-name
+    => post.name
+    - if post.draft?
+      small.label.label-warning> DRAFT
+    br>
+    small.text-muted = number_to_human_size post.size
+  td.cell-commit-message: small.text-muted = post.commit(@commit.id).message
+  td.cell-commit-id: strong = post.commit(@commit.id).short_id
