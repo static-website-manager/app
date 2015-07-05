@@ -19,6 +19,7 @@ class Branch
 
   def commits
     Rugged::Walker.new(@rugged_repository).tap do |walker|
+      walker.sorting Rugged::SORT_TOPO
       walker.push @rugged_branch.target
     end.map do |rugged_commit|
       Commit.new(@rugged_repository, rugged_commit)

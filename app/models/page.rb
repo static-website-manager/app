@@ -11,14 +11,6 @@ class Page
     @type = type
   end
 
-  def commit(sha)
-    walker = Rugged::Walker.new(@rugged_repository)
-    walker.sorting(Rugged::SORT_DATE)
-    walker.push(sha)
-    commits = walker.to_a
-    Commit.new(@rugged_repository, commits.find { |c| c.parents.size == 1 && c.diff(paths: [@name]).size > 0 } || commits.last)
-  end
-
   def size
     rugged_blob.size unless tree?
   end

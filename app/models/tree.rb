@@ -5,10 +5,8 @@ class Tree
   end
 
   def pages
-    @rugged_tree.map do |object|
-      if object[:name].match(/\A[a-zA-Z0-9]+/)
-        object
-      end
+    @rugged_tree.select do |object|
+      object[:name].match(/\A[a-zA-Z0-9]+/) && (object[:type] == :tree || object[:name].match(/.+\.(html|markdown|md)\z/))
     end.compact.sort do |a, b|
       [a[:type] == :tree ? 0 : 1, a[:name]] <=> [b[:type] == :tree ? 0 : 1, b[:name]]
     end.map do |object|
@@ -24,22 +22,26 @@ class Tree
 
   def drafted_posts
     if @rugged_tree['_drafts']
-      @rugged_tree.repo.lookup(@rugged_tree['_drafts'][:oid]).map do |object|
-        if object[:type] == :blob && object[:name].match(/.+\.(html|markdown|md)\z/)
-          Post.new(@rugged_repository, *object.values, draft: true)
-        end
-      end.compact
+      @rugged_tree.repo.lookup(@rugged_tree['_drafts'][:oid]).select do |object|
+        object[:type] == :blob && object[:name].match(/.+\.(html|markdown|md)\z/)
+      end.compact.sort do |a, b|
+        a[:name] <=> b[:name]
+      end.map do |object|
+        Post.new(@rugged_repository, *object.values, draft: true)
+      end
     else []
     end
   end
 
   def published_posts
     if @rugged_tree['_posts']
-      @rugged_tree.repo.lookup(@rugged_tree['_posts'][:oid]).map do |object|
-        if object[:type] == :blob && object[:name].match(/.+\.(html|markdown|md)\z/)
-          Post.new(@rugged_repository, *object.values)
-        end
-      end.compact
+      @rugged_tree.repo.lookup(@rugged_tree['_posts'][:oid]).select do |object|
+        object[:type] == :blob && object[:name].match(/.+\.(html|markdown|md)\z/)
+      end.compact.sort do |a, b|
+        b[:name] <=> a[:name]
+      end.map do |object|
+        Post.new(@rugged_repository, *object.values)
+      end
     else []
     end
   end

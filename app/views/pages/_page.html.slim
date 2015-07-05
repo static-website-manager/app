@@ -4,5 +4,3 @@ tr
     => page.name
     br>
     small.text-muted = number_to_human_size page.size
-  td.cell-commit-message: small.text-muted = page.commit(@commit.id).message
-  td.cell-commit-id: strong = page.commit(@commit.id).short_id
