@@ -5,7 +5,11 @@ class Branch
   def self.find(rugged_repository, name_or_user)
     raw_name = name_or_user.is_a?(User) ? "user_#{name_or_user.id}" : name_or_user.to_s
     rugged_branch = rugged_repository.branches[raw_name]
-    new(rugged_repository, rugged_branch) if rugged_branch
+    if rugged_branch
+      new(rugged_repository, rugged_branch)
+    else
+      raise ActiveRecord::RecordNotFound
+    end
   end
 
   def initialize(rugged_repository, rugged_branch)
