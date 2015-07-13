@@ -1,3 +1,3 @@
-class Page
+class Draft
   include BlobConcern
 end

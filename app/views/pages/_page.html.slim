@@ -1,6 +1,3 @@
-tr
-  td.cell-icon: span.fa class=(page.tree? ? 'fa-folder' : 'fa-file-text-o')
-  td.cell-name
-    => page.name
-    br>
-    small.text-muted = number_to_human_size page.size
+li
+  span.fa.fa-file-o>
+  = page.name
