@@ -11,4 +11,8 @@ module BlobConcern
     @mode = mode
     @type = type
   end
+
+  def persisted?
+    true
+  end
 end

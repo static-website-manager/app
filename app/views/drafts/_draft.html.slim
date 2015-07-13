@@ -1,3 +1,3 @@
 li
   span.fa.fa-file-text-o>
-  = draft.name
+  = link_to draft.name, [:edit, @website, @branch, draft]

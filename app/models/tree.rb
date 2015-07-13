@@ -4,43 +4,61 @@ class Tree
     @rugged_tree = rugged_tree
   end
 
+  def find_draft(id)
+    find(Draft, id)
+  end
+
+  def find_page(id)
+    find(Page, id)
+  end
+
+  def find_post(id)
+    find(Post, id)
+  end
+
   def pages
-    hash = {}
-
-    @rugged_tree.walk(:postorder).select do |root, object|
+    select('', PageTree, Page) do |root, object|
       !root.match(/\A_/) && (object[:type] == :tree || object[:name].match(/\.(html|markdown|md)\z/))
-    end.each do |root, object|
-      (hash[root] ||= []) << object
     end
-
-    arrange(hash, '', PageTree, Page)
   end
 
   def drafts
-    hash = {}
-
-    @rugged_tree.walk(:postorder).select do |root, object|
+    select('_drafts/', DraftTree, Draft) do |root, object|
       root.match(/\A_drafts/) && (object[:type] == :tree || object[:name].match(/\.(html|markdown|md)\z/))
-    end.each do |root, object|
-      (hash[root] ||= []) << object
     end
-
-    arrange(hash, '_drafts/', DraftTree, Draft)
   end
 
   def posts
+    select('_posts/', PostTree, Post, reverse_blobs: true) do |root, object|
+      root.match(/\A_posts/) && (object[:type] == :tree || object[:name].match(/\.(html|markdown|md)\z/))
+    end
+  end
+
+  private
+
+  def find(blob_class, id)
+    object = @rugged_tree.walk(:postorder).find do |root, object|
+      object[:oid] == id
+    end
+
+    if object
+      blob_class.new(@rugged_repository, *object[1].values)
+    else
+      raise ActiveRecord::RecordNotFound
+    end
+  end
+
+  def select(*args)
     hash = {}
 
     @rugged_tree.walk(:postorder).select do |root, object|
-      root.match(/\A_posts/) && (object[:type] == :tree || object[:name].match(/\.(html|markdown|md)\z/))
+      yield root, object
     end.each do |root, object|
       (hash[root] ||= []) << object
     end
 
-    arrange(hash, '_posts/', PostTree, Post, reverse_blobs: true)
+    arrange(hash, *args)
   end
-
-  private
 
   def arrange(hash, root, tree_class, blob_class, options = {})
     trees = Array(hash[root]).select do |object|

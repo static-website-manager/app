@@ -11,8 +11,9 @@ Rails.application.routes.draw do
     resource :setup_check, only: %i[show]
     resources :authorizations, only: %i[index new create edit update destroy], path: 'team'
     resources :branches, only: %i[show], path: '' do
-      resources :pages, only: %i[index]
-      resources :posts, only: %i[index]
+      resources :drafts, only: %i[edit update]
+      resources :pages, only: %i[index edit update]
+      resources :posts, only: %i[index edit update]
     end
   end
 end
