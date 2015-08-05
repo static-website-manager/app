@@ -18,7 +18,16 @@
   = form_for [@website, @branch, @draft] do |form|
     .tab-content
       #overview.tab-pane.active role="tabpanel"
-        p Overview
+        .row
+          .col-sm-7
+            .column-header
+              h2 Recent Activity
+            .text-center style="background-color: #eee; height: 16em;"
+          .col-sm-5
+            .column-header
+              h2 Commit History
+            ol.list-unstyled.commits
+              = render @commits
       #metadata.tab-pane role="tabpanel"
         p Metadata
       - if @draft.writable?

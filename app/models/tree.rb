@@ -38,7 +38,9 @@ class Tree
 
   def find(blob_class, id)
     object = @rugged_tree.walk(:postorder).find do |root, object|
-      object[:oid] == id
+      if object[:oid] == id
+        object[:root] = root
+      end
     end
 
     if object
@@ -64,13 +66,13 @@ class Tree
     trees = Array(hash[root]).select do |object|
       object[:type] == :tree
     end.map do |object|
-      tree_class.new(@rugged_repository, *object.values)
+      tree_class.new(@rugged_repository, *object.values, root)
     end.sort_by(&:name)
 
     blobs = Array(hash[root]).select do |object|
       object[:type] == :blob
     end.map do |object|
-      blob_class.new(@rugged_repository, *object.values)
+      blob_class.new(@rugged_repository, *object.values, root)
     end.sort_by(&:name)
 
     if options[:reverse_blobs]

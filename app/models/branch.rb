@@ -30,8 +30,12 @@ class Branch
     end
   end
 
+  def raw_name
+    @rugged_branch.name
+  end
+
   def name
-    @rugged_branch.name.match(/\Auser_\d+\z/) ? 'working' : @rugged_branch.name
+    raw_name.match(/\Auser_\d+\z/) ? 'working' : raw_name
   end
 
   def master?
