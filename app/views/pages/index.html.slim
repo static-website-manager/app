@@ -6,6 +6,7 @@
 ul.nav.nav-tabs
   li = link_to 'Overview', [@website, @branch]
   li.active = link_to 'Pages', [@website, @branch, :pages]
+  li = link_to 'Drafts', [@website, @branch, :drafts]
   li = link_to 'Posts', [@website, @branch, :posts]
 
 ul.list-unstyled.tree

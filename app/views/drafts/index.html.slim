@@ -1,4 +1,4 @@
-- title "Posts • #{@website.name} [#{@branch.name}]"
+- title "Drafts • #{@website.name} [#{@branch.name}]"
 
 = render partial: 'websites/header', locals: { website: @website }
 = render partial: 'branches/header', locals: { website: @website, branch: @branch }
@@ -6,8 +6,8 @@
 ul.nav.nav-tabs
   li = link_to 'Overview', [@website, @branch]
   li = link_to 'Pages', [@website, @branch, :pages]
-  li = link_to 'Drafts', [@website, @branch, :drafts]
-  li.active = link_to 'Posts', [@website, @branch, :posts]
+  li.active = link_to 'Drafts', [@website, @branch, :drafts]
+  li = link_to 'Posts', [@website, @branch, :posts]
 
 ul.list-unstyled.tree
-  = render @tree.posts
+  = render @tree.drafts
