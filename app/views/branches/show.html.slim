@@ -8,15 +8,19 @@ ul.nav.nav-tabs
   li = link_to 'Pages', [@website, @branch, :pages]
   li = link_to 'Posts', [@website, @branch, :posts]
 
-ol.list-unstyled.commits
-  = render @commits
+br
 
-.text-center
-  - if @commits.prev_page.present?
-    => link_to Kaminari::Helpers::PrevPage.new(self, current_page: @commits.current_page).url, class: 'btn btn-default' do
-      span.fa.fa-angle-double-left>
-      | Newer
-  - if @commits.next_page.present?
-    = link_to Kaminari::Helpers::NextPage.new(self, current_page: @commits.current_page).url, class: 'btn btn-default', style: 'margin-left:0.5em' do
-      ' Older
-      span.fa.fa-angle-double-right
+.row
+  .col-sm-7
+    .column-header
+      h2 Recent Activity
+    .text-center style="background-color: #eee; height: 16em;"
+  .col-sm-5
+    .column-header
+      h2 Commit History
+    ol.list-unstyled.commits
+      = render @commits
+    .text-right style="margin-top:2em"
+      = link_to [@website, @branch, :commits], class: 'btn btn-sm btn-default' do
+        ' View Entire History
+        span.fa.fa-angle-double-right

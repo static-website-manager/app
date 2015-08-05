@@ -1,0 +1,21 @@
+- title "#{@website.name} History [#{@branch.name}]"
+
+= render partial: 'websites/header', locals: { website: @website }
+= render partial: 'branches/header', locals: { website: @website, branch: @branch }
+
+ol.breadcrumb
+  li = link_to 'Branch Overview', [@website, @branch]
+  li.active Commit History
+
+ol.list-unstyled.commits
+  = render @commits
+
+.text-center
+  - if @commits.prev_page.present?
+    => link_to Kaminari::Helpers::PrevPage.new(self, current_page: @commits.current_page).url, class: 'btn btn-default' do
+      span.fa.fa-angle-double-left>
+      | Newer
+  - if @commits.next_page.present?
+    = link_to Kaminari::Helpers::NextPage.new(self, current_page: @commits.current_page).url, class: 'btn btn-default', style: 'margin-left:0.5em' do
+      ' Older
+      span.fa.fa-angle-double-right
