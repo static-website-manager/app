@@ -15,4 +15,8 @@ module BlobConcern
   def persisted?
     true
   end
+
+  def writable?
+    @name.match(/\.(markdown|md)\z/)
+  end
 end

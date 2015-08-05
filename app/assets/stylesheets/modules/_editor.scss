@@ -1,0 +1,29 @@
+.editor-header {
+  margin-bottom: 2em;
+  padding-top: 0.5em;
+  background-color: #eee;
+  .logo-small-back-container {
+    position: absolute;
+    top: 0.9em;
+    left: 1.3em;
+  }
+  .container-fluid {
+    padding: 0;
+  }
+  ul {
+    margin-bottom: 0;
+    margin-bottom: 0;
+    li:first-child {
+      margin-left: 5.5em;
+    }
+    a {
+      outline: none;
+    }
+  }
+}
+
+.editor-save-btn {
+  position: absolute;
+  top: 0.5em;
+  right: 1em;
+}

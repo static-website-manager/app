@@ -1,3 +1,31 @@
 - title "#{@post.name} • Posts • #{@website.name} [#{@branch.name}]"
+- @_body_container = false
 
-h1 Edit Post
+.editor-header
+  .container-fluid
+    => link_to [@website, @branch, :posts], class: 'logo-small-back-container' do
+      span.fa.fa-reply>
+      => image_tag 'logo-small.png', alt: 'Static Website Manager', class: 'logo-small'
+    ul.nav.nav-tabs
+      li.active = link_to 'Overview', '#overview', aria: { controls: 'overview' }, data: { toggle: 'tab' }, role: 'tab'
+      li = link_to 'Metadata', '#metadata', aria: { controls: 'metadata' }, data: { toggle: 'tab' }, role: 'tab'
+      - if @post.writable?
+        li = link_to 'Content', '#content', aria: { controls: 'content' }, data: { toggle: 'tab' }, role: 'tab'
+      - else
+        li = link_to 'Source', '#source', aria: { controls: 'source' }, data: { toggle: 'tab' }, role: 'tab'
+
+.container-fluid
+  = form_for [@website, @branch, @post] do |form|
+    .tab-content
+      #overview.tab-pane.active role="tabpanel"
+        p Overview
+      #metadata.tab-pane role="tabpanel"
+        p Metadata
+      - if @post.writable?
+        #content.tab-pane role="tabpanel"
+          p Content
+      - else
+        #source.tab-pane role="tabpanel"
+          p Source
+    = form.button class: 'btn btn-success editor-save-btn' do
+      | Save Changes
