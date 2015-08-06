@@ -9,5 +9,15 @@ ul.nav.nav-tabs
   li = link_to 'Drafts', [@website, @branch, :drafts]
   li.active = link_to 'Posts', [@website, @branch, :posts]
 
-ul.list-unstyled.tree
-  = render @tree.posts
+.table-responsive
+  table.table.table-bordered.table-striped.table-hover.posts
+    caption = page_entries_info @posts, entry_name: 'post'
+    thead
+      tr
+        th Title
+        th Author
+        th Published
+        th Pathname
+    tbody
+      = render @posts
+= paginate @posts

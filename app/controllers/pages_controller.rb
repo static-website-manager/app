@@ -6,4 +6,8 @@ class PagesController < ApplicationController
     @page = @tree.find_page(params[:id])
     @commits = Kaminari.paginate_array(@page.commits(@branch.raw_name)).page(1).per(10)
   end
+
+  def index
+    @pages = @tree.pages
+  end
 end

@@ -1,3 +1,5 @@
-li
-  span.fa.fa-file-text-o>
-  = link_to draft.name, [:edit, @website, @branch, draft]
+li.col-sm-6.col-md-4.col-lg-3
+  = link_to [:edit, @website, @branch, draft] do
+    span.fa.fa-file-text.fa-3x>
+    h2 => draft.title
+    code.small = draft.pathname

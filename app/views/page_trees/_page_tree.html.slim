@@ -1,5 +1,8 @@
-li
-  span.fa.fa-folder>
-  = page_tree.name
-  ul.list-unstyled
-    = render page_tree.objects
+li.page-tree
+  .panel.panel-default
+    .panel-body
+      = content_tag "h#{level}" do
+        span.fa.fa-folder>
+        = page_tree.name + '/'
+  ul
+    = render page_tree.objects, level: level == 6 ? 6 : level + 1

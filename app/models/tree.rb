@@ -17,20 +17,74 @@ class Tree
   end
 
   def pages
-    select('', PageTree, Page) do |root, object|
+    hash = {}
+
+    @rugged_tree.walk(:postorder).select do |root, object|
       !root.match(/\A_/) && (object[:type] == :tree || object[:name].match(/\.(html|markdown|md)\z/))
+    end.each do |root, object|
+      (hash[root] ||= []) << object
     end
+
+    def arrange(hash, root)
+      trees = Array(hash[root]).select do |object|
+        object[:type] == :tree
+      end.map do |object|
+        PageTree.new(@rugged_repository, *object.values, root)
+      end.sort_by(&:name)
+
+      blobs = Array(hash[root]).select do |object|
+        object[:type] == :blob
+      end.map do |object|
+        Page.new(@rugged_repository, *object.values, root)
+      end.sort_by(&:name).sort do |blob|
+        blob.name.match(/\Aindex\./) ? 0 : 1
+      end
+
+      trees.each do |tree|
+        tree.objects = arrange(hash, root + tree.name + '/')
+      end
+
+      blobs + trees.reject { |t| t.objects.empty? }
+    end
+
+    collection = arrange(hash, '')
+
+    if root = collection.find { |object| object.is_a?(Page) && object.name.match(/\Aindex\.(html|markdown|md)\z/) }
+      collection.delete(root)
+      root.objects = collection
+      collection = [root]
+    end
+
+    def extract(collection)
+      collection.map do |object|
+        if root = (object.objects || []).find { |o| o.is_a?(Page) && o.name.match(/\Aindex\.(html|markdown|md)\z/) }
+          object.objects.delete(root)
+          root.objects = extract(object.objects || [])
+          root.node_name = object.name
+          root
+        else
+          object.objects = extract(object.objects || [])
+          object
+        end
+      end
+    end
+
+    extract collection
   end
 
   def drafts
-    select('_drafts/', DraftTree, Draft) do |root, object|
-      root.match(/\A_drafts/) && (object[:type] == :tree || object[:name].match(/\.(html|markdown|md)\z/))
+    @rugged_tree.walk(:postorder).select do |root, object|
+      root.match(/\A_drafts/) && object[:name].match(/\.(html|markdown|md)\z/)
+    end.map do |root, object|
+      Draft.new(@rugged_repository, *object.values, root)
     end
   end
 
   def posts
-    select('_posts/', PostTree, Post, reverse_blobs: true) do |root, object|
-      root.match(/\A_posts/) && (object[:type] == :tree || object[:name].match(/\.(html|markdown|md)\z/))
+    @rugged_tree.walk(:postorder).select do |root, object|
+      root.match(/\A_posts/) && object[:name].match(/\.(html|markdown|md)\z/)
+    end.map do |root, object|
+      Post.new(@rugged_repository, *object.values, root)
     end
   end
 
@@ -48,41 +102,5 @@ class Tree
     else
       raise ActiveRecord::RecordNotFound
     end
-  end
-
-  def select(*args)
-    hash = {}
-
-    @rugged_tree.walk(:postorder).select do |root, object|
-      yield root, object
-    end.each do |root, object|
-      (hash[root] ||= []) << object
-    end
-
-    arrange(hash, *args)
-  end
-
-  def arrange(hash, root, tree_class, blob_class, options = {})
-    trees = Array(hash[root]).select do |object|
-      object[:type] == :tree
-    end.map do |object|
-      tree_class.new(@rugged_repository, *object.values, root)
-    end.sort_by(&:name)
-
-    blobs = Array(hash[root]).select do |object|
-      object[:type] == :blob
-    end.map do |object|
-      blob_class.new(@rugged_repository, *object.values, root)
-    end.sort_by(&:name)
-
-    if options[:reverse_blobs]
-      blobs.reverse!
-    end
-
-    trees.each do |tree|
-      tree.objects = arrange(hash, root + tree.name + '/', tree_class, blob_class, options)
-    end
-
-    trees.reject { |t| t.objects.empty? } + blobs
   end
 end

@@ -1,3 +1,15 @@
 li
-  span.fa.fa-file-o>
-  = link_to page.name, [:edit, @website, @branch, page]
+  = link_to [:edit, @website, @branch, page] do
+    .panel.panel-default
+      .panel-body
+        - if page.writable?
+          span.fa.fa-file-text.fa-3x.pull-left>
+        - else
+          span.fa.fa-file.fa-3x.pull-left>
+        div style="padding-left: 3.5em"
+          = content_tag "h#{level}" do
+            = page.node_name.present? ? page.node_name : page.name
+          code.small = page.raw_pathname
+  - if page.objects && page.objects.length > 0
+    ul
+      = render page.objects, level: level == 6 ? 6 : level + 1
