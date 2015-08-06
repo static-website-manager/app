@@ -16,8 +16,10 @@
 
 .container-fluid
   = form_for [@website, @branch, @post] do |form|
-    .tab-content
+    .tab-content.editor-content
       #overview.tab-pane.active role="tabpanel"
+        h1 = @post.title
+        code.small = @post.pathname
         .row
           .col-sm-7
             .column-header
