@@ -29,6 +29,10 @@ module BlobConcern
     end
   end
 
+  def content
+    @content ||= rugged_blob.content.sub(/\A(---\s*\n.*?\n?)^((---|\.\.\.)\s*$\n?)/m, '')
+  end
+
   def raw_pathname
     File.join([@path, @name].reject(&:blank?))
   end
@@ -43,5 +47,11 @@ module BlobConcern
 
   def writable?
     @name.match(/\.(markdown|md)\z/)
+  end
+
+  private
+
+  def rugged_blob
+    @rugged_blob ||= @rugged_repository.lookup(@id)
   end
 end

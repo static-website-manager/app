@@ -34,7 +34,9 @@
         p Metadata
       - if @draft.writable?
         #content.tab-pane role="tabpanel"
-          p Content
+          .form-group
+            = form.label :content, class: 'control-label'
+            = form.text_area :content, rows: 20, class: 'form-control'
       - else
         #source.tab-pane role="tabpanel"
           p Source
