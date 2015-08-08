@@ -31,7 +31,7 @@
             ol.list-unstyled.commits
               = render @commits
       #metadata.tab-pane role="tabpanel"
-        p Metadata
+        = render partial: 'metadata_fields', locals: { blob_form: form }
       - if @draft.writable?
         #content.tab-pane role="tabpanel"
           .form-group

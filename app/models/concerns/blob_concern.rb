@@ -30,7 +30,11 @@ module BlobConcern
   end
 
   def content
-    @content ||= rugged_blob.content.sub(/\A(---\s*\n.*?\n?)^((---|\.\.\.)\s*$\n?)/m, '')
+    @content ||= rugged_blob.content.sub(/\A(---\s*\n.*?\n?)^((---|\.\.\.)\s*$\n?)/m, '').force_encoding('utf-8')
+  end
+
+  def metadata
+    @metadata ||= YAML.load(rugged_blob.content)
   end
 
   def raw_pathname

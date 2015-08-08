@@ -1,0 +1,5 @@
+= blob_form.fields_for :metadata do |form|
+  - blob_form.object.metadata.each do |field, value|
+    .form-group
+      = form.label field, class: 'control-label'
+      = form.text_field field, value: value, class: 'form-control'
