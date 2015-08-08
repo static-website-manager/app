@@ -34,9 +34,7 @@
         = render partial: 'metadata_fields', locals: { blob_form: form }
       - if @post.writable?
         #content.tab-pane role="tabpanel"
-          .form-group
-            = form.label :content, class: 'control-label'
-            = form.text_area :content, rows: 20, class: 'form-control'
+          = render partial: 'content_field', locals: { blob_form: form }
       - else
         #source.tab-pane role="tabpanel"
           p Source
