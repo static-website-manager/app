@@ -30,11 +30,11 @@ module BlobConcern
   end
 
   def content
-    @content ||= rugged_blob.content.sub(/\A(---\s*\n.*?\n?)^((---|\.\.\.)\s*$\n?)/m, '').force_encoding('utf-8')
+    @content ||= rugged_blob.content.sub(metadata_regex, '').force_encoding('utf-8')
   end
 
   def metadata
-    @metadata ||= YAML.load(rugged_blob.content)
+    @metadata ||= rugged_blob.content.match(metadata_regex) ? YAML.load(rugged_blob.content) : {}
   end
 
   def raw_pathname
@@ -54,6 +54,10 @@ module BlobConcern
   end
 
   private
+
+  def metadata_regex
+    /\A(---\s*\n.*?\n?)^((---|\.\.\.)\s*$\n?)/m
+  end
 
   def rugged_blob
     @rugged_blob ||= @rugged_repository.lookup(@id)

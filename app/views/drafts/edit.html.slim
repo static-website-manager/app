@@ -1,42 +1,42 @@
 - title "#{@draft.name} • Drafts • #{@website.name} [#{@branch.name}]"
 - @_body_container = false
 
-.editor-header
+.editor-container
+  .editor-header
+    .container-fluid
+      => link_to [@website, @branch, :drafts], class: 'logo-small-back-container' do
+        span.fa.fa-reply>
+        => image_tag 'logo-small.png', alt: 'Static Website Manager', class: 'logo-small'
+      ul.nav.nav-tabs
+        li.active = link_to 'Overview', '#overview', aria: { controls: 'overview' }, data: { toggle: 'tab' }, role: 'tab'
+        li = link_to 'Metadata', '#metadata', aria: { controls: 'metadata' }, data: { toggle: 'tab' }, role: 'tab'
+        - if @draft.writable?
+          li = link_to 'Content', '#content', aria: { controls: 'content' }, data: { toggle: 'tab' }, role: 'tab'
+        - else
+          li = link_to 'Source', '#source', aria: { controls: 'source' }, data: { toggle: 'tab' }, role: 'tab'
   .container-fluid
-    => link_to [@website, @branch, :drafts], class: 'logo-small-back-container' do
-      span.fa.fa-reply>
-      => image_tag 'logo-small.png', alt: 'Static Website Manager', class: 'logo-small'
-    ul.nav.nav-tabs
-      li.active = link_to 'Overview', '#overview', aria: { controls: 'overview' }, data: { toggle: 'tab' }, role: 'tab'
-      li = link_to 'Metadata', '#metadata', aria: { controls: 'metadata' }, data: { toggle: 'tab' }, role: 'tab'
-      - if @draft.writable?
-        li = link_to 'Content', '#content', aria: { controls: 'content' }, data: { toggle: 'tab' }, role: 'tab'
-      - else
-        li = link_to 'Source', '#source', aria: { controls: 'source' }, data: { toggle: 'tab' }, role: 'tab'
-
-.container-fluid
-  = form_for [@website, @branch, @draft] do |form|
-    .tab-content.editor-content
-      #overview.tab-pane.active role="tabpanel"
-        h1 = @draft.title
-        code.small = @draft.pathname
-        .row
-          .col-sm-7
-            .column-header
-              h2 Recent Activity
-            .text-center style="background-color: #eee; height: 16em;"
-          .col-sm-5
-            .column-header
-              h2 Commit History
-            ol.list-unstyled.commits
-              = render @commits
-      #metadata.tab-pane role="tabpanel"
-        = render partial: 'metadata_fields', locals: { blob_form: form }
-      - if @draft.writable?
-        #content.tab-pane role="tabpanel"
-          = render partial: 'content_field', locals: { blob_form: form }
-      - else
-        #source.tab-pane role="tabpanel"
-          p Source
-    = form.button class: 'btn btn-success editor-save-btn' do
-      | Save Changes
+    = form_for [@website, @branch, @draft] do |form|
+      .tab-content.editor-content
+        #overview.tab-pane.active role="tabpanel"
+          h1 = @draft.title
+          code.small = @draft.pathname
+          .row
+            .col-sm-7
+              .column-header
+                h2 Recent Activity
+              .text-center style="background-color: #eee; height: 16em;"
+            .col-sm-5
+              .column-header
+                h2 Commit History
+              ol.list-unstyled.commits
+                = render @commits
+        #metadata.tab-pane role="tabpanel"
+          = render partial: 'metadata_fields', locals: { blob_form: form }
+        - if @draft.writable?
+          #content.tab-pane role="tabpanel"
+            = render partial: 'content_field', locals: { blob_form: form }
+        - else
+          #source.tab-pane role="tabpanel"
+            p Source
+      = form.button class: 'btn btn-success editor-save-btn' do
+        | Save Changes
