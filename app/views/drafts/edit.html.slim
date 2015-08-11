@@ -37,6 +37,6 @@
             = render partial: 'content_field', locals: { blob_form: form }
         - else
           #source.tab-pane role="tabpanel"
-            p Source
+            pre: code = @draft.content
       = form.button class: 'btn btn-success editor-save-btn' do
         | Save Changes
