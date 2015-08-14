@@ -1,11 +1,4 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
-one:
-  role: 1
-  user_id: 
-  website_id: 
-
-two:
-  role: 1
-  user_id: 
-  website_id: 
+sample_website_user_one_full_access:
+  role: 0
+  user: user_one
+  website: sample_website
