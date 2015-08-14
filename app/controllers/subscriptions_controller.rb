@@ -7,14 +7,15 @@ class SubscriptionsController < ApplicationController
   end
 
   def create
-    @subscription.assign_attributes(subscription_params)
+    @subscription.user_attributes = subscription_params[:user_attributes]
+    @subscription.website_attributes = subscription_params[:website_attributes]
 
     if @subscription.save
       session[:user_id] = @subscription.user.id
       redirect_to [:new, @subscription.website, :setup], notice: 'Welcome to Static Website Manager!'
     else
       flash.now.alert = 'There was a problem subscribing your account.'
-      render :new
+      render :new, status: 422
     end
   end
 

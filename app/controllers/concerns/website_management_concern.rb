@@ -8,7 +8,7 @@ module WebsiteManagementConcern
     before_action do
       @website = current_user.websites.find(params[:website_id])
 
-      if controller_name !~ 'setup' && !@website.setup?
+      if controller_name !~ /\Asetup/ && !@website.setup?
         redirect_to [:new, @website, :setup], alert: 'Please complete your website setup to access those features.'
       end
     end
