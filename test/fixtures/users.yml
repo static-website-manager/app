@@ -1,2 +1,7 @@
 user_one:
   email: one@one.local
+  password_digest: $2a$10$KQibUDRKEPI9sjF3Zm8nhe2iEa0usbQuyFUESu0RdYpPx8sMNYVti
+  confirmed: true
+user_unconfirmed:
+  email: unconfirmed@unconfirmed.local
+  password_digest: $2a$10$KQibUDRKEPI9sjF3Zm8nhe2iEa0usbQuyFUESu0RdYpPx8sMNYVti

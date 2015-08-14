@@ -25,6 +25,6 @@ class Website < ActiveRecord::Base
   end
 
   def rugged_repository
-    @rugged_repository ||= Rugged::Repository.send(repository_pathname.exist? ? :new : :init, repository_pathname.to_s)
+    @rugged_repository ||= Rugged::Repository.send(repository_pathname.exist? ? :new : :init_at, repository_pathname.to_s)
   end
 end
