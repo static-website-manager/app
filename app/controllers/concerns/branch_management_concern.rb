@@ -2,12 +2,10 @@ module BranchManagementConcern
   extend ActiveSupport::Concern
 
   included do
-    # Set the current repository’s branch, commit, and tree.
+    # Set the current website’s branch and save its name in the session.
     before_action do
       branch_param = controller_name == 'branches' ? params[:id] : params[:branch_id]
-      @branch = @repository.branch(branch_param == 'working' ? current_user : branch_param)
-      @commit = @branch.commit
-      @tree = @commit.tree
+      @branch = @website.branch(branch_param == 'working' ? current_user : branch_param)
       session[:branch_name] = @branch.name
     end
   end

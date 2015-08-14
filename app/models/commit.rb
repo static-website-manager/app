@@ -29,8 +29,4 @@ class Commit
   def time
     @rugged_commit.time
   end
-
-  def tree
-    Tree.new(@rugged_repository, @rugged_commit.tree)
-  end
 end

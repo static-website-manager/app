@@ -29,7 +29,7 @@ class Tree
       trees = Array(hash[root]).select do |object|
         object[:type] == :tree
       end.map do |object|
-        PageTree.new(@rugged_repository, *object.values, root)
+        PageTree.new(object[:name])
       end.sort_by(&:name)
 
       blobs = Array(hash[root]).select do |object|

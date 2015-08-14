@@ -3,6 +3,6 @@ class CommitsController < ApplicationController
   include BranchManagementConcern
 
   def index
-    @commits = Kaminari.paginate_array(@branch.commits).page(params[:page]).per(20)
+    @commits = @branch.commits(page: params[:page])
   end
 end

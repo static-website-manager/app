@@ -1,19 +1,18 @@
 class DraftsController < ApplicationController
   include WebsiteManagementConcern
   include BranchManagementConcern
-  include CommitManagementConcern
 
   before_action only: %i[edit update] do
-    @draft = @tree.find_draft(params[:id])
-    @commits = Kaminari.paginate_array(@draft.commits(@branch.raw_name)).page(1).per(10)
+    @draft = @branch.find_draft(params[:id])
+    @commits = @draft.commits(@branch.raw_name, per_page: 10)
   end
 
   def index
-    @drafts = @tree.drafts
+    @drafts = @branch.drafts
   end
 
   def update
-    if commit(@draft)
+    if false
       redirect_to [:edit, @website, @branch, @draft], notice: 'Your changes were committed successfully.'
     else
       flash.now.alert = 'There was a problem committing your changes.'

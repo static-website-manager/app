@@ -3,6 +3,6 @@ class BranchesController < ApplicationController
   include BranchManagementConcern
 
   def show
-    @commits = Kaminari.paginate_array(@branch.commits).page(1).per(10)
+    @commits = @branch.commits(per_page: 10)
   end
 end

@@ -1,19 +1,18 @@
 class PagesController < ApplicationController
   include WebsiteManagementConcern
   include BranchManagementConcern
-  include CommitManagementConcern
 
   before_action only: %i[edit update] do
-    @page = @tree.find_page(params[:id])
-    @commits = Kaminari.paginate_array(@page.commits(@branch.raw_name)).page(1).per(10)
+    @page = @branch.find_page(params[:id])
+    @commits = @page.commits(@branch.raw_name, per_page: 10)
   end
 
   def index
-    @pages = @tree.pages
+    @pages = @branch.pages
   end
 
   def update
-    if commit(@page)
+    if false
       redirect_to [:edit, @website, @branch, @page], notice: 'Your changes were committed successfully.'
     else
       flash.now.alert = 'There was a problem committing your changes.'

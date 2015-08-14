@@ -1,19 +1,18 @@
 class PostsController < ApplicationController
   include WebsiteManagementConcern
   include BranchManagementConcern
-  include CommitManagementConcern
 
   before_action only: %i[edit update] do
-    @post = @tree.find_post(params[:id])
-    @commits = Kaminari.paginate_array(@post.commits(@branch.raw_name)).page(1).per(10)
+    @post = @branch.find_post(params[:id])
+    @commits = @post.commits(@branch.raw_name, per_page: 10)
   end
 
   def index
-    @posts = Kaminari.paginate_array(@tree.posts).page(params[:page]).per(50)
+    @posts = @branch.posts(page: params[:page], per_page: 50)
   end
 
   def update
-    if commit(@post)
+    if false
       redirect_to [:edit, @website, @branch, @post], notice: 'Your changes were committed successfully.'
     else
       flash.now.alert = 'There was a problem committing your changes.'

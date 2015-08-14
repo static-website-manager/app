@@ -18,15 +18,17 @@ module BlobConcern
     'Theodore Kimble'
   end
 
-  def commits(refspec)
-    Rugged::Walker.new(@rugged_repository).tap do |walker|
-      walker.sorting Rugged::SORT_TOPO
-      walker.push refspec
-    end.select do |rugged_commit|
-      rugged_commit.parents.size == 1 && rugged_commit.diff(paths: [raw_pathname]).size > 0
-    end.map do |rugged_commit|
-      Commit.new(@rugged_repository, rugged_commit)
-    end
+  def commits(refspec, page: 1, per_page: 20)
+    Kaminari.paginate_array(
+      Rugged::Walker.new(@rugged_repository).tap do |walker|
+        walker.sorting Rugged::SORT_TOPO
+        walker.push refspec
+      end.select do |rugged_commit|
+        rugged_commit.parents.size == 1 && rugged_commit.diff(paths: [raw_pathname]).size > 0
+      end.map do |rugged_commit|
+        Commit.new(@rugged_repository, rugged_commit)
+      end
+    ).page(page).per(per_page)
   end
 
   def content
@@ -47,6 +49,10 @@ module BlobConcern
 
   def published_on
     1.week.ago
+  end
+
+  def update(changes)
+    CommitService.update_file(changes.merge(path: raw_pathname))
   end
 
   def writable?

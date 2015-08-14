@@ -8,11 +8,11 @@ hr
   p.lead Waiting for your <b>master</b> branch to be pushed to the our git repository at <code>/#{@website.id}.git</code>
 
 javascript:
-  var repositorySetupCheck = function() {
+  var websiteSetupCheck = function() {
     $.get("#{url_for([@website, :setup_check])}", function(data) {
       if (data && data.length > 0) {
         window.location = data;
       }
     });
   };
-  setInterval(repositorySetupCheck, 5000);
+  setInterval(websiteSetupCheck, 5000);
