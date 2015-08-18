@@ -2,3 +2,7 @@ sample_website_user_one_full_access:
   role: 0
   user: user_one
   website: sample_website
+new_website_user_one_full_access:
+  role: 0
+  user: user_one
+  website: new_website

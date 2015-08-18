@@ -21,10 +21,12 @@ class Website < ActiveRecord::Base
   private
 
   def repository_pathname
-    @repository_pathname ||= Rails.root.join('repos', "#{id}.git")
+    @repository_pathname ||= Rails.root.join(Rails.application.secrets.repos_dir, "#{id}.git")
   end
 
   def rugged_repository
-    @rugged_repository ||= Rugged::Repository.send(repository_pathname.exist? ? :new : :init_at, repository_pathname.to_s)
+    if persisted?
+      @rugged_repository ||= repository_pathname.exist? ? Rugged::Repository.new(repository_pathname.to_s) : Rugged::Repository.init_at(repository_pathname.to_s, :bare)
+    end
   end
 end

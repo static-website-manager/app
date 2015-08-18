@@ -7,6 +7,8 @@ class Branch
     rugged_branch = rugged_repository.branches[raw_name]
     if rugged_branch
       new(rugged_repository, rugged_branch)
+    elsif name_or_user.is_a?(User)
+      new(rugged_repository, rugged_repository.branches.create("swm_user_#{name_or_user.id}", 'master'))
     else
       raise ActiveRecord::RecordNotFound
     end
