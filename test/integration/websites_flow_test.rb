@@ -3,21 +3,21 @@ require 'test_helper'
 class WebsitesFlowTest < ActionDispatch::IntegrationTest
   def test_websites
     sign_in users(:user_one)
-    get '/websites'
+    get websites_path
     assert_response 200
   end
 
   def test_new_website
     sign_in users(:user_one)
-    get_via_redirect "/websites/#{websites(:new_website).id}"
+    get_via_redirect website_path(websites(:new_website))
     assert_response 200
-    assert_equal "/websites/#{websites(:new_website).id}/setup", path
+    assert_equal new_website_setup_path(websites(:new_website)), path
   end
 
   def test_setup_website
     sign_in users(:user_one)
-    get_via_redirect "/websites/#{websites(:sample_website).id}"
+    get_via_redirect website_path(websites(:sample_website))
     assert_response 200
-    assert_equal "/websites/#{websites(:sample_website).id}/working", path
+    assert_equal website_branch_path(websites(:sample_website), 'working'), path
   end
 end

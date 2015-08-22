@@ -7,23 +7,23 @@ class SignInFlowTest < ActionDispatch::IntegrationTest
 
   def test_failed_sign_in
     visit_sign_in_page
-    post_via_redirect '/sign-in', invalid_params
+    post_via_redirect new_session_path, invalid_params
     assert_response 422
-    assert_equal '/sign-in', path
+    assert_equal new_session_path, path
   end
 
   def test_unconfirmed_sign_in
     visit_sign_in_page
-    post_via_redirect '/sign-in', unconfirmed_params
+    post_via_redirect new_session_path, unconfirmed_params
     assert_response 422
-    assert_equal '/sign-in', path
+    assert_equal new_session_path, path
   end
 
   def test_successful_sign_in
     visit_sign_in_page
-    post_via_redirect '/sign-in', valid_params
+    post_via_redirect new_session_path, valid_params
     assert_response 200
-    assert_equal '/websites', path
+    assert_equal websites_path, path
   end
 
   private
@@ -41,7 +41,7 @@ class SignInFlowTest < ActionDispatch::IntegrationTest
   end
 
   def visit_sign_in_page(assert: false)
-    get '/sign-in'
+    get new_session_path
 
     if assert
       assert_select 'form[action="/sign-in"]' do

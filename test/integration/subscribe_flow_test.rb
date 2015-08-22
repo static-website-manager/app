@@ -7,14 +7,14 @@ class SubscribeFlowTest < ActionDispatch::IntegrationTest
 
   def test_failed_subscription
     visit_subscription_page
-    post_via_redirect '/subscribe', invalid_params
+    post_via_redirect new_subscription_path, invalid_params
     assert_response 422
-    assert_equal '/subscribe', path
+    assert_equal new_subscription_path, path
   end
 
   def test_successful_subscription
     visit_subscription_page
-    post_via_redirect '/subscribe', valid_params
+    post_via_redirect new_subscription_path, valid_params
     assert_response 200
     assert path.match(/\A\/websites\/\d+\/setup\z/)
   end
@@ -46,7 +46,7 @@ class SubscribeFlowTest < ActionDispatch::IntegrationTest
   end
 
   def visit_subscription_page(assert: false)
-    get '/subscribe'
+    get new_subscription_path
 
     if assert
       assert_response :success
