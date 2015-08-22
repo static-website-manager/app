@@ -67,6 +67,6 @@ class Branch
   end
 
   def tree
-    @tree ||= Tree.new(@rugged_repository, @rugged_commit.tree)
+    @tree ||= Tree.new(@rugged_repository, @rugged_branch.target.tree)
   end
 end
