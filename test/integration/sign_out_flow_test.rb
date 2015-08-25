@@ -2,7 +2,7 @@ require 'test_helper'
 
 class SignOutFlowTest < ActionDispatch::IntegrationTest
   def test_sign_out
-    sign_in users(:user_one)
+    sign_in user
     delete_via_redirect sign_out_path
     assert_response 200
     assert_equal root_path, path

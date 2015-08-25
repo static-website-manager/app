@@ -2,26 +2,26 @@ require 'test_helper'
 
 class SetupsFlowTest < ActionDispatch::IntegrationTest
   def test_setup
-    visit_setup_page(websites(:new_website))
+    visit_setup_page(website_new)
   end
 
   def test_setup_and_wait_for_repository
-    # visit_setup_page(websites(:new_website), assert: false)
+    # visit_setup_page(website_new, assert: false)
     # wait and push to master and follow redirect
     # assert_response 200
-    # assert_equal website_branch_path(websites(:new_website), websites(:new_website).branch(users(:user_one))), path
+    # assert_equal website_branch_path(website_new, website_new.branch(user)), path
   end
 
   def test_setup_as_sample_website
-    visit_setup_page(websites(:sample_website), assert: false)
+    visit_setup_page(website, assert: false)
     assert_response 200
-    assert_equal website_branch_path(websites(:sample_website), websites(:sample_website).branch(users(:user_one))), path
+    assert_equal website_branch_path(website, website.branch(user)), path
   end
 
   private
 
   def visit_setup_page(website, assert: false)
-    sign_in users(:user_one)
+    sign_in user
     get_via_redirect new_website_setup_path(website)
 
     if assert

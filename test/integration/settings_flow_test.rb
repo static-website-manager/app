@@ -2,14 +2,14 @@ require 'test_helper'
 
 class SettingsFlowTest < ActionDispatch::IntegrationTest
   def test_settings_as_new_website
-    sign_in users(:user_one)
-    get_via_redirect edit_website_settings_path(websites(:new_website))
+    sign_in user
+    get_via_redirect edit_website_settings_path(website_new)
     assert_response 200
-    assert_equal new_website_setup_path(websites(:new_website)), path
-    patch_via_redirect edit_website_settings_path(websites(:new_website)), valid_params
+    assert_equal new_website_setup_path(website_new), path
+    patch_via_redirect edit_website_settings_path(website_new), valid_params
     assert_response 200
-    assert_equal new_website_setup_path(websites(:new_website)), path
-    refute_equal 'Test', websites(:new_website).reload.name
+    assert_equal new_website_setup_path(website_new), path
+    refute_equal 'Test', website_new.reload.name
   end
 
   def test_settings
@@ -18,29 +18,29 @@ class SettingsFlowTest < ActionDispatch::IntegrationTest
 
   def test_failed_settings_update
     visit_settings_page
-    patch_via_redirect edit_website_settings_path(websites(:sample_website)), invalid_params
+    patch_via_redirect edit_website_settings_path(website), invalid_params
     assert_response 422
-    assert_equal edit_website_settings_path(websites(:sample_website)), path
-    refute_equal '', websites(:sample_website).reload.name
+    assert_equal edit_website_settings_path(website), path
+    refute_equal '', website.reload.name
   end
 
   def test_successfull_settings_update
     visit_settings_page
-    patch_via_redirect edit_website_settings_path(websites(:sample_website)), valid_params
+    patch_via_redirect edit_website_settings_path(website), valid_params
     assert_response 200
-    assert_equal website_branch_path(websites(:sample_website), websites(:sample_website).branch(users(:user_one))), path
-    assert_equal 'Test', websites(:sample_website).reload.name
+    assert_equal website_branch_path(website, website.branch(user)), path
+    assert_equal 'Test', website.reload.name
   end
 
   private
 
   def visit_settings_page(assert: false)
-    sign_in users(:user_one)
-    get_via_redirect edit_website_settings_path(websites(:sample_website))
+    sign_in user
+    get_via_redirect edit_website_settings_path(website)
 
     if assert
       assert_response 200
-      assert_equal edit_website_settings_path(websites(:sample_website)), path
+      assert_equal edit_website_settings_path(website), path
     end
   end
 

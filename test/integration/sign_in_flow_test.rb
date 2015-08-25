@@ -37,7 +37,7 @@ class SignInFlowTest < ActionDispatch::IntegrationTest
   end
 
   def valid_params
-    { email: users(:user_one).email, password: 'password', }
+    { email: user.email, password: 'password', }
   end
 
   def visit_sign_in_page(assert: false)

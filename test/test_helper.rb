@@ -11,4 +11,20 @@ class ActiveSupport::TestCase
   def sign_in(user)
     post_via_redirect '/sign-in', email: user.email, password: 'password'
   end
+
+  def user
+    users(:user_one)
+  end
+
+  def user_unconfirmed
+    users(:user_unconfirmed)
+  end
+
+  def website
+    websites(:sample_website)
+  end
+
+  def website_new
+    websites(:new_website)
+  end
 end
