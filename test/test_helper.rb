@@ -8,6 +8,14 @@ class ActiveSupport::TestCase
 
   private
 
+  def authorization
+    authorizations(:sample_website_user_one_full_access)
+  end
+
+  def authorization_unconfirmed
+    authorizations(:sample_website_user_unconfirmed_full_access)
+  end
+
   def sign_in(user)
     post_via_redirect '/sign-in', email: user.email, password: 'password'
   end

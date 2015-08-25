@@ -2,6 +2,10 @@ sample_website_user_one_full_access:
   role: 0
   user: user_one
   website: sample_website
+sample_website_user_unconfirmed_full_access:
+  role: 0
+  user: user_unconfirmed
+  website: sample_website
 new_website_user_one_full_access:
   role: 0
   user: user_one
