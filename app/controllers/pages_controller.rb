@@ -12,11 +12,6 @@ class PagesController < ApplicationController
   end
 
   def update
-    if false
-      redirect_to [:edit, @website, @branch, @page], notice: 'Your changes were committed successfully.'
-    else
-      flash.now.alert = 'There was a problem committing your changes.'
-      render :edit
-    end
+    redirect_to [:edit, @website, @branch, @page]
   end
 end
