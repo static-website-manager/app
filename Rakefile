@@ -3,4 +3,6 @@
 
 require File.expand_path('../config/application', __FILE__)
 
+SafeYAML::OPTIONS[:default_mode] = :safe
+
 Rails.application.load_tasks
