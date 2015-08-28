@@ -4,7 +4,7 @@ class DraftsController < ApplicationController
 
   before_action only: %i[edit update] do
     @draft = @branch.find_draft(params[:id])
-    @commits = @draft.commits(@branch.raw_name, per_page: 10)
+    @commits = @draft.commits(@branch.target, per_page: 10)
   end
 
   def index
