@@ -34,8 +34,16 @@ class Branch
     ).page(page).per(per_page)
   end
 
-  def pages
-    tree.pages
+  def find_page(oid)
+    tree.find_blob(Page, oid)
+  end
+
+  def find_draft(oid)
+    tree.find_blob(Draft, oid)
+  end
+
+  def find_post(oid)
+    tree.find_blob(Post, oid)
   end
 
   def pages
@@ -60,6 +68,10 @@ class Branch
 
   def persisted?
     true
+  end
+
+  def target
+    @rugged_branch.target
   end
 
   def to_param

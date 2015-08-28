@@ -4,7 +4,7 @@ class PagesController < ApplicationController
 
   before_action only: %i[edit update] do
     @page = @branch.find_page(params[:id])
-    @commits = @page.commits(@branch.raw_name, per_page: 10)
+    @commits = @page.commits(@branch.target, per_page: 10)
   end
 
   def index

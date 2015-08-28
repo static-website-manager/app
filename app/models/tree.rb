@@ -4,18 +4,6 @@ class Tree
     @rugged_tree = rugged_tree
   end
 
-  def find_draft(id)
-    find(Draft, id)
-  end
-
-  def find_page(id)
-    find(Page, id)
-  end
-
-  def find_post(id)
-    find(Post, id)
-  end
-
   def pages
     hash = {}
 
@@ -88,11 +76,9 @@ class Tree
     end
   end
 
-  private
-
-  def find(blob_class, id)
+  def find_blob(blob_class, oid)
     object = @rugged_tree.walk(:postorder).find do |root, object|
-      if object[:oid] == id
+      if object[:oid] == oid
         object[:root] = root
       end
     end
