@@ -3,14 +3,16 @@ class Subscription
 
   attr_reader :user, :website
 
-  def initialize(*args)
-    super
-    @user ||= User.new
-    @website ||= Website.new
+  def initialize
+    @user = User.new
+    @website = Website.new
   end
 
-  def save
+  def save(subscription_params)
     begin
+      @user.assign_attributes(subscription_params[:user_attributes] || {})
+      @website.assign_attributes(subscription_params[:website_attributes] || {})
+
       ActiveRecord::Base.transaction do
         @user.save
         @website.save
@@ -26,13 +28,5 @@ class Subscription
     rescue ActiveRecord::RecordInvalid
       false
     end
-  end
-
-  def user_attributes=(attributes)
-    @user = User.new(attributes)
-  end
-
-  def website_attributes=(attributes)
-    @website = Website.new(attributes)
   end
 end

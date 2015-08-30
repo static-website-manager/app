@@ -1,16 +1,12 @@
 class SubscriptionsController < ApplicationController
   before_action :require_guest
 
-  # Initialize a new subscription.
   before_action only: %i[new create] do
     @subscription = Subscription.new
   end
 
   def create
-    @subscription.user_attributes = subscription_params[:user_attributes]
-    @subscription.website_attributes = subscription_params[:website_attributes]
-
-    if @subscription.save
+    if @subscription.save(subscription_params)
       session[:user_id] = @subscription.user.id
       redirect_to [:new, @subscription.website, :setup], notice: 'Welcome to Static Website Manager!'
     else
