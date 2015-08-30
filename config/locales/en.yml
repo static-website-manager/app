@@ -1,0 +1,5 @@
+en:
+  activerecord:
+    attributes:
+      website:
+        name: Website Name
