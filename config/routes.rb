@@ -15,6 +15,9 @@ Rails.application.routes.draw do
       resources :drafts, only: %i[index edit update]
       resources :pages, only: %i[index edit update]
       resources :posts, only: %i[index edit update]
+      resources :blobs, only: %i[] do
+        resources :commits, only: %i[index], controller: 'blob_commits', path: 'history'
+      end
     end
   end
 end

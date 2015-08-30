@@ -34,6 +34,23 @@ class Branch
     ).page(page).per(per_page)
   end
 
+  def find_blob(blob_class, oid)
+    object = target.tree.walk(:postorder).find do |root, object|
+      if object[:oid] == oid
+        object[:root] = root
+      end
+    end
+
+    if object
+      blob_class ||= Draft if object[1][:root].match(/\A_drafts/)
+      blob_class ||= Post if object[1][:root].match(/\A_posts/)
+      blob_class ||= Page
+      blob_class.new(@rugged_repository, *object[1].values)
+    else
+      raise ActiveRecord::RecordNotFound
+    end
+  end
+
   def find_page(oid)
     find_blob(Page, oid)
   end
@@ -138,21 +155,5 @@ class Branch
 
   def to_param
     name
-  end
-
-  private
-
-  def find_blob(blob_class, oid)
-    object = target.tree.walk(:postorder).find do |root, object|
-      if object[:oid] == oid
-        object[:root] = root
-      end
-    end
-
-    if object
-      blob_class.new(@rugged_repository, *object[1].values)
-    else
-      raise ActiveRecord::RecordNotFound
-    end
   end
 end

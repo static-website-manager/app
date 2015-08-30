@@ -1,0 +1,27 @@
+- title "#{@blob.title} History [#{@website.name} – #{@branch.name}]"
+
+= render partial: 'websites/header', locals: { website: @website }
+
+ol.breadcrumb
+  - case @blob.class.name
+  - when 'Page'
+    li = link_to 'Pages', [@website, @branch, :pages]
+  - when 'Draft'
+    li = link_to 'Drafts', [@website, @branch, :drafts]
+  - when 'Post'
+    li = link_to 'Posts', [@website, @branch, :posts]
+  li = link_to 'Edit Blob', [:edit, @website, @branch, @blob]
+  li.active Commit History
+
+ol.list-unstyled.commits
+  = render @commits
+
+.text-center
+  - if @commits.prev_page.present?
+    => link_to Kaminari::Helpers::PrevPage.new(self, current_page: @commits.current_page).url, class: 'btn btn-default' do
+      span.fa.fa-angle-double-left>
+      | Newer
+  - if @commits.next_page.present?
+    = link_to Kaminari::Helpers::NextPage.new(self, current_page: @commits.current_page).url, class: 'btn btn-default', style: 'margin-left:0.5em' do
+      ' Older
+      span.fa.fa-angle-double-right
