@@ -1,5 +1,4 @@
-class Draft
-  include BlobConcern
+class Draft < Blob
   extend ActiveModel::Naming
 
   def pathname

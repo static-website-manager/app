@@ -1,5 +1,4 @@
-class Post
-  include BlobConcern
+class Post < Blob
   extend ActiveModel::Naming
 
   def pathname

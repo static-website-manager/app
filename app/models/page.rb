@@ -1,5 +1,4 @@
-class Page
-  include BlobConcern
+class Page < Blob
   extend ActiveModel::Naming
 
   attr_accessor :objects, :node_name

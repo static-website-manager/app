@@ -1,5 +1,4 @@
-module BlobConcern
-  extend ActiveSupport::Concern
+class Blob
   include ActiveModel::Conversion
 
   attr_reader :name, :id, :mode, :type, :path
