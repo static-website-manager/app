@@ -6,7 +6,6 @@ class Blob
   def initialize(rugged_repository, name, id, mode, type, path)
     @rugged_repository = rugged_repository
     @name = name
-    @path = "_posts/articles/#{name}"
     @id = id
     @mode = mode
     @type = type
@@ -30,12 +29,16 @@ class Blob
     ).page(page).per(per_page)
   end
 
+  def raw_content
+    rugged_blob.content
+  end
+
   def content
     @content ||= rugged_blob.content.sub(metadata_regex, '').force_encoding('utf-8')
   end
 
   def metadata
-    @metadata ||= rugged_blob.content.match(metadata_regex) ? YAML.load(rugged_blob.content) : {}
+    @metadata ||= rugged_blob.content.match(metadata_regex) ? Hash(YAML.load(rugged_blob.content)) : {}
   end
 
   def raw_pathname

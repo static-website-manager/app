@@ -25,16 +25,16 @@ class PagesFlowTest < ActionDispatch::IntegrationTest
     visit_edit_page('custom', '081d05771a849ea8933e51a220821f68788dbe5f')
   end
 
-  def test_master_update
-    patch_update_page('master', 'cb179d16d7b7dc4d1522a65cd9de876e3ccc9e90')
+  def test_successful_master_update
+    patch_update_page('master', 'cb179d16d7b7dc4d1522a65cd9de876e3ccc9e90', valid_params)
   end
 
-  def test_working_update
-    patch_update_page(user, 'cb179d16d7b7dc4d1522a65cd9de876e3ccc9e90')
+  def test_successful_working_update
+    patch_update_page(user, 'cb179d16d7b7dc4d1522a65cd9de876e3ccc9e90', valid_params)
   end
 
-  def test_custom_update
-    patch_update_page('custom', '081d05771a849ea8933e51a220821f68788dbe5f')
+  def test_successful_custom_update
+    patch_update_page('custom', '081d05771a849ea8933e51a220821f68788dbe5f', valid_params)
   end
 
   private
@@ -54,10 +54,20 @@ class PagesFlowTest < ActionDispatch::IntegrationTest
     end
   end
 
-  def patch_update_page(name_or_user, page_sha1)
+  def patch_update_page(name_or_user, page_sha1, page_params, response_code = 200)
     sign_in user
-    patch_via_redirect website_branch_page_path(website, website.branch(name_or_user), page_sha1)
-    assert_response 200
-    assert_equal edit_website_branch_page_path(website, website.branch(name_or_user), page_sha1), path
+    patch_via_redirect website_branch_page_path(website, website.branch(name_or_user), page_sha1, page_params)
+    assert_response response_code
+    assert_equal edit_website_branch_page_path(website, website.branch(name_or_user), page_sha1, page_params), path
+  end
+
+  def valid_params
+    { page: {
+        metadata: {
+          title: 'Test',
+        },
+        content: 'Test Content',
+      }
+    }
   end
 end
