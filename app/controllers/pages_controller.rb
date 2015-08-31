@@ -14,7 +14,7 @@ class PagesController < ApplicationController
   def update
     if @page.raw_content == page_content
       redirect_to edit_website_branch_page_path(@website, @branch, @page), alert: 'No changes detected.'
-    elsif new_page_id = PageWriterService.perform(current_user, @website, @branch, @page, page_content, params[:message])
+    elsif new_page_id = BlobWriterService.perform(current_user, @website, @branch, @page, page_content, params[:message])
       redirect_to edit_website_branch_page_path(@website, @branch, new_page_id), notice: 'Great, we’ve committed your changes.'
     else
       flash.now.alert = 'There was a problem saving your changes.'

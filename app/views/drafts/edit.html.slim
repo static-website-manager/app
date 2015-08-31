@@ -1,21 +1,21 @@
 - title "#{@draft.name} • Drafts • #{@website.name} [#{@branch.name}]"
 - @_body_container = false
 
-.editor-container
-  .editor-header
+= form_for [@website, @branch, @draft] do |form|
+  .editor-container
+    .editor-header
+      .container-fluid
+        => link_to [@website, @branch, :drafts], class: 'logo-small-back-container' do
+          span.fa.fa-reply>
+          => image_tag 'logo-small.png', alt: 'Static Website Manager', class: 'logo-small'
+        ul.nav.nav-tabs
+          li.active = link_to 'Overview', '#overview', aria: { controls: 'overview' }, data: { toggle: 'tab' }, role: 'tab'
+          li = link_to 'Metadata', '#metadata', aria: { controls: 'metadata' }, data: { toggle: 'tab' }, role: 'tab'
+          - if @draft.writable?
+            li = link_to 'Content', '#content', aria: { controls: 'content' }, data: { toggle: 'tab' }, role: 'tab'
+          - else
+            li = link_to 'Source', '#source', aria: { controls: 'source' }, data: { toggle: 'tab' }, role: 'tab'
     .container-fluid
-      => link_to [@website, @branch, :drafts], class: 'logo-small-back-container' do
-        span.fa.fa-reply>
-        => image_tag 'logo-small.png', alt: 'Static Website Manager', class: 'logo-small'
-      ul.nav.nav-tabs
-        li.active = link_to 'Overview', '#overview', aria: { controls: 'overview' }, data: { toggle: 'tab' }, role: 'tab'
-        li = link_to 'Metadata', '#metadata', aria: { controls: 'metadata' }, data: { toggle: 'tab' }, role: 'tab'
-        - if @draft.writable?
-          li = link_to 'Content', '#content', aria: { controls: 'content' }, data: { toggle: 'tab' }, role: 'tab'
-        - else
-          li = link_to 'Source', '#source', aria: { controls: 'source' }, data: { toggle: 'tab' }, role: 'tab'
-  .container-fluid
-    = form_for [@website, @branch, @draft] do |form|
       .tab-content.editor-content
         #overview.tab-pane.active role="tabpanel"
           h1 = @draft.title
@@ -42,5 +42,6 @@
         - else
           #source.tab-pane role="tabpanel"
             pre: code = @draft.content
+      = text_field_tag :message, params[:message], placeholder: "Save changes to #{@draft.raw_pathname}", class: 'form-control editor-message-input'
       = form.button class: 'btn btn-success editor-save-btn' do
         | Save Changes

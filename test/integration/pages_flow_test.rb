@@ -54,10 +54,10 @@ class PagesFlowTest < ActionDispatch::IntegrationTest
     end
   end
 
-  def patch_update_page(name_or_user, page_sha1, page_params, response_code = 200)
+  def patch_update_page(name_or_user, page_sha1, page_params)
     sign_in user
     patch_via_redirect website_branch_page_path(website, website.branch(name_or_user), page_sha1, page_params)
-    assert_response response_code
+    assert_response 200
     assert_equal edit_website_branch_page_path(website, website.branch(name_or_user), page_sha1, page_params), path
   end
 
