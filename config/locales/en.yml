@@ -1,5 +1,8 @@
 en:
   activerecord:
     attributes:
+      checkout:
+        source: Source Branch
+        target: Target Name
       website:
         name: Website Name

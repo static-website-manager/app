@@ -20,3 +20,7 @@
       li.divider role="separator"
       - website.custom_branch_names.each do |name|
         li class=('active' if branch.name == name) = link_to name, (controller_name == 'branches' ? :id : :branch_id) => website.branch(name)
+      li.divider role="separator"
+      li = link_to [:new, website, :checkout, source: branch.name] do
+        => icon 'plus-circle'
+        | Create Branch

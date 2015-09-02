@@ -1,0 +1,25 @@
+- title 'Create New Branch'
+
+.header.header-center
+  h1.lead
+    = link_to [@website, (@website.branch(session[:branch_name]) rescue @website.branch(current_user))], class: 'logo-small-back-container' do
+      span.fa.fa-reply>
+      => image_tag 'logo-small.png', alt: 'Static Website Manager', class: 'logo-small'
+    | | Create New Branch
+.row
+  .col-sm-8.col-sm-offset-2.col-md-6.col-md-offset-3
+    .panel.panel-default
+      = form_for [@website, @checkout] do |f|
+        .panel-body
+          = errors_for @checkout
+          .row
+            .col-sm-6
+              .form-group
+                => f.label :source, class: 'control-label'
+                = f.select :source, options_for_select(['master', 'working'] + @website.custom_branch_names, selected: @checkout.source), {}, class: 'form-control'
+            .col-sm-6
+              .form-group
+                => f.label :target, class: 'control-label'
+                = f.text_field :target, class: 'form-control'
+        .panel-footer.text-center
+          = f.button 'Create Branch', class: 'btn btn-primary'
