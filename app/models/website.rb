@@ -8,6 +8,12 @@ class Website < ActiveRecord::Base
     Branch.find(rugged_repository, name_or_user)
   end
 
+  def commit(commit_id)
+    rugged_commit = rugged_repository.lookup(commit_id)
+    raise ActiveRecord::RecordNotFound unless rugged_commit
+    Commit.new(rugged_repository, rugged_commit)
+  end
+
   def custom_branch_names
     rugged_repository.branches.each_name(:local).sort.reject do |name|
       name == 'master' || name.match(/\Aswm_user_\d+\z/)

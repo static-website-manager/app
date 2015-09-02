@@ -1,0 +1,56 @@
+- title "#{@website.name} Commit [#{@commit.short_id}]"
+
+= render partial: 'websites/header', locals: { website: @website }
+
+ol.breadcrumb
+  li = link_to 'Website Overview', [@website, (@website.branch(session[:branch_name]) rescue @website.branch(current_user))]
+  li.active = "Commit #{@commit.short_id}"
+
+h1.h3 = @commit.message
+code.h5 = @commit.id
+hr
+- @commit.diff.patches.each do |patch|
+  .panel.panel-default
+    .panel-heading.diff-panel-heading
+      h2.panel-title.diff-panel-title
+        span.code => patch.delta.new_file[:path]
+        - case patch.delta.status
+        - when :added
+          span.label.label-success = patch.delta.status
+        - when :deleted
+          span.label.label-danger = patch.delta.status
+        - when :modified
+          span.label.label-primary = patch.delta.status
+        - when :renamed
+          span.label.label-primary = patch.delta.status
+        - when :copied
+          span.label.label-default = patch.delta.status
+        - when :ignored
+          span.label.label-default = patch.delta.status
+        - when :untracked
+          span.label.label-default = patch.delta.status
+        - when :typechange
+          span.label.label-default = patch.delta.status
+    pre.diff
+      - if %i[added modified].include?(patch.delta.status)
+        - patch.hunks.each do |hunk|
+          - hunk.lines.each do |line|
+            - case line.line_origin
+            - when :context
+              .diff-line.bg-default = line.content
+            - when :addition
+              .diff-line.bg-success = line.content
+            - when :deletion
+              .diff-line.bg-danger = line.content
+            - when :eof_no_newline
+              .diff-line.bg-default = line.content
+            - when :eof_newline_added
+              .diff-line.bg-default = line.content
+            - when :eof_newline_removed
+              .diff-line.bg-default = line.content
+            - when :file_header
+              .diff-line.bg-default = line.content
+            - when :hunk_header
+              .diff-line.bg-default = line.content
+            - when :bindary
+              .diff-line.bg-default = line.content

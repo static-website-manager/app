@@ -3,14 +3,8 @@
 = render partial: 'websites/header', locals: { website: @website }
 
 ol.breadcrumb
-  - case @blob.class.name
-  - when 'Page'
-    li = link_to 'Pages', [@website, @branch, :pages]
-  - when 'Draft'
-    li = link_to 'Drafts', [@website, @branch, :drafts]
-  - when 'Post'
-    li = link_to 'Posts', [@website, @branch, :posts]
-  li = link_to 'Edit Blob', [:edit, @website, @branch, @blob]
+  li = link_to 'Branch Overview', [@website, @branch]
+  li = link_to "Edit #{@blob.class.name}", [:edit, @website, @branch, @blob]
   li.active Commit History
 
 ol.list-unstyled.commits

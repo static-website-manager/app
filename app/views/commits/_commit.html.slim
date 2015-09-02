@@ -7,6 +7,6 @@ li
     br>
     small.text-muted #{commit.time.strftime('%D')}
   p
-    span => commit.message
+    span => link_to commit.message, [@website, commit]
     br>
     small.text-muted #{commit.author_name} authored #{time_ago_in_words commit.time} ago

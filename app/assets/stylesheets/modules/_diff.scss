@@ -1,0 +1,26 @@
+.diff {
+  background: none;
+  border: none;
+  border-radius: none;
+  padding: 0;
+  line-height: 1;
+  overflow-x: scroll;
+}
+
+.diff-panel-heading {
+  padding: 0.5em;
+  .label {
+    margin-left: 0.5em;
+  }
+}
+
+.diff-panel-title {
+  font-size: 1em;
+  font-weight: bold;
+  margin-right: 0.5em;
+}
+
+.diff-line {
+  padding: 0.35em 0.5em;
+  line-height: 1;
+}

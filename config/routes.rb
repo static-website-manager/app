@@ -11,7 +11,7 @@ Rails.application.routes.draw do
     resource :setup_check, only: %i[show]
     resources :authorizations, only: %i[index new create edit update destroy], path: 'team'
     resources :branches, only: %i[show], path: '' do
-      resources :commits, only: %i[index], path: 'history'
+      resources :commits, only: %i[index], controller: 'branch_commits', path: 'history'
       resources :drafts, only: %i[index edit update]
       resources :pages, only: %i[index edit update]
       resources :posts, only: %i[index edit update]
@@ -19,5 +19,6 @@ Rails.application.routes.draw do
         resources :commits, only: %i[index], controller: 'blob_commits', path: 'history'
       end
     end
+    resources :commits, only: %i[show]
   end
 end

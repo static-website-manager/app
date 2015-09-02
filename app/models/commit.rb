@@ -1,5 +1,6 @@
 class Commit
   include ActiveModel::Conversion
+  extend ActiveModel::Naming
 
   def initialize(rugged_repository, rugged_commit)
     @rugged_repository = rugged_repository
@@ -12,6 +13,10 @@ class Commit
 
   def author_email
     @rugged_commit.author[:email]
+  end
+
+  def diff
+    @rugged_commit.parents[0].diff(@rugged_commit)
   end
 
   def id
@@ -28,5 +33,9 @@ class Commit
 
   def time
     @rugged_commit.time
+  end
+
+  def persisted?
+    true
   end
 end

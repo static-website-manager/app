@@ -1,9 +1,9 @@
 require 'test_helper'
 
 class BranchCommitsFlowTest < ActionDispatch::IntegrationTest
-  def test_commit
+  def test_commits
     sign_in user
-    get website_commit_path(website, '0933fd78299541bbe60436c0140a1a3557864539')
+    get website_branch_commits_path(website, website.branch(user))
     assert_response 200
   end
 end
