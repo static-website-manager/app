@@ -1,0 +1,127 @@
+- title "Compare and Merge [#{@website.name} – #{@branch.name} to #{@target.name}]"
+
+.header.header-center
+  h1.lead
+    = link_to [@website, @branch], class: 'logo-small-back-container' do
+      span.fa.fa-reply>
+      => image_tag 'logo-small.png', alt: 'Static Website Manager', class: 'logo-small'
+    | | Compare and Merge
+.row
+  .col-sm-10.col-sm-offset-1.col-md-8.col-md-offset-2
+    .panel.panel-default
+      .panel-heading
+        .row
+          .col-sm-4
+            .btn-group style="display:block"
+              span.btn.btn-block.btn-default.dropdown-toggle data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                - if @branch.name == 'master'
+                  ' Master Branch
+                - elsif @branch.name == 'working'
+                  ' Your Working Branch
+                - else
+                  => @branch.name
+                span.caret
+              ul.dropdown-menu style="margin-top:2.5em"
+                - if @branch.name != 'working'
+                  li = link_to 'Your Working Branch', [@website, @website.branch(current_user), @target]
+                  li.divider role="separator"
+                - @website.custom_branch_names.each do |branch_name|
+                  - if branch_name != @target.name
+                    li = link_to branch_name, [@website, @website.branch(branch_name), @target]
+          .col-sm-2.col-sm-offset-1.text-center.text-muted
+            = icon 'long-arrow-right fa-2x', '', style: 'vertical-align:-0.5em'
+          .col-sm-4.col-sm-offset-1
+            .btn-group style="display:block"
+              span.btn.btn-block.btn-default.dropdown-toggle data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                - if @target.name == 'master'
+                  ' Master Branch
+                - elsif @target.name == 'working'
+                  ' Your Working Branch
+                - else
+                  => @target.name
+                span.caret
+              ul.dropdown-menu style="margin-top:2.5em"
+                - if @target.name != 'master'
+                  li = link_to 'Master Branch', [@website, @branch, @website.branch('master')]
+                - if @branch.name != 'working' && @target.name != 'working'
+                  li = link_to 'Your Working Branch', [@website, @branch, @website.branch(current_user)]
+                - if @target.name != 'master' || @branch.name != 'working' && @target.name != 'working'
+                  li.divider role="separator"
+                - @website.custom_branch_names.each do |target_name|
+                  - if target_name != @branch.name
+                    li = link_to target_name, [@website, @branch, @website.branch(target_name)]
+    - result = 'update'
+    - if @branch.target.oid == @target.target.oid
+      .panel.panel-default
+        .panel-heading
+          h2.panel-title These branches are up-to-date.
+    - elsif @branch.parents.include?(@target.target)
+      .panel.panel-success
+        .panel-heading
+          h2.panel-title
+            ' Merge Branch
+            code => @branch.name
+            ' Into Target Branch
+            code => @target.name
+          hr
+          .row
+            .col-sm-8
+              p This branch can be merged via a fast-forward update.
+            .col-sm-4
+              = link_to '#', class: 'btn btn-block btn-success' do
+                ' Merge Branch
+                = icon 'arrow-circle-o-right'
+    - elsif @target.parents.include?(@branch.target)
+      .panel.panel-warning
+        .panel-heading
+          h2.panel-title
+            ' Update Branch
+            code => @branch.name
+            ' With Changes In Target Branch
+            code => @target.name
+          hr
+          .row
+            .col-sm-8
+              p This branch is out of date and needs to be updated before it can be merged.
+            .col-sm-4
+              = link_to '#', class: 'btn btn-block btn-danger' do
+                ' Update Branch
+                = icon 'arrow-circle-o-right'
+    - else
+      .panel.panel-danger
+        .panel-heading
+          h2.panel-title
+            ' Update Branch
+            code => @branch.name
+            ' With Changes In Target Branch
+            code => @target.name
+          hr
+          .row
+            .col-sm-8
+              p These branches have diverged and this branch needs to be updated before it can be merged.
+            .col-sm-4
+              = link_to '#', class: 'btn btn-block btn-danger' do
+                ' Update Branch
+                = icon 'arrow-circle-o-right'
+    - @diff.each_delta do |delta|
+      .panel.panel-default
+        .panel-heading.diff-panel-heading
+          h3.panel-title.diff-panel-title
+            span.code => delta.new_file[:path]
+            - case delta.status
+            - when :added
+              span.label.label-success = delta.status
+            - when :deleted
+              span.label.label-danger = delta.status
+            - when :modified
+              span.label.label-primary = delta.status
+            - when :renamed
+              span.label.label-primary = delta.status
+            - when :copied
+              span.label.label-default = delta.status
+            - when :ignored
+              span.label.label-default = delta.status
+            - when :untracked
+              span.label.label-default = delta.status
+            - when :typechange
+              span.label.label-default = delta.status

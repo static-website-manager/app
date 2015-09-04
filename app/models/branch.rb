@@ -145,6 +145,12 @@ class Branch
     raw_name.match(/\Aswm_user_\d+\z/) ? 'working' : raw_name
   end
 
+  def parents
+    Rugged::Walker.new(@rugged_repository).tap do |walker|
+      walker.push target
+    end
+  end
+
   def persisted?
     true
   end
