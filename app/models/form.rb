@@ -23,14 +23,8 @@ class Form
     super
   end
 
-  def save(attributes)
+  def save
     ActiveRecord::Base.transaction do
-      model_names.each do |model_name|
-        if attributes.key?("#{model_name}_attributes")
-          send "#{model_name}_attributes=", attributes["#{model_name}_attributes"]
-        end
-      end
-
       model_names.each do |model_name|
         instance_variable_get("@#{model_name}").tap do |model|
           send "setup_#{model_name}", model if respond_to?("setup_#{model_name}")
