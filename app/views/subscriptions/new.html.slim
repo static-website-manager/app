@@ -14,8 +14,8 @@
         p.h4.panel-title Free to try for 30 days
       = form_for @subscription do |form|
         .panel-body
-          = errors_for @subscription.user, @subscription.website
-          = form.fields_for :user_attributes, @subscription.user do |f|
+          = errors_for @subscription
+          = form.fields_for :user do |f|
             .form-group
               => f.label :name, class: 'control-label'
               = f.text_field :name, class: 'form-control'
@@ -29,7 +29,7 @@
               => f.label :password_confirmation, class: 'control-label'
               = f.password_field :password_confirmation, class: 'form-control'
           hr
-          = form.fields_for :website_attributes, @subscription.website do |f|
+          = form.fields_for :website do |f|
             .form-group
               => f.label :name, class: 'control-label'
               = f.text_field :name, class: 'form-control'
