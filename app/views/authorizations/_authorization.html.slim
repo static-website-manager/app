@@ -1,7 +1,7 @@
 tr
   td = authorization.user.name
   td = authorization.user.email
-  td = authorization.role
+  td = authorization.role.titleize
   td
     .btn-group.btn-group-sm
       = link_to icon('pencil', 'Edit'), [:edit, website, authorization], class: 'btn btn-default'

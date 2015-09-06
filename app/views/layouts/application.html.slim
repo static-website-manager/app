@@ -15,12 +15,12 @@ html lang="en"
       .alert.alert-dismissible.alert-full-width.alert-success role="alert"
         .container-fluid
           span.close data-dismiss="alert" aria-label="Close" aria-hidden="true" &times;
-          .alert-text #{notice}#{' ' if content_for?(:notice)}#{content_for(:notice)}
+          .alert-text #{notice.html_safe}#{' ' if content_for?(:notice)}#{content_for(:notice)}
     - if alert
       .alert.alert-dismissible.alert-full-width.alert-warning role="alert"
         .container-fluid
           span.close data-dismiss="alert" aria-label="Close" aria-hidden="true" &times;
-          .alert-text #{alert}#{' ' if content_for?(:alert)}#{content_for(:alert)}
+          .alert-text #{alert.html_safe}#{' ' if content_for?(:alert)}#{content_for(:alert)}
     - if @_body_container == false
       = yield
     - else

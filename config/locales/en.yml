@@ -1,6 +1,8 @@
 en:
   activerecord:
     attributes:
+      authorization:
+        role: Permission
       checkout:
         source: Source Branch
         target: Target Name

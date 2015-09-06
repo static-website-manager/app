@@ -33,7 +33,7 @@ class AuthorizationsController < ApplicationController
     end
 
     if @authorization.save
-      redirect_to [@website, :authorizations], notice: "#{@authorization.user.email} has been invited to join the team!"
+      redirect_to [@website, :authorizations], notice: "<strong>#{@authorization.user.email}</strong> has been invited to join the team!"
     else
       flash.now.alert = 'There was a problem sending the invite.'
       render :new, status: 422
@@ -42,9 +42,9 @@ class AuthorizationsController < ApplicationController
 
   def update
     if @authorization.update(authorization_params)
-      redirect_to [@website, :authorizations], notice: "#{@authorization.user.email}’s access was successfully updated."
+      redirect_to [@website, :authorizations], notice: "<strong>#{@authorization.user.email}</strong>’s permissions were successfully updated."
     else
-      flash.now.alert = 'There was a problem updating the team member.'
+      flash.now.alert = 'There was a problem updating the team member’s permissions.'
       render :edit, status: 422
     end
   end
