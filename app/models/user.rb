@@ -8,4 +8,8 @@ class User < ActiveRecord::Base
   validates :name, presence: true
   validates :password, length: { minimum: 8 }, allow_nil: true
   validates :password_confirmation, presence: true, if: -> { password.present? }
+
+  def email=(value)
+    write_attribute(:email, value.to_s.downcase)
+  end
 end
