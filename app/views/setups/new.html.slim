@@ -11,7 +11,7 @@ javascript:
   var websiteSetupCheck = function() {
     $.get("#{url_for([@website, :setup_check])}", function(data) {
       if (data && data.length > 0) {
-        window.location = data;
+        Turbolinks.visit(data);
       }
     });
   };
