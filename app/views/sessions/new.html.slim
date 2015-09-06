@@ -1,4 +1,4 @@
-- title 'Sign In'
+- title 'Sign In to Static Website Manager'
 
 - if @_user_confirmation_alert
   - content_for :alert do
@@ -18,7 +18,7 @@
         .panel-body
           .form-group
             => label_tag :email, 'Email', class: 'control-label'
-            = email_field_tag :email, params[:email], class: 'form-control'
+            = email_field_tag :email, params[:email].to_s.downcase, class: 'form-control'
           .form-group
             => label_tag :password, 'Password', class: 'control-label'
             = password_field_tag :password, nil, class: 'form-control'

@@ -3,7 +3,7 @@ class SessionsController < ApplicationController
   before_action :require_user, only: %i[destroy]
 
   def create
-    user = User.find_by_email(params[:email])
+    user = User.find_by_email(params[:email].to_s.downcase)
 
     if user && !user.confirmed?
       @_user_confirmation_alert = true
