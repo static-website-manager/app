@@ -7,14 +7,14 @@
       => image_tag 'logo-large.png', alt: ''
       strong Static Website Manager
     p = link_to content_tag(:strong, 'Sign up for just $50/month'), :new_subscription
-    p Existing User? #{link_to 'Sign In', :new_session}
+    p Existing User? #{link_to content_tag(:strong, 'Sign In'), :new_session}
 .container
   .marketing-introduction
     h1 Easy Website Management for Teams
     h2 Tired of making frequent changes to your team’s existing Jekyll website?
     .row
       .col-md-10.col-md-offset-1
-        p The <i>Static Website Manager</i> takes the pain out of website management by giving your non-technical team members <b>powerful tools to make webpage changes</b> and write and edit blog posts. Each team member gets their own working branch and you can <b>create collaborative branches</b> that your whole team has access to. Administrators can deploy branches at any time and team members with less privilege can <b>submit merge requests for team review and approval</b>.
+        p The <i>Static Website Manager</i> takes the pain out of website management by giving your non-technical team members powerful tools to <b>make webpage changes</b> and <b>write and edit blog posts</b>. Each team member gets their own working branch and you can <b>create collaborative branches</b> that your whole team has access to. Administrators can deploy branches at any time and team members with less privilege can <b>submit merge requests for team review and approval</b>.
     .row
       .col-sm-6.text-right
         = link_to 'Subscribe free for 30 days »', :new_subscription, class: 'btn btn-lg btn-success'
@@ -28,13 +28,13 @@
     .row
       .col-sm-4
         span.badge 1
-        h2.lead The Tech Lead Pushes your Jekyll Website to our Git Server
+        h2.lead Push your existing Jekyll website to Static Website Manager
       .col-sm-4
         span.badge 2
-        h2.lead Team Members Write Posts and Edit YAML Front-Matter
+        h2.lead Team members update webpages, write posts and edit YAML front-matter
       .col-sm-4
         span.badge 3
-        h2.lead Submit Deploy Requests for Team Review
+        h2.lead Create collaborative branches and submit deploy requests for team review
 .container
   .row
     .col-md-10.col-md-offset-1
