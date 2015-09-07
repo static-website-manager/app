@@ -1,4 +1,10 @@
-- title "Posts • #{@website.name} [#{@branch.name}]"
+- case @branch.name
+- when 'master'
+  - title 'Posts • Master Branch'
+- when 'working'
+  - title 'Posts • Your Working Branch'
+- else
+  - title "Posts • Custom Branch “#{@branch.name}”"
 
 = render partial: 'websites/header', locals: { website: @website }
 = render partial: 'branches/header', locals: { website: @website, branch: @branch }
@@ -15,7 +21,6 @@ ul.nav.nav-tabs
     thead
       tr
         th Title
-        th Author
         th Published
         th Pathname
     tbody

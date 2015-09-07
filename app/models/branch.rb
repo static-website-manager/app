@@ -133,7 +133,7 @@ class Branch
         root.match(/\A_posts/) && object[:name].match(/\.(markdown|md)\z/)
       end.map do |root, object|
         Post.new(@rugged_repository, *object.values, root)
-      end
+      end.sort_by(&:published_on).reverse
     ).page(page).per(per_page)
   end
 

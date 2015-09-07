@@ -8,3 +8,6 @@ en:
         target: Target Name
       website:
         name: Website Name
+  date:
+    formats:
+      default: '%B %d, %Y'

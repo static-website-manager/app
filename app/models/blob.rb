@@ -12,10 +12,6 @@ class Blob
     @path = path
   end
 
-  def author
-    'Theodore Kimble'
-  end
-
   def commits(target, page: 1, per_page: 20)
     Kaminari.paginate_array(
       Rugged::Walker.new(@rugged_repository).tap do |walker|
@@ -47,10 +43,6 @@ class Blob
 
   def persisted?
     true
-  end
-
-  def published_on
-    1.week.ago
   end
 
   def update(changes)
