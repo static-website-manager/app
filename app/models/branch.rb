@@ -121,7 +121,7 @@ class Branch
 
   def drafts
     target.tree.walk(:postorder).select do |root, object|
-      root.match(/\A_drafts/) && object[:name].match(/\.(html|markdown|md)\z/)
+      root.match(/\A_drafts/) && object[:name].match(/\.(markdown|md)\z/)
     end.map do |root, object|
       Draft.new(@rugged_repository, *object.values, root)
     end
@@ -130,7 +130,7 @@ class Branch
   def posts(page: 1, per_page: 20)
     Kaminari.paginate_array(
       target.tree.walk(:postorder).select do |root, object|
-        root.match(/\A_posts/) && object[:name].match(/\.(html|markdown|md)\z/)
+        root.match(/\A_posts/) && object[:name].match(/\.(markdown|md)\z/)
       end.map do |root, object|
         Post.new(@rugged_repository, *object.values, root)
       end
