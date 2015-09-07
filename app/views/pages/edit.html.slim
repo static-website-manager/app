@@ -6,7 +6,7 @@
     .editor-header
       .container-fluid
         => link_to [@website, @branch, :pages], class: 'logo-small-back-container' do
-          span.fa.fa-reply>
+          => icon 'reply'
           => image_tag 'logo-small.png', alt: 'Static Website Manager', class: 'logo-small'
         ul.nav.nav-tabs
           li.active = link_to 'Overview', '#overview', aria: { controls: 'overview' }, data: { toggle: 'tab' }, role: 'tab'
@@ -33,7 +33,7 @@
               .text-right style="margin-top:2em"
                 = link_to website_branch_blob_commits_path(@website, @branch, @page), class: 'btn btn-sm btn-default' do
                   ' View Entire History
-                  span.fa.fa-angle-double-right
+                  = icon 'angle-double-right'
         #metadata.tab-pane role="tabpanel"
           = render partial: 'metadata_fields', locals: { blob_form: form }
         - if @page.writable?

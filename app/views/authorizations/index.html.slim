@@ -3,7 +3,7 @@
 .header.header-center
   h1.lead
     = link_to [@website, (@website.branch(session[:branch_name]) rescue @website.branch(current_user))], class: 'logo-small-back-container' do
-      span.fa.fa-reply>
+      => icon 'reply'
       => image_tag 'logo-small.png', alt: 'Static Website Manager', class: 'logo-small'
     | | Manage Your Website Team
 .row

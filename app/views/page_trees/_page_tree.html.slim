@@ -2,7 +2,7 @@ li.page-tree
   .panel.panel-default
     .panel-body
       = content_tag "h#{level}" do
-        span.fa.fa-folder>
+        => icon 'folder'
         = page_tree.name + '/'
   ul
     = render page_tree.objects, level: level == 6 ? 6 : level + 1

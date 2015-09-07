@@ -13,9 +13,9 @@ ol.list-unstyled.commits
 .text-center
   - if @commits.prev_page.present?
     => link_to Kaminari::Helpers::PrevPage.new(self, current_page: @commits.current_page).url, class: 'btn btn-default' do
-      span.fa.fa-angle-double-left>
+      => icon 'angle-double-left'
       | Newer
   - if @commits.next_page.present?
     = link_to Kaminari::Helpers::NextPage.new(self, current_page: @commits.current_page).url, class: 'btn btn-default', style: 'margin-left:0.5em' do
       ' Older
-      span.fa.fa-angle-double-right
+      = icon 'angle-double-right'

@@ -3,9 +3,9 @@ li
     .panel.panel-default
       .panel-body
         - if page.writable?
-          span.fa.fa-file-text.fa-3x.pull-left>
+          => icon 'file-text fa-3x pull-left'
         - else
-          span.fa.fa-file.fa-3x.pull-left>
+          => icon 'file fa-3x pull-left'
         div style="padding-left: 3.5em"
           = content_tag "h#{level}" do
             = page.node_name.present? ? page.node_name : page.name
