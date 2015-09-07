@@ -1,5 +1,5 @@
 li
-  = link_to [:edit, @website, @branch, page] do
+  = link_to [:edit, website, branch, page] do
     .panel.panel-default
       .panel-body
         - if page.writable?
@@ -12,4 +12,4 @@ li
           code.small = page.raw_pathname
   - if page.objects && page.objects.length > 0
     ul
-      = render page.objects, level: level == 6 ? 6 : level + 1
+      = render page.objects, website: website, branch: branch, level: level == 6 ? 6 : level + 1

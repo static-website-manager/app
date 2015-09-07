@@ -16,4 +16,4 @@ ul.nav.nav-tabs
   li = link_to 'Posts', [@website, @branch, :posts]
 
 ul.list-unstyled.pages
-  = render @pages, level: 1
+  = render @pages, website: @website, branch: @branch, level: 1

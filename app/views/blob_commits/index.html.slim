@@ -8,7 +8,7 @@ ol.breadcrumb
   li.active Commit History
 
 ol.list-unstyled.commits
-  = render @commits
+  = render @commits, website: @website
 
 .text-center
   - if @commits.prev_page.present?

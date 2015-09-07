@@ -24,7 +24,7 @@ ul.nav.nav-tabs style="margin-bottom:3em"
     .column-header
       h2 Commit History
     ol.list-unstyled.commits
-      = render @commits
+      = render @commits, website: @website
     .text-right style="margin-top:2em"
       = link_to [@website, @branch, :commits], class: 'btn btn-sm btn-default' do
         ' View Entire History

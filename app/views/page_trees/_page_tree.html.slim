@@ -5,4 +5,4 @@ li.page-tree
         => icon 'folder'
         = page_tree.name + '/'
   ul
-    = render page_tree.objects, level: level == 6 ? 6 : level + 1
+    = render page_tree.objects, website: website, branch: branch, level: level == 6 ? 6 : level + 1

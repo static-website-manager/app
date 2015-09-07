@@ -19,5 +19,5 @@ ul.nav.nav-tabs
         th Published
         th Pathname
     tbody
-      = render @posts
+      = render @posts, website: @website, branch: @branch
 = paginate @posts
