@@ -11,4 +11,5 @@
  * file per style scope.
  *
  *= require ./base
+ *= require ./bootstrap_select
  */

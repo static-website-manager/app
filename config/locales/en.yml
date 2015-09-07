@@ -4,8 +4,8 @@ en:
       authorization:
         role: Permission
       checkout:
-        source: Source Branch
-        target: Target Name
+        source: Source
+        target: Your Custom Branch Name
       website:
         name: Website Name
   date:
