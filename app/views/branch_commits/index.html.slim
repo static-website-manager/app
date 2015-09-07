@@ -1,4 +1,10 @@
-- title "#{@website.name} History [#{@branch.name}]"
+- case @branch.name
+- when 'master'
+  - title 'Commit History • Master Branch'
+- when 'working'
+  - title 'Commit History • Your Working Branch'
+- else
+  - title "Commit History • Custom Branch “#{@branch.name}”"
 
 = render partial: 'websites/header', locals: { website: @website }
 = render partial: 'branches/header', locals: { website: @website, branch: @branch }

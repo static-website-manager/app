@@ -4,13 +4,13 @@
     margin-bottom: 0.5em;
     border-bottom: solid 1px #ddd;
     line-height: 1.35;
-    span.fa-dot-circle-o {
+    .fa-dot-circle-o {
       margin-top: 0.35em;
     }
     p {
       line-height: 1.35;
       margin: 0 0 0 1.25em;
-      span {
+      > span {
         font-size: 1.15em;
       }
     }
@@ -18,4 +18,9 @@
   li:last-child {
     border: none;
   }
+}
+
+.commit-author {
+  border-bottom: 1px dotted #999;
+  cursor: pointer;
 }
