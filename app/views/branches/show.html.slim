@@ -1,15 +1,19 @@
-- title "#{@website.name} [#{@branch.name}]"
+- case @branch.name
+- when 'master'
+  - title 'Master Branch'
+- when 'working'
+  - title 'Your Working Branch'
+- else
+  - title "Custom Branch “#{@branch.name}”"
 
 = render partial: 'websites/header', locals: { website: @website }
 = render partial: 'branches/header', locals: { website: @website, branch: @branch }
 
-ul.nav.nav-tabs
+ul.nav.nav-tabs style="margin-bottom:3em"
   li.active = link_to 'Overview', '#'
   li = link_to 'Pages', [@website, @branch, :pages]
   li = link_to 'Drafts', [@website, @branch, :drafts]
   li = link_to 'Posts', [@website, @branch, :posts]
-
-br
 
 .row
   .col-sm-7

@@ -1,23 +1,21 @@
 .branch-header
-  = link_to [website, branch, website.branch('master')], class: 'btn btn-default pull-right' do
+  => link_to [website, branch, website.branch('master')], class: 'btn btn-default pull-right' do
     => icon 'random'
     | Compare and Merge
-  span.btn-group>
+  span.btn-group
     span.btn.btn-default.dropdown-toggle type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
       - if branch.name == 'master'
-        ' Master
-        span.small.text-muted> Read-only
+        ' Master Branch
       - elsif branch.name == 'working'
         ' Your Working Branch
       - else
         => branch.name
       span.caret
     ul.dropdown-menu
+      li class=('active' if branch.name == 'master') = link_to 'Master Branch', (controller_name == 'branches' ? :id : :branch_id) => website.branch('master')
       li class=('active' if branch.name == 'working') = link_to 'Your Working Branch', (controller_name == 'branches' ? :id : :branch_id) => website.branch(current_user)
-      li class=('active' if branch.name == 'master') = link_to (controller_name == 'branches' ? :id : :branch_id) => website.branch('master') do
-        ' Master
-        span.small.text-muted Read-only
       li.divider role="separator"
+      li.dropdown-header Custom Branches
       - website.custom_branch_names.each do |name|
         li class=('active' if branch.name == name) = link_to name, (controller_name == 'branches' ? :id : :branch_id) => website.branch(name)
       li.divider role="separator"
