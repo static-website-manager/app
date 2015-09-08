@@ -5,6 +5,7 @@ class DraftsController < ApplicationController
   before_action only: %i[edit update] do
     @draft = @branch.find_draft(params[:id])
     @commits = @draft.commits(@branch.target, per_page: 10)
+    @blob_commit = BlobCommit.new(current_user, @website, @branch, @draft)
   end
 
   def index
@@ -12,10 +13,12 @@ class DraftsController < ApplicationController
   end
 
   def update
-    if @draft.raw_content == draft_content
+    @blob_commit.save(draft_content, params[:message])
+
+    if @blob_commit.id.present? && @blob_commit.id == @draft.id
       redirect_to edit_website_branch_draft_path(@website, @branch, @draft), alert: 'No changes detected.'
-    elsif new_draft_id = BlobWriterService.perform(current_user, @website, @branch, @draft, draft_content, params[:message])
-      redirect_to edit_website_branch_draft_path(@website, @branch, new_draft_id), notice: 'Great, we’ve committed your changes.'
+    elsif @blob_commit.id.present?
+      redirect_to edit_website_branch_draft_path(@website, @branch, @blob_commit.id), notice: 'Great, we’ve committed your changes.'
     else
       flash.now.alert = 'There was a problem saving your changes.'
       render :edit, status: 422

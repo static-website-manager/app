@@ -1,5 +1,11 @@
-- title "#{@post.name} • Posts • #{@website.name} [#{@branch.name}]"
 - @_body_container = false
+- case @branch.name
+- when 'master'
+  - title "Edit Post #{@post.short_id} • Master Branch"
+- when 'working'
+  - title "Edit Post #{@post.short_id} • Your Working Branch"
+- else
+  - title "Edit Post #{@post.short_id} • Custom Branch “#{@branch.name}”"
 
 = form_for [@website, @branch, @post] do |form|
   .editor-container

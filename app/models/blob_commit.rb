@@ -1,6 +1,16 @@
-class BlobWriterService
-  def self.perform(user, website, branch, blob, blob_content, commit_message)
-    oid = nil
+class BlobCommit
+  include ActiveModel::Model
+
+  attr_reader :user, :website, :branch, :blob, :id
+
+  def initialize(user, website, branch, blob)
+    @user = user
+    @website = website
+    @branch = branch
+    @blob = blob
+  end
+
+  def save(raw_content, commit_message)
     clone_path = Rails.root.join('tmp', "clone_#{rand(1000)}_#{Time.now.to_i}")
 
     FileUtils.rm_rf(clone_path)
@@ -11,10 +21,10 @@ class BlobWriterService
       rugged_repository.checkout('origin/' + branch.raw_name)
       rugged_branch = rugged_repository.branches['origin/' + branch.raw_name]
 
-      oid = rugged_repository.write(blob_content, :blob)
+      @id = rugged_repository.write(raw_content, :blob)
       index = rugged_repository.index
       index.read_tree(rugged_branch.target.tree)
-      index.add(path: blob.raw_pathname, oid: oid, mode: 0100644)
+      index.add(path: blob.raw_pathname, oid: @id, mode: 0100644)
 
       author = {
         email: user.email,
@@ -37,10 +47,12 @@ class BlobWriterService
         cd #{clone_path};
         git push origin #{branch.raw_name};
       `
+    rescue
+      @id = nil
     ensure
       FileUtils.rm_rf(clone_path)
     end
 
-    oid
+    !!@id
   end
 end
