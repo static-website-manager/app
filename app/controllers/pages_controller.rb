@@ -15,7 +15,7 @@ class PagesController < ApplicationController
   def update
     @blob_commit.save(page_content, params[:message])
 
-    if @blob_commit.id.present? && @blob_commit.commit_id == @page.id
+    if @blob_commit.id.present? && @blob_commit.id == @page.id
       redirect_to edit_website_branch_page_path(@website, @branch, @page), alert: 'No changes detected.'
     elsif @blob_commit.id.present?
       redirect_to edit_website_branch_page_path(@website, @branch, @blob_commit.id), notice: 'Great, we’ve committed your changes.'
