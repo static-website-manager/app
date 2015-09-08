@@ -31,6 +31,10 @@ class Commit
     @rugged_commit.message
   end
 
+  def parent_ids
+    @rugged_commit.parent_ids
+  end
+
   def time
     @rugged_commit.time
   end
