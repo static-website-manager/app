@@ -45,6 +45,10 @@ class Blob
     true
   end
 
+  def short_id
+    id[0..6]
+  end
+
   def update(changes)
     CommitService.update_file(changes.merge(path: raw_pathname))
   end

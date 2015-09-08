@@ -1,9 +1,21 @@
-- title "#{@blob.title} History [#{@website.name} – #{@branch.name}]"
+- case @branch.name
+- when 'master'
+  - title "Commit History • #{@blob.class} #{@blob.short_id} • Master Branch"
+- when 'working'
+  - title "Commit History • #{@blob.class} #{@blob.short_id} • Your Working Branch"
+- else
+  - title "Commit History • #{@blob.class} #{@blob.short_id} • Custom Branch “#{@branch.name}”"
 
 = render partial: 'websites/header', locals: { website: @website }
 
 ol.breadcrumb
-  li = link_to 'Branch Overview', [@website, @branch]
+  - case @branch.name
+  - when 'master'
+    li = link_to 'Master Branch', [@website, @branch, @blob.class.name.underscore.pluralize.to_sym]
+  - when 'working'
+    li = link_to 'Your Working Branch', [@website, @branch, @blob.class.name.underscore.pluralize.to_sym]
+  - else
+    li = link_to 'Custom Branch', [@website, @branch, @blob.class.name.underscore.pluralize.to_sym]
   li = link_to "Edit #{@blob.class.name}", [:edit, @website, @branch, @blob]
   li.active Commit History
 
