@@ -4,12 +4,7 @@
     | Compare and Merge
   span.btn-group
     span.btn.btn-default.dropdown-toggle type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-      - if branch.name == 'master'
-        ' Master Branch
-      - elsif branch.name == 'working'
-        ' Your Working Branch
-      - else
-        => branch.name
+      => branch.basic_name
       span.caret
     ul.dropdown-menu
       li class=('active' if branch.name == 'master') = link_to 'Master Branch', (controller_name == 'branches' ? :id : :branch_id) => website.branch('master')

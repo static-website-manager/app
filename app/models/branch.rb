@@ -145,6 +145,39 @@ class Branch
     raw_name.match(/\Aswm_user_\d+\z/) ? 'working' : raw_name
   end
 
+  def full_name
+    case name
+    when 'master'
+      'Master Branch'
+    when 'working'
+      'Your Working Branch'
+    else
+      "Custom Branch “#{name}”"
+    end
+  end
+
+  def short_name
+    case name
+    when 'master'
+      'Master Branch'
+    when 'working'
+      'Your Working Branch'
+    else
+      'Custom Branch'
+    end
+  end
+
+  def basic_name
+    case name
+    when 'master'
+      'Master Branch'
+    when 'working'
+      'Your Working Branch'
+    else
+      name
+    end
+  end
+
   def parents
     Rugged::Walker.new(@rugged_repository).tap do |walker|
       walker.push target

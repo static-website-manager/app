@@ -1,4 +1,4 @@
-- title "Compare and Merge [#{@website.name} – #{@branch.name} to #{@target.name}]"
+- title "Compare #{@branch.full_name} to #{@target.full_name}"
 
 .header.header-center
   h1.lead
@@ -14,12 +14,7 @@
           .col-sm-4
             .btn-group style="display:block"
               span.btn.btn-block.btn-default.dropdown-toggle data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                - if @branch.name == 'master'
-                  ' Master Branch
-                - elsif @branch.name == 'working'
-                  ' Your Working Branch
-                - else
-                  => @branch.name
+                => @branch.basic_name
                 span.caret
               ul.dropdown-menu style="margin-top:2.5em"
                 - if @branch.name != 'working'
@@ -33,12 +28,7 @@
           .col-sm-4.col-sm-offset-1
             .btn-group style="display:block"
               span.btn.btn-block.btn-default.dropdown-toggle data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                - if @target.name == 'master'
-                  ' Master Branch
-                - elsif @target.name == 'working'
-                  ' Your Working Branch
-                - else
-                  => @target.name
+                => @target.basic_name
                 span.caret
               ul.dropdown-menu style="margin-top:2.5em"
                 - if @target.name != 'master'

@@ -1,11 +1,5 @@
 - @_body_container = false
-- case @branch.name
-- when 'master'
-  - title "Edit Page #{@page.short_id} • Master Branch"
-- when 'working'
-  - title "Edit Page #{@page.short_id} • Your Working Branch"
-- else
-  - title "Edit Page #{@page.short_id} • Custom Branch “#{@branch.name}”"
+- title "Edit Page #{@page.short_id} • #{@branch.full_name}"
 
 = form_for [@website, @branch, @page] do |form|
   .editor-container

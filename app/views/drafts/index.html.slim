@@ -1,10 +1,4 @@
-- case @branch.name
-- when 'master'
-  - title 'Drafts • Master Branch'
-- when 'working'
-  - title 'Drafts • Your Working Branch'
-- else
-  - title "Drafts • Custom Branch “#{@branch.name}”"
+- title "Drafts • #{@branch.full_name}"
 
 = render partial: 'websites/header', locals: { website: @website }
 = render partial: 'branches/header', locals: { website: @website, branch: @branch }
