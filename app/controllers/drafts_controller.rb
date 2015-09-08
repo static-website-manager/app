@@ -28,6 +28,10 @@ class DraftsController < ApplicationController
   private
 
   def draft_content
-    [YAML.dump((params[:draft].try(:[], :metadata) || {}).to_hash), @draft.writable? ? params[:draft].try(:[], :content) || '' : @draft.content].join("---\n\n")
+    if params[:draft].try(:metadata).present?
+      [YAML.dump(params[:draft][:metadata].to_hash), @draft.writable? ? params[:draft].try(:[], :content) || '' : @draft.content].join("---\n\n")
+    else
+      @draft.writable? ? params[:draft].try(:[], :content) || '' : @draft.content
+    end
   end
 end

@@ -28,6 +28,10 @@ class PostsController < ApplicationController
   private
 
   def post_content
-    [YAML.dump((params[:post].try(:[], :metadata) || {}).to_hash), @post.writable? ? params[:post].try(:[], :content) || '' : @post.content].join("---\n\n")
+    if params[:post].try(:metadata).present?
+      [YAML.dump(params[:post][:metadata].to_hash), @post.writable? ? params[:post].try(:[], :content) || '' : @post.content].join("---\n\n")
+    else
+      @post.writable? ? params[:post].try(:[], :content) || '' : @post.content
+    end
   end
 end
