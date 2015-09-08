@@ -54,7 +54,7 @@ class Blob
   end
 
   def writable?
-    @name.match(/\.(markdown|md)\z/)
+    @name.match(/\.(markdown|mdown|mkdn|mkd|md)\z/)
   end
 
   private

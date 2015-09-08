@@ -21,4 +21,5 @@ Turbolinks.enableProgressBar();
 
 $(document).on('page:change', function(event) {
   $('[data-toggle="popover"]').popover();
+  $('[data-toggle="tooltip"]').tooltip();
 });

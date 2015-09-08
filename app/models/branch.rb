@@ -67,7 +67,7 @@ class Branch
     hash = {}
 
     target.tree.walk(:postorder).select do |root, object|
-      !root.match(/\A_/) && (object[:type] == :tree || object[:name].match(/\.(html|markdown|md)\z/))
+      !root.match(/\A_/) && (object[:type] == :tree || object[:name].match(/\.(htm|html|text|txt|markdown|mdown|mkdn|mkd|md)\z/))
     end.each do |root, object|
       (hash[root] ||= []) << object
     end
@@ -96,7 +96,7 @@ class Branch
 
     collection = arrange(hash, '')
 
-    if root = collection.find { |object| object.is_a?(Page) && object.name.match(/\Aindex\.(html|markdown|md)\z/) }
+    if root = collection.find { |object| object.is_a?(Page) && object.name.match(/\Aindex\.(htm|html|text|txt|markdown|mdown|mkdn|mkd|md)\z/) }
       collection.delete(root)
       root.objects = collection
       collection = [root]
@@ -104,7 +104,7 @@ class Branch
 
     def extract(collection)
       collection.map do |object|
-        if root = (object.objects || []).find { |o| o.is_a?(Page) && o.name.match(/\Aindex\.(html|markdown|md)\z/) }
+        if root = (object.objects || []).find { |o| o.is_a?(Page) && o.name.match(/\Aindex\.(htm|html|text|txt|markdown|mdown|mkdn|mkd|md)\z/) }
           object.objects.delete(root)
           root.objects = extract(object.objects || [])
           root.node_name = object.name
@@ -121,7 +121,7 @@ class Branch
 
   def drafts
     target.tree.walk(:postorder).select do |root, object|
-      root.match(/\A_drafts/) && object[:name].match(/\.(markdown|md)\z/)
+      root.match(/\A_drafts/) && object[:name].match(/\.(htm|html|text|txt|markdown|mdown|mkdn|mkd|md)\z/)
     end.map do |root, object|
       Draft.new(@rugged_repository, *object.values, root)
     end
@@ -130,7 +130,7 @@ class Branch
   def posts(page: 1, per_page: 20)
     Kaminari.paginate_array(
       target.tree.walk(:postorder).select do |root, object|
-        root.match(/\A_posts/) && object[:name].match(/\.(markdown|md)\z/)
+        root.match(/\A_posts/) && object[:name].match(/\.(htm|html|text|txt|markdown|mdown|mkdn|mkd|md)\z/)
       end.map do |root, object|
         Post.new(@rugged_repository, *object.values, root)
       end.sort_by(&:published_on).reverse

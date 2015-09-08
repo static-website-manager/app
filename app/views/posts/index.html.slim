@@ -28,4 +28,6 @@ ul.nav.nav-tabs.branch-nav
         = render @posts, website: @website, branch: @branch
   = paginate @posts
 - else
-  p No Markdown posts found.
+  p
+    ' No HTML, Text or Markdown posts found.
+    span.fa.fa-question-circle data-toggle="tooltip" data-placement="top" title="Accepted file extension include: .html .htm .text .txt .markdown .mdown .mkdn .mdk .md"

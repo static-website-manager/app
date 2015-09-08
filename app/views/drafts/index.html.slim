@@ -19,4 +19,6 @@ ul.nav.nav-tabs.branch-nav
   ul.list-unstyled.drafts.row
     = render @drafts, website: @website, branch: @branch
 - else
-  p No Markdown drafts found.
+  p
+    ' No HTML, Text or Markdown drafts found.
+    span.fa.fa-question-circle data-toggle="tooltip" data-placement="top" title="Accepted file extension include: .html .htm .text .txt .markdown .mdown .mkdn .mdk .md"
