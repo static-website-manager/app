@@ -8,6 +8,6 @@ class ComparisonsController < ApplicationController
   end
 
   def show
-    @diff = @target.target.diff(@branch.target)
+    @merge_base = @website.merge_base(@branch.target, @target.target)
   end
 end

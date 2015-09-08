@@ -1,0 +1,11 @@
+.panel.panel-success
+  .panel-heading
+    h2.panel-title Your Branch is a few commits ahead and can be merged automatically.
+  .panel-body
+    .row
+      .col-sm-8
+        p Changes from <code>#{branch.name}</code> will be merged into <code>#{target.name}</code>.
+      .col-sm-4
+        = link_to '#', class: 'btn btn-block btn-primary' do
+          ' Merge Changes
+          = icon 'arrow-circle-o-right'

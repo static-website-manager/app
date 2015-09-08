@@ -20,6 +20,10 @@ class Website < ActiveRecord::Base
     end
   end
 
+  def merge_base(*args)
+    rugged_repository.merge_base(*args)
+  end
+
   def repository_pathname
     @repository_pathname ||= Rails.root.join(Rails.application.secrets.repos_dir, "#{id}.git")
   end

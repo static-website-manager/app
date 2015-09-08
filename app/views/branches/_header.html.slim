@@ -1,5 +1,5 @@
 .branch-header
-  => link_to [website, branch, website.branch('master')], class: 'btn btn-default pull-right' do
+  => link_to [website, branch, branch.name == 'master' ? website.branch(current_user) : website.branch('master')], class: 'btn btn-default pull-right' do
     => icon 'random'
     | Compare and Merge
   span.btn-group
