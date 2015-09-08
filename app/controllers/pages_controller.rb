@@ -28,6 +28,6 @@ class PagesController < ApplicationController
   private
 
   def page_content
-    [YAML.dump((params[:page].try(:[], :metadata) || {}).to_hash), params[:page].try(:[], :content) || ''].join("---\n\n")
+    [YAML.dump((params[:page].try(:[], :metadata) || {}).to_hash), @page.writable? ? params[:page].try(:[], :content) || '' : @page.content].join("---\n\n")
   end
 end
