@@ -8,10 +8,10 @@
     | | Create Custom Branch
 .row
   .col-sm-8.col-sm-offset-2.col-md-6.col-md-offset-3
+    = errors_for @checkout
     .panel.panel-default
       = form_for [@website, @checkout] do |f|
         .panel-body
-          = errors_for @checkout
           .row
             .col-sm-6
               .form-group

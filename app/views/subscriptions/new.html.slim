@@ -9,12 +9,12 @@
         strong Static Website Manager
     h1.h4.text-center: strong Subscribe your whole team for just $50 per website per month.
     br
+    = errors_for @subscription
     .panel.panel-default
       .panel-heading
         p.h4.panel-title.text-center Free to try for 30 days – No committments, cancel anytime.
       = form_for @subscription do |form|
         .panel-body
-          = errors_for @subscription
           = form.fields_for :user do |f|
             .form-group
               => f.label :name, class: 'control-label'
