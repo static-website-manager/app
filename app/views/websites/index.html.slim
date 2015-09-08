@@ -7,5 +7,9 @@
   h1.lead
     => image_tag 'logo-small.png', alt: 'Static Website Manager', class: 'logo-small'
     | Your Websites
-hr
-= render @websites
+
+- if @websites.any?
+  = render @websites
+- else
+  hr
+  p You don’t have access to any websites.
