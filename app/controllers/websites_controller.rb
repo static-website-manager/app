@@ -3,6 +3,7 @@ class WebsitesController < ApplicationController
 
   def index
     @websites = current_user.websites
+    session[:return_to] = request.path
   end
 
   def show

@@ -1,9 +1,12 @@
 - title 'Your Websites'
 
 .header
-  .btn-group.pull-right
-    = form_tag :sign_out, method: :delete do
-      = button_tag icon('sign-out'), class: 'btn btn-sm btn-default', title: 'Sign Out'
+  .pull-right
+    .btn-group
+      = link_to icon('home'), :edit_account, class: 'btn btn-sm btn-default', title: 'Your Account'
+    .btn-group
+      = form_tag :sign_out, method: :delete do
+        = button_tag icon('sign-out'), class: 'btn btn-sm btn-default', title: 'Sign Out'
   h1.lead
     => image_tag 'logo-small.png', alt: 'Static Website Manager', class: 'logo-small'
     | Your Websites

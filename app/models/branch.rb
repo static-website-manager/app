@@ -3,6 +3,7 @@ class Branch
   extend ActiveModel::Naming
 
   def self.find(rugged_repository, name_or_user)
+    raise ActiveRecord::RecordNotFound if name_or_user.blank?
     raw_name = name_or_user.is_a?(User) ? "swm_user_#{name_or_user.id}" : name_or_user.to_s
     rugged_branch = rugged_repository.branches[raw_name]
     if rugged_branch

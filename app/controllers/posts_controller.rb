@@ -10,6 +10,7 @@ class PostsController < ApplicationController
 
   def index
     @posts = @branch.posts(page: params[:page], per_page: 50)
+    session[:return_to] = request.path
   end
 
   def update

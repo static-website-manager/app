@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   root to: 'marketings#root'
 
+  resource :account, only: %i[edit update], path_names: { edit: '' }
   resource :session, only: %i[new create], path: 'sign-in', path_names: { new: '' }
   resource :session, only: %i[destroy], path: 'sign-out', as: :sign_out
   resources :subscriptions, only: %i[new create], path: 'subscribe', path_names: { new: '' }
