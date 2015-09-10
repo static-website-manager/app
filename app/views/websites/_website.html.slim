@@ -25,7 +25,3 @@
             li.divider role="separator"
             - website.custom_branch_names.each do |name|
               li = link_to name, [website, website.branch(name)]
-            li.divider role="separator"
-            li = link_to [:new, website, :checkout] do
-              => icon 'plus-circle'
-              | Create Branch

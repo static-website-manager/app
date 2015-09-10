@@ -2,7 +2,7 @@
 
 .header.header-center
   h1.lead
-    = link_to [@website, (@website.branch(session[:branch_name]) rescue @website.branch(current_user))], class: 'logo-small-back-container' do
+    = link_to [@website, @branch], class: 'logo-small-back-container' do
       => icon 'reply'
       => image_tag 'logo-small.png', alt: 'Static Website Manager', class: 'logo-small'
     | | Create Custom Branch
@@ -10,13 +10,22 @@
   .col-sm-8.col-sm-offset-2.col-md-6.col-md-offset-3
     = errors_for @checkout
     .panel.panel-default
-      = form_for [@website, @checkout] do |f|
+      = form_for [@website, @branch, @checkout] do |f|
         .panel-body
           .row
             .col-sm-6
-              .form-group
-                => f.label :source, class: 'control-label'
-                = f.select :source, grouped_options_for_select([['', [['Master Branch', 'master'], ['Your Working Branch']]], ['Custom Branches', @website.custom_branch_names]], selected: @checkout.source), {}, class: 'form-control selectpicker'
+              label Source
+              .btn-group style="display:block"
+                .btn.btn-block.btn-default.dropdown-toggle type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                  => @branch.basic_name
+                  span.caret
+                ul.dropdown-menu style="margin-top:2.5em"
+                  li class=('active' if @branch.name == 'master') = link_to 'Master Branch', branch_id: @website.branch('master')
+                  li class=('active' if @branch.name == 'working') = link_to 'Your Working Branch', branch_id: @website.branch(current_user)
+                  li.divider role="separator"
+                  li.dropdown-header Custom Branches
+                  - @website.custom_branch_names.each do |name|
+                    li class=('active' if @branch.name == name) = link_to name, branch_id: @website.branch(name)
             .col-sm-6
               .form-group
                 => f.label :target, class: 'control-label'

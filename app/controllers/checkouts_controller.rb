@@ -1,12 +1,12 @@
 class CheckoutsController < ApplicationController
   include WebsiteManagementConcern
+  include BranchManagementConcern
 
   before_action do
-    @checkout = Checkout.new(user: current_user, website: @website, source: session[:branch_name])
+    @checkout = Checkout.new(user: current_user, website: @website, source: @branch.raw_name)
   end
 
   def create
-    @checkout.source = params[:checkout].try(:[], :source)
     @checkout.target = params[:checkout].try(:[], :target)
 
     if @checkout.save
