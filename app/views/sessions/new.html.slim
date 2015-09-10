@@ -24,3 +24,6 @@
             = password_field_tag :password, nil, class: 'form-control'
         .panel-footer.text-center
           = button_tag 'Submit', class: 'btn btn-primary'
+    p.text-center.text-muted
+      ' Forget your password?
+      = link_to 'Send Password Reset Email', :new_password_reset

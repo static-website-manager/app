@@ -3,6 +3,7 @@ Rails.application.routes.draw do
 
   resource :account, only: %i[edit update], path_names: { edit: '' }
   resource :session, only: %i[new create], path: 'sign-in', path_names: { new: '' }
+  resource :password_reset, only: %i[new create], path: 'reset-password', path_names: { new: '' }
   resource :session, only: %i[destroy], path: 'sign-out', as: :sign_out
   resources :subscriptions, only: %i[new create], path: 'subscribe', path_names: { new: '' }
 
