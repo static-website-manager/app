@@ -25,4 +25,14 @@ class ApplicationController < ActionController::Base
       redirect_to :new_session
     end
   end
+
+  # Sign in the provided user.
+  def sign_in(user)
+    session[:user_id] = user.id
+  end
+
+  # Sign out the current user
+  def sign_out
+    reset_session
+  end
 end

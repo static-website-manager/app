@@ -10,7 +10,7 @@ class SessionsController < ApplicationController
       flash.now.alert = 'We found your account, but need you to confirm your email address first.'
       render :new, status: 422
     elsif user && user.confirmed? && user.authenticate(params[:password])
-      session[:user_id] = user.id
+      sign_in(user)
       redirect_to :websites, notice: 'Welcome back!'
     else
       flash.now.alert = 'We could not find anyone with those credentials.'
@@ -19,7 +19,7 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    reset_session
+    sign_out
     redirect_to :root, notice: 'Goodbye, and thanks for your business.'
   end
 end
