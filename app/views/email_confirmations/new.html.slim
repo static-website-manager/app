@@ -1,0 +1,19 @@
+- title 'Resend Confirmation Email'
+
+.header.header-center
+  = link_to :new_session, class: 'logo-large logo-back' do
+    => icon 'reply'
+    => image_tag 'logo-large.png', alt: ''
+    strong Static Website Manager
+.row
+  .col-sm-8.col-sm-offset-2.col-md-6.col-md-offset-3.col-lg-4.col-lg-offset-4
+    .panel.panel-default
+      .panel-heading
+        h1.h4.panel-title Resend Confirmation Email
+      = form_tag :email_confirmation do
+        .panel-body
+          .form-group
+            => label_tag :email, 'Email', class: 'control-label'
+            = email_field_tag :email, params[:email].to_s.downcase, class: 'form-control'
+        .panel-footer.text-center
+          = button_tag 'Submit', class: 'btn btn-primary'

@@ -30,6 +30,7 @@ class ApplicationController < ActionController::Base
 
   # Sign in the provided user.
   def sign_in(user)
+    @current_user = user
     session[:authentication] = user.session_token!
   end
 

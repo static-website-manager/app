@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   root to: 'marketings#root'
 
   resource :account, only: %i[edit update], path_names: { edit: '' }
+  resource :email_confirmation, only: %i[new create show], path: 'confirm-email', path_names: { new: 'resend' }
   resource :password, only: %i[edit update], path_names: { edit: '' }
   resource :password_reset, only: %i[new create], path: 'reset-password', path_names: { new: '' }
   resource :session, only: %i[new create], path: 'sign-in', path_names: { new: '' }

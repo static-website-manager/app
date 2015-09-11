@@ -2,7 +2,7 @@
 
 - if @_user_confirmation_alert
   - content_for :alert do
-    = link_to 'Resend Confirmation Email', '#', class: 'btn btn-xs btn-success'
+    = link_to 'Resend Confirmation Email', :new_email_confirmation, class: 'btn btn-xs btn-success'
 
 .header.header-center
   = link_to :root, class: 'logo-large logo-back' do
@@ -24,6 +24,11 @@
             = password_field_tag :password, nil, class: 'form-control'
         .panel-footer.text-center
           = button_tag 'Submit', class: 'btn btn-primary'
-    p.text-center.text-muted
+.row style="margin-top:2em"
+  .col-sm-8.col-sm-offset-2.col-md-6.col-md-offset-3
+    p.text-center.text-muted.small
+      ' Need to confirm your email address?
+      = link_to 'Resend Confirmation Email', :new_email_confirmation
+    p.text-center.text-muted.small
       ' Forget your password?
       = link_to 'Send Password Reset Email', :new_password_reset

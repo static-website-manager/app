@@ -1,4 +1,9 @@
 class UserMailer < ApplicationMailer
+  def email_confirmation(user)
+    @user = user
+    mail to: user.email, subject: 'Please Confirm Your Email Address'
+  end
+
   def password_reset(user)
     @user = user
     mail to: user.email, subject: 'Reset Your Password'
@@ -9,6 +14,7 @@ class UserMailer < ApplicationMailer
   end
 
   def subscription_confirmation(user)
+    @user = user
     mail to: user.email, subject: 'Thanks For Starting Your Trial Subscription'
   end
 end

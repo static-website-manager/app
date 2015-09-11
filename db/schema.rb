@@ -28,15 +28,20 @@ ActiveRecord::Schema.define(version: 3) do
   add_index "authorizations", ["website_id"], name: "index_authorizations_on_website_id", using: :btree
 
   create_table "users", force: :cascade do |t|
-    t.text     "email",                                null: false
+    t.text     "email",                                    null: false
     t.text     "password_digest"
     t.text     "name"
-    t.text     "session_token"
+    t.text     "email_confirmation_token"
     t.text     "password_reset_token"
-    t.boolean  "confirmed",            default: false, null: false
-    t.datetime "created_at",                           null: false
-    t.datetime "updated_at",                           null: false
+    t.text     "session_token"
+    t.boolean  "confirmed",                default: false, null: false
+    t.datetime "created_at",                               null: false
+    t.datetime "updated_at",                               null: false
   end
+
+  add_index "users", ["email_confirmation_token"], name: "index_users_on_email_confirmation_token", unique: true, using: :btree
+  add_index "users", ["password_reset_token"], name: "index_users_on_password_reset_token", unique: true, using: :btree
+  add_index "users", ["session_token"], name: "index_users_on_session_token", unique: true, using: :btree
 
   create_table "websites", force: :cascade do |t|
     t.text     "name",       null: false
