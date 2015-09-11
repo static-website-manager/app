@@ -1,7 +1,11 @@
 user_one:
+  name: User One
   email: one@one.local
   password_digest: $2a$10$KQibUDRKEPI9sjF3Zm8nhe2iEa0usbQuyFUESu0RdYpPx8sMNYVti
+  password_reset_token: abc-123
   confirmed: true
 user_unconfirmed:
+  name: User Unconfirmed
   email: unconfirmed@unconfirmed.local
   password_digest: $2a$10$KQibUDRKEPI9sjF3Zm8nhe2iEa0usbQuyFUESu0RdYpPx8sMNYVti
+  password_reset_token: def-456

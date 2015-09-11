@@ -13,6 +13,10 @@ class User < ActiveRecord::Base
     write_attribute(:email, value.to_s.downcase)
   end
 
+  def password_reset_token!
+    password_reset_token || generate_token!(:password_reset_token)
+  end
+
   def session_token!
     session_token || generate_token!(:session_token)
   end
@@ -21,7 +25,7 @@ class User < ActiveRecord::Base
 
   def generate_token!(name)
     SecureRandom.urlsafe_base64.tap do |token|
-      update_column :session_token, token
+      update_column name, token
     end
   end
 end

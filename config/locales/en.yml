@@ -6,6 +6,8 @@ en:
       checkout:
         source: Source
         target: Your Custom Branch Name
+      user:
+        password_confirmation: Password Confirmation
       website:
         name: Website Name
   date:
