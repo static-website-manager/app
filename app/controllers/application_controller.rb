@@ -4,7 +4,9 @@ class ApplicationController < ActionController::Base
 
   # Set the @current_user before every request.
   before_action do
-    @current_user = User.find_by_id(session[:user_id])
+    if session[:authentication].present?
+      @current_user = User.find_by_session_token(session[:authentication])
+    end
   end
 
   # Expose the @current_user ivar to all controllers and views.
@@ -28,7 +30,7 @@ class ApplicationController < ActionController::Base
 
   # Sign in the provided user.
   def sign_in(user)
-    session[:user_id] = user.id
+    session[:authentication] = user.session_token!
   end
 
   # Sign out the current user
