@@ -8,7 +8,7 @@ ol.breadcrumb
 
 .row
   .col-md-8
-      h1.h3 style="margin-top:0" = @commit.message.present? ? @commit.message : content_tag(:em, 'No message provided.', class: 'small')
+      h1.h3 style="margin-top:0": strong = @commit.message.present? ? @commit.message : content_tag(:em, 'No message provided.', class: 'small')
       p
         span.commit-author data-toggle="popover" data-placement="right" data-trigger="click" data-html="true" data-content=content_tag(:code, @commit.author_email) => @commit.author_name
         ' authored
@@ -19,56 +19,12 @@ ol.breadcrumb
           ' on
           = localize @commit.time.to_date
   .col-md-4
-      p: code.h5 = @commit.id
+      p: code.code-text = @commit.id
       p
         strong => pluralize @commit.parent_ids.length, 'parent'
         - @commit.parent_ids.each_with_index do |parent_id, i|
-          code => link_to parent_id[0..6], website_commit_path(@website, parent_id)
+          code.code-text => link_to parent_id[0..6], website_commit_path(@website, parent_id)
           - if i < @commit.parent_ids.length - 1
             ' +
 hr
-- @commit.diff.patches.each do |patch|
-  .panel.panel-default
-    .panel-heading.diff-panel-heading
-      h2.panel-title.diff-panel-title
-        span.code => patch.delta.new_file[:path]
-        - case patch.delta.status
-        - when :added
-          span.label.label-success = patch.delta.status
-        - when :deleted
-          span.label.label-danger = patch.delta.status
-        - when :modified
-          span.label.label-primary = patch.delta.status
-        - when :renamed
-          span.label.label-primary = patch.delta.status
-        - when :copied
-          span.label.label-default = patch.delta.status
-        - when :ignored
-          span.label.label-default = patch.delta.status
-        - when :untracked
-          span.label.label-default = patch.delta.status
-        - when :typechange
-          span.label.label-default = patch.delta.status
-    pre.diff
-      - if %i[added modified].include?(patch.delta.status)
-        - patch.hunks.each do |hunk|
-          - hunk.lines.each do |line|
-            - case line.line_origin
-            - when :context
-              .diff-line.bg-default = line.content
-            - when :addition
-              .diff-line.bg-success = line.content
-            - when :deletion
-              .diff-line.bg-danger = line.content
-            - when :eof_no_newline
-              .diff-line.bg-default = line.content
-            - when :eof_newline_added
-              .diff-line.bg-default = line.content
-            - when :eof_newline_removed
-              .diff-line.bg-default = line.content
-            - when :file_header
-              .diff-line.bg-default = line.content
-            - when :hunk_header
-              .diff-line.bg-default = line.content
-            - when :bindary
-              .diff-line.bg-default = line.content
+= render @commit.diff

@@ -1,26 +1,73 @@
 .diff {
-  background: none;
-  border: none;
-  border-radius: none;
-  padding: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  font-family: $font-family-monospace;
+  font-size: 0.9em;
   line-height: 1;
-  overflow-x: scroll;
-}
-
-.diff-panel-heading {
-  padding: 0.5em;
-  .label {
-    margin-left: 0.5em;
+  .table {
+    margin-bottom: 0;
   }
 }
 
-.diff-panel-title {
-  font-size: 1em;
-  font-weight: bold;
-  margin-right: 0.5em;
+.diff-status {
+  position: relative;
+  top: -0.1em;
+  margin-left: 0.5em;
 }
 
-.diff-line {
-  padding: 0.35em 0.5em;
-  line-height: 1;
+.diff-cell {
+  position: relative;
+  padding: 0.15em 0.5em !important;
+  border-top: solid 1px #eee !important;
+}
+
+.diff-addition {
+  .diff-cell {
+    background-color: $state-success-bg;
+    border-top: solid 1px $state-success-border !important;
+  }
+  .diff-code {
+    &:before {
+      content: '+';
+      position: absolute;
+      left: 0;
+      color: $state-success-text;
+      font-weight: bold;
+    }
+  }
+}
+
+.diff-deletion {
+  .diff-cell {
+    background-color: $state-danger-bg;
+    border-top: solid 1px $state-danger-border !important;
+  }
+  .diff-code {
+    &:before {
+      content: '-';
+      position: absolute;
+      left: 0;
+      color: $state-danger-text;
+      font-weight: bold;
+    }
+  }
+}
+
+tr:first-child > .diff-cell {
+  border-top: none !important;
+}
+
+.diff-number {
+  width: 1%;
+  min-width: 4em;
+  text-align: center;
+  color: rgba(0,0,0,0.3);
+}
+
+.diff-code {
+  padding-left: 2em !important;
+}
+
+.diff-pre {
+  white-space: pre;
 }

@@ -1,0 +1,34 @@
+.panel.panel-default
+  .panel-heading.panel-heading-sm
+    h3.panel-title
+      span.code => patch.delta.new_file[:path]
+      - case patch.delta.status
+      - when :added
+        span.diff-status.label.label-success Added
+      - when :deleted
+        span.diff-status.label.label-danger Deleted
+      - when :modified
+        span.diff-status.label.label-primary Modified
+      - when :renamed
+        span.diff-status.label.label-default Renamed
+      - when :copied
+        span.diff-status.label.label-default Copied
+      - when :ignored
+        span.diff-status.label.label-default Ignored
+      - when :untracked
+        span.diff-status.label.label-default Untracked
+      - when :typechange
+        span.diff-status.label.label-default Typechange
+  .diff
+    table.table
+      tbody
+        - patch.hunks.each do |hunk|
+          - hunk.lines.each do |line|
+            tr class=(line.line_origin == :addition ? 'diff-addition' : (line.line_origin == :deletion ? 'diff-deletion' : ''))
+              td.diff-cell.diff-number = line.old_lineno == -1 ? '' : line.old_lineno
+              td.diff-cell.diff-number = line.new_lineno == -1 ? '' : line.new_lineno
+              td.diff-cell.diff-code
+                - if %i[addition deletion context].include?(line.line_origin)
+                  span.diff-pre = line.content.to_s.sub(/\s+\z/, '')
+                - else
+                  span.diff-pre = line.content.to_s.sub(/\A\s+/, '').sub(/\s+\z/, '')

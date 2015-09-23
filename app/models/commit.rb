@@ -16,7 +16,11 @@ class Commit
   end
 
   def diff
-    @rugged_commit.parents[0].diff(@rugged_commit)
+    if @rugged_commit.parents.any?
+      Diff.new(@rugged_commit.parents[0].diff(@rugged_commit))
+    else
+      Diff.new(@rugged_commit.diff)
+    end
   end
 
   def id

@@ -18,7 +18,7 @@ class Blob
         walker.sorting Rugged::SORT_TOPO
         walker.push target
       end.select do |rugged_commit|
-        rugged_commit.parents.size == 1 && rugged_commit.diff(paths: [raw_pathname]).size > 0
+        rugged_commit.diff(paths: [raw_pathname]).size > 0
       end.map do |rugged_commit|
         Commit.new(@rugged_repository, rugged_commit)
       end

@@ -1,0 +1,12 @@
+- if diff.pages.any?
+  h2.h4 Pages
+  = render partial: 'patches/patch', collection: diff.pages
+- if diff.drafts.any?
+  h2.h4 Drafts
+  = render partial: 'patches/patch', collection: diff.drafts
+- if diff.posts.any?
+  h2.h4 Posts
+  = render partial: 'patches/patch', collection: diff.posts
+- if diff.files.any?
+  h2.h4 Files
+  = render partial: 'patches/patch', collection: diff.files
