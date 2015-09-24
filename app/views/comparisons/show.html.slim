@@ -8,7 +8,7 @@
     | | Compare and Merge
 .row
   .col-sm-10.col-sm-offset-1.col-md-8.col-md-offset-2
-    .panel.panel-default style="margin-bottom:0.4em"
+    .panel.panel-default style="margin-bottom:2em"
       .panel-heading
         .row
           .col-sm-4
@@ -26,7 +26,7 @@
                   - if branch_name != @target.name
                     li = link_to branch_name, [@website, @website.branch(branch_name), @target]
           .col-sm-2.col-sm-offset-1.text-center
-            = icon 'long-arrow-right fa-2x', '', style: 'color:#ccc; vertical-align:-0.5em'
+            = link_to icon('arrows-h fa-2x', '', style: 'vertical-align:-0.5em'), [@website, @target, @branch]
           .col-sm-4.col-sm-offset-1
             .btn-group style="display:block"
               span.btn.btn-block.btn-default.dropdown-toggle data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
@@ -41,12 +41,18 @@
                 - @website.custom_branch_names.each do |target_name|
                   - if target_name != @branch.name
                     li = link_to target_name, [@website, @branch, @website.branch(target_name)]
-    .row style="margin-bottom:2em"
-      .col-sm-6
-        code.small.text-muted style="background:none; padding:0" = @branch.commit.id
-      .col-sm-6.text-right
-        code.small.text-muted style="background:none; padding:0" = @target.commit.id
-
+      .panel-body
+        .row
+          .col-sm-6
+            p.text-muted.small Recent Commits
+            ul.list-unstyled
+              - @branch.commits(per_page: 3).each do |commit|
+                li: code.code-text = link_to commit.short_id, [@website, commit]
+          .col-sm-6.text-right
+            p.text-muted.small Recent Commits
+            ul.list-unstyled
+              - @target.commits(per_page: 3).each do |commit|
+                li: code.code-text = link_to commit.short_id, [@website, commit]
     - if @branch.target.oid == @target.target.oid
       = render partial: 'equal'
     - elsif @branch.target.oid == @merge_base

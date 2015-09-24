@@ -1,11 +1,11 @@
-.panel.panel-warning
-  .panel-heading
-    h2.panel-title Your Branch is out-of-date, but can be updated automatically.
-  .panel-body
-    .row
-      .col-sm-8
-        p Changes from <code>#{target.name}</code> will be merged into <code>#{branch.name}</code>.
-      .col-sm-4
-        = link_to '#', class: 'btn btn-block btn-primary' do
-          ' Merge Changes
-          = icon 'arrow-circle-o-right'
+.well.text-center
+  p
+    span.label.label-default => branch.basic_name
+    ' is behind
+    span.label.label-default => target.basic_name
+    | but those changes can be automatically merged.
+  hr
+  = form_tag [:merge, @website, branch, target] do
+    = button_tag class: 'btn btn-sm btn-primary' do
+      ' Merge Branches
+      = icon 'arrow-circle-right', '', style: 'margin-left:0.5em'
