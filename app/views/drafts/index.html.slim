@@ -12,7 +12,13 @@ ul.nav.nav-tabs.branch-nav
 - if @drafts.any?
   ul.list-unstyled.drafts.row
     = render @drafts, website: @website, branch: @branch
+  hr
 - else
   p
     ' No HTML, Text or Markdown drafts found.
     span.fa.fa-question-circle data-toggle="tooltip" data-placement="top" title="Accepted file extension include: .html .htm .text .txt .markdown .mdown .mkdn .mdk .md"
+  br
+
+= link_to [:new, @website, @branch, :draft], class: 'btn btn-primary' do
+  => icon 'plus-circle'
+  | Add Draft

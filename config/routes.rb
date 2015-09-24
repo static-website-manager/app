@@ -20,9 +20,9 @@ Rails.application.routes.draw do
       end
       resources :checkouts, only: %i[new create], path: 'checkout', path_names: { new: '' }
       resources :commits, only: %i[index], controller: 'branch_commits', path: 'history'
-      resources :drafts, only: %i[index edit update]
-      resources :pages, only: %i[index edit update]
-      resources :posts, only: %i[index edit update]
+      resources :drafts, only: %i[index new create edit update]
+      resources :pages, only: %i[index new create edit update]
+      resources :posts, only: %i[index new create edit update]
       resources :blobs, only: %i[] do
         resources :commits, only: %i[index], controller: 'blob_commits', path: 'history'
       end

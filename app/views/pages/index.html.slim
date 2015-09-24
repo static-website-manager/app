@@ -10,9 +10,17 @@ ul.nav.nav-tabs.branch-nav
   li = link_to 'Posts', [@website, @branch, :posts]
 
 - if @pages.any?
+  .pull-right style="position:relative; z-index:1"
+    = link_to [:new, @website, @branch, :page], class: 'btn btn-primary' do
+      => icon 'plus-circle'
+      | Add Page
   ul.list-unstyled.pages
     = render @pages, website: @website, branch: @branch, level: 1
 - else
   p
     ' No HTML, Text or Markdown pages found.
     span.fa.fa-question-circle data-toggle="tooltip" data-placement="top" title="Accepted file extension include: .html .htm .text .txt .markdown .mdown .mkdn .mdk .md"
+  br
+  = link_to [:new, @website, @branch, :page], class: 'btn btn-primary' do
+    => icon 'plus-circle'
+    | Add Page

@@ -12,7 +12,12 @@ ul.nav.nav-tabs.branch-nav
 - if @posts.any?
   .table-responsive
     table.table.table-bordered.table-striped.table-hover.posts
-      caption = page_entries_info @posts, entry_name: 'post'
+      caption
+        .pull-right style="position:relative; z-index:1"
+          = link_to [:new, @website, @branch, :post], class: 'btn btn-sm btn-primary' do
+            => icon 'plus-circle'
+            | Add Post
+        span style="position:relative; top:0.5em" = page_entries_info @posts, entry_name: 'post'
       thead
         tr
           th Title
@@ -25,3 +30,7 @@ ul.nav.nav-tabs.branch-nav
   p
     ' No HTML, Text or Markdown posts found.
     span.fa.fa-question-circle data-toggle="tooltip" data-placement="top" title="Accepted file extension include: .html .htm .text .txt .markdown .mdown .mkdn .mdk .md"
+  br
+  = link_to [:new, @website, @branch, :post], class: 'btn btn-primary' do
+    => icon 'plus-circle'
+    | Add Post
