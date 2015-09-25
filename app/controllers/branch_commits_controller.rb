@@ -1,6 +1,6 @@
 class BranchCommitsController < ApplicationController
-  include WebsiteManagementConcern
-  include BranchManagementConcern
+  include WebsiteConcern
+  include BranchConcern
 
   def index
     @commits = @branch.commits(page: params[:page])

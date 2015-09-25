@@ -1,4 +1,5 @@
-module BranchManagementConcern
+module BranchConcern
+  extend WebsiteConcern
   extend ActiveSupport::Concern
 
   included do

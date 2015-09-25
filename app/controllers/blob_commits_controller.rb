@@ -1,6 +1,6 @@
 class BlobCommitsController < ApplicationController
-  include WebsiteManagementConcern
-  include BranchManagementConcern
+  include WebsiteConcern
+  include BranchConcern
 
   before_action do
     @blob = @branch.find_blob(nil, params[:blob_id])

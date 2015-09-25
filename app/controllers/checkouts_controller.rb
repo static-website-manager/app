@@ -1,6 +1,6 @@
 class CheckoutsController < ApplicationController
-  include WebsiteManagementConcern
-  include BranchManagementConcern
+  include WebsiteConcern
+  include BranchConcern
 
   before_action do
     @checkout = Checkout.new(user: current_user, website: @website, source: @branch.raw_name)

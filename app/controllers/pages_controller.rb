@@ -1,6 +1,6 @@
 class PagesController < ApplicationController
-  include WebsiteManagementConcern
-  include BranchManagementConcern
+  include WebsiteConcern
+  include BranchConcern
 
   before_action only: %i[edit update] do
     @page = @branch.find_page(params[:id])

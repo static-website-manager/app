@@ -1,6 +1,6 @@
 class BranchesController < ApplicationController
-  include WebsiteManagementConcern
-  include BranchManagementConcern
+  include WebsiteConcern
+  include BranchConcern
 
   def show
     @commits = @branch.commits(per_page: 10)

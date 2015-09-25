@@ -1,5 +1,5 @@
 class SetupChecksController < ApplicationController
-  include WebsiteManagementConcern
+  include WebsiteConcern
 
   def show
     if @website.setup?

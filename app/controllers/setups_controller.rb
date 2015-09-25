@@ -1,5 +1,5 @@
 class SetupsController < ApplicationController
-  include WebsiteManagementConcern
+  include WebsiteConcern
 
   before_action do
     if @website.setup?

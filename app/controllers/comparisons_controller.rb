@@ -1,6 +1,6 @@
 class ComparisonsController < ApplicationController
-  include WebsiteManagementConcern
-  include BranchManagementConcern
+  include WebsiteConcern
+  include BranchConcern
 
   before_action do
     @target = @website.branch(params[:id] == 'working' ? current_user : params[:id])

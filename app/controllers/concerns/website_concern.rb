@@ -1,4 +1,4 @@
-module WebsiteManagementConcern
+module WebsiteConcern
   extend ActiveSupport::Concern
 
   included do

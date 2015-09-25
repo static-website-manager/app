@@ -1,5 +1,5 @@
 class CommitsController < ApplicationController
-  include WebsiteManagementConcern
+  include WebsiteConcern
 
   def show
     @commit = @website.commit(params[:id])
