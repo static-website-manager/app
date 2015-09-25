@@ -10,7 +10,6 @@ class DraftsController < ApplicationController
 
   def index
     @drafts = @branch.drafts
-    session[:return_to] = request.path
   end
 
   def update

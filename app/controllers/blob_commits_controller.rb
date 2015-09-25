@@ -8,6 +8,5 @@ class BlobCommitsController < ApplicationController
 
   def index
     @commits = @blob.commits(@branch.target, page: params[:page])
-    session[:return_to] = request.path
   end
 end

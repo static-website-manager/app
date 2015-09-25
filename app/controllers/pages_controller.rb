@@ -10,7 +10,6 @@ class PagesController < ApplicationController
 
   def index
     @pages = @branch.pages
-    session[:return_to] = request.path
   end
 
   def update
