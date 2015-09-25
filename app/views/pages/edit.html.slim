@@ -10,11 +10,7 @@
           => image_tag 'logo-small.png', alt: 'Static Website Manager', class: 'logo-small'
         ul.nav.nav-tabs
           li.active = link_to 'Overview', '#overview', aria: { controls: 'overview' }, data: { toggle: 'tab' }, role: 'tab'
-          li = link_to 'Metadata', '#metadata', aria: { controls: 'metadata' }, data: { toggle: 'tab' }, role: 'tab'
-          - if @page.writable?
-            li = link_to 'Content', '#content', aria: { controls: 'content' }, data: { toggle: 'tab' }, role: 'tab'
-          - else
-            li = link_to 'Source', '#source', aria: { controls: 'source' }, data: { toggle: 'tab' }, role: 'tab'
+          li = link_to 'Edit', '#edit', aria: { controls: 'edit' }, data: { toggle: 'tab' }, role: 'tab'
     .container-fluid
       .tab-content.editor-content
         #overview.tab-pane.active role="tabpanel"
@@ -34,13 +30,11 @@
                 = link_to website_branch_blob_commits_path(@website, @branch, @page), class: 'btn btn-sm btn-default' do
                   ' View Entire History
                   = icon 'angle-double-right'
-        #metadata.tab-pane role="tabpanel"
+        #edit.tab-pane role="tabpanel"
           = render partial: 'metadata_fields', locals: { blob_form: form }
-        - if @page.writable?
-          #content.tab-pane role="tabpanel"
+          - if @page.writable?
             = render partial: 'content_field', locals: { blob_form: form }
-        - else
-          #source.tab-pane role="tabpanel"
+          - else
             pre: code = @page.content
       = text_field_tag :message, params[:message], placeholder: "Save changes to #{@page.raw_pathname}", class: 'form-control editor-message-input'
       = form.button class: 'btn btn-success editor-save-btn' do
