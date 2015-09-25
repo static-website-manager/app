@@ -9,33 +9,15 @@
           => icon 'reply'
           => image_tag 'logo-small.png', alt: 'Static Website Manager', class: 'logo-small'
         ul.nav.nav-tabs
-          li.active = link_to 'Overview', '#overview', aria: { controls: 'overview' }, data: { toggle: 'tab' }, role: 'tab'
-          li = link_to 'Edit', '#edit', aria: { controls: 'edit' }, data: { toggle: 'tab' }, role: 'tab'
+          li = link_to 'Overview', [@website, @branch, @post]
+          li.active = link_to 'Edit', '#'
     .container-fluid
-      .tab-content.editor-content
-        #overview.tab-pane.active role="tabpanel"
-          h1 = @post.title
-          code.small = @post.pathname
-          .row
-            .col-sm-7
-              .column-header
-                h2 Recent Activity
-              .text-center style="background-color: #eee; height: 16em;"
-            .col-sm-5
-              .column-header
-                h2 Commit History
-              ol.list-unstyled.commits
-                = render @commits, website: @website
-              .text-right style="margin-top:2em"
-                = link_to website_branch_blob_commits_path(@website, @branch, @post), class: 'btn btn-sm btn-default' do
-                  ' View Entire History
-                  = icon 'angle-double-right'
-        #edit.tab-pane role="tabpanel"
-          = render partial: 'metadata_fields', locals: { blob_form: form }
-          - if @post.writable?
-            = render partial: 'content_field', locals: { blob_form: form }
-          - else
-            pre: code = @post.content
-      = text_field_tag :message, params[:message], placeholder: "Save changes to #{@post.raw_pathname}", class: 'form-control editor-message-input'
-      = form.button class: 'btn btn-success editor-save-btn' do
-        | Save Changes
+      .editor-content
+        = render partial: 'metadata_fields', locals: { blob_form: form }
+        - if @post.writable?
+          = render partial: 'content_field', locals: { blob_form: form }
+        - else
+          pre: code = @post.content
+    = text_field_tag :message, params[:message], placeholder: "Save changes to #{@post.raw_pathname}", class: 'form-control editor-message-input'
+    = form.button class: 'btn btn-success editor-save-btn' do
+      | Save Changes

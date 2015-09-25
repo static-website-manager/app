@@ -1,0 +1,30 @@
+- @_body_container = false
+- title "Draft #{@draft.short_id} • #{@branch.full_name}"
+
+.editor-container
+  .editor-header
+    .container-fluid
+      => link_to [@website, @branch, :drafts], class: 'logo-small-back-container' do
+        => icon 'reply'
+        => image_tag 'logo-small.png', alt: 'Static Website Manager', class: 'logo-small'
+      ul.nav.nav-tabs
+        li.active = link_to 'Overview', '#'
+        li = link_to 'Edit', [:edit, @website, @branch, @draft]
+  .container-fluid
+    .editor-content
+      h1 = @draft.title
+      code.small = @draft.pathname
+      .row
+        .col-sm-7
+          .column-header
+            h2 Recent Activity
+          .text-center style="background-color: #eee; height: 16em;"
+        .col-sm-5
+          .column-header
+            h2 Commit History
+          ol.list-unstyled.commits
+            = render @commits, website: @website
+          .text-right style="margin-top:2em"
+            = link_to website_branch_blob_commits_path(@website, @branch, @draft), class: 'btn btn-sm btn-default' do
+              ' View Entire History
+              = icon 'angle-double-right'
