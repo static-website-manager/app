@@ -5,6 +5,7 @@
 
 ul.nav.nav-tabs.branch-nav
   li = link_to 'Overview', [@website, @branch]
+  li = link_to 'History', [@website, @branch, :commits]
   li = link_to 'Pages', [@website, @branch, :pages]
   li.active = link_to 'Drafts', [@website, @branch, :drafts]
   li = link_to 'Posts', [@website, @branch, :posts]
