@@ -11,7 +11,7 @@
     .panel.panel-default
       .panel-heading
         h1.h4.panel-title Reset Your Password
-      = form_for @user, url: [:password, token: params[:token]] do |form|
+      = form_for @user, url: [:password_reset, token: params[:token]] do |form|
         .panel-body
           .form-group
             => form.label :password, class: 'control-label'

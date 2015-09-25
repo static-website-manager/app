@@ -1,42 +1,55 @@
 require 'test_helper'
 
-class PasswordResetFlowTest < ActionDispatch::IntegrationTest
-  def test_password_reset
-    visit_password_reset_page(assert: true)
+class PasswordResetsFlowTest < ActionDispatch::IntegrationTest
+  def test_edit_password_reset
+    visit_edit_password_reset_page
   end
 
-  def test_failed_password_reset
-    visit_password_reset_page
-    post_via_redirect new_password_reset_path, invalid_params
+  def test_failed_edit_password_reset
+    patch_via_redirect password_reset_path(token: user.password_reset_token), invalid_params
     assert_response 422
-    assert_equal new_password_reset_path, path
+    assert_equal edit_password_reset_path, path
   end
 
-  def test_successful_password_reset
-    visit_password_reset_page
-    post_via_redirect new_password_reset_path, valid_params
+  def test_successful_edit_password_reset
+    patch_via_redirect password_reset_path(token: user.password_reset_token), valid_params
     assert_response 200
-    assert_equal root_path, path
+    assert_equal websites_path, path
+  end
+
+  def test_successful_edit_password_reset_unconfirmed_user
+    patch_via_redirect password_reset_path(token: user_unconfirmed.password_reset_token), valid_params
+    assert_response 200
+    assert_equal websites_path, path
   end
 
   private
 
   def invalid_params
-    { email: 'invalid@unknown.com' }
+    {
+      user: {
+        password: 'password',
+        password_confirmation: 'pass',
+      },
+    }
   end
 
   def valid_params
-    { email: user.email }
+    {
+      user: {
+        password: 'password',
+        password_confirmation: 'password',
+      },
+    }
   end
 
-  def visit_password_reset_page(assert: false)
-    get new_password_reset_path
+  def visit_edit_password_reset_page(assert: false)
+    get edit_password_reset_path(token: user.password_reset_token)
 
-    if assert
-      assert_select 'form[action="/reset-password"]' do
-        assert_select 'input[name="email"]'
-        assert_select 'button[type="submit"]'
-      end
+    assert_select 'form[action="/reset-password?token=' + user.password_reset_token + '"]' do
+      assert_select 'input[name="user[password]"]'
+      assert_select 'input[name="user[password_confirmation]"]'
+      assert_select 'button[type="submit"]'
     end
   end
 end
