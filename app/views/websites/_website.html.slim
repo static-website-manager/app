@@ -11,6 +11,7 @@
       .col-sm-6
         .btn-group style="margin-right:1em"
           = link_to 'Overview', [website, website.branch(current_user)], class: 'btn btn-default'
+          = link_to 'History', [website, website.branch(current_user), :commits], class: 'btn btn-default'
           = link_to 'Pages', [website, website.branch(current_user), :pages], class: 'btn btn-default'
           = link_to 'Drafts', [website, website.branch(current_user), :drafts], class: 'btn btn-default'
           = link_to 'Posts', [website, website.branch(current_user), :posts], class: 'btn btn-default'
