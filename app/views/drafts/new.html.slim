@@ -11,6 +11,12 @@
         li.active = link_to 'New Draft', '#'
   .container-fluid
     .editor-content
-  = text_field_tag :message, params[:message], placeholder: 'Add New Draft', class: 'form-control editor-message-input'
-  = button_tag class: 'btn btn-success editor-save-btn' do
-    | Save Changes
+      hr
+      .row
+        .col-sm-6.col-sm-offset-3
+          .row
+            .col-sm-9
+              = text_field_tag :message, params[:message], placeholder: 'Add New Draft', class: 'form-control'
+            .col-sm-3
+              = button_tag class: 'btn btn-success' do
+                | Save Changes
