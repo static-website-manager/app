@@ -9,7 +9,7 @@ hr
 
 javascript:
   var websiteSetupCheck = function() {
-    $.get("#{url_for([@website, :setup_check])}", function(data) {
+    $.get("#{url_for([@website, :setup])}", function(data) {
       if (data && data.length > 0) {
         Turbolinks.visit(data);
       }

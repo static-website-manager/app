@@ -11,8 +11,7 @@ Rails.application.routes.draw do
 
   resources :websites, only: %i[index show] do
     resource :settings, only: %i[edit update], path_names: { edit: '' }
-    resource :setup, only: %i[new create], path_names: { new: '' }
-    resource :setup_check, only: %i[show]
+    resource :setup, only: %i[new show], path_names: { new: '' }
     resources :authorizations, only: %i[index new create edit update destroy], path: 'team'
     resources :branches, only: %i[show], path: '' do
       resources :comparisons, only: %i[show], path: 'compare', as: :branch do
