@@ -9,6 +9,7 @@
         => image_tag 'logo-small.png', alt: 'Static Website Manager', class: 'logo-small'
       ul.nav.nav-tabs
         li.active = link_to 'Overview', '#'
+        li = link_to 'History', [@website, @branch, @post, :commits]
         li = link_to 'Edit', [:edit, @website, @branch, @post]
   .container-fluid
     .editor-content
@@ -25,6 +26,6 @@
           ol.list-unstyled.commits
             = render @commits, website: @website
           .text-right style="margin-top:2em"
-            = link_to website_branch_blob_commits_path(@website, @branch, @post), class: 'btn btn-sm btn-default' do
+            = link_to [@website, @branch, @post, :commits], class: 'btn btn-sm btn-default' do
               ' View Entire History
               = icon 'angle-double-right'

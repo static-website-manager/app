@@ -1,0 +1,16 @@
+- @_body_container = false
+- title "New Post • #{@branch.full_name}"
+
+.editor-container
+  .editor-header
+    .container-fluid
+      => link_to [@website, @branch, :posts], class: 'logo-small-back-container' do
+        => icon 'reply'
+        => image_tag 'logo-small.png', alt: 'Static Website Manager', class: 'logo-small'
+      ul.nav.nav-tabs
+        li.active = link_to 'New Post', '#'
+  .container-fluid
+    .editor-content
+  = text_field_tag :message, params[:message], placeholder: 'Add New Post', class: 'form-control editor-message-input'
+  = button_tag class: 'btn btn-success editor-save-btn' do
+    | Save Changes

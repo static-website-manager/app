@@ -10,6 +10,7 @@
           => image_tag 'logo-small.png', alt: 'Static Website Manager', class: 'logo-small'
         ul.nav.nav-tabs
           li = link_to 'Overview', [@website, @branch, @draft]
+          li = link_to 'History', [@website, @branch, @draft, :commits]
           li.active = link_to 'Edit', '#'
     .container-fluid
       .editor-content

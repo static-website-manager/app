@@ -1,0 +1,26 @@
+- @_body_container = false
+- title "Draft History #{@draft.short_id} • #{@branch.full_name}"
+
+.editor-container
+  .editor-header
+    .container-fluid
+      => link_to [@website, @branch, :drafts], class: 'logo-small-back-container' do
+        => icon 'reply'
+        => image_tag 'logo-small.png', alt: 'Static Website Manager', class: 'logo-small'
+      ul.nav.nav-tabs
+        li = link_to 'Overview', [@website, @branch, @draft]
+        li.active = link_to 'History', '#'
+        li = link_to 'Edit', [:edit, @website, @branch, @draft]
+  .container-fluid
+    .editor-content
+      ol.list-unstyled.commits
+        = render @commits, website: @website
+      .text-center
+        - if @commits.prev_page.present?
+          => link_to Kaminari::Helpers::PrevPage.new(self, current_page: @commits.current_page).url, class: 'btn btn-default' do
+            => icon 'angle-double-left'
+            | Newer
+        - if @commits.next_page.present?
+          = link_to Kaminari::Helpers::NextPage.new(self, current_page: @commits.current_page).url, class: 'btn btn-default', style: 'margin-left:0.5em' do
+            ' Older
+            = icon 'angle-double-right'

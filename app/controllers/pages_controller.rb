@@ -10,6 +10,12 @@ class PagesController < ApplicationController
     @pages = @branch.pages
   end
 
+  def new
+  end
+
+  def create
+  end
+
   def show
     @commits = @page.commits(@branch.target, per_page: 10)
   end

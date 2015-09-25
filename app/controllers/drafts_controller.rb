@@ -10,6 +10,12 @@ class DraftsController < ApplicationController
     @drafts = @branch.drafts
   end
 
+  def new
+  end
+
+  def create
+  end
+
   def show
     @commits = @draft.commits(@branch.target, per_page: 10)
   end

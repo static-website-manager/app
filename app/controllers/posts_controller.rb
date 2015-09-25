@@ -10,6 +10,12 @@ class PostsController < ApplicationController
     @posts = @branch.posts(page: params[:page], per_page: 50)
   end
 
+  def new
+  end
+
+  def create
+  end
+
   def show
     @commits = @post.commits(@branch.target, per_page: 10)
   end
