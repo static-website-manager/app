@@ -11,7 +11,7 @@
       li class=('active' if branch.name == 'working') = link_to 'Your Working Branch', (controller_name == 'branches' ? :id : :branch_id) => website.branch(current_user)
       li.divider role="separator"
       li.dropdown-header Custom Branches
-      - website.custom_branch_names.each do |name|
+      - repository.custom_branch_names.each do |name|
         li class=('active' if branch.name == name) = link_to name, (controller_name == 'branches' ? :id : :branch_id) => website.branch(name)
       li.divider role="separator"
       li = link_to [:new, website, branch, :checkout] do
