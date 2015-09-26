@@ -1,11 +1,9 @@
 class PageTree
-  include ActiveModel::Conversion
+  include ActiveModel::Model
 
-  attr_reader :name
-  attr_accessor :objects
+  attr_accessor :name, :objects
 
-  def initialize(name)
-    @name = name
-    @objects = []
+  def objects
+    Array(@objects)
   end
 end

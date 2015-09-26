@@ -77,7 +77,7 @@ class Branch
       trees = Array(hash[root]).select do |object|
         object[:type] == :tree
       end.map do |object|
-        PageTree.new(object[:name])
+        PageTree.new(name: object[:name])
       end.sort_by(&:name)
 
       blobs = Array(hash[root]).select do |object|
