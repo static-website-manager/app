@@ -9,8 +9,16 @@ class Repository
     end
   end
 
+  def merge_base(*args)
+    rugged_repository.merge_base(*args)
+  end
+
   def setup?
     !rugged_repository.empty? && rugged_repository.branches['master']
+  end
+
+  def update_ref(*args)
+    rugged_repository.references.update(*args)
   end
 
   private

@@ -14,10 +14,6 @@ class Website < ActiveRecord::Base
     Commit.new(rugged_repository, rugged_commit)
   end
 
-  def merge_base(*args)
-    rugged_repository.merge_base(*args)
-  end
-
   def repository_pathname
     @repository_pathname ||= Rails.root.join(Rails.application.secrets.repos_dir, "#{id}.git")
   end
@@ -26,9 +22,5 @@ class Website < ActiveRecord::Base
     if persisted?
       @rugged_repository ||= repository_pathname.exist? ? Rugged::Repository.new(repository_pathname.to_s) : Rugged::Repository.init_at(repository_pathname.to_s, :bare)
     end
-  end
-
-  def update_ref(*args)
-    @rugged_repository.references.update(*args)
   end
 end
