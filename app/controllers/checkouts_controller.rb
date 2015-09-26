@@ -9,13 +9,21 @@ class CheckoutsController < ApplicationController
   end
 
   def create
-    @checkout.target = params[:checkout].try(:[], :target)
+    @checkout.target = checkout_params[:target]
 
     if @checkout.save
-      redirect_to [@website, @checkout.branch], notice: 'Ok, your new branch is ready to use.'
+      redirect_to [@website, @website.branch(@checkout.target)], notice: 'Ok, your new branch is ready to use.'
     else
       flash.now.alert = 'There was a problem creating your branch.'
       render :new, status: 422
     end
+  end
+
+  private
+
+  def checkout_params
+    params.require(:checkout).permit(
+      :target,
+    )
   end
 end

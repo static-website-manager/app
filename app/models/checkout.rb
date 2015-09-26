@@ -31,8 +31,4 @@ class Checkout
       @website.rugged_repository.branches.create(target, source)
     end
   end
-
-  def branch
-    website.branch(target)
-  end
 end
