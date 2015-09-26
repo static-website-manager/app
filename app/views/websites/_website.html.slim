@@ -2,28 +2,28 @@
 .well
   h2 style=(repository.setup? ? 'margin:0 0 1em' : 'margin:0')
     => icon 'cube'
-    span.website-title => link_to website.name, (repository.setup? ? [website, website.branch(current_user)] : [:new, website, :setup])
+    span.website-title => link_to website.name, (repository.setup? ? [website, repository.branch(current_user)] : [:new, website, :setup])
     - if repository.setup?
-      strong.text-muted.website-info = website.branch(current_user).commit.short_id
+      strong.text-muted.website-info = repository.branch(current_user).commit.short_id
     - else
       em.text-muted.website-info Pending setup...
   - if repository.setup?
     .row
       .col-sm-6
         .btn-group style="margin-right:1em"
-          = link_to 'Overview', [website, website.branch(current_user)], class: 'btn btn-default'
-          = link_to 'History', [website, website.branch(current_user), :commits], class: 'btn btn-default'
-          = link_to 'Pages', [website, website.branch(current_user), :pages], class: 'btn btn-default'
-          = link_to 'Drafts', [website, website.branch(current_user), :drafts], class: 'btn btn-default'
-          = link_to 'Posts', [website, website.branch(current_user), :posts], class: 'btn btn-default'
+          = link_to 'Overview', [website, repository.branch(current_user)], class: 'btn btn-default'
+          = link_to 'History', [website, repository.branch(current_user), :commits], class: 'btn btn-default'
+          = link_to 'Pages', [website, repository.branch(current_user), :pages], class: 'btn btn-default'
+          = link_to 'Drafts', [website, repository.branch(current_user), :drafts], class: 'btn btn-default'
+          = link_to 'Posts', [website, repository.branch(current_user), :posts], class: 'btn btn-default'
       .col-sm-6.text-right
         span.btn-group
           span.btn.btn-default.dropdown-toggle type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
             span> Jump to Branch...
             span.caret
           ul.dropdown-menu
-            li = link_to 'Your Working Branch', [website, website.branch(current_user)]
-            li = link_to 'Master', [website, website.branch('master')]
+            li = link_to 'Your Working Branch', [website, repository.branch(current_user)]
+            li = link_to 'Master', [website, repository.branch('master')]
             li.divider role="separator"
             - repository.custom_branch_names.each do |name|
-              li = link_to name, [website, website.branch(name)]
+              li = link_to name, [website, repository.branch(name)]

@@ -17,7 +17,7 @@ class ApplicationController < ActionController::Base
   # Find the current website’s branch.
   def require_branch
     branch_param = controller_name == 'branches' ? params[:id] : params[:branch_id]
-    @branch = @website.branch(branch_param == 'working' ? current_user : branch_param)
+    @branch = @repository.branch(branch_param == 'working' ? current_user : branch_param)
   end
 
   # Ensure current users are redirected to their website list.
@@ -27,10 +27,13 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  # Ensure the current website’s repository is setup.
-  def require_setup_repository
+  # Find the current website’s repository.
+  def require_repository
     @repository = Repository.new(website_id: @website.id)
+  end
 
+  # Ensure the current repository is setup.
+  def require_setup
     unless @repository.setup?
       redirect_to [:new, @website, :setup], alert: 'Please complete your website setup to access those features.'
     end

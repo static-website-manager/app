@@ -1,6 +1,7 @@
 class WebsitesController < ApplicationController
   before_action :require_user
   before_action :require_website, only: %i[show]
+  before_action :require_repository, only: %i[show]
   before_action :set_return_to, only: %i[index]
 
   before_action only: %i[show] do
@@ -13,7 +14,7 @@ class WebsitesController < ApplicationController
 
   def show
     if @repository.setup?
-      redirect_to [@website, @website.branch(current_user)]
+      redirect_to [@website, @repository.branch(current_user)]
     else
       redirect_to [:new, @website, :setup]
     end

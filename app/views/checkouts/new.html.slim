@@ -20,12 +20,12 @@
                   => @branch.basic_name
                   span.caret
                 ul.dropdown-menu style="margin-top:2.5em"
-                  li class=('active' if @branch.name == 'master') = link_to 'Master Branch', branch_id: @website.branch('master')
-                  li class=('active' if @branch.name == 'working') = link_to 'Your Working Branch', branch_id: @website.branch(current_user)
+                  li class=('active' if @branch.name == 'master') = link_to 'Master Branch', branch_id: @repository.branch('master')
+                  li class=('active' if @branch.name == 'working') = link_to 'Your Working Branch', branch_id: @repository.branch(current_user)
                   li.divider role="separator"
                   li.dropdown-header Custom Branches
                   - @repository.custom_branch_names.each do |name|
-                    li class=('active' if @branch.name == name) = link_to name, branch_id: @website.branch(name)
+                    li class=('active' if @branch.name == name) = link_to name, branch_id: @repository.branch(name)
             .col-sm-6
               .form-group
                 => f.label :target, class: 'control-label'

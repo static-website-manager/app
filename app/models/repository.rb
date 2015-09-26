@@ -3,6 +3,10 @@ class Repository
 
   attr_accessor :website_id
 
+  def branch(name_or_user)
+    Branch.find(rugged_repository, name_or_user)
+  end
+
   def commit(commit_id)
     rugged_commit = rugged_repository.lookup(commit_id)
     raise ActiveRecord::RecordNotFound unless rugged_commit

@@ -18,13 +18,13 @@
                 span.caret
               ul.dropdown-menu style="margin-top:2.5em"
                 - if @target.name != 'master'
-                  li = link_to 'Master Branch', [@website, @website.branch('master'), @target]
+                  li = link_to 'Master Branch', [@website, @repository.branch('master'), @target]
                 - if @target.name != 'working'
-                  li = link_to 'Your Working Branch', [@website, @website.branch(current_user), @target]
+                  li = link_to 'Your Working Branch', [@website, @repository.branch(current_user), @target]
                 li.divider role="separator"
                 - @repository.custom_branch_names.each do |branch_name|
                   - if branch_name != @target.name
-                    li = link_to branch_name, [@website, @website.branch(branch_name), @target]
+                    li = link_to branch_name, [@website, @repository.branch(branch_name), @target]
           .col-sm-2.col-sm-offset-1.text-center
             = link_to icon('arrows-h fa-2x', '', style: 'vertical-align:-0.5em'), [@website, @target, @branch]
           .col-sm-4.col-sm-offset-1
@@ -34,13 +34,13 @@
                 span.caret
               ul.dropdown-menu style="margin-top:2.5em"
                 - if @branch.name != 'master'
-                  li = link_to 'Master Branch', [@website, @branch, @website.branch('master')]
+                  li = link_to 'Master Branch', [@website, @branch, @repository.branch('master')]
                 - if @branch.name != 'working'
-                  li = link_to 'Your Working Branch', [@website, @branch, @website.branch(current_user)]
+                  li = link_to 'Your Working Branch', [@website, @branch, @repository.branch(current_user)]
                 li.divider role="separator"
                 - @repository.custom_branch_names.each do |target_name|
                   - if target_name != @branch.name
-                    li = link_to target_name, [@website, @branch, @website.branch(target_name)]
+                    li = link_to target_name, [@website, @branch, @repository.branch(target_name)]
       .panel-body
         .row
           .col-sm-6

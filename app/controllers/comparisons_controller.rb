@@ -1,11 +1,12 @@
 class ComparisonsController < ApplicationController
   before_action :require_user
   before_action :require_website
-  before_action :require_setup_repository
+  before_action :require_repository
+  before_action :require_setup
   before_action :require_branch
 
   before_action do
-    @target = @website.branch(params[:id] == 'working' ? current_user : params[:id])
+    @target = @repository.branch(params[:id] == 'working' ? current_user : params[:id])
     raise ActiveRecord::RecordNotFound if @target.name == @branch.name
     @merge_base = @repository.merge_base(@branch.target, @target.target)
   end

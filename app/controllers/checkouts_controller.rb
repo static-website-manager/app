@@ -1,7 +1,8 @@
 class CheckoutsController < ApplicationController
   before_action :require_user
   before_action :require_website
-  before_action :require_setup_repository
+  before_action :require_repository
+  before_action :require_setup
   before_action :require_branch
 
   before_action do
@@ -12,7 +13,7 @@ class CheckoutsController < ApplicationController
     @checkout.target = checkout_params[:target]
 
     if @checkout.save
-      redirect_to [@website, @website.branch(@checkout.target)], notice: 'Ok, your new branch is ready to use.'
+      redirect_to [@website, @repository.branch(@checkout.target)], notice: 'Ok, your new branch is ready to use.'
     else
       flash.now.alert = 'There was a problem creating your branch.'
       render :new, status: 422

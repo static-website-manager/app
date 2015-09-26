@@ -1,10 +1,11 @@
 class SettingsController < ApplicationController
   before_action :require_user
   before_action :require_website
+  before_action :require_repository
 
   def update
     if @website.update(settings_params)
-      redirect_to [@website, (@website.branch(session[:branch_name]) rescue @website.branch(current_user))], notice: 'Settings updated successfully.'
+      redirect_to session[:return_to] || [@website, @repository.branch(current_user)], notice: 'Settings updated successfully.'
     else
       flash.now.alert = 'There was a problem saving your business settings.'
       render :edit, status: 422

@@ -1,5 +1,5 @@
 .branch-header
-  => link_to [website, branch, branch.name == 'master' ? website.branch(current_user) : website.branch('master')], class: 'btn btn-default pull-right' do
+  => link_to [website, branch, branch.name == 'master' ? repository.branch(current_user) : repository.branch('master')], class: 'btn btn-default pull-right' do
     => icon 'random'
     | Compare and Merge
   span.btn-group
@@ -7,12 +7,12 @@
       => branch.basic_name
       span.caret
     ul.dropdown-menu
-      li class=('active' if branch.name == 'master') = link_to 'Master Branch', (controller_name == 'branches' ? :id : :branch_id) => website.branch('master')
-      li class=('active' if branch.name == 'working') = link_to 'Your Working Branch', (controller_name == 'branches' ? :id : :branch_id) => website.branch(current_user)
+      li class=('active' if branch.name == 'master') = link_to 'Master Branch', (controller_name == 'branches' ? :id : :branch_id) => repository.branch('master')
+      li class=('active' if branch.name == 'working') = link_to 'Your Working Branch', (controller_name == 'branches' ? :id : :branch_id) => repository.branch(current_user)
       li.divider role="separator"
       li.dropdown-header Custom Branches
       - repository.custom_branch_names.each do |name|
-        li class=('active' if branch.name == name) = link_to name, (controller_name == 'branches' ? :id : :branch_id) => website.branch(name)
+        li class=('active' if branch.name == name) = link_to name, (controller_name == 'branches' ? :id : :branch_id) => repository.branch(name)
       li.divider role="separator"
       li = link_to [:new, website, branch, :checkout] do
         => icon 'plus-circle'
