@@ -21,17 +21,15 @@ class PagesController < ApplicationController
   end
 
   def edit
-    @blob_commit = BlobCommit.new(current_user, @website, @branch, @page)
   end
 
   def update
-    @blob_commit = BlobCommit.new(current_user, @website, @branch, @page)
-    @blob_commit.save(page_content, params[:message])
+    new_id = @page.save(@website, @branch, current_user, page_content, params[:message])
 
-    if @blob_commit.id.present? && @blob_commit.id == @page.id
+    if new_id.present? && new_id == @page.id
       redirect_to website_branch_page_path(@website, @branch, @page), alert: 'No changes detected.'
-    elsif @blob_commit.id.present?
-      redirect_to website_branch_page_path(@website, @branch, @blob_commit.id), notice: 'Great, we’ve committed your changes.'
+    elsif new_id.present?
+      redirect_to website_branch_page_path(@website, @branch, new_id), notice: 'Great, we’ve committed your changes.'
     else
       flash.now.alert = 'There was a problem saving your changes.'
       render :edit, status: 422

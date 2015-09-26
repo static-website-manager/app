@@ -21,17 +21,15 @@ class PostsController < ApplicationController
   end
 
   def edit
-    @blob_commit = BlobCommit.new(current_user, @website, @branch, @post)
   end
 
   def update
-    @blob_commit = BlobCommit.new(current_user, @website, @branch, @post)
-    @blob_commit.save(post_content, params[:message])
+    new_id = @post.save(@website, @branch, current_user, post_content, params[:message])
 
-    if @blob_commit.id.present? && @blob_commit.id == @post.id
+    if new_id.present? && new_id == @post.id
       redirect_to website_branch_post_path(@website, @branch, @post), alert: 'No changes detected.'
-    elsif @blob_commit.id.present?
-      redirect_to website_branch_post_path(@website, @branch, @blob_commit.id), notice: 'Great, we’ve committed your changes.'
+    elsif new_id.present?
+      redirect_to website_branch_post_path(@website, @branch, new_id), notice: 'Great, we’ve committed your changes.'
     else
       flash.now.alert = 'There was a problem saving your changes.'
       render :edit, status: 422
@@ -41,7 +39,7 @@ class PostsController < ApplicationController
   private
 
   def post_content
-    if params[:post].try(:metadata).present?
+    if params[:post].try(:[], :metadata).present?
       [YAML.dump(params[:post][:metadata].to_hash), @post.writable? ? params[:post].try(:[], :content) || '' : @post.content].join("---\n\n")
     else
       @post.writable? ? params[:post].try(:[], :content) || '' : @post.content

@@ -21,17 +21,15 @@ class DraftsController < ApplicationController
   end
 
   def edit
-    @blob_commit = BlobCommit.new(current_user, @website, @branch, @draft)
   end
 
   def update
-    @blob_commit = BlobCommit.new(current_user, @website, @branch, @draft)
-    @blob_commit.save(draft_content, params[:message])
+    new_id = @draft.save(@website, @branch, current_user, draft_content, params[:message])
 
-    if @blob_commit.id.present? && @blob_commit.id == @draft.id
+    if new_id.present? && new_id == @draft.id
       redirect_to website_branch_draft_path(@website, @branch, @draft), alert: 'No changes detected.'
-    elsif @blob_commit.id.present?
-      redirect_to website_branch_draft_path(@website, @branch, @blob_commit.id), notice: 'Great, we’ve committed your changes.'
+    elsif new_id
+      redirect_to website_branch_draft_path(@website, @branch, new_id), notice: 'Great, we’ve committed your changes.'
     else
       flash.now.alert = 'There was a problem saving your changes.'
       render :edit, status: 422
@@ -41,7 +39,7 @@ class DraftsController < ApplicationController
   private
 
   def draft_content
-    if params[:draft].try(:metadata).present?
+    if params[:draft].try(:[], :metadata).present?
       [YAML.dump(params[:draft][:metadata].to_hash), @draft.writable? ? params[:draft].try(:[], :content) || '' : @draft.content].join("---\n\n")
     else
       @draft.writable? ? params[:draft].try(:[], :content) || '' : @draft.content
