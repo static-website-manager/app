@@ -1,5 +1,6 @@
 class SettingsController < ApplicationController
-  include WebsiteConcern
+  before_action :require_user
+  before_action :require_website
 
   def update
     if @website.update(settings_params)

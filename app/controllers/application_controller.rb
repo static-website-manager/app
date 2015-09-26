@@ -14,21 +14,39 @@ class ApplicationController < ActionController::Base
 
   private
 
-  # Before filter to ensure current users are redirected.
+  # Find the current website’s branch.
+  def require_branch
+    branch_param = controller_name == 'branches' ? params[:id] : params[:branch_id]
+    @branch = @website.branch(branch_param == 'working' ? current_user : branch_param)
+  end
+
+  # Ensure current users are redirected to their website list.
   def require_guest
     if current_user
       redirect_to :websites
     end
   end
 
-  # Before filter to ensure guests are required to sign-in.
+  # Ensure the current website’s repository is setup.
+  def require_setup_repository
+    unless @website.setup?
+      redirect_to [:new, @website, :setup], alert: 'Please complete your website setup to access those features.'
+    end
+  end
+
+  # Ensure guests are redirected to sign-in.
   def require_user
     unless current_user
       redirect_to :new_session
     end
   end
 
-  # Before filter to set the current path as a return value for nested views.
+  # Find the current user‘s website.
+  def require_website
+    @website = current_user.websites.find(params[:website_id])
+  end
+
+  # Set the current path as a return value for nested views.
   def set_return_to
     session[:return_to] = request.path
   end

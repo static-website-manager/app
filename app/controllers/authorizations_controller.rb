@@ -1,5 +1,6 @@
 class AuthorizationsController < ApplicationController
-  include WebsiteConcern
+  before_action :require_user
+  before_action :require_website
 
   # Initialize a new authorization with user.
   before_action only: %i[new create] do

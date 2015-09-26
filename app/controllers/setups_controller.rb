@@ -1,5 +1,6 @@
 class SetupsController < ApplicationController
-  include WebsiteConcern
+  before_action :require_user
+  before_action :require_website
 
   def new
     if @website.setup?

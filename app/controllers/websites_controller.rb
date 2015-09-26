@@ -1,5 +1,6 @@
 class WebsitesController < ApplicationController
   before_action :require_user
+  before_action :require_website, only: %i[show]
   before_action :set_return_to, only: %i[index]
 
   def index
@@ -7,8 +8,6 @@ class WebsitesController < ApplicationController
   end
 
   def show
-    @website = current_user.websites.find(params[:id])
-
     if @website.setup?
       redirect_to [@website, @website.branch(current_user)]
     else
