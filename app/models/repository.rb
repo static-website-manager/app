@@ -46,10 +46,8 @@ class Repository
       @rugged_repository ||= Rugged::Repository.new(repository_pathname.to_s)
     elsif repository_pathname.exist?
       @rugged_repository ||= Rugged::Repository.init_at(repository_pathname.to_s, :bare)
-    elsif website_id.present?
-      raise ArgumentError, 'there was an unknown error'
     else
-      raise ArgumentError, 'website_id must be set'
+      raise ActiveRecord::RecordNotFound
     end
   end
 end
