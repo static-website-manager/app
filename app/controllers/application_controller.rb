@@ -31,7 +31,7 @@ class ApplicationController < ActionController::Base
   def require_setup_repository
     @repository = Repository.new(website_id: @website.id)
 
-    unless @website.setup?
+    unless @repository.setup?
       redirect_to [:new, @website, :setup], alert: 'Please complete your website setup to access those features.'
     end
   end

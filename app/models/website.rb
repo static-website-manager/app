@@ -14,12 +14,6 @@ class Website < ActiveRecord::Base
     Commit.new(rugged_repository, rugged_commit)
   end
 
-  def custom_branch_names
-    rugged_repository.branches.each_name(:local).sort.reject do |name|
-      name == 'master' || name.match(/\Aswm_user_\d+\z/)
-    end
-  end
-
   def merge_base(*args)
     rugged_repository.merge_base(*args)
   end
@@ -32,10 +26,6 @@ class Website < ActiveRecord::Base
     if persisted?
       @rugged_repository ||= repository_pathname.exist? ? Rugged::Repository.new(repository_pathname.to_s) : Rugged::Repository.init_at(repository_pathname.to_s, :bare)
     end
-  end
-
-  def setup?
-    !rugged_repository.empty? && rugged_repository.branches['master']
   end
 
   def update_ref(*args)

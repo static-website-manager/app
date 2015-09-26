@@ -22,7 +22,7 @@
                 - if @target.name != 'working'
                   li = link_to 'Your Working Branch', [@website, @website.branch(current_user), @target]
                 li.divider role="separator"
-                - @website.custom_branch_names.each do |branch_name|
+                - @repository.custom_branch_names.each do |branch_name|
                   - if branch_name != @target.name
                     li = link_to branch_name, [@website, @website.branch(branch_name), @target]
           .col-sm-2.col-sm-offset-1.text-center
@@ -38,7 +38,7 @@
                 - if @branch.name != 'working'
                   li = link_to 'Your Working Branch', [@website, @branch, @website.branch(current_user)]
                 li.divider role="separator"
-                - @website.custom_branch_names.each do |target_name|
+                - @repository.custom_branch_names.each do |target_name|
                   - if target_name != @branch.name
                     li = link_to target_name, [@website, @branch, @website.branch(target_name)]
       .panel-body

@@ -9,6 +9,10 @@ class Repository
     end
   end
 
+  def setup?
+    !rugged_repository.empty? && rugged_repository.branches['master']
+  end
+
   private
 
   def repository_pathname

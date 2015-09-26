@@ -24,7 +24,7 @@
                   li class=('active' if @branch.name == 'working') = link_to 'Your Working Branch', branch_id: @website.branch(current_user)
                   li.divider role="separator"
                   li.dropdown-header Custom Branches
-                  - @website.custom_branch_names.each do |name|
+                  - @repository.custom_branch_names.each do |name|
                     li class=('active' if @branch.name == name) = link_to name, branch_id: @website.branch(name)
             .col-sm-6
               .form-group
