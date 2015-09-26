@@ -14,9 +14,15 @@
           li.active = link_to 'Edit', '#'
     .container-fluid
       .editor-content
-        = render partial: 'metadata_fields', locals: { blob_form: form }
+        = form.fields_for :metadata do |metadata_form|
+          - form.object.metadata.each do |field, value|
+            .form-group
+              = metadata_form.label field, class: 'control-label'
+              = metadata_form.text_field field, value: value, class: 'form-control'
         - if @page.writable?
-          = render partial: 'content_field', locals: { blob_form: form }
+          .form-group
+            = form.label :content, class: 'control-label'
+            = form.text_area :content, rows: 20, class: 'form-control'
         - else
           pre: code = @page.content
         hr
