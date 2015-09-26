@@ -20,10 +20,6 @@ class Branch
     @rugged_branch = rugged_branch
   end
 
-  def commit
-    Commit.new(@rugged_repository, @rugged_branch.target)
-  end
-
   def commits(page: 1, per_page: 20)
     Kaminari.paginate_array(
       Rugged::Walker.new(@rugged_repository).tap do |walker|
