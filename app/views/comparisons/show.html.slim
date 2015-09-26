@@ -56,8 +56,8 @@
     - if @branch.target.oid == @target.target.oid
       = render partial: 'equal'
     - elsif @branch.target.oid == @merge_base
-      = render partial: 'behind', locals: { branch: @branch, target: @target }
+      = render partial: 'behind', locals: { website: @website, branch: @branch, target: @target }
     - elsif @target.target.oid == @merge_base
-      = render partial: 'ahead', locals: { branch: @branch, target: @target }
+      = render partial: 'ahead', locals: { website: @website, branch: @branch, target: @target }
     - else
-      = render partial: 'divergent', locals: { branch: @branch, target: @target }
+      = render partial: 'divergent'

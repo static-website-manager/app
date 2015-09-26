@@ -5,7 +5,7 @@
     span.label.label-default => target.basic_name
     | and can be automatically merged.
   hr
-  = form_tag [:merge, @website, branch, target] do
+  = form_tag [:merge, website, branch, target] do
     = button_tag class: 'btn btn-sm btn-primary' do
       ' Merge Branches
       = icon 'arrow-circle-right', '', style: 'margin-left:0.5em'
