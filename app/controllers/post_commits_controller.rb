@@ -2,6 +2,8 @@ class PostCommitsController < ApplicationController
   include WebsiteConcern
   include BranchConcern
 
+  before_action :set_return_to
+
   before_action do
     @post = @branch.find_post(params[:post_id])
   end

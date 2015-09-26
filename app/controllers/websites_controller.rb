@@ -1,5 +1,6 @@
 class WebsitesController < ApplicationController
   before_action :require_user
+  before_action :set_return_to, only: %i[index]
 
   def index
     @websites = current_user.websites

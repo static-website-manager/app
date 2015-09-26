@@ -2,7 +2,7 @@
 
 .header.header-center
   h1.lead
-    = link_to request.referer || [@website, @branch], class: 'logo-small-back-container' do
+    = link_to session[:return_to] || [@website, @branch], class: 'logo-small-back-container' do
       => icon 'reply'
       => image_tag 'logo-small.png', alt: 'Static Website Manager', class: 'logo-small'
     | | Compare and Merge

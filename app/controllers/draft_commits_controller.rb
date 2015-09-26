@@ -2,6 +2,8 @@ class DraftCommitsController < ApplicationController
   include WebsiteConcern
   include BranchConcern
 
+  before_action :set_return_to
+
   before_action do
     @draft = @branch.find_draft(params[:draft_id])
   end

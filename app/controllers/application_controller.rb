@@ -28,6 +28,11 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  # Before filter to set the current path as a return value for nested views.
+  def set_return_to
+    session[:return_to] = request.path
+  end
+
   # Sign in the provided user.
   def sign_in(user)
     @current_user = user

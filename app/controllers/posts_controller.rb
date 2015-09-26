@@ -2,6 +2,8 @@ class PostsController < ApplicationController
   include WebsiteConcern
   include BranchConcern
 
+  before_action :set_return_to, only: %i[index show]
+
   before_action only: %i[show edit update] do
     @post = @branch.find_post(params[:id])
   end
