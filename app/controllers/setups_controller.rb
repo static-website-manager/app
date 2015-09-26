@@ -8,7 +8,7 @@ class SetupsController < ApplicationController
     end
   end
 
-  def show
+  def check
     if @website.setup?
       render text: url_for([@website, @website.branch(current_user)])
     else

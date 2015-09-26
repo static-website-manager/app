@@ -8,11 +8,13 @@ hr
   p.lead Waiting for your <b>master</b> branch to be pushed to the our git repository at <code>/#{@website.id}.git</code>
 
 javascript:
+  var websiteSetupInterval;
   var websiteSetupCheck = function() {
-    $.get("#{url_for([@website, :setup])}", function(data) {
+    $.get("#{url_for([:check, @website, :setup])}", function(data) {
       if (data && data.length > 0) {
+        clearInterval(websiteSetupInterval);
         Turbolinks.visit(data);
       }
     });
   };
-  setInterval(websiteSetupCheck, 5000);
+  websiteSetupInterval = setInterval(websiteSetupCheck, 5000);
