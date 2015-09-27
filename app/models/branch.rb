@@ -24,53 +24,6 @@ class Branch
     @rugged_branch.target.oid[0..6]
   end
 
-  def find_blob(blob_class, oid)
-    object = target.tree.walk(:postorder).find do |root, object|
-      if object[:oid] == oid
-        object[:root] = root
-      end
-    end
-
-    if object
-      if object[1][:root].match(/\A_drafts/)
-        Draft.new(
-          id: object[1][:oid],
-          filename: object[1][:name],
-          pathname: object[1][:root],
-          rugged_repository: @rugged_repository,
-        )
-      elsif object[1][:root].match(/\A_posts/)
-        Post.new(
-          id: object[1][:oid],
-          filename: object[1][:name],
-          pathname: object[1][:root],
-          rugged_repository: @rugged_repository,
-        )
-      else
-        Page.new(
-          id: object[1][:oid],
-          filename: object[1][:name],
-          pathname: object[1][:root],
-          rugged_repository: @rugged_repository,
-        )
-      end
-    else
-      raise ActiveRecord::RecordNotFound
-    end
-  end
-
-  def find_page(oid)
-    find_blob(Page, oid)
-  end
-
-  def find_draft(oid)
-    find_blob(Draft, oid)
-  end
-
-  def find_post(oid)
-    find_blob(Post, oid)
-  end
-
   def pages
     hash = {}
 
@@ -213,6 +166,10 @@ class Branch
 
   def target
     @rugged_branch.target
+  end
+
+  def tree
+    @rugged_branch.target.tree
   end
 
   def to_param

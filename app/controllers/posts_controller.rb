@@ -7,7 +7,7 @@ class PostsController < ApplicationController
   before_action :set_return_to, only: %i[index show]
 
   before_action only: %i[show edit update] do
-    @post = @branch.find_post(params[:id])
+    @post = Post.find(@repository.send(:rugged_repository), @branch.tree, params[:id])
   end
 
   def index

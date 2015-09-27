@@ -7,7 +7,7 @@ class PagesController < ApplicationController
   before_action :set_return_to, only: %i[index show]
 
   before_action only: %i[show edit update] do
-    @page = @branch.find_page(params[:id])
+    @page = Page.find(@repository.send(:rugged_repository), @branch.tree, params[:id])
   end
 
   def index

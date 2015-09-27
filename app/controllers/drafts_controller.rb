@@ -7,7 +7,7 @@ class DraftsController < ApplicationController
   before_action :set_return_to, only: %i[index show]
 
   before_action only: %i[show edit update] do
-    @draft = @branch.find_draft(params[:id])
+    @draft = Draft.find(@repository.send(:rugged_repository), @branch.tree, params[:id])
   end
 
   def index
