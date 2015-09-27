@@ -5,16 +5,14 @@ class Page
 
   def self.find(rugged_repository, tree, id)
     result = tree.walk(:postorder).find do |root, object|
-      if object[:oid] == id
-        object[:root] = root
-      end
+      object[:oid] == id
     end
 
-    if result && !result[1][:root].match(/\A(_drafts|_posts)/)
+    if result && !result[0].match(/\A(_drafts|_posts)/)
       new(
         id: id,
         filename: result[1][:name],
-        pathname: result[1][:root],
+        pathname: result[0],
         rugged_repository: rugged_repository,
       )
     else
