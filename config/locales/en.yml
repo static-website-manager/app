@@ -3,9 +3,6 @@ en:
     attributes:
       authorization:
         role: Permission
-      checkout:
-        source: Source
-        target: Your Custom Branch Name
       user:
         password_confirmation: Password Confirmation
       website:

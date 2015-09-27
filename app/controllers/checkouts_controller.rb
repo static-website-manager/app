@@ -5,26 +5,24 @@ class CheckoutsController < ApplicationController
   before_action :require_setup
   before_action :require_branch
 
-  before_action do
-    @checkout = Checkout.new(user: current_user, website: @website, source: @branch.raw_name)
-  end
-
   def create
-    @checkout.target = checkout_params[:target]
-
-    if @checkout.save
-      redirect_to [@website, @repository.branch(@checkout.target)], notice: 'Ok, your new branch is ready to use.'
+    if params[:target].blank?
+      flash.now.alert = 'Please provide a target branch.'
+      render :new, status: 422
+    elsif !@repository.local_branch?(@branch.raw_name)
+      flash.now.alert = 'Source branch must already be a local branch.'
+      render :new, status: 422
+    elsif params[:target].match(/\A(swm_user|master)/)
+      flash.now.alert = 'Target branch must not be the master or a Static Website Manager branch.'
+      render :new, status: 422
+    elsif @repository.local_branch?(params[:target])
+      flash.now.alert = 'Target branch must not already be a local branch.'
+      render :new, status: 422
+    elsif @repository.create_branch(@branch.raw_name, params[:target])
+      redirect_to [@website, @repository.branch(params[:target])], notice: 'Ok, your new branch is ready to use.'
     else
       flash.now.alert = 'There was a problem creating your branch.'
       render :new, status: 422
     end
-  end
-
-  private
-
-  def checkout_params
-    params.require(:checkout).permit(
-      :target,
-    )
   end
 end

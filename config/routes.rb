@@ -16,10 +16,10 @@ Rails.application.routes.draw do
     end
     resources :authorizations, only: %i[index new create edit update destroy], path: 'team'
     resources :branches, only: %i[show], path: '' do
+      resource :checkout, only: %i[new create], path_names: { new: '' }
       resources :branches, only: %i[show], controller: 'comparisons', path: 'compare' do
         post :merge, on: :member
       end
-      resources :checkouts, only: %i[new create], path: 'checkout', path_names: { new: '' }
       resources :commits, only: %i[index], controller: 'branch_commits', path: 'history'
       resources :drafts, only: %i[index new create show edit update] do
         resources :commits, only: %i[index], controller: 'draft_commits', path: 'history'

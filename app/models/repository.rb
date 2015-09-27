@@ -13,10 +13,18 @@ class Repository
     Commit.new(rugged_repository, rugged_commit)
   end
 
+  def create_branch(source_branch_name, target_branch_name)
+    rugged_repository.branches.create(target_branch_name, source_branch_name)
+  end
+
   def custom_branch_names
     rugged_repository.branches.each_name(:local).sort.reject do |name|
       name == 'master' || name.match(/\Aswm_user_\d+\z/)
     end
+  end
+
+  def local_branch?(branch_name)
+    rugged_repository.branches.each_name(:local).include?(branch_name)
   end
 
   def merge_base(*args)
