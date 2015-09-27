@@ -1,5 +1,5 @@
 - @_body_container = false
-- title "Post #{@post.short_id} • #{@branch.name}"
+- title "Post #{@post.short_id} • #{@branch.title(current_user)}"
 
 .editor-container
   .editor-header

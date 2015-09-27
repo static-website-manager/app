@@ -1,4 +1,4 @@
-- title "Compare #{@branch.full_name} to #{@target.full_name}"
+- title "Compare #{@branch.title(current_user)} to #{@target.title(current_user)}"
 
 .header.header-center
   h1.lead
@@ -14,12 +14,12 @@
           .col-sm-4
             .btn-group style="display:block"
               span.btn.btn-block.btn-default.dropdown-toggle data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                => @branch.basic_name
+                => @branch.title(current_user)
                 span.caret
               ul.dropdown-menu style="margin-top:2.5em"
-                - if @target.name != 'master'
+                - unless @target.master?
                   li = link_to 'Master Branch', [@website, @repository.branch('master'), @target]
-                - if @target.name != 'working'
+                - unless @target.working?(current_user)
                   li = link_to 'Your Working Branch', [@website, @repository.branch(current_user), @target]
                 li.divider role="separator"
                 - @repository.custom_branch_names.each do |branch_name|
@@ -30,12 +30,12 @@
           .col-sm-4.col-sm-offset-1
             .btn-group style="display:block"
               span.btn.btn-block.btn-default.dropdown-toggle data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                => @target.basic_name
+                => @target.title(current_user)
                 span.caret
               ul.dropdown-menu style="margin-top:2.5em"
-                - if @branch.name != 'master'
+                - unless @branch.master?
                   li = link_to 'Master Branch', [@website, @branch, @repository.branch('master')]
-                - if @branch.name != 'working'
+                - unless @branch.working?(current_user)
                   li = link_to 'Your Working Branch', [@website, @branch, @repository.branch(current_user)]
                 li.divider role="separator"
                 - @repository.custom_branch_names.each do |target_name|
@@ -46,18 +46,18 @@
           .col-sm-6
             p.text-muted.small Recent Commits
             ul.list-unstyled
-              - @branch.commits(per_page: 3).each do |commit|
+              - @branch_commits.each do |commit|
                 li: code.code-text = link_to commit.short_id, [@website, commit]
           .col-sm-6.text-right
             p.text-muted.small Recent Commits
             ul.list-unstyled
-              - @target.commits(per_page: 3).each do |commit|
+              - @target_commits.each do |commit|
                 li: code.code-text = link_to commit.short_id, [@website, commit]
-    - if @branch.target.oid == @target.target.oid
+    - if @branch.commit_id == @target.commit_id
       = render partial: 'equal'
-    - elsif @branch.target.oid == @merge_base
+    - elsif @branch.commit_id == @merge_base
       = render partial: 'behind', locals: { website: @website, branch: @branch, target: @target }
-    - elsif @target.target.oid == @merge_base
+    - elsif @target.commit_id == @merge_base
       = render partial: 'ahead', locals: { website: @website, branch: @branch, target: @target }
     - else
       = render partial: 'divergent'

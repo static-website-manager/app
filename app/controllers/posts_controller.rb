@@ -7,11 +7,11 @@ class PostsController < ApplicationController
   before_action :set_return_to, only: %i[index show]
 
   before_action only: %i[show edit update] do
-    @post = Post.find(@repository.send(:rugged_repository), @branch.tree, params[:id])
+    @post = Post.find(@repository.send(:rugged_repository), @branch.commit_id, params[:id])
   end
 
   def index
-    @posts = Post.all(@repository.send(:rugged_repository), @branch.tree, page: params[:page], per_page: 50)
+    @posts = Post.all(@repository.send(:rugged_repository), @branch.commit_id, page: params[:page], per_page: 50)
   end
 
   def new
@@ -21,7 +21,7 @@ class PostsController < ApplicationController
   end
 
   def show
-    @commits = Commit.list(@repository.send(:rugged_repository), @branch.target, pathname: @post.full_pathname, per_page: 10)
+    @commits = Commit.list(@repository.send(:rugged_repository), @branch.commit_id, pathname: @post.full_pathname, per_page: 10)
   end
 
   def edit

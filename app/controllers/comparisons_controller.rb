@@ -8,17 +8,22 @@ class ComparisonsController < ApplicationController
   before_action do
     @target = @repository.branch(params[:id] == 'working' ? current_user : params[:id])
     raise ActiveRecord::RecordNotFound if @target.name == @branch.name
-    @merge_base = @repository.merge_base(@branch.target, @target.target)
+    @merge_base = @repository.merge_base(@branch.commit_id, @target.commit_id)
+  end
+
+  def show
+    @branch_commits = Commit.list(@repository.send(:rugged_repository), @branch.commit_id, per_page: 3)
+    @target_commits = Commit.list(@repository.send(:rugged_repository), @target.commit_id, per_page: 3)
   end
 
   def merge
-    if @branch.target.oid == @target.target.oid
+    if @branch.commit_id == @target.commit_id
       redirect_to [@website, @branch, @target], alert: 'These branches are up-to-date. No merge is necessary.'
-    elsif @branch.target.oid == @merge_base
-      @repository.update_ref("refs/heads/#{@branch.raw_name}", @target.target.oid)
+    elsif @branch.commit_id == @merge_base
+      @repository.update_ref("refs/heads/#{@branch.name}", @target.commit_id)
       redirect_to [@website, @branch, @target], notice: 'Great, these branches are now up-to-date.'
-    elsif @target.target.oid == @merge_base
-      @repository.update_ref("refs/heads/#{@target.raw_name}", @branch.target.oid)
+    elsif @target.commit_id == @merge_base
+      @repository.update_ref("refs/heads/#{@target.name}", @branch.commit_id)
       redirect_to [@website, @branch, @target], notice: 'Great, these branches are now up-to-date.'
     else
       redirect_to [@website, @branch, @target], alert: 'These branches have diverged and must be merged offline.'

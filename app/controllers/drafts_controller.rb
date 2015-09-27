@@ -7,11 +7,11 @@ class DraftsController < ApplicationController
   before_action :set_return_to, only: %i[index show]
 
   before_action only: %i[show edit update] do
-    @draft = Draft.find(@repository.send(:rugged_repository), @branch.tree, params[:id])
+    @draft = Draft.find(@repository.send(:rugged_repository), @branch.commit_id, params[:id])
   end
 
   def index
-    @drafts = Draft.all(@repository.send(:rugged_repository), @branch.tree)
+    @drafts = Draft.all(@repository.send(:rugged_repository), @branch.commit_id)
   end
 
   def new
@@ -21,7 +21,7 @@ class DraftsController < ApplicationController
   end
 
   def show
-    @commits = Commit.list(@repository.send(:rugged_repository), @branch.target, pathname: @draft.full_pathname, per_page: 10)
+    @commits = Commit.list(@repository.send(:rugged_repository), @branch.commit_id, pathname: @draft.full_pathname, per_page: 10)
   end
 
   def edit

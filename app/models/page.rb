@@ -3,8 +3,8 @@ class Page
 
   attr_accessor :dirname, :filename, :id, :objects, :pathname, :rugged_repository
 
-  def self.find(rugged_repository, tree, id)
-    result = tree.walk(:postorder).find do |root, object|
+  def self.find(rugged_repository, commit_id, id)
+    result = rugged_repository.lookup(commit_id).tree.walk(:postorder).find do |root, object|
       object[:oid] == id
     end
 
@@ -20,10 +20,10 @@ class Page
     end
   end
 
-  def self.all(rugged_repository, tree)
+  def self.all(rugged_repository, commit_id)
     result_hash = {}
 
-    tree.walk(:postorder).select do |root, object|
+    rugged_repository.lookup(commit_id).tree.walk(:postorder).select do |root, object|
       !root.match(/\A_/) && (object[:type] == :tree || object[:name].match(/\.(htm|html|text|txt|markdown|mdown|mkdn|mkd|md)\z/))
     end.each do |root, object|
       (result_hash[root] ||= []) << object

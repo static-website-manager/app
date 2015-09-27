@@ -3,8 +3,8 @@ class Post
 
   attr_accessor :filename, :id, :pathname, :rugged_repository
 
-  def self.find(rugged_repository, tree, id)
-    result = tree.walk(:postorder).find do |root, object|
+  def self.find(rugged_repository, commit_id, id)
+    result = rugged_repository.lookup(commit_id).tree.walk(:postorder).find do |root, object|
       object[:oid] == id
     end
 
@@ -20,9 +20,9 @@ class Post
     end
   end
 
-  def self.all(rugged_repository, tree, page: 1, per_page: 20)
+  def self.all(rugged_repository, commit_id, page: 1, per_page: 20)
     Kaminari.paginate_array(
-      tree.walk(:postorder).select do |root, object|
+      rugged_repository.lookup(commit_id).tree.walk(:postorder).select do |root, object|
         root.match(/\A_posts/) && object[:name].match(/\.(htm|html|text|txt|markdown|mdown|mkdn|mkd|md)\z/)
       end.map do |root, object|
         Post.new(

@@ -31,70 +31,37 @@ class Branch
 
   attr_accessor :name, :rugged_branch, :rugged_repository
 
-  def short_id
-    rugged_branch.target.oid[0..6]
+  def commit_id
+    rugged_branch.target.oid
   end
 
-  def raw_name
-    rugged_branch.name
-  end
-
-  def name
-    raw_name.match(/\Aswm_user_\d+\z/) ? 'working' : raw_name
-  end
-
-  def full_name
-    case name
-    when 'master'
-      'Master Branch'
-    when 'working'
-      'Your Working Branch'
-    else
-      "Custom Branch “#{name}”"
-    end
-  end
-
-  def short_name
-    case name
-    when 'master'
-      'Master Branch'
-    when 'working'
-      'Your Working Branch'
-    else
-      'Custom Branch'
-    end
-  end
-
-  def basic_name
-    case name
-    when 'master'
-      'Master Branch'
-    when 'working'
-      'Your Working Branch'
-    else
-      name
-    end
-  end
-
-  def parents
-    Rugged::Walker.new(@rugged_repository).tap do |walker|
-      walker.push target
-    end
+  def master?
+    name == 'master'
   end
 
   def persisted?
     true
   end
 
-  def target
-    rugged_branch.target
+  def short_id
+    rugged_branch.target.oid[0..6]
   end
 
-  def tree
-    rugged_branch.target.tree
+  def title(user)
+    if master?
+      'Master Branch'
+    elsif working?(user)
+      'Your Working Branch'
+    else
+      "Custom Branch “#{name}”"
+    end
   end
 
   def to_param
     name
+  end
+
+  def working?(user)
+    name == "swm_user_#{user.id}"
   end
 end

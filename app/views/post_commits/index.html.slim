@@ -1,5 +1,5 @@
 - @_body_container = false
-- title "Post History #{@post.short_id} • #{@branch.full_name}"
+- title "Post History #{@post.short_id} • #{@branch.title(current_user)}"
 
 .editor-container
   .editor-header

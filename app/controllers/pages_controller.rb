@@ -7,11 +7,11 @@ class PagesController < ApplicationController
   before_action :set_return_to, only: %i[index show]
 
   before_action only: %i[show edit update] do
-    @page = Page.find(@repository.send(:rugged_repository), @branch.tree, params[:id])
+    @page = Page.find(@repository.send(:rugged_repository), @branch.commit_id, params[:id])
   end
 
   def index
-    @pages = Page.all(@repository.send(:rugged_repository), @branch.tree)
+    @pages = Page.all(@repository.send(:rugged_repository), @branch.commit_id)
   end
 
   def new
@@ -21,7 +21,7 @@ class PagesController < ApplicationController
   end
 
   def show
-    @commits = Commit.list(@repository.send(:rugged_repository), @branch.target, pathname: @page.full_pathname, per_page: 10)
+    @commits = Commit.list(@repository.send(:rugged_repository), @branch.commit_id, pathname: @page.full_pathname, per_page: 10)
   end
 
   def edit

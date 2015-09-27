@@ -1,5 +1,5 @@
 - @_body_container = false
-- title "New Draft • #{@branch.full_name}"
+- title "New Draft • #{@branch.title(current_user)}"
 
 .editor-container
   .editor-header

@@ -7,6 +7,6 @@ class BranchCommitsController < ApplicationController
   before_action :set_return_to
 
   def index
-    @commits = Commit.list(@repository.send(:rugged_repository), @branch.target, page: params[:page])
+    @commits = Commit.list(@repository.send(:rugged_repository), @branch.commit_id, page: params[:page])
   end
 end

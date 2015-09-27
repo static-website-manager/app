@@ -3,8 +3,8 @@ class Draft
 
   attr_accessor :filename, :id, :pathname, :rugged_repository
 
-  def self.find(rugged_repository, tree, id)
-    result = tree.walk(:postorder).find do |root, object|
+  def self.find(rugged_repository, commit_id, id)
+    result = rugged_repository.lookup(commit_id).tree.walk(:postorder).find do |root, object|
       object[:oid] == id
     end
 
@@ -20,8 +20,8 @@ class Draft
     end
   end
 
-  def self.all(rugged_repository, tree)
-    tree.walk(:postorder).select do |root, object|
+  def self.all(rugged_repository, commit_id)
+    rugged_repository.lookup(commit_id).tree.walk(:postorder).select do |root, object|
       root.match(/\A_drafts/) && object[:name].match(/\.(htm|html|text|txt|markdown|mdown|mkdn|mkd|md)\z/)
     end.map do |root, object|
       Draft.new(

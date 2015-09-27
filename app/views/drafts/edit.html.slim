@@ -1,5 +1,5 @@
 - @_body_container = false
-- title "Edit Draft #{@draft.short_id} • #{@branch.full_name}"
+- title "Edit Draft #{@draft.short_id} • #{@branch.title(current_user)}"
 
 = form_for [@website, @branch, @draft] do |form|
   .editor-container

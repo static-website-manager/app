@@ -7,10 +7,10 @@ class DraftCommitsController < ApplicationController
   before_action :set_return_to
 
   before_action do
-    @draft = Draft.find(@repository.send(:rugged_repository), @branch.tree, params[:draft_id])
+    @draft = Draft.find(@repository.send(:rugged_repository), @branch.commit_id, params[:draft_id])
   end
 
   def index
-    @commits = Commit.list(@repository.send(:rugged_repository), @branch.target, pathname: @draft.full_pathname, page: params[:page])
+    @commits = Commit.list(@repository.send(:rugged_repository), @branch.commit_id, pathname: @draft.full_pathname, page: params[:page])
   end
 end

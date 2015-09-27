@@ -1,5 +1,5 @@
 - @_body_container = false
-- title "Page #{@page.short_id} • #{@branch.full_name}"
+- title "Page #{@page.short_id} • #{@branch.title(current_user)}"
 
 .editor-container
   .editor-header

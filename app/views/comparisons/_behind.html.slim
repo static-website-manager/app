@@ -1,8 +1,8 @@
 .well.text-center
   p
-    span.label.label-default => branch.basic_name
+    span.label.label-default => branch.title(current_user)
     ' is behind
-    span.label.label-default => target.basic_name
+    span.label.label-default => target.title(current_user)
     | but those changes can be automatically merged.
   hr
   = form_tag [:merge, website, branch, target] do

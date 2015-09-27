@@ -1,4 +1,4 @@
-- title "Pages • #{@branch.full_name}"
+- title "Pages • #{@branch.title(current_user)}"
 
 = render partial: 'websites/header', locals: { website: @website }
 = render partial: 'branches/header', locals: { website: @website, repository: @repository, branch: @branch }
