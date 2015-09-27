@@ -82,8 +82,8 @@ class Branch
       trees = Array(hash[root]).select do |object|
         object[:type] == :tree
       end.map do |object|
-        PageTree.new(name: object[:name])
-      end.sort_by(&:name)
+        PageTree.new(filename: object[:name])
+      end.sort_by(&:filename)
 
       blobs = Array(hash[root]).select do |object|
         object[:type] == :blob
@@ -99,7 +99,7 @@ class Branch
       end
 
       trees.each do |tree|
-        tree.objects = arrange(hash, root + tree.name + '/')
+        tree.objects = arrange(hash, root + tree.filename + '/')
       end
 
       blobs + trees.reject { |t| t.objects.empty? }

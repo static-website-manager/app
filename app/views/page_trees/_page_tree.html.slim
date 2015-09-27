@@ -3,6 +3,6 @@ li.page-tree
     .panel-body
       = content_tag "h#{level}" do
         => icon 'folder'
-        = page_tree.name + '/'
+        = page_tree.filename + '/'
   ul
     = render page_tree.objects, website: website, branch: branch, level: level == 6 ? 6 : level + 1
