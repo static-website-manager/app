@@ -20,6 +20,10 @@ class Branch
     @rugged_branch = rugged_branch
   end
 
+  def short_id
+    @rugged_branch.target.oid[0..6]
+  end
+
   def commits(page: 1, per_page: 20)
     Kaminari.paginate_array(
       Rugged::Walker.new(@rugged_repository).tap do |walker|

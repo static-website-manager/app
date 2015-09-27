@@ -4,7 +4,7 @@
     => icon 'cube'
     span.website-title => link_to website.name, (repository.setup? ? [website, repository.branch(current_user)] : [:new, website, :setup])
     - if repository.setup?
-      strong.text-muted.website-info = repository.branch(current_user).commit.short_id
+      strong.text-muted.website-info = repository.branch(current_user).short_id
     - else
       em.text-muted.website-info Pending setup...
   - if repository.setup?
