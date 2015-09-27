@@ -21,7 +21,7 @@ class PagesController < ApplicationController
   end
 
   def show
-    @commits = Commit.list(@repository.send(:rugged_repository), @branch.target, @page.full_pathname, per_page: 10)
+    @commits = Commit.list(@repository.send(:rugged_repository), @branch.target, pathname: @page.full_pathname, per_page: 10)
   end
 
   def edit

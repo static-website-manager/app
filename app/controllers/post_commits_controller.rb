@@ -11,6 +11,6 @@ class PostCommitsController < ApplicationController
   end
 
   def index
-    @commits = Commit.list(@repository.send(:rugged_repository), @branch.target, @post.full_pathname, per_page: 10)
+    @commits = Commit.list(@repository.send(:rugged_repository), @branch.target, pathname: @post.full_pathname, page: params[:page])
   end
 end

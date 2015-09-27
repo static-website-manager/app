@@ -7,6 +7,6 @@ class BranchesController < ApplicationController
   before_action :set_return_to
 
   def show
-    @commits = @branch.commits(per_page: 10)
+    @commits = Commit.list(@repository.send(:rugged_repository), @branch.target, per_page: 10)
   end
 end
