@@ -11,6 +11,6 @@ class PageCommitsController < ApplicationController
   end
 
   def index
-    @commits = @page.commits(@branch.target, page: params[:page])
+    @commits = Commit.list(@repository.send(:rugged_repository), @branch.target, @page.full_pathname, per_page: 10)
   end
 end

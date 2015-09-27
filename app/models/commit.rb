@@ -2,6 +2,19 @@ class Commit
   include ActiveModel::Conversion
   extend ActiveModel::Naming
 
+  def self.list(rugged_repository, target, pathname, page: 1, per_page: 20)
+    Kaminari.paginate_array(
+      Rugged::Walker.new(rugged_repository).tap do |walker|
+        walker.sorting Rugged::SORT_TOPO
+        walker.push target
+      end.select do |rugged_commit|
+        rugged_commit.diff(paths: [pathname]).size > 0
+      end.map do |rugged_commit|
+        Commit.new(rugged_repository, rugged_commit)
+      end
+    ).page(page).per(per_page)
+  end
+
   def initialize(rugged_repository, rugged_commit)
     @rugged_repository = rugged_repository
     @rugged_commit = rugged_commit
