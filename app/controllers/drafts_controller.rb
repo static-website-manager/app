@@ -21,7 +21,7 @@ class DraftsController < ApplicationController
   end
 
   def show
-    @commits = Commit.list(@repository.send(:rugged_repository), @branch.commit_id, pathname: @draft.full_pathname, per_page: 10)
+    @commits = Commit.all(@repository.send(:rugged_repository), @branch.commit_id, pathname: @draft.full_pathname, per_page: 10)
   end
 
   def edit

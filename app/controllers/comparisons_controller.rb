@@ -12,8 +12,8 @@ class ComparisonsController < ApplicationController
   end
 
   def show
-    @branch_commits = Commit.list(@repository.send(:rugged_repository), @branch.commit_id, per_page: 3)
-    @target_commits = Commit.list(@repository.send(:rugged_repository), @target.commit_id, per_page: 3)
+    @branch_commits = Commit.all(@repository.send(:rugged_repository), @branch.commit_id, per_page: 3)
+    @target_commits = Commit.all(@repository.send(:rugged_repository), @target.commit_id, per_page: 3)
   end
 
   def merge
