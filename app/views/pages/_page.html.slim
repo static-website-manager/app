@@ -8,8 +8,8 @@ li
           => icon 'file fa-3x pull-left'
         div style="padding-left: 3.5em"
           = content_tag "h#{level}" do
-            = page.node_name.present? ? page.node_name : page.name
-          code.small = page.raw_pathname
+            = page.dirname.present? ? page.dirname : page.filename
+          code.small = page.full_pathname
   - if page.objects && page.objects.length > 0
     ul
       = render page.objects, website: website, branch: branch, level: level == 6 ? 6 : level + 1

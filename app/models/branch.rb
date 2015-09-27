@@ -42,7 +42,16 @@ class Branch
       blob_class ||= Draft if object[1][:root].match(/\A_drafts/)
       blob_class ||= Post if object[1][:root].match(/\A_posts/)
       blob_class ||= Page
-      blob_class.new(@rugged_repository, *object[1].values)
+      if blob_class == Page
+        Page.new(
+          id: object[1][:oid],
+          filename: object[1][:name],
+          pathname: object[1][:root],
+          rugged_repository: @rugged_repository,
+        )
+      else
+        blob_class.new(@rugged_repository, *object[1].values)
+      end
     else
       raise ActiveRecord::RecordNotFound
     end
@@ -79,9 +88,14 @@ class Branch
       blobs = Array(hash[root]).select do |object|
         object[:type] == :blob
       end.map do |object|
-        Page.new(@rugged_repository, *object.values, root)
-      end.sort_by(&:name).sort do |blob|
-        blob.name.match(/\Aindex\./) ? 0 : 1
+        Page.new(
+          id: object[:oid],
+          filename: object[:name],
+          pathname: root,
+          rugged_repository: @rugged_repository,
+        )
+      end.sort_by(&:filename).sort do |blob|
+        blob.filename.match(/\Aindex\./) ? 0 : 1
       end
 
       trees.each do |tree|
@@ -93,7 +107,7 @@ class Branch
 
     collection = arrange(hash, '')
 
-    if root = collection.find { |object| object.is_a?(Page) && object.name.match(/\Aindex\.(htm|html|text|txt|markdown|mdown|mkdn|mkd|md)\z/) }
+    if root = collection.find { |object| object.is_a?(Page) && object.filename.match(/\Aindex\.(htm|html|text|txt|markdown|mdown|mkdn|mkd|md)\z/) }
       collection.delete(root)
       root.objects = collection
       collection = [root]
@@ -101,10 +115,10 @@ class Branch
 
     def extract(collection)
       collection.map do |object|
-        if root = (object.objects || []).find { |o| o.is_a?(Page) && o.name.match(/\Aindex\.(htm|html|text|txt|markdown|mdown|mkdn|mkd|md)\z/) }
+        if root = (object.objects || []).find { |o| o.is_a?(Page) && o.filename.match(/\Aindex\.(htm|html|text|txt|markdown|mdown|mkdn|mkd|md)\z/) }
           object.objects.delete(root)
           root.objects = extract(object.objects || [])
-          root.node_name = object.name
+          root.dirname = object.filename
           root
         else
           object.objects = extract(object.objects || [])
