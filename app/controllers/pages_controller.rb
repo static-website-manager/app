@@ -11,7 +11,7 @@ class PagesController < ApplicationController
   end
 
   def index
-    @pages = @branch.pages
+    @pages = Page.all(@repository.send(:rugged_repository), @branch.tree)
   end
 
   def new

@@ -20,6 +20,19 @@ class Draft
     end
   end
 
+  def self.all(rugged_repository, tree)
+    tree.walk(:postorder).select do |root, object|
+      root.match(/\A_drafts/) && object[:name].match(/\.(htm|html|text|txt|markdown|mdown|mkdn|mkd|md)\z/)
+    end.map do |root, object|
+      Draft.new(
+        id: object[:oid],
+        filename: object[:name],
+        pathname: root,
+        rugged_repository: rugged_repository,
+      )
+    end
+  end
+
   def full_pathname
     File.join([pathname, filename].reject(&:blank?))
   end

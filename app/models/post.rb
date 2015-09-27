@@ -20,6 +20,21 @@ class Post
     end
   end
 
+  def self.all(rugged_repository, tree, page: 1, per_page: 20)
+    Kaminari.paginate_array(
+      tree.walk(:postorder).select do |root, object|
+        root.match(/\A_posts/) && object[:name].match(/\.(htm|html|text|txt|markdown|mdown|mkdn|mkd|md)\z/)
+      end.map do |root, object|
+        Post.new(
+          id: object[:oid],
+          filename: object[:name],
+          pathname: root,
+          rugged_repository: rugged_repository,
+        )
+      end.sort_by(&:published_on).reverse
+    ).page(page).per(per_page)
+  end
+
   def full_pathname
     File.join([pathname, filename].reject(&:blank?))
   end

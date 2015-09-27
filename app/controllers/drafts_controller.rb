@@ -11,7 +11,7 @@ class DraftsController < ApplicationController
   end
 
   def index
-    @drafts = @branch.drafts
+    @drafts = Draft.all(@repository.send(:rugged_repository), @branch.tree)
   end
 
   def new

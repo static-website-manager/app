@@ -11,7 +11,7 @@ class PostsController < ApplicationController
   end
 
   def index
-    @posts = @branch.posts(page: params[:page], per_page: 50)
+    @posts = Post.all(@repository.send(:rugged_repository), @branch.tree, page: params[:page], per_page: 50)
   end
 
   def new
