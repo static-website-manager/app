@@ -11,6 +11,6 @@ class DraftCommitsController < ApplicationController
   end
 
   def index
-    @commits = @draft.commits(@branch.target, page: params[:page])
+    @commits = Commit.list(@repository.send(:rugged_repository), @branch.target, @draft.full_pathname, per_page: 10)
   end
 end

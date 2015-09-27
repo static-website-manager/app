@@ -1,7 +1,7 @@
 class Page
   include ActiveModel::Model
 
-  attr_accessor :id, :dirname, :filename, :objects, :pathname, :rugged_repository
+  attr_accessor :dirname, :filename, :id, :objects, :pathname, :rugged_repository
 
   def full_pathname
     File.join([pathname, filename].reject(&:blank?))

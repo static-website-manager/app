@@ -39,18 +39,27 @@ class Branch
     end
 
     if object
-      blob_class ||= Draft if object[1][:root].match(/\A_drafts/)
-      blob_class ||= Post if object[1][:root].match(/\A_posts/)
-      blob_class ||= Page
-      if blob_class == Page
-        Page.new(
+      if object[1][:root].match(/\A_drafts/)
+        Draft.new(
+          id: object[1][:oid],
+          filename: object[1][:name],
+          pathname: object[1][:root],
+          rugged_repository: @rugged_repository,
+        )
+      elsif object[1][:root].match(/\A_posts/)
+        Post.new(
           id: object[1][:oid],
           filename: object[1][:name],
           pathname: object[1][:root],
           rugged_repository: @rugged_repository,
         )
       else
-        blob_class.new(@rugged_repository, *object[1].values)
+        Page.new(
+          id: object[1][:oid],
+          filename: object[1][:name],
+          pathname: object[1][:root],
+          rugged_repository: @rugged_repository,
+        )
       end
     else
       raise ActiveRecord::RecordNotFound
@@ -134,7 +143,12 @@ class Branch
     target.tree.walk(:postorder).select do |root, object|
       root.match(/\A_drafts/) && object[:name].match(/\.(htm|html|text|txt|markdown|mdown|mkdn|mkd|md)\z/)
     end.map do |root, object|
-      Draft.new(@rugged_repository, *object.values, root)
+      Draft.new(
+        id: object[:oid],
+        filename: object[:name],
+        pathname: root,
+        rugged_repository: @rugged_repository,
+      )
     end
   end
 
@@ -143,7 +157,12 @@ class Branch
       target.tree.walk(:postorder).select do |root, object|
         root.match(/\A_posts/) && object[:name].match(/\.(htm|html|text|txt|markdown|mdown|mkdn|mkd|md)\z/)
       end.map do |root, object|
-        Post.new(@rugged_repository, *object.values, root)
+        Post.new(
+          id: object[:oid],
+          filename: object[:name],
+          pathname: root,
+          rugged_repository: @rugged_repository,
+        )
       end.sort_by(&:published_on).reverse
     ).page(page).per(per_page)
   end

@@ -21,7 +21,7 @@ class PostsController < ApplicationController
   end
 
   def show
-    @commits = @post.commits(@branch.target, per_page: 10)
+    @commits = Commit.list(@repository.send(:rugged_repository), @branch.target, @post.full_pathname, per_page: 10)
   end
 
   def edit
