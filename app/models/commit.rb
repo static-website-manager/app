@@ -1,6 +1,8 @@
 class Commit
   include ActiveModel::Model
 
+  attr_accessor :author_email, :author_name, :id, :message, :parent_ids, :rugged_commit, :rugged_repository, :time
+
   def self.find(rugged_repository, commit_id)
     rugged_commit = rugged_repository.lookup(commit_id)
 
@@ -25,13 +27,13 @@ class Commit
       walker.sorting Rugged::SORT_TOPO
       walker.push commit_id
     end
-  
+
     if pathname.present?
       commits = commits.select do |rugged_commit|
         rugged_commit.diff(paths: [pathname]).size > 0
       end
     end
-    
+
     commits = commits.map do |rugged_commit|
       Commit.new(
         author_email: rugged_commit.author[:email],
@@ -47,8 +49,6 @@ class Commit
 
     Kaminari.paginate_array(commits).page(page).per(per_page)
   end
-
-  attr_accessor :author_email, :author_name, :id, :message, :parent_ids, :rugged_commit, :rugged_repository, :time
 
   def diff
     if rugged_commit.parents.any?

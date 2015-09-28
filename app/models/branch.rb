@@ -1,6 +1,8 @@
 class Branch
   include ActiveModel::Model
 
+  attr_accessor :name, :rugged_branch, :rugged_repository
+
   def self.find(rugged_repository, name_or_user)
     if name_or_user.blank?
       raise ActiveRecord::RecordNotFound
@@ -28,8 +30,6 @@ class Branch
       raise ActiveRecord::RecordNotFound
     end
   end
-
-  attr_accessor :name, :rugged_branch, :rugged_repository
 
   def commit_id
     rugged_branch.target.oid
