@@ -26,18 +26,19 @@
     font-size: 1.2em;
     line-height: 1;
   }
-  &.logo-back {
-    padding-left: 83px;
-    i.fa {
-      position: absolute;
-      left: 2px;
-      top: 50%;
-      margin-top: -10px;
-      font-size: 20px;
-    }
-    img {
-      left: 30px;
-    }
+}
+
+.logo-back {
+  padding-left: 83px;
+  i.fa {
+    position: absolute;
+    left: 2px;
+    top: 50%;
+    margin-top: -10px;
+    font-size: 20px;
+  }
+  img {
+    left: 30px;
   }
 }
 

@@ -2,8 +2,8 @@
 - title "Edit Post #{@post.short_id} • #{@branch.title(current_user)}"
 
 = form_for [@website, @branch, @post] do |form|
-  .editor-container
-    .editor-header
+  .blob-container
+    .blob-header
       .container-fluid
         => link_to [@website, @branch, :posts], class: 'logo-small-back-container' do
           => icon 'reply'
@@ -13,7 +13,7 @@
           li = link_to 'History', [@website, @branch, @post, :commits]
           li.active = link_to 'Edit', '#'
     .container-fluid
-      .editor-content
+      .blob-content
         - if @post.writable?
           .form-group
             = form.label :content, class: 'control-label'

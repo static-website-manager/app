@@ -1,8 +1,8 @@
 - @_body_container = false
 - title "Post History #{@post.short_id} • #{@branch.title(current_user)}"
 
-.editor-container
-  .editor-header
+.blob-container
+  .blob-header
     .container-fluid
       => link_to [@website, @branch, :posts], class: 'logo-small-back-container' do
         => icon 'reply'
@@ -12,7 +12,7 @@
         li.active = link_to 'History', '#'
         li = link_to 'Edit', [:edit, @website, @branch, @post]
   .container-fluid
-    .editor-content
+    .blob-content
       ol.list-unstyled.commits
         = render @commits, website: @website
       .text-center

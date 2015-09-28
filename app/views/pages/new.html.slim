@@ -2,8 +2,8 @@
 - title "New Page • #{@branch.title(current_user)}"
 
 = form_for [@website, @branch, @page] do |form|
-  .editor-container
-    .editor-header
+  .blob-container
+    .blob-header
       .container-fluid
         => link_to [@website, @branch, :pages], class: 'logo-small-back-container' do
           => icon 'reply'
@@ -11,7 +11,7 @@
         ul.nav.nav-tabs
           li.active = link_to 'New Page', '#'
     .container-fluid
-      .editor-content
+      .blob-content
         .form-group
           = form.label :content, class: 'control-label'
           = form.text_area :content, rows: 20, class: 'form-control'

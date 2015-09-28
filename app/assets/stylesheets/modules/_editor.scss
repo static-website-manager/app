@@ -1,8 +1,8 @@
-.editor-container {
+.blob-container {
   position: relative;
 }
 
-.editor-header {
+.blob-header {
   margin-bottom: 2em;
   padding-top: 0.5em;
   background-color: #eee;
@@ -26,7 +26,7 @@
   }
 }
 
-.editor-content {
+.blob-content {
   h1 {
     margin: 0;
     font-size: 1.8em;

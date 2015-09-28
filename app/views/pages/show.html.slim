@@ -1,8 +1,8 @@
 - @_body_container = false
 - title "Page #{@page.short_id} • #{@branch.title(current_user)}"
 
-.editor-container
-  .editor-header
+.blob-container
+  .blob-header
     .container-fluid
       => link_to [@website, @branch, :pages], class: 'logo-small-back-container' do
         => icon 'reply'
@@ -12,7 +12,7 @@
         li = link_to 'History', [@website, @branch, @page, :commits]
         li = link_to 'Edit', [:edit, @website, @branch, @page]
   .container-fluid
-    .editor-content
+    .blob-content
       h1 = @page.title
       code.small = @page.full_pathname
       .row
