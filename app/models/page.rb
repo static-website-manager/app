@@ -1,7 +1,7 @@
 class Page
   include ActiveModel::Model
 
-  attr_accessor :dirname, :filename, :id, :objects, :pathname, :rugged_repository
+  attr_accessor :content, :dirname, :filename, :id, :objects, :pathname, :rugged_blob, :rugged_repository
 
   def self.find(rugged_repository, commit_id, id)
     result = rugged_repository.lookup(commit_id).tree.walk(:postorder).find do |root, object|
@@ -9,10 +9,13 @@ class Page
     end
 
     if result && !result[0].match(/\A_/)
+      rugged_blob = rugged_repository.lookup(id)
       new(
+        content: rugged_blob.content.sub(/\A(---\s*\n.*?\n?)^((---|\.\.\.)\s*$\n?)/m, '').force_encoding('utf-8'),
         id: id,
         filename: result[1][:name],
         pathname: result[0],
+        rugged_blob: rugged_blob,
         rugged_repository: rugged_repository,
       )
     else

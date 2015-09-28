@@ -1,22 +1,28 @@
 - @_body_container = false
 - title "New Post • #{@branch.title(current_user)}"
 
-.editor-container
-  .editor-header
+= form_for [@website, @branch, @post] do |form|
+  .editor-container
+    .editor-header
+      .container-fluid
+        => link_to [@website, @branch, :posts], class: 'logo-small-back-container' do
+          => icon 'reply'
+          => image_tag 'logo-small.png', alt: 'Static Website Manager', class: 'logo-small'
+        ul.nav.nav-tabs
+          li.active = link_to 'New Post', '#'
     .container-fluid
-      => link_to [@website, @branch, :posts], class: 'logo-small-back-container' do
-        => icon 'reply'
-        => image_tag 'logo-small.png', alt: 'Static Website Manager', class: 'logo-small'
-      ul.nav.nav-tabs
-        li.active = link_to 'New Post', '#'
-  .container-fluid
-    .editor-content
-      hr
-      .row
-        .col-sm-6.col-sm-offset-3
-          .row
-            .col-sm-9
-              = text_field_tag :message, params[:message], placeholder: 'Add New Post', class: 'form-control'
-            .col-sm-3
-              = button_tag class: 'btn btn-success' do
-                | Save Changes
+      .editor-content
+        .form-group
+          = form.label :content, class: 'control-label'
+          = form.text_area :content, rows: 20, class: 'form-control'
+        hr
+        .row
+          .col-sm-6.col-sm-offset-3
+            .row
+              .col-sm-9
+                .form-group
+                  = label_tag :message, 'Commit Message', class: 'control-label'
+                  = text_field_tag :message, params[:message], placeholder: 'Add New Post', class: 'form-control'
+              .col-sm-3 style="margin-top:1.8em"
+                = form.button class: 'btn btn-success' do
+                  | Save Changes

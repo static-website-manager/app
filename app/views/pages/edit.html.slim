@@ -14,11 +14,6 @@
           li.active = link_to 'Edit', '#'
     .container-fluid
       .editor-content
-        = form.fields_for :metadata do |metadata_form|
-          - form.object.metadata.each do |field, value|
-            .form-group
-              = metadata_form.label field, class: 'control-label'
-              = metadata_form.text_field field, value: value, class: 'form-control'
         - if @page.writable?
           .form-group
             = form.label :content, class: 'control-label'
@@ -30,7 +25,7 @@
           .col-sm-6.col-sm-offset-3
             .row
               .col-sm-9
-                = text_field_tag :message, params[:message], placeholder: "Save changes to #{@page.raw_pathname}", class: 'form-control'
+                = text_field_tag :message, params[:message], placeholder: "Save changes to #{@page.full_pathname}", class: 'form-control'
               .col-sm-#
                 = form.button class: 'btn btn-success' do
                   | Save Changes

@@ -6,6 +6,10 @@ class DraftsController < ApplicationController
   before_action :require_branch
   before_action :set_return_to, only: %i[index show]
 
+  before_action only: %i[new create] do
+    @draft = Draft.new(rugged_repository: @repository.send(:rugged_repository), pathname: '_drafts')
+  end
+
   before_action only: %i[show edit update] do
     @draft = Draft.find(@repository.send(:rugged_repository), @branch.commit_id, params[:id])
   end
@@ -14,39 +18,27 @@ class DraftsController < ApplicationController
     @drafts = Draft.all(@repository.send(:rugged_repository), @branch.commit_id)
   end
 
-  def new
-  end
-
   def create
-  end
-
-  def show
-    @commits = Commit.all(@repository.send(:rugged_repository), @branch.commit_id, pathname: @draft.full_pathname, per_page: 10)
-  end
-
-  def edit
-  end
-
-  def update
-    new_id = @draft.save(@website, @branch, current_user, draft_content, params[:message])
-
-    if new_id.present? && new_id == @draft.id
+    if success
       redirect_to website_branch_draft_path(@website, @branch, @draft), alert: 'No changes detected.'
-    elsif new_id
-      redirect_to website_branch_draft_path(@website, @branch, new_id), notice: 'Great, we’ve committed your changes.'
     else
       flash.now.alert = 'There was a problem saving your changes.'
       render :edit, status: 422
     end
   end
 
-  private
+  def show
+    @commits = Commit.all(@repository.send(:rugged_repository), @branch.commit_id, pathname: @draft.full_pathname, per_page: 10)
+  end
 
-  def draft_content
-    if params[:draft].try(:[], :metadata).present?
-      [YAML.dump(params[:draft][:metadata].to_hash), @draft.writable? ? params[:draft].try(:[], :content) || '' : @draft.content].join("---\n\n")
+  def update
+    if same
+      redirect_to website_branch_draft_path(@website, @branch, @draft), alert: 'No changes detected.'
+    elsif success
+      redirect_to website_branch_draft_path(@website, @branch, new_id), notice: 'Great, we’ve committed your changes.'
     else
-      @draft.writable? ? params[:draft].try(:[], :content) || '' : @draft.content
+      flash.now.alert = 'There was a problem saving your changes.'
+      render :edit, status: 422
     end
   end
 end
