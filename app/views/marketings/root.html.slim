@@ -1,53 +1,46 @@
 - title 'Static Website Manager – Easy Team Management for your Jekyll Websites'
 - @_body_container = false
 
-.container-fluid
-  .header.text-right
-    .logo-large.pull-left
-      => image_tag 'logo-large.png', alt: ''
-      strong Static Website Manager
-    p = link_to content_tag(:strong, 'Sign up for just $50/month'), :new_subscription
-    p Existing User? #{link_to content_tag(:strong, 'Sign In'), :new_session}
-.container
-  .marketing-introduction
-    h1 Easy Website Management for Teams
-    h2 Tired of making frequent changes to your team’s existing Jekyll website?
-    .row
-      .col-md-10.col-md-offset-1
-        p The <i>Static Website Manager</i> takes the pain out of website management by giving your non-technical team members powerful tools to <b>make webpage changes</b> and <b>write and edit blog posts</b>. Each team member gets their own working branch and you can <b>create collaborative branches</b> that your whole team has access to. Administrators can deploy branches at any time and team members with less privilege can <b>submit merge requests for team review and approval</b>.
-    .row
-      .col-sm-6.text-right
-        = link_to 'Subscribe free for 30 days »', :new_subscription, class: 'btn btn-lg btn-success'
-      .col-sm-6.text-left
-        small.text-muted
-          ' No commitments. Cancel Anytime.
-          br>
-          | Enroll in a yearly plan and save over 15%.
-.marketing-jumbotron
+.marketing-introduction
+  .container-fluid
+    .header.text-right
+      .logo-large.pull-left
+        => image_tag 'logo-large.png', alt: ''
+        strong Static Website Manager
+      p = link_to content_tag(:strong, 'Sign up for just $50/month'), :new_subscription
+      p Existing User? #{link_to content_tag(:strong, 'Sign In'), :new_session}
   .container
-    .row
-      .col-sm-4
+    h1 The Static Website CMS
+    h2
+      ' Tired of making frequent changes to your team’s existing Jekyll website?
+      strong> Static Website Manager
+      | allows team members of all technical abilities to safely update pages, write posts and edit metadata.
+    .row.text-center
+      .col-sm-3
         span.badge 1
-        h2.lead Push your existing Jekyll website to Static Website Manager
-      .col-sm-4
+        h3.lead Push your existing Jekyll website design to Static Website Manager’s git server.
+      .col-sm-3
         span.badge 2
-        h2.lead Team members update webpages, write posts and edit YAML front-matter
-      .col-sm-4
+        h3.lead Team members get their own working branch and can create custom collaborative branches to make their changes.
+      .col-sm-3
         span.badge 3
-        h2.lead Create collaborative branches and submit deploy requests for team review
-.container
-  .row
-    .col-md-10.col-md-offset-1
-      .row
-        .col-sm-7
-          ul
-            li Invite and manage up to <strong>100 team members</strong>
-            li Apply <strong>predefined access levels</strong> or create <strong>user-specific settings</strong>
-            li Store up to <strong>1GB of repository data</strong>
-            li Connect with <strong>SSL encryption</strong> over <code>http</code> and <code>git</code> protocols
-        .col-sm-5
-          p = link_to :new_subscription, class: 'btn btn-block btn-lg btn-success' do
-            ' Try the
-            strong> Static Website <br> Manager
-            | Free for 30 Days
-  hr
+        h3.lead Preview the compiled website design of any branch and submit and accept merge requests.
+      .col-sm-3
+        span.badge 4
+        h3.lead Point your own custom domain to the master branch and your website is live! Or setup custom callbacks to deploy to your own location!
+    .marketing-button
+      = link_to :new_subscription, class: 'btn btn-lg btn-success' do
+        ' Try the
+        strong> Static Website Manager
+        ' Free for 30 Days
+        = icon 'angle-double-right'
+.marketing-questions
+  .container
+    p.lead.text-center Questions?
+    .row
+      .col-sm-6
+        h4 Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        p Pellentesque porttitor arcu vitae tortor scelerisque, at luctus neque commodo. Mauris turpis ligula, mattis eget dapibus vel, mollis id purus. Nullam vitae egestas quam. Nunc in arcu est. Nunc volutpat diam a erat finibus fringilla. Maecenas lobortis tincidunt cursus. Mauris vulputate leo eget congue facilisis.
+      .col-sm-6
+        h4 Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        p Pellentesque porttitor arcu vitae tortor scelerisque, at luctus neque commodo. Mauris turpis ligula, mattis eget dapibus vel, mollis id purus. Nullam vitae egestas quam. Nunc in arcu est. Nunc volutpat diam a erat finibus fringilla. Maecenas lobortis tincidunt cursus. Mauris vulputate leo eget congue facilisis.
