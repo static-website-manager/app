@@ -12,17 +12,4 @@
           li.active = link_to 'New Post', '#'
     .container-fluid
       .blob-content
-        .form-group
-          = form.label :content, class: 'control-label'
-          = form.text_area :content, rows: 20, class: 'form-control'
-        hr
-        .row
-          .col-sm-6.col-sm-offset-3
-            .row
-              .col-sm-9
-                .form-group
-                  = label_tag :message, 'Commit Message', class: 'control-label'
-                  = text_field_tag :message, params[:message], placeholder: 'Add New Post', class: 'form-control'
-              .col-sm-3 style="margin-top:1.8em"
-                = form.button class: 'btn btn-success' do
-                  | Save Changes
+        = render partial: 'blobs/form', object: form, locals: { placeholder: 'Add New Post' }

@@ -1,0 +1,13 @@
+.blob-editor
+  .row
+    .col-sm-4
+      h2.h4 Metadata
+    .col-sm-8
+      = form.label :content, class: 'control-label h4'
+      = form.text_area :content, rows: 20, class: 'form-control'
+.blob-submit
+  .row
+    .col-sm-9
+      = text_field_tag :message, params[:message], placeholder: placeholder, class: 'form-control'
+    .col-sm-3
+      = form.button 'Save Changes', class: 'btn btn-block btn-success'

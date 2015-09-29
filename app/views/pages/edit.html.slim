@@ -14,18 +14,4 @@
           li.active = link_to 'Edit', '#'
     .container-fluid
       .blob-content
-        - if @page.writable?
-          .form-group
-            = form.label :content, class: 'control-label'
-            = form.text_area :content, rows: 20, class: 'form-control'
-        - else
-          pre: code = @page.content
-        hr
-        .row
-          .col-sm-6.col-sm-offset-3
-            .row
-              .col-sm-9
-                = text_field_tag :message, params[:message], placeholder: "Save changes to #{@page.full_pathname}", class: 'form-control'
-              .col-sm-#
-                = form.button class: 'btn btn-success' do
-                  | Save Changes
+        = render partial: 'blobs/form', object: form, locals: { placeholder: "Save changes to #{@page.full_pathname}" }

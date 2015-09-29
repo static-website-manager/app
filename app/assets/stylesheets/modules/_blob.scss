@@ -36,3 +36,16 @@
     margin: 0.5em 0 3em;
   }
 }
+
+.blob-submit {
+  position: absolute;
+  top: 0.5em;
+  right: 0.5em;
+  min-width: 45em;
+  .col-sm-9 {
+    padding-right: 0.25em;
+  }
+  .col-sm-3 {
+    padding-left: 0.25em;
+  }
+}
