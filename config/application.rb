@@ -6,6 +6,9 @@ require 'rails/all'
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
+# Default to safe YAML.
+SafeYAML::OPTIONS[:default_mode] = :safe
+
 module StaticWebsiteManager
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
