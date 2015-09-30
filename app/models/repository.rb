@@ -50,7 +50,7 @@ class Repository
 
     if repository_pathname.present? && repository_pathname.exist?
       @rugged_repository ||= Rugged::Repository.new(repository_pathname.to_s)
-    elsif repository_pathname.exist?
+    elsif repository_pathname.present?
       @rugged_repository ||= Rugged::Repository.init_at(repository_pathname.to_s, :bare)
     else
       raise ActiveRecord::RecordNotFound
