@@ -30,7 +30,7 @@ class PostsController < ApplicationController
 
     if @post.raw_content == raw_content
       redirect_to [@website, @branch, @post], alert: 'No changes detected.'
-    elsif @post.save(@branch.name, current_user.email, current_user.name, params[:message])
+    elsif @post.update(@branch.name, current_user.email, current_user.name, params[:message])
       redirect_to [@website, @branch, @post], notice: 'Great, we’ve committed your changes.'
     else
       flash.now.alert = 'There was a problem saving your changes.'

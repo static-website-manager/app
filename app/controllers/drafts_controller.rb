@@ -30,7 +30,7 @@ class DraftsController < ApplicationController
 
     if @draft.raw_content == raw_content
       redirect_to [@website, @branch, @draft], alert: 'No changes detected.'
-    elsif @draft.save(@branch.name, current_user.email, current_user.name, params[:message])
+    elsif @draft.update(@branch.name, current_user.email, current_user.name, params[:message])
       redirect_to [@website, @branch, @draft], notice: 'Great, we’ve committed your changes.'
     else
       flash.now.alert = 'There was a problem saving your changes.'

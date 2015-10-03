@@ -39,7 +39,7 @@ class PagesController < ApplicationController
 
     if @page.raw_content == raw_content
       redirect_to [@website, @branch, @page], alert: 'No changes detected.'
-    elsif @page.save(@branch.name, current_user.email, current_user.name, params[:message])
+    elsif @page.update(@branch.name, current_user.email, current_user.name, params[:message])
       redirect_to [@website, @branch, @page], notice: 'Great, we’ve committed your changes.'
     else
       flash.now.alert = 'There was a problem saving your changes.'
