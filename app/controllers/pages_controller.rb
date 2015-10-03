@@ -31,14 +31,16 @@ class PagesController < ApplicationController
     @commits = Commit.all(@repository.send(:rugged_repository), @branch.commit_id, pathname: @page.full_pathname, per_page: 10)
   end
 
-  def edit
-  end
-
   def update
-    if same
-      redirect_to website_branch_page_path(@website, @branch, @page), alert: 'No changes detected.'
-    elsif success
-      redirect_to website_branch_page_path(@website, @branch, @page), notice: 'Great, we’ve committed your changes.'
+    raw_content = @page.raw_content
+    @page.content = params[:page].try(:[], :content)
+    @page.filename = params[:page].try(:[], :filename)
+    @page.metadata = params[:page].try(:[], :metadata)
+
+    if @page.raw_content == raw_content
+      redirect_to [@website, @branch, @page], alert: 'No changes detected.'
+    elsif @page.save(@branch.name, current_user.email, current_user.name, params[:message])
+      redirect_to [@website, @branch, @page], notice: 'Great, we’ve committed your changes.'
     else
       flash.now.alert = 'There was a problem saving your changes.'
       render :edit, status: 422

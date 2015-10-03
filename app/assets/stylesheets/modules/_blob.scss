@@ -37,6 +37,13 @@
   }
 }
 
+.blob-editor {
+  .form-group:last-child,
+  .well:last-child {
+    margin-bottom: 0;
+  }
+}
+
 .blob-submit {
   position: absolute;
   top: 0.5em;

@@ -1,7 +1,40 @@
 .blob-editor
   .row
     .col-sm-4
-      h2.h4 Metadata
+      p.h4 Metadata
+      .well.well-sm
+        - if form.object.metadata && form.object.metadata.any?
+          = form.fields_for :metadata do |metadata|
+            - form.object.metadata.each do |key, value|
+              - if value.class == String
+                .form-group
+                  = metadata.label key, key, class: 'control-label'
+                  = metadata.text_field key, value: value, class: 'form-control'
+              - elsif value.class == Time
+                .form-group
+                  = metadata.label key, key, class: 'control-label'
+                  = metadata.time_field key, value: value, class: 'form-control'
+              - elsif value.class == TrueClass || value.class == FalseClass
+                .checkbox
+                  = metadata.label key do
+                    => metadata.check_box key, checked: value
+                    strong = key
+              - elsif value.class == Array && value.map(&:class).uniq == [String]
+                label.control-label = key
+                .well.well-sm
+                  - value.each_with_index do |value, i|
+                    .form-group
+                      = metadata.text_field key, multiple: true, value: value, class: 'form-control'
+              - elsif value.class == Hash && value.keys.map(&:class).uniq == [String] && value.values.map(&:class).uniq == [String]
+                label.control-label = key
+                .well.well-sm
+                  = metadata.fields_for key do |child|
+                    - value.each do |child_key, value|
+                      .form-group
+                        = child.label child_key, child_key, class: 'control-label'
+                        = child.text_field child_key, value: value, class: 'form-control'
+        - else
+          em No metadata found.
     .col-sm-8
       = form.label :content, class: 'control-label h4'
       = form.text_area :content, rows: 20, class: 'form-control'

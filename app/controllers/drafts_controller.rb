@@ -18,24 +18,20 @@ class DraftsController < ApplicationController
     @drafts = Draft.all(@repository.send(:rugged_repository), @branch.commit_id)
   end
 
-  def create
-    if success
-      redirect_to website_branch_draft_path(@website, @branch, @draft), alert: 'No changes detected.'
-    else
-      flash.now.alert = 'There was a problem saving your changes.'
-      render :edit, status: 422
-    end
-  end
-
   def show
     @commits = Commit.all(@repository.send(:rugged_repository), @branch.commit_id, pathname: @draft.full_pathname, per_page: 10)
   end
 
   def update
-    if same
-      redirect_to website_branch_draft_path(@website, @branch, @draft), alert: 'No changes detected.'
-    elsif success
-      redirect_to website_branch_draft_path(@website, @branch, new_id), notice: 'Great, we’ve committed your changes.'
+    raw_content = @draft.raw_content
+    @draft.content = params[:draft].try(:[], :content)
+    @draft.filename = params[:draft].try(:[], :filename)
+    @draft.metadata = params[:draft].try(:[], :metadata)
+
+    if @draft.raw_content == raw_content
+      redirect_to [@website, @branch, @draft], alert: 'No changes detected.'
+    elsif @draft.save(@branch.name, current_user.email, current_user.name, params[:message])
+      redirect_to [@website, @branch, @draft], notice: 'Great, we’ve committed your changes.'
     else
       flash.now.alert = 'There was a problem saving your changes.'
       render :edit, status: 422

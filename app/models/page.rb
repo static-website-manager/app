@@ -1,27 +1,8 @@
 class Page
   include ActiveModel::Model
+  include BlobConcern
 
-  attr_accessor :content, :dirname, :filename, :id, :objects, :pathname, :rugged_blob, :rugged_repository
-
-  def self.find(rugged_repository, commit_id, id)
-    result = rugged_repository.lookup(commit_id).tree.walk(:postorder).find do |root, object|
-      object[:oid] == id
-    end
-
-    if result && !result[0].match(/\A_/)
-      rugged_blob = rugged_repository.lookup(id)
-      new(
-        content: rugged_blob.content.sub(/\A(---\s*\n.*?\n?)^((---|\.\.\.)\s*$\n?)/m, '').force_encoding('utf-8'),
-        id: id,
-        filename: result[1][:name],
-        pathname: result[0],
-        rugged_blob: rugged_blob,
-        rugged_repository: rugged_repository,
-      )
-    else
-      raise ActiveRecord::RecordNotFound
-    end
-  end
+  attr_accessor :dirname, :objects
 
   def self.all(rugged_repository, commit_id)
     result_hash = {}
@@ -39,28 +20,12 @@ class Page
     )
   end
 
-  def full_pathname
-    File.join([pathname, filename].reject(&:blank?))
-  end
-
-  def persisted?
-    id.present?
-  end
-
-  def short_id
-    id[0..6]
+  def self.find(*args)
+    super args.push(/\A[^_]/)
   end
 
   def title
     filename.split('.').first.titleize
-  end
-
-  def to_param
-    id
-  end
-
-  def writable?
-    filename.match(/\.(markdown|mdown|mkdn|mkd|md)\z/)
   end
 
   private

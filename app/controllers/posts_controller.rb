@@ -18,24 +18,20 @@ class PostsController < ApplicationController
     @posts = Post.all(@repository.send(:rugged_repository), @branch.commit_id, page: params[:page], per_page: 50)
   end
 
-  def create
-    if success
-      redirect_to website_branch_post_path(@website, @branch, @post), notice: 'Great, we’ve committed your changes.'
-    else
-      flash.now.alert = 'There was a problem saving your changes.'
-      render :edit, status: 422
-    end
-  end
-
   def show
     @commits = Commit.all(@repository.send(:rugged_repository), @branch.commit_id, pathname: @post.full_pathname, per_page: 10)
   end
 
   def update
-    if save
-      redirect_to website_branch_post_path(@website, @branch, @post), alert: 'No changes detected.'
-    elsif success
-      redirect_to website_branch_post_path(@website, @branch, @post), notice: 'Great, we’ve committed your changes.'
+    raw_content = @post.raw_content
+    @post.content = params[:post].try(:[], :content)
+    @post.filename = params[:post].try(:[], :filename)
+    @post.metadata = params[:post].try(:[], :metadata)
+
+    if @post.raw_content == raw_content
+      redirect_to [@website, @branch, @post], alert: 'No changes detected.'
+    elsif @post.save(@branch.name, current_user.email, current_user.name, params[:message])
+      redirect_to [@website, @branch, @post], notice: 'Great, we’ve committed your changes.'
     else
       flash.now.alert = 'There was a problem saving your changes.'
       render :edit, status: 422
