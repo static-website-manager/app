@@ -1,15 +1,24 @@
-- @_body_container = false
 - title "New Post • #{@branch.title(current_user)}"
 
-= form_for [@website, @branch, @post] do |form|
-  .blob-container
-    .blob-header
-      .container-fluid
-        => link_to [@website, @branch, :posts], class: 'logo-small-back-container' do
-          => icon 'reply'
-          => image_tag 'logo-small.png', alt: 'Static Website Manager', class: 'logo-small'
-        ul.nav.nav-tabs
-          li.active = link_to 'New Post', '#'
-    .container-fluid
-      .blob-content
-        = render partial: 'blobs/form', object: form, locals: { placeholder: 'Add New Post' }
+.header.header-center
+  h1.lead
+    = link_to session[:return_to] || [@website, @repository.branch(current_user)], class: 'logo-small-back-container' do
+      => icon 'reply'
+      => image_tag 'logo-small.png', alt: 'Static Website Manager', class: 'logo-small'
+    ' | New Post
+    small = @branch.title(current_user)
+.row
+  .col-sm-8.col-sm-offset-2.col-md-6.col-md-offset-3
+    = errors_for @post
+    .panel.panel-default
+      = form_for [@website, @branch, @post] do |form|
+        .panel-body
+          .row
+            .col-sm-9
+              => label_tag :name, 'File Name', class: 'control-label'
+              = text_field_tag :name, params[:name], class: 'form-control'
+            .col-sm-3
+              => label_tag :extension, 'Extension', class: 'control-label'
+              = select_tag :extension, options_for_select([['Markdown', 'md'], ['HTML', 'html']]), class: 'form-control'
+        .panel-footer.text-center
+            = form.button 'Save Post', class: 'btn btn-primary'
