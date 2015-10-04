@@ -10,7 +10,7 @@ class DraftsController < ApplicationController
     @draft = Draft.new(pathname: '_drafts', rugged_repository: @repository.send(:rugged_repository))
   end
 
-  before_action only: %i[show edit update] do
+  before_action only: %i[show edit update delete destroy] do
     @draft = Draft.find(@repository.send(:rugged_repository), @branch.commit_id, params[:id])
   end
 
@@ -45,6 +45,15 @@ class DraftsController < ApplicationController
     else
       flash.now.alert = 'There was a problem saving your changes.'
       render :edit, status: 422
+    end
+  end
+
+  def destroy
+    if @draft.destroy
+      redirect_to [@website, @branch, :drafts], notice: 'Ok, we‘ve committed your changes.'
+    else
+      flash.now.alert = 'There was a problem saving your changes.'
+      render :delete, status: 422
     end
   end
 end

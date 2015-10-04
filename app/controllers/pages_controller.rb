@@ -10,7 +10,7 @@ class PagesController < ApplicationController
     @page = Page.new(rugged_repository: @repository.send(:rugged_repository))
   end
 
-  before_action only: %i[show edit update] do
+  before_action only: %i[show edit update delete destroy] do
     @page = Page.find(@repository.send(:rugged_repository), @branch.commit_id, params[:id])
   end
 
@@ -45,6 +45,15 @@ class PagesController < ApplicationController
     else
       flash.now.alert = 'There was a problem saving your changes.'
       render :edit, status: 422
+    end
+  end
+
+  def destroy
+    if @page.destroy
+      redirect_to [@website, @branch, :pages], notice: 'Ok, we‘ve committed your changes.'
+    else
+      flash.now.alert = 'There was a problem saving your changes.'
+      render :delete, status: 422
     end
   end
 end

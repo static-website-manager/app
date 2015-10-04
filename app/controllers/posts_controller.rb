@@ -10,7 +10,7 @@ class PostsController < ApplicationController
     @post = Post.new(pathname: '_posts', rugged_repository: @repository.send(:rugged_repository))
   end
 
-  before_action only: %i[show edit update] do
+  before_action only: %i[show edit update delete destroy] do
     @post = Post.find(@repository.send(:rugged_repository), @branch.commit_id, params[:id])
   end
 
@@ -45,6 +45,15 @@ class PostsController < ApplicationController
     else
       flash.now.alert = 'There was a problem saving your changes.'
       render :edit, status: 422
+    end
+  end
+
+  def destroy
+    if @post.destroy
+      redirect_to [@website, @branch, :posts], notice: 'Ok, we‘ve committed your changes.'
+    else
+      flash.now.alert = 'There was a problem saving your changes.'
+      render :delete, status: 422
     end
   end
 end

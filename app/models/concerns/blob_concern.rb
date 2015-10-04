@@ -36,6 +36,10 @@ module BlobConcern
     filename.split('.')[0..-2].join('.')
   end
 
+  def destroy(branch_name, author_email, author_name, commit_message)
+    false
+  end
+
   def extension
     filename.split('.').length > 1 ? filename.split('.').last : ''
   end

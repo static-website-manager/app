@@ -13,8 +13,14 @@
         li = link_to 'Edit', [:edit, @website, @branch, @post]
   .container-fluid
     .blob-content
-      h1 = @post.title
-      code.small = @post.pathname
+      .row
+        .col-sm-9
+          h1 = @post.title
+          code.small = @post.pathname
+        .col-sm-3
+          = link_to [:delete, @website, @branch, @post] do
+            => icon 'trash'
+            | Delete
       .row
         .col-sm-7
           .column-header

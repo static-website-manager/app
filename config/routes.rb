@@ -21,13 +21,16 @@ Rails.application.routes.draw do
         post :merge, on: :member
       end
       resources :commits, only: %i[index], controller: 'branch_commits', path: 'history'
-      resources :drafts, only: %i[index new create show edit update] do
+      resources :drafts do
+        get :delete, on: :member
         resources :commits, only: %i[index], controller: 'draft_commits', path: 'history'
       end
-      resources :pages, only: %i[index new create show edit update] do
+      resources :pages do
+        get :delete, on: :member
         resources :commits, only: %i[index], controller: 'page_commits', path: 'history'
       end
-      resources :posts, only: %i[index new create show edit update] do
+      resources :posts do
+        get :delete, on: :member
         resources :commits, only: %i[index], controller: 'post_commits', path: 'history'
       end
     end
