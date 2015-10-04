@@ -18,7 +18,7 @@ class Post
   end
 
   def self.find(*args)
-    super args.push(/\A_posts/)
+    super *args.push(/\A_posts/)
   end
 
   def pretty_pathname

@@ -18,10 +18,10 @@
           h1 = @page.title
           code.small = @page.full_pathname
         .col-sm-3.text-right
-          => link_to [:new, @website, @branch, @page, :move] do
-            ' Move
-            = icon 'arrow-left'
-          = link_to [:delete, @website, @branch, @page] do
+          => link_to [:new, @website, @branch, @page, :move], class: 'btn btn-primary' do
+            ' Rename
+            = icon 'angle-double-right'
+          = link_to [:delete, @website, @branch, @page], class: 'btn btn-danger' do
             => icon 'trash'
             | Delete
       .row

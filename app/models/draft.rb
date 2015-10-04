@@ -1,5 +1,6 @@
 class Draft
   include ActiveModel::Model
+  include BlobConcern
 
   def self.all(rugged_repository, commit_id)
     rugged_repository.lookup(commit_id).tree.walk(:postorder).select do |root, object|
@@ -15,7 +16,7 @@ class Draft
   end
 
   def self.find(*args)
-    super args.push(/\A_drafts/)
+    super *args.push(/\A_drafts/)
   end
 
   def pretty_pathname

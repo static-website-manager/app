@@ -1,16 +1,16 @@
-- title "Move Page #{@page.short_id} • #{@branch.title(current_user)}"
+- title "Rename Page #{@page.short_id} • #{@branch.title(current_user)}"
 
 .header.header-center
   h1.lead
     = link_to session[:return_to] || [@website, @branch, @page], class: 'logo-small-back-container' do
       => icon 'reply'
       => image_tag 'logo-small.png', alt: 'Static Website Manager', class: 'logo-small'
-    | | Move Page
+    | | Rename Page
 .row
   .col-sm-8.col-sm-offset-2.col-md-6.col-md-offset-3
     = errors_for @page
-    .panel.panel-default
-      = form_for [@website, @branch, @page, :move] do |form|
+    = form_for @page, url: [@website, @branch, @page, :move], method: :post do |form|
+      .panel.panel-default
         .panel-body
           .row
             .col-sm-9
@@ -18,6 +18,6 @@
               = form.text_field :basename, class: 'form-control'
             .col-sm-3
               => form.label :extension, class: 'control-label'
-              = form.select :extension, options_for_select([['Markdown', 'md'], ['HTML', 'html']]), class: 'form-control'
+              = form.select :extension, options_for_select([['Markdown', 'md'], ['HTML', 'html']]), {}, class: 'form-control'
         .panel-footer.text-center
-            = form.button 'Move Page', class: 'btn btn-primary'
+            = form.button 'Rename Page', class: 'btn btn-primary'

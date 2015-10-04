@@ -21,7 +21,7 @@ class Page
   end
 
   def self.find(*args)
-    super args.push(/\A[^_]/)
+    super *args.push(/\A[^_]/)
   end
 
   def title
