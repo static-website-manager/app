@@ -32,6 +32,14 @@ module BlobConcern
     rugged_blob.content.match(/\A(---\s*\n.*?\n?)^((---|\.\.\.)\s*$\n?)/m) ? Hash(YAML.load(rugged_blob.content)) : {}
   end
 
+  def basename
+    filename.split('.')[0..-2].join('.')
+  end
+
+  def extension
+    filename.split('.').length > 1 ? filename.split('.').last : ''
+  end
+
   def full_pathname
     File.join([pathname, filename].reject(&:blank?))
   end

@@ -1,15 +1,24 @@
-- @_body_container = false
 - title "New Page • #{@branch.title(current_user)}"
 
-= form_for [@website, @branch, @page] do |form|
-  .blob-container
-    .blob-header
-      .container-fluid
-        => link_to [@website, @branch, :pages], class: 'logo-small-back-container' do
-          => icon 'reply'
-          => image_tag 'logo-small.png', alt: 'Static Website Manager', class: 'logo-small'
-        ul.nav.nav-tabs
-          li.active = link_to 'New Page', '#'
-    .container-fluid
-      .blob-content
-        = render partial: 'blobs/form', object: form, locals: { placeholder: 'Add New Page' }
+.header.header-center
+  h1.lead
+    = link_to session[:return_to] || [@website, @branch], class: 'logo-small-back-container' do
+      => icon 'reply'
+      => image_tag 'logo-small.png', alt: 'Static Website Manager', class: 'logo-small'
+    ' | New Page
+    small = @branch.title(current_user)
+.row
+  .col-sm-8.col-sm-offset-2.col-md-6.col-md-offset-3
+    = errors_for @page
+    .panel.panel-default
+      = form_for [@website, @branch, @page] do |form|
+        .panel-body
+          .row
+            .col-sm-9
+              => form.label :basename, class: 'control-label'
+              = form.text_field :basename, class: 'form-control'
+            .col-sm-3
+              => form.label :extension, class: 'control-label'
+              = form.select :extension, options_for_select([['Markdown', 'md'], ['HTML', 'html']]), class: 'form-control'
+        .panel-footer.text-center
+            = form.button 'Save Page', class: 'btn btn-primary'

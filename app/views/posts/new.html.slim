@@ -2,7 +2,7 @@
 
 .header.header-center
   h1.lead
-    = link_to session[:return_to] || [@website, @repository.branch(current_user)], class: 'logo-small-back-container' do
+    = link_to session[:return_to] || [@website, @branch], class: 'logo-small-back-container' do
       => icon 'reply'
       => image_tag 'logo-small.png', alt: 'Static Website Manager', class: 'logo-small'
     ' | New Post
@@ -15,10 +15,10 @@
         .panel-body
           .row
             .col-sm-9
-              => label_tag :name, 'File Name', class: 'control-label'
-              = text_field_tag :name, params[:name], class: 'form-control'
+              => form.label :basename, class: 'control-label'
+              = form.text_field :basename, class: 'form-control'
             .col-sm-3
-              => label_tag :extension, 'Extension', class: 'control-label'
-              = select_tag :extension, options_for_select([['Markdown', 'md'], ['HTML', 'html']]), class: 'form-control'
+              => form.label :extension, class: 'control-label'
+              = form.select :extension, options_for_select([['Markdown', 'md'], ['HTML', 'html']]), class: 'form-control'
         .panel-footer.text-center
             = form.button 'Save Post', class: 'btn btn-primary'
