@@ -48,6 +48,10 @@ module BlobConcern
     File.join([pathname, filename].reject(&:blank?))
   end
 
+  def move(branch_name, author_email, author_name, commit_message)
+    false
+  end
+
   def persisted?
     id.present?
   end

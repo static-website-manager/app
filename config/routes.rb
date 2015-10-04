@@ -23,14 +23,17 @@ Rails.application.routes.draw do
       resources :commits, only: %i[index], controller: 'branch_commits', path: 'history'
       resources :drafts do
         get :delete, on: :member
+        resource :move, only: %i[new create], controller: 'draft_moves', path: 'rename', path_names: { new: '' }
         resources :commits, only: %i[index], controller: 'draft_commits', path: 'history'
       end
       resources :pages do
         get :delete, on: :member
+        resource :move, only: %i[new create], controller: 'page_moves', path: 'rename', path_names: { new: '' }
         resources :commits, only: %i[index], controller: 'page_commits', path: 'history'
       end
       resources :posts do
         get :delete, on: :member
+        resource :move, only: %i[new create], controller: 'post_moves', path: 'rename', path_names: { new: '' }
         resources :commits, only: %i[index], controller: 'post_commits', path: 'history'
       end
     end

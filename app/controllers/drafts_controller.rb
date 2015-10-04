@@ -49,7 +49,7 @@ class DraftsController < ApplicationController
   end
 
   def destroy
-    if @draft.destroy
+    if @draft.destroy(@branch.name, current_user.email, current_user.name, params[:message])
       redirect_to [@website, @branch, :drafts], notice: 'Ok, we‘ve committed your changes.'
     else
       flash.now.alert = 'There was a problem saving your changes.'

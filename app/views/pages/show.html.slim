@@ -17,7 +17,10 @@
         .col-sm-9
           h1 = @page.title
           code.small = @page.full_pathname
-        .col-sm-3
+        .col-sm-3.text-right
+          => link_to [:new, @website, @branch, @page, :move] do
+            ' Move
+            = icon 'arrow-left'
           = link_to [:delete, @website, @branch, @page] do
             => icon 'trash'
             | Delete

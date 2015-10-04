@@ -49,7 +49,7 @@ class PagesController < ApplicationController
   end
 
   def destroy
-    if @page.destroy
+    if @page.destroy(@branch.name, current_user.email, current_user.name, params[:message])
       redirect_to [@website, @branch, :pages], notice: 'Ok, we‘ve committed your changes.'
     else
       flash.now.alert = 'There was a problem saving your changes.'
