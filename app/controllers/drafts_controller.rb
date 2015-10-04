@@ -6,10 +6,6 @@ class DraftsController < ApplicationController
   before_action :require_branch
   before_action :set_return_to, only: %i[index show]
 
-  before_action only: %i[new create] do
-    @draft = Draft.new(rugged_repository: @repository.send(:rugged_repository), pathname: '_drafts')
-  end
-
   before_action only: %i[show edit update] do
     @draft = Draft.find(@repository.send(:rugged_repository), @branch.commit_id, params[:id])
   end

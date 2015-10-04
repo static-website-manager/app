@@ -6,10 +6,6 @@ class PostsController < ApplicationController
   before_action :require_branch
   before_action :set_return_to, only: %i[index show]
 
-  before_action only: %i[new create] do
-    @post = Post.new(rugged_repository: @repository.send(:rugged_repository), pathname: '_posts')
-  end
-
   before_action only: %i[show edit update] do
     @post = Post.find(@repository.send(:rugged_repository), @branch.commit_id, params[:id])
   end
