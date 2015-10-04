@@ -7,7 +7,7 @@ class PostsController < ApplicationController
   before_action :set_return_to, only: %i[index show]
 
   before_action only: %i[new create] do
-    @post = Post.new(rugged_repository: @repository.send(:rugged_repository))
+    @post = Post.new(pathname: '_posts', rugged_repository: @repository.send(:rugged_repository))
   end
 
   before_action only: %i[show edit update] do
@@ -21,7 +21,7 @@ class PostsController < ApplicationController
   def create
     @post.filename = [params[:post].try(:[], :basename), params[:post].try(:[], :extension)].reject(&:blank?).join('.')
 
-    if @post.create(@branch.name, current_user.email, current_user.name, params[:message])
+    if @post.save(@branch.name, current_user.email, current_user.name, params[:message])
       redirect_to [:edit, @website, @branch, @post], notice: 'Great, we’ve committed your changes.'
     else
       flash.now.alert = 'There was a problem saving your changes.'
@@ -40,7 +40,7 @@ class PostsController < ApplicationController
 
     if @post.raw_content == raw_content
       redirect_to [@website, @branch, @post], alert: 'No changes detected.'
-    elsif @post.update(@branch.name, current_user.email, current_user.name, params[:message])
+    elsif @post.save(@branch.name, current_user.email, current_user.name, params[:message])
       redirect_to [@website, @branch, @post], notice: 'Great, we’ve committed your changes.'
     else
       flash.now.alert = 'There was a problem saving your changes.'

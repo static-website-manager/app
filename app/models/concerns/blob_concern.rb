@@ -64,7 +64,7 @@ module BlobConcern
     end
   end
 
-  def update(branch_name, author_email, author_name, commit_message)
+  def save(branch_name, author_email, author_name, commit_message)
     original_id = id
     clone_path = Rails.root.join('tmp', "clone_#{rand(1000)}_#{Time.now.to_i}")
 

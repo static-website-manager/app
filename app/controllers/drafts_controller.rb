@@ -7,7 +7,7 @@ class DraftsController < ApplicationController
   before_action :set_return_to, only: %i[index show]
 
   before_action only: %i[new create] do
-    @draft = Draft.new(rugged_repository: @repository.send(:rugged_repository))
+    @draft = Draft.new(pathname: '_drafts', rugged_repository: @repository.send(:rugged_repository))
   end
 
   before_action only: %i[show edit update] do
@@ -21,7 +21,7 @@ class DraftsController < ApplicationController
   def create
     @draft.filename = [params[:draft].try(:[], :basename), params[:draft].try(:[], :extension)].reject(&:blank?).join('.')
 
-    if @draft.create(@branch.name, current_user.email, current_user.name, params[:message])
+    if @draft.save(@branch.name, current_user.email, current_user.name, params[:message])
       redirect_to [:edit, @website, @branch, @draft], notice: 'Great, we’ve committed your changes.'
     else
       flash.now.alert = 'There was a problem saving your changes.'
@@ -40,7 +40,7 @@ class DraftsController < ApplicationController
 
     if @draft.raw_content == raw_content
       redirect_to [@website, @branch, @draft], alert: 'No changes detected.'
-    elsif @draft.update(@branch.name, current_user.email, current_user.name, params[:message])
+    elsif @draft.save(@branch.name, current_user.email, current_user.name, params[:message])
       redirect_to [@website, @branch, @draft], notice: 'Great, we’ve committed your changes.'
     else
       flash.now.alert = 'There was a problem saving your changes.'

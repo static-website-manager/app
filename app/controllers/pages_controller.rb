@@ -21,7 +21,7 @@ class PagesController < ApplicationController
   def create
     @page.filename = [params[:page].try(:[], :basename), params[:page].try(:[], :extension)].reject(&:blank?).join('.')
 
-    if @page.create(@branch.name, current_user.email, current_user.name, params[:message])
+    if @page.save(@branch.name, current_user.email, current_user.name, params[:message])
       redirect_to [:edit, @website, @branch, @page], notice: 'Great, we’ve committed your changes.'
     else
       flash.now.alert = 'There was a problem saving your changes.'
@@ -40,7 +40,7 @@ class PagesController < ApplicationController
 
     if @page.raw_content == raw_content
       redirect_to [@website, @branch, @page], alert: 'No changes detected.'
-    elsif @page.update(@branch.name, current_user.email, current_user.name, params[:message])
+    elsif @page.save(@branch.name, current_user.email, current_user.name, params[:message])
       redirect_to [@website, @branch, @page], notice: 'Great, we’ve committed your changes.'
     else
       flash.now.alert = 'There was a problem saving your changes.'
