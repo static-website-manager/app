@@ -40,6 +40,14 @@ module BlobConcern
     id.present?
   end
 
+  def short_id
+    id[0..6]
+  end
+
+  def to_param
+    id
+  end
+
   def raw_content
     if metadata.kind_of?(Hash) && metadata.any?
       [YAML.dump(metadata.to_hash), content].join("---\n\n")
@@ -94,14 +102,6 @@ module BlobConcern
     ensure
       FileUtils.rm_rf(clone_path)
     end
-  end
-
-  def short_id
-    id[0..6]
-  end
-
-  def to_param
-    id
   end
 
   def writable?
