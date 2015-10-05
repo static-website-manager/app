@@ -93,7 +93,6 @@ module BlobConcern
 
   def move(filename, branch_name, author_email, author_name, commit_message)
     original_filename = filename
-    original_id = id
     clone_path = Rails.root.join('tmp', "clone_#{rand(1000)}_#{Time.now.to_i}")
 
     FileUtils.rm_rf(clone_path)
@@ -136,7 +135,6 @@ module BlobConcern
       `
       true
     rescue
-      @id = original_id
       @filename = original_filename
       # Cleanup git object?
       false

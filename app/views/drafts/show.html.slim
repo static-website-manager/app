@@ -18,6 +18,9 @@
           h1 = @draft.title
           code.small = @draft.full_pathname
         .col-sm-3.text-right
+          => link_to [:new, @website, @branch, @draft, :publication], class: 'btn btn-success' do
+            ' Publish
+            = icon 'plus-circle'
           => link_to [:new, @website, @branch, @draft, :move], class: 'btn btn-primary' do
             ' Rename
             = icon 'arrow-circle-o-right'

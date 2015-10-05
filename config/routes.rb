@@ -24,6 +24,7 @@ Rails.application.routes.draw do
       resources :drafts do
         get :delete, on: :member
         resource :move, only: %i[new create], controller: 'draft_moves', path: 'rename', path_names: { new: '' }
+        resource :publication, only: %i[new create], controller: 'draft_publications', path: 'publish', path_names: { new: '' }
         resources :commits, only: %i[index], controller: 'draft_commits', path: 'history'
       end
       resources :pages do
