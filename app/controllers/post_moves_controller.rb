@@ -10,11 +10,17 @@ class PostMovesController < ApplicationController
   end
 
   def create
-    if @post.move(@branch.name, current_user.email, current_user.name, params[:message])
+    if @post.move(filename, @branch.name, current_user.email, current_user.name, params[:message])
       redirect_to [@website, @branch, @post], notice: 'Great, we’ve committed your changes.'
     else
       flash.now.alert = 'There was a problem saving your changes.'
       render :new, status: 422
     end
+  end
+
+  private
+
+  def filename
+    [params[:post].try(:[], :basename).to_s, params[:post].try(:[], :extension).to_s].reject(&:blank?).join('.')
   end
 end

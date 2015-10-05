@@ -19,6 +19,6 @@
               = form.text_field :basename, class: 'form-control'
             .col-sm-3
               => form.label :extension, class: 'control-label'
-              = form.select :extension, options_for_select([['Markdown', 'md'], ['HTML', 'html']]), class: 'form-control'
+              = form.select :extension, options_for_select([['Markdown', 'md'], ['HTML', 'html']], form.object.extension), {}, class: 'form-control'
         .panel-footer.text-center
-            = form.button 'Save Post', class: 'btn btn-primary'
+          = form.button 'Save Post', class: 'btn btn-primary'

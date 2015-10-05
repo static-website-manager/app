@@ -52,9 +52,9 @@ class Commit
 
   def diff
     if rugged_commit.parents.any?
-      Diff.new(rugged_diff: rugged_commit.parents[0].diff(rugged_commit))
+      Diff.new(rugged_diff: rugged_commit.parents[0].diff(rugged_commit).tap(&:find_similar!))
     else
-      Diff.new(rugged_diff: rugged_commit.diff)
+      Diff.new(rugged_diff: rugged_commit.diff.tap(&:find_similar!))
     end
   end
 
