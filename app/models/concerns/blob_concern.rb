@@ -10,14 +10,14 @@ module BlobConcern
 
     def find(rugged_repository, commit_id, id, match_pattern = nil)
       result = rugged_repository.lookup(commit_id).tree.walk(:postorder).find do |root, object|
-        object[:oid] == id
+        object[:name] == id
       end
 
       if result && (match_pattern ? result[0].match(match_pattern) : result[0])
-        rugged_blob = rugged_repository.lookup(id)
+        rugged_blob = rugged_repository.lookup(result[1][:oid])
         new(
           content: content(rugged_blob),
-          id: id,
+          id: result[1][:oid],
           filename: result[1][:name],
           metadata: metadata(rugged_blob),
           pathname: result[0],
@@ -152,7 +152,7 @@ module BlobConcern
   end
 
   def to_param
-    id
+    filename
   end
 
   def raw_content
