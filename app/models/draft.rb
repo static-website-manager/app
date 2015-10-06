@@ -4,7 +4,7 @@ class Draft
 
   def self.all(rugged_repository, commit_id)
     rugged_repository.lookup(commit_id).tree.walk(:postorder).select do |root, object|
-      root.match(/\A_drafts/) && object[:name].match(/\.(htm|html|text|txt|markdown|mdown|mkdn|mkd|md)\z/)
+      root.match(/\A_drafts/) && object[:name].match(/\A[\w\-]+\.(htm|html|text|txt|markdown|mdown|mkdn|mkd|md)\z/)
     end.map do |root, object|
       new(
         id: object[:oid],
@@ -23,8 +23,9 @@ class Draft
     full_pathname.gsub(/\A_drafts\//, '')
   end
 
-  def publish(branch_name, author_email, author_name, commit_message)
+  def publish(publication_date, branch_name, author_email, author_name, commit_message)
     original_pathname = pathname
+    original_filename = filename
     clone_path = Rails.root.join('tmp', "clone_#{rand(1000)}_#{Time.now.to_i}")
 
     FileUtils.rm_rf(clone_path)
@@ -40,6 +41,7 @@ class Draft
       cloned_index.remove(full_pathname)
 
       @pathname = '_posts/'
+      @filename = [*original_filename.split('/')[0..-2], publication_date.strftime('%Y-%m-%d'), original_filename.split('/')[-1]].join('-')
       # Check for validity?
 
       cloned_index.add(path: full_pathname, oid: id, mode: 0100644)
@@ -68,6 +70,7 @@ class Draft
       true
     rescue
       @pathname = original_pathname
+      @filename = original_filename
       # Cleanup git object?
       false
     ensure

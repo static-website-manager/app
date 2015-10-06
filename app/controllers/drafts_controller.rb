@@ -19,7 +19,7 @@ class DraftsController < ApplicationController
   end
 
   def create
-    @draft.filename = [params[:draft].try(:[], :basename), params[:draft].try(:[], :extension)].reject(&:blank?).join('.')
+    @draft.filename = [params[:draft].try(:[], :basename).to_s.parameterize, params[:draft].try(:[], :extension)].reject(&:blank?).join('.')
 
     if @draft.save(@branch.name, current_user.email, current_user.name, params[:message])
       redirect_to [:edit, @website, @branch, @draft], notice: 'Great, we’ve committed your changes.'

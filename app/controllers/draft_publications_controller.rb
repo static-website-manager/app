@@ -10,11 +10,17 @@ class DraftPublicationsController < ApplicationController
   end
 
   def create
-    if @draft.publish(@branch.name, current_user.email, current_user.name, params[:message])
+    if @draft.publish(publication_date, @branch.name, current_user.email, current_user.name, params[:message])
       redirect_to website_branch_post_path(@website, @branch, @draft), notice: 'Great, we’ve committed your changes.'
     else
       flash.now.alert = 'There was a problem saving your changes.'
       render :new, status: 422
     end
+  end
+
+  private
+
+  def publication_date
+    Date.new(params[:publication_year].to_i, params[:publication_month].to_i, params[:publication_day].to_i)
   end
 end

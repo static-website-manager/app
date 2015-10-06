@@ -19,7 +19,7 @@ class PostsController < ApplicationController
   end
 
   def create
-    @post.filename = [params[:post].try(:[], :basename), params[:post].try(:[], :extension)].reject(&:blank?).join('.')
+    @post.filename = [params[:post].try(:[], :basename).to_s.parameterize, params[:post].try(:[], :extension)].reject(&:blank?).join('.')
 
     if @post.save(@branch.name, current_user.email, current_user.name, params[:message])
       redirect_to [:edit, @website, @branch, @post], notice: 'Great, we’ve committed your changes.'

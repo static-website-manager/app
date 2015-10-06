@@ -5,7 +5,7 @@ class Post
   def self.all(rugged_repository, commit_id, page: 1, per_page: 20)
     Kaminari.paginate_array(
       rugged_repository.lookup(commit_id).tree.walk(:postorder).select do |root, object|
-        root.match(/\A_posts/) && object[:name].match(/\.(htm|html|text|txt|markdown|mdown|mkdn|mkd|md)\z/)
+        root.match(/\A_posts/) && object[:name].match(/\A\d{4}\-\d{2}\-\d{2}\-[\w\-]+\.(htm|html|text|txt|markdown|mdown|mkdn|mkd|md)\z/)
       end.map do |root, object|
         Post.new(
           id: object[:oid],

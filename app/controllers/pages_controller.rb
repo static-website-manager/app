@@ -19,7 +19,7 @@ class PagesController < ApplicationController
   end
 
   def create
-    @page.filename = [params[:page].try(:[], :basename), params[:page].try(:[], :extension)].reject(&:blank?).join('.')
+    @page.filename = [params[:page].try(:[], :basename).to_s.parameterize, params[:page].try(:[], :extension)].reject(&:blank?).join('.')
 
     if @page.save(@branch.name, current_user.email, current_user.name, params[:message])
       redirect_to [:edit, @website, @branch, @page], notice: 'Great, we’ve committed your changes.'
