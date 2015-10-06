@@ -15,7 +15,9 @@
     .blob-content
       .row
         .col-sm-9
-          h1 = @post.title
+          h1
+            => @post.title
+            span.small = localize(@post.published_on)
           code.small = @post.pathname
         .col-sm-3.text-right
           => link_to [:new, @website, @branch, @post, :move], class: 'btn btn-primary' do
