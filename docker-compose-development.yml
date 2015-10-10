@@ -2,8 +2,10 @@ repos:
   image: busybox
   volumes:
     - /repos
+
 postgres:
   image: postgres
+
 rails:
   build: .
   dockerfile: Dockerfile-rails
@@ -14,5 +16,13 @@ rails:
     - "80:3000"
   volumes:
     - .:/rails
+  volumes_from:
+    - repos
+
+git:
+  build: .
+  dockerfile: Dockerfile-git
+  ports:
+    - "4224:22"
   volumes_from:
     - repos
