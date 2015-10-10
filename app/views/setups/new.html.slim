@@ -2,19 +2,7 @@
 
 = render partial: 'websites/header', locals: { website: @website, setup: true }
 hr
-.text-center.text-muted
+#setup_check.text-center.text-muted data-url=url_for([:check, @website, :setup])
   div style="margin:4em 0"
     = icon 'spinner fa-spin fa-4x'
   p.lead Waiting for your <b>master</b> branch to be pushed to the our git repository at <code>/#{@website.id}.git</code>
-
-javascript:
-  var websiteSetupInterval;
-  var websiteSetupCheck = function() {
-    $.get("#{url_for([:check, @website, :setup])}", function(data) {
-      if (data && data.length > 0) {
-        clearInterval(websiteSetupInterval);
-        Turbolinks.visit(data);
-      }
-    });
-  };
-  websiteSetupInterval = setInterval(websiteSetupCheck, 5000);
