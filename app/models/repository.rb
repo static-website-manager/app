@@ -29,16 +29,6 @@ class Repository
     rugged_repository.merge_base(*args)
   end
 
-  def setup?
-    !rugged_repository.empty? && rugged_repository.branches['master']
-  end
-
-  def update_ref(*args)
-    rugged_repository.references.update(*args)
-  end
-
-  private
-
   def repository_pathname
     if website_id.present?
       Rails.root.join(Rails.application.secrets.repos_dir, "#{website_id}.git")
@@ -55,5 +45,13 @@ class Repository
     else
       raise ActiveRecord::RecordNotFound
     end
+  end
+
+  def setup?
+    !rugged_repository.empty? && rugged_repository.branches['master']
+  end
+
+  def update_ref(*args)
+    rugged_repository.references.update(*args)
   end
 end

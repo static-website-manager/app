@@ -7,15 +7,15 @@ class PagesController < ApplicationController
   before_action :set_return_to, only: %i[index show]
 
   before_action only: %i[new create] do
-    @page = Page.new(rugged_repository: @repository.send(:rugged_repository))
+    @page = Page.new(rugged_repository: @repository.rugged_repository)
   end
 
   before_action only: %i[show edit update delete destroy] do
-    @page = Page.find(@repository.send(:rugged_repository), @branch.commit_id, params[:id])
+    @page = Page.find(@repository.rugged_repository, @branch.commit_id, params[:id])
   end
 
   def index
-    @pages = Page.all(@repository.send(:rugged_repository), @branch.commit_id)
+    @pages = Page.all(@repository.rugged_repository, @branch.commit_id)
   end
 
   def create
@@ -30,7 +30,7 @@ class PagesController < ApplicationController
   end
 
   def show
-    @commits = Commit.all(@repository.send(:rugged_repository), @branch.commit_id, pathname: @page.full_pathname, per_page: 10)
+    @commits = Commit.all(@repository.rugged_repository, @branch.commit_id, pathname: @page.full_pathname, per_page: 10)
   end
 
   def update

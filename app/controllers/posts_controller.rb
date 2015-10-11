@@ -7,15 +7,15 @@ class PostsController < ApplicationController
   before_action :set_return_to, only: %i[index show]
 
   before_action only: %i[new create] do
-    @post = Post.new(pathname: '_posts', rugged_repository: @repository.send(:rugged_repository))
+    @post = Post.new(pathname: '_posts', rugged_repository: @repository.rugged_repository)
   end
 
   before_action only: %i[show edit update delete destroy] do
-    @post = Post.find(@repository.send(:rugged_repository), @branch.commit_id, params[:id])
+    @post = Post.find(@repository.rugged_repository, @branch.commit_id, params[:id])
   end
 
   def index
-    @posts = Post.all(@repository.send(:rugged_repository), @branch.commit_id, page: params[:page], per_page: 50)
+    @posts = Post.all(@repository.rugged_repository, @branch.commit_id, page: params[:page], per_page: 50)
   end
 
   def create
@@ -30,7 +30,7 @@ class PostsController < ApplicationController
   end
 
   def show
-    @commits = Commit.all(@repository.send(:rugged_repository), @branch.commit_id, pathname: @post.full_pathname, per_page: 10)
+    @commits = Commit.all(@repository.rugged_repository, @branch.commit_id, pathname: @post.full_pathname, per_page: 10)
   end
 
   def update

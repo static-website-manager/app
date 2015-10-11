@@ -7,15 +7,15 @@ class DraftsController < ApplicationController
   before_action :set_return_to, only: %i[index show]
 
   before_action only: %i[new create] do
-    @draft = Draft.new(pathname: '_drafts', rugged_repository: @repository.send(:rugged_repository))
+    @draft = Draft.new(pathname: '_drafts', rugged_repository: @repository.rugged_repository)
   end
 
   before_action only: %i[show edit update delete destroy] do
-    @draft = Draft.find(@repository.send(:rugged_repository), @branch.commit_id, params[:id])
+    @draft = Draft.find(@repository.rugged_repository, @branch.commit_id, params[:id])
   end
 
   def index
-    @drafts = Draft.all(@repository.send(:rugged_repository), @branch.commit_id)
+    @drafts = Draft.all(@repository.rugged_repository, @branch.commit_id)
   end
 
   def create
@@ -30,7 +30,7 @@ class DraftsController < ApplicationController
   end
 
   def show
-    @commits = Commit.all(@repository.send(:rugged_repository), @branch.commit_id, pathname: @draft.full_pathname, per_page: 10)
+    @commits = Commit.all(@repository.rugged_repository, @branch.commit_id, pathname: @draft.full_pathname, per_page: 10)
   end
 
   def update

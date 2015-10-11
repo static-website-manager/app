@@ -6,7 +6,7 @@ class DraftMovesController < ApplicationController
   before_action :require_branch
 
   before_action do
-    @draft = Draft.find(@repository.send(:rugged_repository), @branch.commit_id, params[:draft_id])
+    @draft = Draft.find(@repository.rugged_repository, @branch.commit_id, params[:draft_id])
   end
 
   def create

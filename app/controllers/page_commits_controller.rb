@@ -7,10 +7,10 @@ class PageCommitsController < ApplicationController
   before_action :set_return_to
 
   before_action do
-    @page = Page.find(@repository.send(:rugged_repository), @branch.commit_id, params[:page_id])
+    @page = Page.find(@repository.rugged_repository, @branch.commit_id, params[:page_id])
   end
 
   def index
-    @commits = Commit.all(@repository.send(:rugged_repository), @branch.commit_id, pathname: @page.full_pathname, page: params[:page])
+    @commits = Commit.all(@repository.rugged_repository, @branch.commit_id, pathname: @page.full_pathname, page: params[:page])
   end
 end
