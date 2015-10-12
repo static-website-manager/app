@@ -15,11 +15,20 @@
       ol.list-unstyled.commits
         = render @commits, website: @website
       .text-center
-        - if @commits.prev_page.present?
-          => link_to Kaminari::Helpers::PrevPage.new(self, current_page: @commits.current_page).url, class: 'btn btn-default' do
-            => icon 'angle-double-left'
-            | Newer
-        - if @commits.next_page.present?
-          = link_to Kaminari::Helpers::NextPage.new(self, current_page: @commits.current_page).url, class: 'btn btn-default', style: 'margin-left:0.5em' do
-            ' Older
-            = icon 'angle-double-right'
+        - if @commits.prev_page.present? || @commits.next_page.present?
+          - if @commits.prev_page.present?
+            => link_to Kaminari::Helpers::PrevPage.new(self, current_page: @commits.current_page).url, class: 'btn btn-default' do
+              => icon 'angle-double-left'
+              | Newer
+          - else
+            => link_to '#', class: 'btn btn-default disabled' do
+              => icon 'angle-double-left'
+              | Newer
+          - if @commits.next_page.present?
+            = link_to Kaminari::Helpers::NextPage.new(self, current_page: @commits.current_page).url, class: 'btn btn-default', style: 'margin-left:0.5em' do
+              ' Older
+              = icon 'angle-double-right'
+          - else
+            = link_to '#', class: 'btn btn-default disabled', style: 'margin-left:0.5em' do
+              ' Older
+              = icon 'angle-double-right'
