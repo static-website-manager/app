@@ -21,6 +21,7 @@ Rails.application.routes.draw do
       resources :branches, only: %i[show], controller: 'comparisons', path: 'compare' do
         post :merge, on: :member
       end
+      resources :collections, only: %i[index]
       resources :commits, only: %i[index], controller: 'branch_commits', path: 'history'
       resources :drafts, format: false, id: /.*/ do
         get :delete, on: :member

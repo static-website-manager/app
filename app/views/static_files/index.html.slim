@@ -10,6 +10,7 @@ ul.nav.nav-tabs.branch-nav
   li = link_to 'Pages', [@website, @branch, :static_files]
   li = link_to 'Drafts', [@website, @branch, :drafts]
   li = link_to 'Posts', [@website, @branch, :posts]
+  li = link_to 'Collections', [@website, @branch, :collections]
   li.active = link_to 'Files', [@website, @branch, :static_files]
 
 - if @static_files.any?

@@ -1,17 +1,17 @@
-- title "Design • #{@branch.name}"
+- title "Collections • #{@branch.name}"
 
 = render partial: 'websites/header', locals: { website: @website }
 = render partial: 'branches/header', locals: { website: @website, repository: @repository, branch: @branch }
 
 ul.nav.nav-tabs.branch-nav
   li = link_to 'Overview', [@website, @branch]
-  li = link_to 'History', [@website, @branch, :commits]
-  li.active = link_to 'Design', [@website, @branch, :design]
+  li = link_to 'History', '#'
+  li = link_to 'Design', [@website, @branch, :design]
   li = link_to 'Pages', [@website, @branch, :pages]
   li = link_to 'Drafts', [@website, @branch, :drafts]
   li = link_to 'Posts', [@website, @branch, :posts]
-  li = link_to 'Collections', [@website, @branch, :collections]
+  li.active = link_to 'Collections', [@website, @branch, :collections]
   li = link_to 'Files', [@website, @branch, :static_files]
 
 .alert.alert-warning
-  h1.h5: em Layout &amp; Design Coming Soon
+  h1.h5: em Collections Management Coming Soon
