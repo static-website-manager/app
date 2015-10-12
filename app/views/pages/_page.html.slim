@@ -8,7 +8,7 @@ li
           => icon 'file fa-3x pull-left'
         div style="padding-left: 3.5em"
           = content_tag "h#{level}" do
-            = page.dirname.present? ? page.dirname : page.filename
+            = page.dirname.present? ? page.dirname.titleize : page.title
           code.small = page.full_pathname
   - if page.objects && page.objects.length > 0
     ul

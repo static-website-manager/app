@@ -25,7 +25,15 @@ class Page
   end
 
   def title
-    filename.split('.').first.titleize
+    if filename.match(/\Aindex\.(markdown|mdown|mkdn|mkd|md)\z/)
+      'Home'
+    elsif extension.match(/\A(markdown|mdown|mkdn|mkd|md)\z/) && basename.match(/\A[A-Z_]+\z/)
+      basename
+    elsif extension.match(/\A(markdown|mdown|mkdn|mkd|md)\z/)
+      basename.titleize
+    else
+      filename
+    end
   end
 
   private

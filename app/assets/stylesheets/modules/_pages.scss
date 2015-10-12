@@ -43,6 +43,7 @@
     margin: -0.05em 0 0;
     font-size: 1.5em;
     font-weight: bold;
+    line-height: 1;
   }
   code {
     display: block;
@@ -59,7 +60,7 @@
   .panel-body {
     padding: 0.75em 0.75em 0.5em;
   }
-  .page-tree {
+  .page-tree > .panel {
     color: #999;
     h1, h2, h3, h4, h5, h6 {
       margin: 0;
