@@ -17,6 +17,7 @@ Rails.application.routes.draw do
     resources :authorizations, only: %i[index new create edit update destroy], path: 'team'
     resources :branches, only: %i[show], path: '' do
       resource :checkout, only: %i[new create], path_names: { new: '' }
+      resource :design, only: %i[show]
       resources :branches, only: %i[show], controller: 'comparisons', path: 'compare' do
         post :merge, on: :member
       end
