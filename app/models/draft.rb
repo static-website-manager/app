@@ -1,6 +1,7 @@
 class Draft
   include ActiveModel::Model
   include BlobConcern
+  include PageConcern
 
   def self.all(rugged_repository, commit_id)
     rugged_repository.lookup(commit_id).tree.walk(:postorder).select do |root, object|

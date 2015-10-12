@@ -1,6 +1,7 @@
 class Page
   include ActiveModel::Model
   include BlobConcern
+  include PageConcern
 
   attr_accessor :dirname, :objects
 

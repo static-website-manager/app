@@ -1,6 +1,7 @@
 class Post
   include ActiveModel::Model
   include BlobConcern
+  include PageConcern
 
   def self.all(rugged_repository, commit_id, page: 1, per_page: 20)
     Kaminari.paginate_array(
