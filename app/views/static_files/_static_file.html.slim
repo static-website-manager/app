@@ -1,0 +1,8 @@
+li
+  = content_tag "h#{level}" do
+    = link_to [website, branch, static_file] do
+      => icon 'file-o'
+      code.code-text = static_file.filename
+  - if static_file.objects && static_file.objects.length > 0
+    ul
+      = render static_file.objects, website: website, branch: branch, level: level == 6 ? 6 : level + 1

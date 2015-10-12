@@ -1,0 +1,6 @@
+li
+  = content_tag "h#{level}" do
+    => icon 'folder-o'
+    code.code-text = static_file_tree.filename + '/'
+  ul
+    = render static_file_tree.objects, website: website, branch: branch, level: level == 6 ? 6 : level + 1

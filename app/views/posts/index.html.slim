@@ -9,6 +9,7 @@ ul.nav.nav-tabs.branch-nav
   li = link_to 'Pages', [@website, @branch, :pages]
   li = link_to 'Drafts', [@website, @branch, :drafts]
   li.active = link_to 'Posts', [@website, @branch, :posts]
+  li = link_to 'Files', [@website, @branch, :static_files]
 
 - if @posts.any?
   .table-responsive

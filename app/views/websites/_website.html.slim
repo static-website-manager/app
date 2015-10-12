@@ -16,6 +16,7 @@
           = link_to 'Pages', [website, repository.branch(current_user), :pages], class: 'btn btn-default'
           = link_to 'Drafts', [website, repository.branch(current_user), :drafts], class: 'btn btn-default'
           = link_to 'Posts', [website, repository.branch(current_user), :posts], class: 'btn btn-default'
+          = link_to 'Files', [website, repository.branch(current_user), :static_files], class: 'btn btn-default'
       .col-sm-6.text-right
         span.btn-group
           span.btn.btn-default.dropdown-toggle type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"

@@ -1,0 +1,39 @@
+- @_body_container = false
+- title "File #{@static_file.short_id} • #{@branch.title(current_user)}"
+
+.blob-container
+  .blob-header
+    .container-fluid
+      => link_to [@website, @branch, :static_files], class: 'logo-small-back-container' do
+        => icon 'reply'
+        => image_tag 'logo-small.png', alt: 'Static Website Manager', class: 'logo-small'
+      ul.nav.nav-tabs
+        li.active = link_to 'Overview', '#'
+        li = link_to 'History', [@website, @branch, @static_file, :commits]
+  .container-fluid
+    .blob-content
+      .row
+        .col-sm-9
+          h1 = @static_file.full_pathname
+          code.small = @static_file.full_pathname
+        .col-sm-3.text-right
+          => link_to [:new, @website, @branch, @static_file, :move], class: 'btn btn-primary' do
+            ' Rename
+            = icon 'arrow-circle-o-right'
+          = link_to [:delete, @website, @branch, @static_file], class: 'btn btn-danger' do
+            => icon 'trash'
+            | Delete
+      .row
+        .col-sm-7
+          .column-header
+            h2 Recent Activity
+          .text-center style="background-color: #eee; height: 16em;"
+        .col-sm-5
+          .column-header
+            h2 Commit History
+          ol.list-unstyled.commits
+            = render @commits, website: @website
+          .text-right style="margin-top:2em"
+            = link_to [@website, @branch, @static_file, :commits], class: 'btn btn-sm btn-default' do
+              ' View Entire History
+              = icon 'angle-double-right'

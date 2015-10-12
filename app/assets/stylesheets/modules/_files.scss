@@ -1,0 +1,56 @@
+.files {
+  margin: 2em 0;
+  padding: 0;
+  list-style: none;
+  ul {
+    position: relative;
+    margin: 0 0 0 2em;
+    padding: 0;
+    list-style: none;
+  }
+  li {
+    position: relative;
+    display: block;
+    margin: 0.5em 0;
+    padding: 0;
+  }
+  ul:before {
+    content: '';
+    display: block;
+    position: absolute;
+    width: 2px;
+    background-color: #eee;
+    top: 0;
+    bottom: 0;
+    left: -1.6em;
+  }
+  ul {
+    li:before {
+      content: '';
+      display: block;
+      position: absolute;
+      width: 1em;
+      height: 2px;
+      background-color: #eee;
+      top: 0.6em;
+      left: -1.6em;
+    }
+  }
+  h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+    font-size: 1em;
+    font-weight: normal;
+    line-height: 1;
+    color: #444;
+  }
+  .code-text {
+    color: #444;
+  }
+  a, a:hover {
+    text-decoration: none;
+    color: #444;
+    .code-text {
+      color: $code-color;
+    }
+  }
+}

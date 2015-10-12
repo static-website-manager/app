@@ -27,6 +27,11 @@ Rails.application.routes.draw do
         resource :publication, only: %i[new create], controller: 'draft_publications', path: 'publish', path_names: { new: '' }
         resources :commits, only: %i[index], controller: 'draft_commits', path: 'history'
       end
+      resources :static_files, only: %i[index show destroy], path: 'files', format: false, id: /.*/ do
+        get :delete, on: :member
+        resource :move, only: %i[new create], controller: 'static_file_moves', path: 'rename', path_names: { new: '' }
+        resources :commits, only: %i[index], controller: 'static_file_commits', path: 'history'
+      end
       resources :pages, format: false, id: /.*/ do
         get :delete, on: :member
         resource :move, only: %i[new create], controller: 'page_moves', path: 'rename', path_names: { new: '' }
