@@ -17,10 +17,10 @@
                 => @branch.title(current_user)
                 span.caret
               ul.dropdown-menu style="margin-top:2.5em"
-                - unless @target.master?
-                  li = link_to 'Master Branch', [@website, @repository.branch('master'), @target]
-                - unless @target.working?(current_user)
-                  li = link_to 'Your Working Branch', [@website, @repository.branch(current_user), @target]
+                - unless @target.production?
+                  li = link_to 'Production Branch', [@website, @repository.branch('master'), @target]
+                - unless @target.staging?(current_user)
+                  li = link_to 'Your Staging Branch', [@website, @repository.branch(current_user), @target]
                 li.divider role="separator"
                 - @repository.custom_branch_names.each do |branch_name|
                   - if branch_name != @target.name
@@ -33,10 +33,10 @@
                 => @target.title(current_user)
                 span.caret
               ul.dropdown-menu style="margin-top:2.5em"
-                - unless @branch.master?
-                  li = link_to 'Master Branch', [@website, @branch, @repository.branch('master')]
-                - unless @branch.working?(current_user)
-                  li = link_to 'Your Working Branch', [@website, @branch, @repository.branch(current_user)]
+                - unless @branch.production?
+                  li = link_to 'Production Branch', [@website, @branch, @repository.branch('master')]
+                - unless @branch.staging?(current_user)
+                  li = link_to 'Your Staging Branch', [@website, @branch, @repository.branch(current_user)]
                 li.divider role="separator"
                 - @repository.custom_branch_names.each do |target_name|
                   - if target_name != @branch.name

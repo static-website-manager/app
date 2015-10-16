@@ -17,7 +17,7 @@ class ApplicationController < ActionController::Base
   # Find the current website’s branch.
   def require_branch
     branch_param = controller_name == 'branches' ? params[:id] : params[:branch_id]
-    @branch = @repository.branch(branch_param == 'working' ? current_user : branch_param)
+    @branch = @repository.branch(branch_param == 'staging' ? current_user : branch_param)
   end
 
   # Ensure current users are redirected to their website list.

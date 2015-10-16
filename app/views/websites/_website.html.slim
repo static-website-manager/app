@@ -23,8 +23,10 @@
             span> Jump to Branch...
             span.caret
           ul.dropdown-menu
-            li = link_to 'Your Working Branch', [website, repository.branch(current_user)]
-            li = link_to 'Master', [website, repository.branch('master')]
-            li.divider role="separator"
-            - repository.custom_branch_names.each do |name|
-              li = link_to name, [website, repository.branch(name)]
+            li = link_to 'Production Branch', [website, repository.branch('master')]
+            li = link_to 'Your Staging Branch', [website, repository.branch(current_user)]
+            - if repository.custom_branch_names.any?
+              li.divider role="separator"
+              li.dropdown-header Custom Branches
+              - repository.custom_branch_names.each do |name|
+                li = link_to name, [website, repository.branch(name)]

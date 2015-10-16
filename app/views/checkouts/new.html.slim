@@ -19,8 +19,8 @@
                   => @branch.title(current_user)
                   span.caret
                 ul.dropdown-menu style="margin-top:2.5em"
-                  li class=('active' if @branch.master?) = link_to 'Master Branch', branch_id: @repository.branch('master')
-                  li class=('active' if @branch.working?(current_user)) = link_to 'Your Working Branch', branch_id: @repository.branch(current_user)
+                  li class=('active' if @branch.production?) = link_to 'Production Branch', branch_id: @repository.branch('master')
+                  li class=('active' if @branch.staging?(current_user)) = link_to 'Your Staging Branch', branch_id: @repository.branch(current_user)
                   li.divider role="separator"
                   li.dropdown-header Custom Branches
                   - @repository.custom_branch_names.each do |name|

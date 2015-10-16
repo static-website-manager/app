@@ -6,7 +6,7 @@ class ComparisonsController < ApplicationController
   before_action :require_branch
 
   before_action do
-    @target = @repository.branch(params[:id] == 'working' ? current_user : params[:id])
+    @target = @repository.branch(params[:id] == 'staging' ? current_user : params[:id])
     raise ActiveRecord::RecordNotFound if @target.name == @branch.name
     @merge_base = @repository.merge_base(@branch.commit_id, @target.commit_id)
   end

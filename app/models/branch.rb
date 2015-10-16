@@ -35,7 +35,7 @@ class Branch
     rugged_branch.target.oid
   end
 
-  def master?
+  def production?
     name == 'master'
   end
 
@@ -48,10 +48,10 @@ class Branch
   end
 
   def title(user)
-    if master?
-      'Master Branch'
-    elsif working?(user)
-      'Your Working Branch'
+    if production?
+      'Production Branch'
+    elsif staging?(user)
+      'Your Staging Branch'
     else
       "Custom Branch “#{name}”"
     end
@@ -61,7 +61,7 @@ class Branch
     name
   end
 
-  def working?(user)
+  def staging?(user)
     name == "swm_user_#{user.id}"
   end
 end
