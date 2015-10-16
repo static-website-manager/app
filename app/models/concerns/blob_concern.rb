@@ -117,7 +117,11 @@ module BlobConcern
   end
 
   def raw_content
-    content
+    rugged_blob.content.force_encoding('utf-8')
+  end
+
+  def raw_text
+    rugged_blob.text.force_encoding('utf-8')
   end
 
   def save(branch_name, author_email, author_name, commit_message)

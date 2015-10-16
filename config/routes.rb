@@ -70,6 +70,8 @@ Rails.application.routes.draw do
 
   get 'websites/:website_id/:branch_id/files/*static_file_id/rename', to: 'static_file_moves#new', as: :new_website_branch_static_file_move, format: false
   post 'websites/:website_id/:branch_id/files/*static_file_id/rename', to: 'static_file_moves#create', as: :website_branch_static_file_move, format: false
+  get 'websites/:website_id/:branch_id/files/*static_file_id/download', to: 'static_file_downloads#show', as: :download_website_branch_static_file, format: false
+  get 'websites/:website_id/:branch_id/files/*static_file_id/preview', to: 'static_file_previews#show', as: :preview_website_branch_static_file, format: false
   get 'websites/:website_id/:branch_id/files/*static_file_id/history', to: 'static_file_commits#index', as: :website_branch_static_file_commits, format: false
   get 'websites/:website_id/:branch_id/files/*id/delete', to: 'static_files#delete', as: :delete_website_branch_static_file, format: false
   delete 'websites/:website_id/:branch_id/files/*id', to: 'static_files#destroy', format: false

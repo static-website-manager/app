@@ -13,13 +13,20 @@
   .container-fluid
     .blob-content
       .row
-        .col-sm-9
+        .col-sm-8
           .blob-icon-lg
             => icon 'file-o fa-4x'
             span.label.label-primary FILE
           h1: code.code-text = @static_file.filename
           code.small = @static_file.full_pathname
-        .col-sm-3.text-right
+        .col-sm-4.text-right
+          - if @static_file.preview?
+            => link_to [:preview, @website, @branch, @static_file], class: 'btn btn-success' do
+              => icon 'eye'
+              | Preview
+          => link_to [:download, @website, @branch, @static_file], class: 'btn btn-success' do
+            => icon 'cloud-download'
+            | Download
           => link_to [:new, @website, @branch, @static_file, :move], class: 'btn btn-primary' do
             ' Rename
             = icon 'arrow-circle-o-right'

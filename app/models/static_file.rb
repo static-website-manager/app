@@ -35,6 +35,18 @@ class StaticFile
     end
   end
 
+  def image?
+    extension.match(/\A(gif|ico|jpeg|jpg|png)\z/)
+  end
+
+  def preview?
+    extension.match(/\A(gif|htm|html|ico|jpeg|jpg|js|json||markdown|mdown|mkdn|mkd|md|png|text|txt|xml|yml)\z/)
+  end
+
+  def text?
+    extension.match(/\A(htm|html|js|json||markdown|mdown|mkdn|mkd|md|xml|yml)\z/)
+  end
+
   private
 
   def self.arrange_hash_into_nested_collection(hash, root)
