@@ -9,7 +9,7 @@
         => image_tag 'logo-small.png', alt: 'Static Website Manager', class: 'logo-small'
       ul.nav.nav-tabs
         li = link_to 'Overview', [@website, @branch, @static_file]
-        li.active = link_to 'History', '#'
+        li.active = link_to 'History', [@website, @branch, @static_file, :commits]
   .container-fluid
     .blob-content
       ol.list-unstyled.commits

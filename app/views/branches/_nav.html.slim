@@ -1,9 +1,9 @@
 ul.nav.nav-tabs.branch-nav
   li class=('active' if current_page?([@website, @branch])) = link_to 'Overview', [@website, @branch]
-  li class=('active' if current_page?([@website, @branch, :commits])) = link_to 'History', [@website, @branch, :commits]
   li class=('active' if current_page?([@website, @branch, :design])) = link_to 'Design', [@website, @branch, :design]
   li class=('active' if current_page?([@website, @branch, :pages])) = link_to 'Pages', [@website, @branch, :pages]
   li class=('active' if current_page?([@website, @branch, :drafts])) = link_to 'Drafts', [@website, @branch, :drafts]
   li class=('active' if current_page?([@website, @branch, :posts])) = link_to 'Posts', [@website, @branch, :posts]
   li class=('active' if current_page?([@website, @branch, :collections])) = link_to 'Collections', [@website, @branch, :collections]
   li class=('active' if current_page?([@website, @branch, :static_files])) = link_to 'Files', [@website, @branch, :static_files]
+  li class=('active' if current_page?([@website, @branch, :commits])) = link_to 'History', [@website, @branch, :commits]

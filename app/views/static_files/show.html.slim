@@ -8,7 +8,7 @@
         => icon 'reply'
         => image_tag 'logo-small.png', alt: 'Static Website Manager', class: 'logo-small'
       ul.nav.nav-tabs
-        li.active = link_to 'Overview', '#'
+        li.active = link_to 'Overview', [@website, @branch, @static_file]
         li = link_to 'History', [@website, @branch, @static_file, :commits]
   .container-fluid
     .blob-content

@@ -10,8 +10,8 @@
           => image_tag 'logo-small.png', alt: 'Static Website Manager', class: 'logo-small'
         ul.nav.nav-tabs
           li = link_to 'Overview', [@website, @branch, @page]
+          li.active = link_to 'Edit', [:edit, @website, @branch, @page]
           li = link_to 'History', [@website, @branch, @page, :commits]
-          li.active = link_to 'Edit', '#'
     .container-fluid
       .blob-content
         = render partial: 'blobs/form', object: form, locals: { placeholder: "Save changes to #{@page.full_pathname}" }
