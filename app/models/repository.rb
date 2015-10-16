@@ -3,6 +3,22 @@ class Repository
 
   attr_accessor :website_id
 
+  def self.pathname(website_id)
+    Rails.root.join(Rails.application.secrets.repos_dir, "#{website_id}.git")
+  end
+
+  def self.rugged_repository(website_id)
+    pathname = pathname(website_id)
+
+    if pathname.present? && pathname.exist?
+      Rugged::Repository.new(pathname.to_s)
+    elsif pathname.present?
+      Rugged::Repository.init_at(pathname.to_s, :bare)
+    else
+      raise ActiveRecord::RecordNotFound
+    end
+  end
+
   def branch(*args)
     Branch.find(rugged_repository, *args)
   end
@@ -29,22 +45,8 @@ class Repository
     rugged_repository.merge_base(*args)
   end
 
-  def repository_pathname
-    if website_id.present?
-      Rails.root.join(Rails.application.secrets.repos_dir, "#{website_id}.git")
-    end
-  end
-
   def rugged_repository
-    return @rugged_repository if @rugged_repository
-
-    if repository_pathname.present? && repository_pathname.exist?
-      @rugged_repository ||= Rugged::Repository.new(repository_pathname.to_s)
-    elsif repository_pathname.present?
-      @rugged_repository ||= Rugged::Repository.init_at(repository_pathname.to_s, :bare)
-    else
-      raise ActiveRecord::RecordNotFound
-    end
+    @rugged_repository ||= Repository.rugged_repository(website_id)
   end
 
   def setup?
