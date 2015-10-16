@@ -5,6 +5,11 @@
 = render partial: 'branches/nav', locals: { website: @website, branch: @branch }
 
 - if @drafts.any?
+  .clearfix
+    = link_to [:new, @website, @branch, :draft], class: 'btn btn-sm btn-primary pull-right' do
+      => icon 'plus-circle'
+      | Add Draft
+    p.text-muted Displaying all #{pluralize @drafts.length, 'draft'}
   ul.list-unstyled.drafts.row
     = render @drafts, website: @website, branch: @branch
   hr
@@ -13,7 +18,6 @@
     ' No HTML, Text or Markdown drafts found.
     span.fa.fa-question-circle data-toggle="tooltip" data-placement="top" title="Accepted file extension include: .html .htm .text .txt .markdown .mdown .mkdn .mdk .md"
   br
-
-= link_to [:new, @website, @branch, :draft], class: 'btn btn-primary' do
-  => icon 'plus-circle'
-  | Add Draft
+  = link_to [:new, @website, @branch, :draft], class: 'btn btn-primary' do
+    => icon 'plus-circle'
+    | Add Draft

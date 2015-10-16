@@ -7,12 +7,12 @@
 - if @posts.any?
   .table-responsive
     table.table.table-bordered.table-striped.table-hover.posts
-      caption
-        .pull-right style="position:relative; z-index:1"
+      caption style="padding-top: 0.2em; padding-bottom: 0.2em; line-height:1"
+        .pull-right style="position:relative; z-index:1; top: -0.2em"
           = link_to [:new, @website, @branch, :post], class: 'btn btn-sm btn-primary' do
             => icon 'plus-circle'
             | Add Post
-        span style="position:relative; top:0.5em" = page_entries_info @posts, entry_name: 'post'
+        = page_entries_info @posts, entry_name: 'post'
       thead
         tr
           th Title
