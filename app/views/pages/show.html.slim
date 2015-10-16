@@ -15,6 +15,9 @@
     .blob-content
       .row
         .col-sm-9
+          .blob-icon-lg
+            => icon 'file-o fa-4x'
+            span.label.label-primary PAGE
           h1 = @page.title
           code.small = @page.full_pathname
         .col-sm-3.text-right

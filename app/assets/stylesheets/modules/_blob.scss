@@ -37,6 +37,27 @@
   }
 }
 
+.blob-icon-lg {
+  position: relative;
+  float: left;
+  margin-right: 1em;
+  .label {
+    position: absolute;
+    left: -0.6em;
+    bottom: 0.8em;
+  }
+}
+
+.blob-icon-sm {
+  float: left;
+  margin-right: 0.5em;
+}
+
+.blob-icon-sm + h1 {
+  margin-bottom: 0.5em;
+  font-size: 1.3em;
+}
+
 .blob-editor {
   .form-group:last-child,
   .well:last-child {

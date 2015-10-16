@@ -12,6 +12,10 @@
         li.active = link_to 'History', [@website, @branch, @static_file, :commits]
   .container-fluid
     .blob-content
+      .blob-icon-sm
+        span.label.label-primary FILE
+      h1: code.code-text = @static_file.full_pathname
+      hr
       ol.list-unstyled.commits
         = render @commits, website: @website
       = render partial: 'pagination', object: @commits
