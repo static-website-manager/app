@@ -5,7 +5,7 @@
         = link_to icon('users'), [website, :authorizations], class: 'btn btn-sm btn-default', title: 'Team Members'
         = link_to icon('gears'), [:edit, website, :settings], class: 'btn btn-sm btn-default', title: 'Website Settings'
     .btn-group
-      = link_to icon('home'), :edit_account, class: 'btn btn-sm btn-default', title: 'Your Account'
+      = link_to icon('user'), :edit_account, class: 'btn btn-sm btn-default', title: 'Your Account'
     .btn-group
       = form_tag :sign_out, method: :delete do
         = button_tag icon('sign-out'), class: 'btn btn-sm btn-default', title: 'Sign Out'

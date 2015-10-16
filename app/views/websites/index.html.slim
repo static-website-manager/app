@@ -3,7 +3,7 @@
 .header
   .pull-right
     .btn-group
-      = link_to icon('home'), :edit_account, class: 'btn btn-sm btn-default', title: 'Your Account'
+      = link_to icon('user'), :edit_account, class: 'btn btn-sm btn-default', title: 'Your Account'
     .btn-group
       = form_tag :sign_out, method: :delete do
         = button_tag icon('sign-out'), class: 'btn btn-sm btn-default', title: 'Sign Out'

@@ -17,7 +17,7 @@ class Repository
 
   def custom_branch_names
     rugged_repository.branches.each_name(:local).sort.reject do |name|
-      name == 'master' || name.match(/\Aswm_user_\d+\z/)
+      name == 'master' || name.match(/\Astatic_user_\d+\z/)
     end
   end
 

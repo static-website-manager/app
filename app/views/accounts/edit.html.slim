@@ -1,16 +1,15 @@
 - title 'Edit Your Account Information'
 
 .header.header-center
-  = link_to session[:return_to] || :websites, class: 'logo-large logo-back' do
-    => icon 'reply'
-    => image_tag 'logo-large.png', alt: ''
-    strong Static Website Manager
+  h1.lead
+    = link_to session[:return_to] || [@website, @repository.branch(current_user)], class: 'logo-small-back-container' do
+      => icon 'reply'
+      => image_tag 'logo-small.png', alt: 'Static Website Manager', class: 'logo-small'
+    | | Account Information
 .row
   .col-sm-8.col-sm-offset-2.col-md-6.col-md-offset-3
     = errors_for current_user
     .panel.panel-default
-      .panel-heading
-        h1.h4.panel-title Account Information
       = form_for current_user, url: :account do |form|
         .panel-body
           .form-group

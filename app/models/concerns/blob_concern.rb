@@ -3,27 +3,6 @@ module BlobConcern
 
   attr_accessor :filename, :id, :pathname, :rugged_blob, :rugged_repository
 
-  class_methods do
-    def find(rugged_repository, commit_id, id, match_pattern = nil)
-      result = rugged_repository.lookup(commit_id).tree.walk(:postorder).find do |root, object|
-        object[:name] == id
-      end
-
-      if result && (match_pattern ? result[0].match(match_pattern) : result[0])
-        rugged_blob = rugged_repository.lookup(result[1][:oid])
-        new(
-          id: result[1][:oid],
-          filename: result[1][:name],
-          pathname: result[0],
-          rugged_blob: rugged_blob,
-          rugged_repository: rugged_repository,
-        )
-      else
-        raise ActiveRecord::RecordNotFound
-      end
-    end
-  end
-
   def basename
     filename.present? ? filename.split('.')[0..-2].join('.') : ''
   end
@@ -137,14 +116,6 @@ module BlobConcern
     id.present?
   end
 
-  def short_id
-    id[0..6]
-  end
-
-  def to_param
-    filename
-  end
-
   def raw_content
     content
   end
@@ -196,6 +167,18 @@ module BlobConcern
       false
     ensure
       FileUtils.rm_rf(clone_path)
+    end
+  end
+
+  def short_id
+    id[0..6]
+  end
+
+  def to_param
+    if defined?(pretty_pathname)
+      pretty_pathname
+    else
+      full_pathname
     end
   end
 end

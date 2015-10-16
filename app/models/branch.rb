@@ -7,7 +7,7 @@ class Branch
     if name_or_user.blank?
       raise ActiveRecord::RecordNotFound
     elsif name_or_user.is_a?(User)
-      name = "swm_user_#{name_or_user.id}"
+      name = "static_user_#{name_or_user.id}"
     else
       name = name_or_user.to_s
     end
@@ -62,6 +62,6 @@ class Branch
   end
 
   def staging?(user)
-    name == "swm_user_#{user.id}"
+    name == "static_user_#{user.id}"
   end
 end

@@ -16,8 +16,25 @@ class Draft
     end
   end
 
-  def self.find(*args)
-    super *args.push(/\A_drafts/)
+  def self.find(rugged_repository, commit_id, pathname)
+    result = rugged_repository.lookup(commit_id).tree.walk(:postorder).find do |root, object|
+      File.join([root, object[:name]].reject(&:blank?)).sub(/\A_drafts\//, '') == pathname
+    end
+
+    if result && result[0].match(/\A_drafts/)
+      rugged_blob = rugged_repository.lookup(result[1][:oid])
+      new(
+        content: content(rugged_blob),
+        id: result[1][:oid],
+        filename: result[1][:name],
+        metadata: metadata(rugged_blob),
+        pathname: result[0],
+        rugged_blob: rugged_blob,
+        rugged_repository: rugged_repository,
+      )
+    else
+      raise ActiveRecord::RecordNotFound
+    end
   end
 
   def pretty_pathname

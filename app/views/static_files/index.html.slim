@@ -2,16 +2,7 @@
 
 = render partial: 'websites/header', locals: { website: @website }
 = render partial: 'branches/header', locals: { website: @website, repository: @repository, branch: @branch }
-
-ul.nav.nav-tabs.branch-nav
-  li = link_to 'Overview', [@website, @branch]
-  li = link_to 'History', [@website, @branch, :commits]
-  li = link_to 'Design', [@website, @branch, :design]
-  li = link_to 'Pages', [@website, @branch, :static_files]
-  li = link_to 'Drafts', [@website, @branch, :drafts]
-  li = link_to 'Posts', [@website, @branch, :posts]
-  li = link_to 'Collections', [@website, @branch, :collections]
-  li.active = link_to 'Files', [@website, @branch, :static_files]
+= render partial: 'branches/nav', locals: { website: @website, branch: @branch }
 
 - if @static_files.any?
   ul.list-unstyled.files
