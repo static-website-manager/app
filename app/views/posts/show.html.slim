@@ -18,7 +18,7 @@
           h1
             => @post.title
             span.small = localize(@post.published_on)
-          code.small = @post.pathname
+          code.small = @post.full_pathname
         .col-sm-3.text-right
           => link_to [:new, @website, @branch, @post, :move], class: 'btn btn-primary' do
             ' Rename

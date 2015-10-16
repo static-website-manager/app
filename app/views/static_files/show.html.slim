@@ -14,7 +14,7 @@
     .blob-content
       .row
         .col-sm-9
-          h1 = @static_file.full_pathname
+          h1: code.code-text = @static_file.filename
           code.small = @static_file.full_pathname
         .col-sm-3.text-right
           => link_to [:new, @website, @branch, @static_file, :move], class: 'btn btn-primary' do
