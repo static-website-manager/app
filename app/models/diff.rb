@@ -29,7 +29,7 @@ class Diff
 
   private
 
-  def draft?
+  def draft?(patch)
     patch.delta.new_file[:path].match(/\A_drafts\/.+\.(#{page_extensions.join('|')})\z/)
   end
 
@@ -37,7 +37,7 @@ class Diff
     patch.delta.new_file[:path].match(/\A[^_\.].+\.(#{page_extensions.join('|')})\z/)
   end
 
-  def post?
+  def post?(patch)
     patch.delta.new_file[:path].match(/\A_posts\/.+\.(#{page_extensions.join('|')})\z/)
   end
 end

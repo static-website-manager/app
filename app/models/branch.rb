@@ -31,12 +31,24 @@ class Branch
     end
   end
 
+  def self.html_extensions
+    %w[htm html]
+  end
+
+  def self.markdown_extensions
+    %w[markdown mdown mkdn mkd md]
+  end
+
+  def self.page_extensions
+    html_extensions + markdown_extensions
+  end
+
   def commit_id
     rugged_branch.target.oid
   end
 
   def html_extensions
-    %w[htm html]
+    Branch.html_extensions
   end
 
   def layout_names
@@ -48,7 +60,7 @@ class Branch
   end
 
   def markdown_extensions
-    %w[markdown mdown mkdn mkd md]
+    Branch.markdown_extensions
   end
 
   def page_extensions
