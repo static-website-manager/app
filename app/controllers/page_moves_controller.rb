@@ -6,7 +6,7 @@ class PageMovesController < ApplicationController
   before_action :require_branch
 
   before_action do
-    @page = Page.find(@repository.rugged_repository, @branch.commit_id, params[:page_id])
+    @page = Page.find(@repository.rugged_repository, @branch.commit_id, params[:page_id], @branch.page_extensions)
   end
 
   def create

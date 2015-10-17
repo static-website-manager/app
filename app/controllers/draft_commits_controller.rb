@@ -7,7 +7,7 @@ class DraftCommitsController < ApplicationController
   before_action :set_return_to
 
   before_action do
-    @draft = Draft.find(@repository.rugged_repository, @branch.commit_id, params[:draft_id])
+    @draft = Draft.find(@repository.rugged_repository, @branch.commit_id, params[:draft_id], @branch.page_extensions)
   end
 
   def index

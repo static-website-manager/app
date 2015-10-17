@@ -5,11 +5,11 @@ module PageConcern
 
   class_methods do
     def content(rugged_blob)
-      rugged_blob.text.sub(/\A(---\s*\n.*?\n?)^((---|\.\.\.)\s*$\n?)/m, '').force_encoding('utf-8')
+      rugged_blob.text.sub(FRONT_MATTER_REGEXP, '').force_encoding('utf-8')
     end
 
     def metadata(rugged_blob)
-      rugged_blob.text.match(/\A(---\s*\n.*?\n?)^((---|\.\.\.)\s*$\n?)/m) ? Hash(YAML.load(rugged_blob.text)) : {}
+      rugged_blob.text.match(FRONT_MATTER_REGEXP) ? Hash(YAML.load(rugged_blob.text)) : {}
     end
   end
 
@@ -19,9 +19,5 @@ module PageConcern
     else
       "---\n---\n\n#{content}"
     end
-  end
-
-  def writable?
-    filename.match(/\.(markdown|mdown|mkdn|mkd|md)\z/)
   end
 end

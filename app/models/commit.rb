@@ -50,11 +50,11 @@ class Commit
     Kaminari.paginate_array(commits).page(page).per(per_page)
   end
 
-  def diff
+  def diff(page_extensions)
     if rugged_commit.parents.any?
-      Diff.new(rugged_diff: rugged_commit.parents[0].diff(rugged_commit).tap(&:find_similar!))
+      Diff.new(page_extensions: page_extensions, rugged_diff: rugged_commit.parents[0].diff(rugged_commit).tap(&:find_similar!))
     else
-      Diff.new(rugged_diff: rugged_commit.diff.tap(&:find_similar!))
+      Diff.new(page_extensions: page_extensions, rugged_diff: rugged_commit.diff.tap(&:find_similar!))
     end
   end
 

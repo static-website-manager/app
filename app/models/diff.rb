@@ -1,31 +1,43 @@
 class Diff
   include ActiveModel::Model
 
-  attr_accessor :rugged_diff
-
-  def pages
-    @pages ||= rugged_diff.patches.select do |patch|
-      patch.delta.new_file[:path].match(/\A[^_].+\.(htm|html|text|txt|markdown|mdown|mkdn|mkd|md)\z/)
-    end
-  end
+  attr_accessor :page_extensions, :rugged_diff
 
   def drafts
     @drafts ||= rugged_diff.patches.select do |patch|
-      patch.delta.new_file[:path].match(/\A_drafts\/.+\.(htm|html|text|txt|markdown|mdown|mkdn|mkd|md)\z/)
-    end
-  end
-
-  def posts
-    @posts ||= rugged_diff.patches.select do |patch|
-      patch.delta.new_file[:path].match(/\A_posts\/.+\.(htm|html|text|txt|markdown|mdown|mkdn|mkd|md)\z/)
+      draft?(patch)
     end
   end
 
   def files
     @files ||= rugged_diff.patches.select do |patch|
-      !patch.delta.new_file[:path].match(/\A[^_].+\.(htm|html|text|txt|markdown|mdown|mkdn|mkd|md)\z/) &&
-      !patch.delta.new_file[:path].match(/\A_drafts\/.+\.(htm|html|text|txt|markdown|mdown|mkdn|mkd|md)\z/) &&
-      !patch.delta.new_file[:path].match(/\A_posts\/.+\.(htm|html|text|txt|markdown|mdown|mkdn|mkd|md)\z/)
+      !page?(patch) && !draft?(patch) && !post?(patch)
     end
+  end
+
+  def pages
+    @pages ||= rugged_diff.patches.select do |patch|
+      page?(patch)
+    end
+  end
+
+  def posts
+    @posts ||= rugged_diff.patches.select do |patch|
+      post?(patch)
+    end
+  end
+
+  private
+
+  def draft?
+    patch.delta.new_file[:path].match(/\A_drafts\/.+\.(#{page_extensions.join('|')})\z/)
+  end
+
+  def page?(patch)
+    patch.delta.new_file[:path].match(/\A[^_\.].+\.(#{page_extensions.join('|')})\z/)
+  end
+
+  def post?
+    patch.delta.new_file[:path].match(/\A_posts\/.+\.(#{page_extensions.join('|')})\z/)
   end
 end

@@ -11,11 +11,11 @@ class PostsController < ApplicationController
   end
 
   before_action only: %i[show edit update delete destroy] do
-    @post = Post.find(@repository.rugged_repository, @branch.commit_id, params[:id])
+    @post = Post.find(@repository.rugged_repository, @branch.commit_id, params[:id], @branch.page_extensions)
   end
 
   def index
-    @posts = Post.all(@repository.rugged_repository, @branch.commit_id, page: params[:page], per_page: 50)
+    @posts = Post.all(@repository.rugged_repository, @branch.commit_id, @branch.page_extensions, page: params[:page], per_page: 50)
   end
 
   def create

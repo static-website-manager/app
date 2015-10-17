@@ -11,11 +11,11 @@ class PagesController < ApplicationController
   end
 
   before_action only: %i[show edit update delete destroy] do
-    @page = Page.find(@repository.rugged_repository, @branch.commit_id, params[:id])
+    @page = Page.find(@repository.rugged_repository, @branch.commit_id, params[:id], @branch.page_extensions)
   end
 
   def index
-    @pages = Page.all(@repository.rugged_repository, @branch.commit_id)
+    @pages = Page.all(@repository.rugged_repository, @branch.commit_id, @branch.page_extensions)
   end
 
   def create

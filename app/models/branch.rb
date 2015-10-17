@@ -35,6 +35,18 @@ class Branch
     rugged_branch.target.oid
   end
 
+  def html_extensions
+    %w[htm html]
+  end
+
+  def markdown_extensions
+    %w[markdown mdown mkdn mkd md]
+  end
+
+  def page_extensions
+    html_extensions + markdown_extensions
+  end
+
   def production?
     name == 'master'
   end

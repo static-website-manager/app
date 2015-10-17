@@ -7,7 +7,7 @@ class StaticFileCommitsController < ApplicationController
   before_action :set_return_to
 
   before_action do
-    @static_file = StaticFile.find(@repository.rugged_repository, @branch.commit_id, params[:static_file_id])
+    @static_file = StaticFile.find(@repository.rugged_repository, @branch.commit_id, params[:static_file_id], @branch.page_extensions)
   end
 
   def index

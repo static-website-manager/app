@@ -11,11 +11,11 @@ class DraftsController < ApplicationController
   end
 
   before_action only: %i[show edit update delete destroy] do
-    @draft = Draft.find(@repository.rugged_repository, @branch.commit_id, params[:id])
+    @draft = Draft.find(@repository.rugged_repository, @branch.commit_id, params[:id], @branch.page_extensions)
   end
 
   def index
-    @drafts = Draft.all(@repository.rugged_repository, @branch.commit_id)
+    @drafts = Draft.all(@repository.rugged_repository, @branch.commit_id, @branch.page_extensions)
   end
 
   def create

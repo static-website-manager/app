@@ -31,4 +31,4 @@
             code.code-text => link_to parent_id[0..6], website_commit_path(@website, parent_id)
             - if i < @commit.parent_ids.length - 1
               ' +
-    = render @commit.diff
+    = render @commit.diff(@branch.page_extensions)

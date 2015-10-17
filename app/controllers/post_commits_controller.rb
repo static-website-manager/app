@@ -7,7 +7,7 @@ class PostCommitsController < ApplicationController
   before_action :set_return_to
 
   before_action do
-    @post = Post.find(@repository.rugged_repository, @branch.commit_id, params[:post_id])
+    @post = Post.find(@repository.rugged_repository, @branch.commit_id, params[:post_id], @branch.page_extensions)
   end
 
   def index

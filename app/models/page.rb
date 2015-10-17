@@ -5,51 +5,82 @@ class Page
 
   attr_accessor :dirname, :objects
 
-  def self.all(rugged_repository, commit_id)
+  def self.all(rugged_repository, commit_id, page_extensions)
     result_hash = {}
 
     rugged_repository.lookup(commit_id).tree.walk(:postorder).select do |root, object|
-      !root.match(/\A_/) && (object[:type] == :tree || object[:name].match(/\.(htm|html|text|txt|markdown|mdown|mkdn|mkd|md)\z/))
+      if root.match(HIDDEN_FILE_REGEXP)
+        false
+      elsif object[:name].match(HIDDEN_FILE_REGEXP)
+        false
+      elsif object[:type] == :blob && object[:name].match(PAGE_EXTENTIONS_REGEXP_PROC.call(page_extensions))
+        rugged_blob = rugged_repository.lookup(object[:oid])
+
+        if rugged_blob.binary?
+          false
+        elsif rugged_blob.text.match(FRONT_MATTER_REGEXP)
+          true
+        else
+          false
+        end
+      elsif object[:type] == :tree
+        true
+      end
     end.each do |root, object|
       (result_hash[root] ||= []) << object
     end
 
     squash_index_blobs(
       squash_root_index_blob(
-        arrange_hash_into_nested_collection(result_hash, '')
-      )
+        arrange_hash_into_nested_collection(result_hash, ''),
+        page_extensions
+      ),
+      page_extensions
     )
   end
 
-  def self.find(rugged_repository, commit_id, pathname)
+  def self.find(rugged_repository, commit_id, pathname, page_extensions)
     result = rugged_repository.lookup(commit_id).tree.walk(:postorder).find do |root, object|
-      File.join([root, object[:name]].reject(&:blank?)) == pathname
+      object[:type] == :blob && File.join([root, object[:name]].reject(&:blank?)) == pathname
     end
 
-    if result && result[0].match(/(\A(\/|[^_]+)|\A\z)/)
+    if !result
+      raise ActiveRecord::RecordNotFound
+    elsif result[0].match(HIDDEN_FILE_REGEXP)
+      raise ActiveRecord::RecordNotFound
+    elsif result[1][:name].match(HIDDEN_FILE_REGEXP)
+      raise ActiveRecord::RecordNotFound
+    elsif result[1][:name].match(PAGE_EXTENTIONS_REGEXP_PROC.call(page_extensions))
       rugged_blob = rugged_repository.lookup(result[1][:oid])
-      new(
-        content: content(rugged_blob),
-        id: result[1][:oid],
-        filename: result[1][:name],
-        metadata: metadata(rugged_blob),
-        pathname: result[0],
-        rugged_blob: rugged_blob,
-        rugged_repository: rugged_repository,
-      )
+
+      if rugged_blob.binary?
+        raise ActiveRecord::RecordNotFound
+      elsif rugged_blob.text.match(FRONT_MATTER_REGEXP)
+        new(
+          content: content(rugged_blob),
+          id: result[1][:oid],
+          filename: result[1][:name],
+          metadata: metadata(rugged_blob),
+          pathname: result[0],
+          rugged_blob: rugged_blob,
+          rugged_repository: rugged_repository,
+        )
+      else
+        raise ActiveRecord::RecordNotFound
+      end
     else
       raise ActiveRecord::RecordNotFound
     end
   end
 
-  def title
-    if pathname.blank? && filename.match(/\Aindex\.(markdown|mdown|mkdn|mkd|md)\z/)
+  def title(markdown_extensions)
+    if pathname.blank? && filename.match(/\Aindex\.(#{markdown_extensions.join('|')})\z/)
       'Home'
-    elsif filename.match(/\Aindex\.(markdown|mdown|mkdn|mkd|md)\z/)
+    elsif filename.match(/\Aindex\.(#{markdown_extensions.join('|')})\z/)
       pathname.split('/').last.titleize.sub(/\/\z/, '')
-    elsif extension.match(/\A(markdown|mdown|mkdn|mkd|md)\z/) && basename.match(/\A[A-Z_]+\z/)
+    elsif extension.match(/\A(#{markdown_extensions.join('|')})\z/) && basename.match(/\A[A-Z_]+\z/)
       basename
-    elsif extension.match(/\A(markdown|mdown|mkdn|mkd|md)\z/)
+    elsif extension.match(/\A(#{markdown_extensions.join('|')})\z/)
       basename.titleize
     else
       filename
@@ -85,22 +116,22 @@ class Page
     blobs + trees.reject { |t| t.objects.empty? }
   end
 
-  def self.squash_index_blobs(collection)
+  def self.squash_index_blobs(collection, page_extensions)
     collection.map do |object|
-      if root = Array(object.objects).find { |o| o.is_a?(Page) && o.filename.match(/\Aindex\.(htm|html|text|txt|markdown|mdown|mkdn|mkd|md)\z/) }
+      if root = Array(object.objects).find { |o| o.is_a?(Page) && o.filename.match(/\Aindex\.(#{page_extensions.join('|')})\z/) }
         object.objects.delete(root)
-        root.objects = squash_index_blobs(object.objects || [])
+        root.objects = squash_index_blobs(object.objects || [], page_extensions)
         root.dirname = object.filename
         root
       else
-        object.objects = squash_index_blobs(object.objects || [])
+        object.objects = squash_index_blobs(object.objects || [], page_extensions)
         object
       end
     end
   end
 
-  def self.squash_root_index_blob(collection)
-    if root = collection.find { |object| object.is_a?(Page) && object.filename.match(/\Aindex\.(htm|html|text|txt|markdown|mdown|mkdn|mkd|md)\z/) }
+  def self.squash_root_index_blob(collection, page_extensions)
+    if root = collection.find { |object| object.is_a?(Page) && object.filename.match(/\Aindex\.(#{page_extensions.join('|')})\z/) }
       collection.delete(root)
       root.objects = collection
       collection = [root]

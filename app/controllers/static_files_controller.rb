@@ -7,11 +7,11 @@ class StaticFilesController < ApplicationController
   before_action :set_return_to, only: %i[index show]
 
   before_action only: %i[show delete destroy] do
-    @static_file = StaticFile.find(@repository.rugged_repository, @branch.commit_id, params[:id])
+    @static_file = StaticFile.find(@repository.rugged_repository, @branch.commit_id, params[:id], @branch.page_extensions)
   end
 
   def index
-    @static_files = StaticFile.all(@repository.rugged_repository, @branch.commit_id)
+    @static_files = StaticFile.all(@repository.rugged_repository, @branch.commit_id, @branch.page_extensions)
   end
 
   def show

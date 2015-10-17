@@ -6,7 +6,7 @@ class DraftPublicationsController < ApplicationController
   before_action :require_branch
 
   before_action do
-    @draft = Draft.find(@repository.rugged_repository, @branch.commit_id, params[:draft_id])
+    @draft = Draft.find(@repository.rugged_repository, @branch.commit_id, params[:draft_id], @branch.page_extensions)
   end
 
   def create

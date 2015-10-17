@@ -4,11 +4,27 @@ class StaticFile
 
   attr_accessor :dirname, :objects
 
-  def self.all(rugged_repository, commit_id)
+  def self.all(rugged_repository, commit_id, page_extensions)
     result_hash = {}
 
     rugged_repository.lookup(commit_id).tree.walk(:postorder).select do |root, object|
-      !root.match(/\A_/) && (object[:type] == :tree || !object[:name].match(/\.(htm|html|text|txt|markdown|mdown|mkdn|mkd|md)\z/))
+      if root.match(HIDDEN_FILE_REGEXP)
+        false
+      elsif object[:name].match(HIDDEN_FILE_REGEXP)
+        false
+      elsif object[:type] == :blob && object[:name].match(PAGE_EXTENTIONS_REGEXP_PROC.call(page_extensions))
+        rugged_blob = rugged_repository.lookup(object[:oid])
+
+        if rugged_blob.binary?
+          true
+        elsif rugged_blob.text.match(FRONT_MATTER_REGEXP)
+          false
+        else
+          true
+        end
+      else
+        true
+      end
     end.each do |root, object|
       (result_hash[root] ||= []) << object
     end
@@ -16,12 +32,40 @@ class StaticFile
     arrange_hash_into_nested_collection(result_hash, '')
   end
 
-  def self.find(rugged_repository, commit_id, pathname)
+  def self.find(rugged_repository, commit_id, pathname, page_extensions)
     result = rugged_repository.lookup(commit_id).tree.walk(:postorder).find do |root, object|
-      File.join([root, object[:name]].reject(&:blank?)) == pathname
+      object[:type] == :blob && File.join([root, object[:name]].reject(&:blank?)) == pathname
     end
 
-    if result && result[0].match(/(\A(\/|[^_]+)|\A\z)/)
+    if !result
+      raise ActiveRecord::RecordNotFound
+    elsif result[0].match(HIDDEN_FILE_REGEXP)
+      raise ActiveRecord::RecordNotFound
+    elsif result[1][:name].match(HIDDEN_FILE_REGEXP)
+      raise ActiveRecord::RecordNotFound
+    elsif result[1][:name].match(PAGE_EXTENTIONS_REGEXP_PROC.call(page_extensions))
+      rugged_blob = rugged_repository.lookup(result[1][:oid])
+
+      if rugged_blob.binary?
+        new(
+          id: result[1][:oid],
+          filename: result[1][:name],
+          pathname: result[0],
+          rugged_blob: rugged_blob,
+          rugged_repository: rugged_repository,
+        )
+      elsif rugged_blob.text.match(FRONT_MATTER_REGEXP)
+        raise ActiveRecord::RecordNotFound
+      else
+        new(
+          id: result[1][:oid],
+          filename: result[1][:name],
+          pathname: result[0],
+          rugged_blob: rugged_blob,
+          rugged_repository: rugged_repository,
+        )
+      end
+    else
       rugged_blob = rugged_repository.lookup(result[1][:oid])
       new(
         id: result[1][:oid],
@@ -30,8 +74,6 @@ class StaticFile
         rugged_blob: rugged_blob,
         rugged_repository: rugged_repository,
       )
-    else
-      raise ActiveRecord::RecordNotFound
     end
   end
 
@@ -40,11 +82,7 @@ class StaticFile
   end
 
   def preview?
-    extension.match(/\A(gif|htm|html|ico|jpeg|jpg|js|json|markdown|mdown|mkdn|mkd|md|png|text|txt|xml|yml)\z/)
-  end
-
-  def text?
-    extension.match(/\A(htm|html|js|json|markdown|mdown|mkdn|mkd|md|xml|yml)\z/)
+    image? || !rugged_blob.binary?
   end
 
   private

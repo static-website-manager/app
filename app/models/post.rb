@@ -3,10 +3,13 @@ class Post
   include BlobConcern
   include PageConcern
 
-  def self.all(rugged_repository, commit_id, page: 1, per_page: 20)
+  def self.all(rugged_repository, commit_id, page_extensions, page: 1, per_page: 20)
     Kaminari.paginate_array(
       rugged_repository.lookup(commit_id).tree.walk(:postorder).select do |root, object|
-        root.match(/\A_posts/) && object[:name].match(/\A\d{4}\-\d{2}\-\d{2}\-[\w\-]+\.(htm|html|text|txt|markdown|mdown|mkdn|mkd|md)\z/)
+        if root.match(/\A_posts/) && object[:name].match(/\A\d{4}\-\d{2}\-\d{2}\-[\w\-]+\.(#{page_extensions.join('|')})\z/)
+          rugged_blob = rugged_repository.lookup(object[:oid])
+          rugged_blob && !rugged_blob.binary? && rugged_blob.text.match(FRONT_MATTER_REGEXP)
+        end
       end.map do |root, object|
         Post.new(
           id: object[:oid],
@@ -18,24 +21,35 @@ class Post
     ).page(page).per(per_page)
   end
 
-  def self.find(rugged_repository, commit_id, pathname)
+  def self.find(rugged_repository, commit_id, pathname, page_extensions)
     result = rugged_repository.lookup(commit_id).tree.walk(:postorder).find do |root, object|
-      File.join([root, object[:name]].reject(&:blank?)).sub(/\A_posts\//, '') == pathname
+      object[:type] == :blob && File.join([root, object[:name]].reject(&:blank?)).sub(/\A_posts\//, '') == pathname
     end
 
-    if result && result[0].match(/\A_posts/)
-      rugged_blob = rugged_repository.lookup(result[1][:oid])
-      new(
-        content: content(rugged_blob),
-        id: result[1][:oid],
-        filename: result[1][:name],
-        metadata: metadata(rugged_blob),
-        pathname: result[0],
-        rugged_blob: rugged_blob,
-        rugged_repository: rugged_repository,
-      )
-    else
+    if !result
       raise ActiveRecord::RecordNotFound
+    elsif !result[0].match(/\A_posts/)
+      raise ActiveRecord::RecordNotFound
+    elsif !result[1][:name].match(/\A\d{4}\-\d{2}\-\d{2}\-[\w\-]+\.(#{page_extensions.join('|')})\z/)
+      raise ActiveRecord::RecordNotFound
+    else
+      rugged_blob = rugged_repository.lookup(result[1][:oid])
+
+      if rugged_blob.binary?
+        raise ActiveRecord::RecordNotFound
+      elsif rugged_blob.text.match(FRONT_MATTER_REGEXP)
+        new(
+          content: content(rugged_blob),
+          id: result[1][:oid],
+          filename: result[1][:name],
+          metadata: metadata(rugged_blob),
+          pathname: result[0],
+          rugged_blob: rugged_blob,
+          rugged_repository: rugged_repository,
+        )
+      else
+        raise ActiveRecord::RecordNotFound
+      end
     end
   end
 
