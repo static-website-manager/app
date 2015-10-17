@@ -13,10 +13,10 @@
         .btn-group style="margin-right:1em"
           = link_to 'Overview', [website, repository.branch(current_user)], class: 'btn btn-default'
           = link_to 'Design', [website, repository.branch(current_user), :design], class: 'btn btn-default'
+          = link_to 'Collections', [website, repository.branch(current_user), :collections], class: 'btn btn-default'
           = link_to 'Pages', [website, repository.branch(current_user), :pages], class: 'btn btn-default'
           = link_to 'Drafts', [website, repository.branch(current_user), :drafts], class: 'btn btn-default'
           = link_to 'Posts', [website, repository.branch(current_user), :posts], class: 'btn btn-default'
-          = link_to 'Collections', [website, repository.branch(current_user), :collections], class: 'btn btn-default'
           = link_to 'Files', [website, repository.branch(current_user), :static_files], class: 'btn btn-default'
           = link_to 'History', [website, repository.branch(current_user), :commits], class: 'btn btn-default'
       .col-sm-6.text-right
