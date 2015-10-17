@@ -39,6 +39,14 @@ class Branch
     %w[htm html]
   end
 
+  def layout_names
+    rugged_repository.lookup(commit_id).tree.walk(:postorder).select do |root, object|
+      root == '_layouts/'
+    end.map do |root, object|
+      object[:name].split('.').first
+    end.reject(&:blank?).uniq
+  end
+
   def markdown_extensions
     %w[markdown mdown mkdn mkd md]
   end

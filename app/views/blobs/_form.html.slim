@@ -4,7 +4,7 @@
       = form.fields_for :metadata do |metadata|
         .form-group
           => metadata.label :layout, 'Layout', class: 'control-label'
-          = metadata.select :layout, options_for_select([form.object.metadata.find { |key, _| key == 'layout' }.try(:[], 1)], form.object.metadata.find { |key, _| key == 'layout' }.try(:[], 1)), {}, class: 'form-control'
+          = metadata.select :layout, options_for_select(branch.layout_names, form.object.metadata.find { |key, _| key == 'layout' }.try(:[], 1)), {}, class: 'form-control'
         .form-group
           => metadata.label :title, 'Title', class: 'control-label'
           = metadata.text_field :title, value: form.object.metadata.find { |key, _| key == 'title' }.try(:[], 1), class: 'form-control'
