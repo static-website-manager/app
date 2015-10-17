@@ -7,6 +7,10 @@ module BlobConcern
     filename.present? ? filename.split('.')[0..-2].join('.') : ''
   end
 
+  def basepath
+    File.join([pathname, basename].reject(&:blank?))
+  end
+
   def destroy(branch_name, author_email, author_name, commit_message)
     clone_path = Rails.root.join('tmp', "clone_#{rand(1000)}_#{Time.now.to_i}")
 
@@ -60,7 +64,8 @@ module BlobConcern
     File.join([pathname, filename].reject(&:blank?))
   end
 
-  def move(filename, branch_name, author_email, author_name, commit_message)
+  def move(new_full_pathname, branch_name, author_email, author_name, commit_message)
+    original_pathname = pathname
     original_filename = filename
     clone_path = Rails.root.join('tmp', "clone_#{rand(1000)}_#{Time.now.to_i}")
 
@@ -76,7 +81,8 @@ module BlobConcern
       cloned_index.read_tree(cloned_branch.target.tree)
       cloned_index.remove(full_pathname)
 
-      @filename = filename
+      @pathname = new_full_pathname.split('/')[0..-2].join('/')
+      @filename = new_full_pathname.split('/').last
       # Check for validity?
 
       cloned_index.add(path: full_pathname, oid: id, mode: 0100644)

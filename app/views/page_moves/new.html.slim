@@ -14,10 +14,10 @@
         .panel-body
           .row
             .col-sm-9
-              => form.label :basename, class: 'control-label'
-              = form.text_field :basename, class: 'form-control'
+              => form.label :basepath, 'Filename', class: 'control-label'
+              = form.text_field :basepath, class: 'form-control'
             .col-sm-3
               => form.label :extension, class: 'control-label'
-              = form.select :extension, options_for_select([['Markdown', 'md'], ['HTML', 'html']], form.object.extension), {}, class: 'form-control'
+              = form.select :extension, options_for_select([form.object.extension], form.object.extension), {}, class: 'form-control'
         .panel-footer.text-center
           = form.button 'Rename Page', class: 'btn btn-primary'

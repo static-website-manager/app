@@ -21,6 +21,6 @@ class StaticFileMovesController < ApplicationController
   private
 
   def filename
-    [params[:static_file].try(:[], :basename).to_s, @static_file.extension].reject(&:blank?).join('.')
+    [params[:static_file].try(:[], :basepath).to_s, @static_file.extension].reject(&:blank?).join('.')
   end
 end

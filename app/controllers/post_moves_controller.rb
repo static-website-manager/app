@@ -21,6 +21,6 @@ class PostMovesController < ApplicationController
   private
 
   def filename
-    [params[:post].try(:[], :basename).to_s, params[:post].try(:[], :extension).to_s].reject(&:blank?).join('.')
+    [params[:post].try(:[], :basepath).to_s, params[:post].try(:[], :extension).to_s].reject(&:blank?).join('.')
   end
 end

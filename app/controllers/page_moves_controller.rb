@@ -21,6 +21,6 @@ class PageMovesController < ApplicationController
   private
 
   def filename
-    [params[:page].try(:[], :basename).to_s, params[:page].try(:[], :extension).to_s].reject(&:blank?).join('.')
+    [params[:page].try(:[], :basepath).to_s, params[:page].try(:[], :extension).to_s].reject(&:blank?).join('.')
   end
 end

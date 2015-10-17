@@ -21,6 +21,6 @@ class DraftMovesController < ApplicationController
   private
 
   def filename
-    [params[:draft].try(:[], :basename).to_s, params[:draft].try(:[], :extension).to_s].reject(&:blank?).join('.')
+    [params[:draft].try(:[], :basepath).to_s, params[:draft].try(:[], :extension).to_s].reject(&:blank?).join('.')
   end
 end

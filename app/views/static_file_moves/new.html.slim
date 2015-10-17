@@ -14,8 +14,8 @@
         .panel-body
           .row
             .col-sm-9
-              => form.label :basename, class: 'control-label'
-              = form.text_field :basename, class: 'form-control'
+              => form.label :basepath, class: 'control-label'
+              = form.text_field :basepath, class: 'form-control'
             .col-sm-3
               => form.label :extension, class: 'control-label'
               = form.select :extension, options_for_select([form.object.extension], form.object.extension), {}, class: 'form-control'
