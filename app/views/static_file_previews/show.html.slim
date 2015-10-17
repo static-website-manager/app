@@ -13,7 +13,9 @@
         h2.h4.panel-title = @static_file.filename
       .panel-body style=("background: url('#{image_path('checkers.png')}') repeat;" if @static_file.image?)
         - if @static_file.text?
-          pre: code = @static_file.raw_text
+          css:
+            #{Rouge::Themes::Github.render(scope: '.highlight')}
+          = Rouge::Formatters::HTML.new(css_class: 'highlight').format(Rouge::Lexers::Shell.new.lex(@static_file.raw_text)).html_safe
         - elsif @static_file.image?
           .text-center
             = image_tag "data:image/png;base64,#{Base64.strict_encode64(@static_file.raw_content)}", alt: ''
