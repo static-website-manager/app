@@ -158,7 +158,7 @@ module BlobConcern
       Rugged::Commit.create(cloned_repository,
         author: author,
         committer: author,
-        message: commit_message.present? ? commit_message : (original_id.present? ? "Save changes to #{pretty_pathname}" : "Add New #{self.class.name}"),
+        message: commit_message.present? ? commit_message : (original_id.present? ? "Save changes to #{full_pathname}" : "Add New #{self.class.name}"),
         parents: [cloned_branch.target],
         tree: cloned_index.write_tree(cloned_repository),
         update_ref: 'refs/heads/' + branch_name,
