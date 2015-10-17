@@ -12,14 +12,17 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require moment
 //= require turbolinks
 //= require bootstrap
+//= require bootstrap-datetimepicker
 //= require_tree .
 
 Turbolinks.enableTransitionCache();
 Turbolinks.enableProgressBar();
 
-$(document).on('page:change', function(event) {
+$(document).on('ready page:change', function(event) {
   $('[data-toggle="popover"]').popover();
   $('[data-toggle="tooltip"]').tooltip();
+  $('.datetimepicker').datetimepicker();
 });
