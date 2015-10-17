@@ -12,9 +12,7 @@
     = form_for [@website, @branch, @post], method: :delete do |form|
       .panel.panel-default
         .panel-heading
-          p.h4.panel-title
-            => @post.title
-            small = @post.short_id
+          p.h4.panel-title = @post.title
         .panel-body
           p: em Are you sure you want to delete this post?
         .panel-footer.text-center
