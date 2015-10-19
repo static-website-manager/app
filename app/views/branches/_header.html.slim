@@ -9,10 +9,11 @@
     ul.dropdown-menu
       li class=('active' if branch.production?) = link_to 'Production Branch', (controller_name == 'branches' ? :id : :branch_id) => repository.branch('master')
       li class=('active' if branch.staging?(current_user)) = link_to 'Your Staging Branch', (controller_name == 'branches' ? :id : :branch_id) => repository.branch(current_user)
-      li.divider role="separator"
-      li.dropdown-header Custom Branches
-      - repository.custom_branch_names.each do |name|
-        li class=('active' if branch.name == name) = link_to name, (controller_name == 'branches' ? :id : :branch_id) => repository.branch(name)
+      - if repository.custom_branch_names.any?
+        li.divider role="separator"
+        li.dropdown-header Custom Branches
+        - repository.custom_branch_names.each do |name|
+          li class=('active' if branch.name == name) = link_to name, (controller_name == 'branches' ? :id : :branch_id) => repository.branch(name)
       li.divider role="separator"
       li = link_to [:new, website, branch, :checkout] do
         => icon 'plus-circle'
