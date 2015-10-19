@@ -74,13 +74,13 @@ class Page
   end
 
   def title(markdown_extensions)
-    if pathname.blank? && filename.match(/\Aindex\.(#{markdown_extensions.join('|')})\z/)
+    if pathname.blank? && basename == 'index' && markdown?(markdown_extensions)
       'Home'
-    elsif filename.match(/\Aindex\.(#{markdown_extensions.join('|')})\z/)
+    elsif basename == 'index' && markdown?(markdown_extensions)
       pathname.split('/').last.titleize.sub(/\/\z/, '')
-    elsif extension.match(/\A(#{markdown_extensions.join('|')})\z/) && basename.match(/\A[A-Z_]+\z/)
+    elsif markdown?(markdown_extensions) && basename.match(/\A[A-Z_]+\z/)
       basename
-    elsif extension.match(/\A(#{markdown_extensions.join('|')})\z/)
+    elsif markdown?(markdown_extensions)
       basename.titleize
     else
       filename

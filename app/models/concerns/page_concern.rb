@@ -21,6 +21,10 @@ module PageConcern
     end
   end
 
+  def markdown?(markdown_extensions)
+    extension.match(/\A(#{markdown_extensions.join('|')})\z/)
+  end
+
   def raw_content
     if metadata.kind_of?(Hash) && metadata.any?
       [YAML.dump(metadata.to_hash), content].join("---\n\n")

@@ -7,10 +7,10 @@
           = metadata.select :layout, options_for_select(branch.layout_names, form.object.metadata.find { |key, _| key == 'layout' }.try(:[], 1)), {}, class: 'form-control'
         .form-group
           => metadata.label :title, 'Title', class: 'control-label'
-          = metadata.text_field :title, value: form.object.metadata.find { |key, _| key == 'title' }.try(:[], 1), placeholder: form.object.title, class: 'form-control'
+          = metadata.text_field :title, value: form.object.metadata.find { |key, _| key == 'title' }.try(:[], 1), placeholder: form.object.title(branch.markdown_extensions), class: 'form-control'
         .form-group
           => metadata.label :excerpt, 'Excerpt', class: 'control-label'
-          = metadata.text_area :excerpt, value: form.object.metadata.find { |key, _| key == 'excerpt' }.try(:[], 1), rows: 4, placeholder: form.object.excerpt, class: 'form-control'
+          = metadata.text_area :excerpt, value: form.object.metadata.find { |key, _| key == 'excerpt' }.try(:[], 1), rows: 4, placeholder: form.object.markdown?(branch.markdown_extensions) ? form.object.excerpt : '', class: 'form-control'
         .form-group
           => metadata.label :permalink, 'Permalink', class: 'control-label'
           = metadata.text_field :permalink, value: form.object.metadata.find { |key, _| key == 'permalink' }.try(:[], 1), class: 'form-control'
