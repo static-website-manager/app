@@ -18,4 +18,4 @@
       h1: code.code-text = @draft.pretty_pathname
       hr
       = form_for [@website, @branch, @draft] do |form|
-        = render partial: 'blobs/form', object: form, locals: { placeholder: "Save changes to #{@draft.pretty_pathname}" }
+        = render partial: 'blobs/form', object: form, locals: { branch: @branch, placeholder: "Save changes to #{@draft.pretty_pathname}" }
