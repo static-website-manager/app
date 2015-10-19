@@ -5,10 +5,10 @@
 = render partial: 'branches/nav', locals: { website: @website, branch: @branch }
 
 p.text-muted style="margin-bottom:2em"
-  - if deployment = @website.deployments.find_by_branch_name(@branch.name)
+  - if @deployment
     ' Public URL
-    => link_to deployment.url, deployment.url, target: :_blank, style: 'margin-left: 0.3em'
-    = link_to 'Remove', [:delete, @website, @branch, deployment], class: 'btn btn-xs btn-danger', style: 'margin-left: 0.3em'
+    => link_to @deployment.url, @deployment.url, target: :_blank, style: 'margin-left: 0.3em'
+    = link_to 'Remove', [:delete, @website, @branch, @deployment], class: 'btn btn-xs btn-danger', style: 'margin-left: 0.3em'
   - else
     ' No Public URL Attached
     = link_to 'Publish Branch', [:new, @website, @branch, :deployment], class: 'btn btn-xs btn-success', style: 'margin-left: 0.3em'

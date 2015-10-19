@@ -18,6 +18,7 @@ class Deployment < ActiveRecord::Base
   after_create do
     begin
       setup!
+      JekyllBuildJob.perform_later(self)
     rescue Exception => e
       cleanup!
       raise e

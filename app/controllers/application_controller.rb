@@ -14,10 +14,11 @@ class ApplicationController < ActionController::Base
 
   private
 
-  # Find the current website’s branch.
+  # Find the current website’s branch and deployment.
   def require_branch
     branch_param = controller_name == 'branches' ? params[:id] : params[:branch_id]
     @branch = @repository.branch(branch_param == 'staging' ? current_user : branch_param)
+    @deployment = @website.deployments.find_by_branch_name(@branch.name)
   end
 
   # Ensure current users are redirected to their website list.
