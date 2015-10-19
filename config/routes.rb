@@ -17,15 +17,15 @@ Rails.application.routes.draw do
     resources :authorizations, only: %i[index new create edit update destroy], path: 'team'
     resources :branches, only: %i[show], path: '' do
       resource :checkout, only: %i[new create], path_names: { new: '' }
+      resource :deployment, only: %i[new create destroy] do
+        get :delete
+      end
       resource :design, only: %i[show]
       resources :branches, only: %i[show], controller: 'comparisons', path: 'compare' do
         post :merge, on: :member
       end
       resources :collections, only: %i[index]
       resources :commits, only: %i[index], controller: 'branch_commits', path: 'history'
-      resources :deployments, only: %i[new create destroy], path: 'publish', path_names: { edit: '' } do
-        get :delete, on: :member
-      end
     end
     resources :commits, only: %i[show]
   end

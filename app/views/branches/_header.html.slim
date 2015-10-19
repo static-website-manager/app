@@ -2,7 +2,7 @@
   => link_to [website, branch, branch.production? ? repository.branch(current_user) : repository.branch('master')], class: 'btn btn-default pull-right' do
     => icon 'random'
     | Compare and Merge
-  span.btn-group>
+  span.btn-group
     span.btn.btn-default.dropdown-toggle type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
       => branch.title(current_user)
       span.caret
@@ -18,12 +18,3 @@
       li = link_to [:new, website, branch, :checkout] do
         => icon 'plus-circle'
         | Create Custom Branch
-  span.small.text-muted style="margin-left:1em"
-    - if deployment = website.deployments.find_by_branch_name(branch.name)
-      => link_to deployment.url, deployment.url, target: :_blank
-      => icon 'external-link'
-      ' –
-      = link_to 'Remove?', [:delete, website, branch, deployment]
-    - else
-      span> No Public URL —
-      = link_to 'Publish Branch', [:new, website, branch, :deployment]

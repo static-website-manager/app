@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 
 ruby '2.2.3'
 
+gem 'aws-sdk'
 gem 'bcrypt'
 gem 'bootstrap-sass'
 gem 'bootstrap3-datetimepicker-rails'
