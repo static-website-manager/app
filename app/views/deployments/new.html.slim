@@ -1,0 +1,20 @@
+- title 'Publish Branch'
+
+.header.header-center
+  h1.lead
+    = link_to session[:return_to] || [@website, @branch], class: 'logo-small-back-container' do
+      => icon 'reply'
+      => image_tag 'logo-small.png', alt: 'Static Website Manager', class: 'logo-small'
+    | | Publish Branch
+.row
+  .col-sm-8.col-sm-offset-2.col-md-6.col-md-offset-3
+    = form_tag [@website, @branch, @deployment] do
+      .panel.panel-default
+        .panel-heading
+          h1.h4.panel-title
+            ' Branch Name
+            code = @branch.name
+        .panel-body
+          p This action will create a public URL at which this website can be viewed.
+        .panel-footer.text-center
+          = button_tag 'Publish Branch', class: 'btn btn-primary'

@@ -23,6 +23,9 @@ Rails.application.routes.draw do
       end
       resources :collections, only: %i[index]
       resources :commits, only: %i[index], controller: 'branch_commits', path: 'history'
+      resources :deployments, only: %i[new create destroy], path: 'publish', path_names: { edit: '' } do
+        get :delete, on: :member
+      end
     end
     resources :commits, only: %i[show]
   end
