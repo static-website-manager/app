@@ -13,6 +13,14 @@ module PageConcern
     end
   end
 
+  def excerpt
+    if content.to_s.match("\n\n")
+      content.to_s.split("\n\n").first
+    else
+      content.to_s.split("\r\n\r\n").first
+    end
+  end
+
   def raw_content
     if metadata.kind_of?(Hash) && metadata.any?
       [YAML.dump(metadata.to_hash), content].join("---\n\n")
