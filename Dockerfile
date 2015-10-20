@@ -1,6 +1,6 @@
 FROM ruby:2.2.3
 RUN apt-get update -qq && apt-get install -y build-essential cmake nodejs
-ENV home /rails
+ENV home /app
 RUN mkdir $home
 WORKDIR $home
 ADD Gemfile $home/Gemfile
