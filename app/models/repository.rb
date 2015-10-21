@@ -4,7 +4,7 @@ class Repository
   attr_accessor :website_id
 
   def self.pathname(website_id)
-    Rails.root.join(Rails.application.secrets.repos_dir, "#{website_id}.git")
+    Pathname.new(File.join('/repos', "#{website_id}.git"))
   end
 
   def self.rugged_repository(website_id)

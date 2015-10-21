@@ -42,6 +42,8 @@ class Deployment < ActiveRecord::Base
   private
 
   def cleanup!
+    FileUtils.rm_rf(File.join('/sites', id))
+
     Aws::S3::Bucket.new(logging_bucket_name).tap do |bucket|
       if bucket.exists?
         bucket.clear!
@@ -57,6 +59,8 @@ class Deployment < ActiveRecord::Base
   end
 
   def setup!
+    FileUtils.mkdir(File.join('/sites', id))
+
     Aws::S3::Client.new.tap do |client|
       client.create_bucket({
         acl: 'private',
