@@ -23,7 +23,7 @@
             span.small = localize(@post.published_on)
           code.small = @post.full_pathname
         .col-sm-3.text-right
-          - if @deployment
+          - if @deployment && @deployment.success?
             => link_to @post.public_url(@deployment.url), target: :_blank, class: 'btn btn-default' do
               ' Preview
               = icon 'external-link'

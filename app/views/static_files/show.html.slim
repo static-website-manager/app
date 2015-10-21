@@ -27,7 +27,7 @@
           => link_to [:download, @website, @branch, @static_file], class: 'btn btn-default' do
             => icon 'cloud-download'
             | Download
-          - if @deployment
+          - if @deployment && @deployment.success?
             => link_to @static_file.public_url(@deployment.url), target: :_blank, class: 'btn btn-default' do
               ' View Raw
               = icon 'external-link'

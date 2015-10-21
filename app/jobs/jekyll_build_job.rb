@@ -12,5 +12,10 @@ class JekyllBuildJob < ActiveJob::Base
     }
 
     response = Net::HTTP.post_form(uri, data)
+
+    deployment.update(
+      response_status: response.code,
+      response_message: response.body,
+    )
   end
 end

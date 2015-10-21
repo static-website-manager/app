@@ -6,12 +6,18 @@
 
 p.text-muted style="margin-bottom:2em"
   - if @deployment
-    ' Public URL
-    => link_to @deployment.url, @deployment.url, target: :_blank, style: 'margin-left: 0.3em'
-    = link_to 'Remove', [:delete, @website, @branch, @deployment], class: 'btn btn-xs btn-danger', style: 'margin-left: 0.3em'
+    - if @deployment.success?
+      => link_to @deployment.url, target: :_blank, class: 'btn btn-sm btn-primary', style: 'margin-right: 0.5em' do
+        ' View Public Website
+        = icon 'external-link'
+      code.code-text.small => @deployment.url
+      = link_to 'Remove', [:delete, @website, @branch, @deployment], class: 'btn btn-xs btn-danger', style: 'margin-left: 0.5em'
+    - else
+      strong.text-danger => @deployment.response_message
+      = link_to 'Remove', [:delete, @website, @branch, @deployment], class: 'btn btn-xs btn-danger', style: 'margin-left: 0.5em'
   - else
     ' No Public URL Attached
-    = link_to 'Publish Branch', [:new, @website, @branch, :deployment], class: 'btn btn-xs btn-success', style: 'margin-left: 0.3em'
+    = link_to 'Publish Branch', [:new, @website, @branch, :deployment], class: 'btn btn-xs btn-success', style: 'margin-left: 0.5em'
 
 .row
   .col-sm-7

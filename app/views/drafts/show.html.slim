@@ -21,7 +21,7 @@
           h1 = @draft.title
           code.small = @draft.full_pathname
         .col-sm-3.text-right
-          - if @deployment
+          - if @deployment && @deployment.success?
             => link_to @draft.public_url(@deployment.url), target: :_blank, class: 'btn btn-default' do
               ' Preview
               = icon 'external-link'

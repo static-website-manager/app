@@ -31,6 +31,10 @@ class Deployment < ActiveRecord::Base
     "#{host_prefix}.logs.staticwebsitemanager"
   end
 
+  def success?
+    response_status == 200
+  end
+
   def url
     "http://#{website_bucket_name}.s3-website-us-west-2.amazonaws.com/"
   end
