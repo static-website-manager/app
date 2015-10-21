@@ -27,7 +27,8 @@ module PageConcern
 
   def raw_content
     if metadata.kind_of?(Hash) && metadata.any?
-      [YAML.dump(metadata.to_hash), content].join("---\n\n")
+      cleaned_metadata = metadata['permalink'].blank?, metadata.merge(permalink: nil) : metadata
+      [YAML.dump(cleaned_metadata.to_hash), content].join("---\n\n")
     else
       "---\n---\n\n#{content}"
     end
