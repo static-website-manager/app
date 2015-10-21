@@ -10,7 +10,7 @@ class DeploymentsController < ApplicationController
   end
 
   before_action only: %i[delete destroy] do
-    @deployment = @website.deployments.find_by_branch_name(@branch.name)
+    @deployment = @website.deployments.find_by_branch_name!(@branch.name)
   end
 
   def create
