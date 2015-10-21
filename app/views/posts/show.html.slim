@@ -23,6 +23,10 @@
             span.small = localize(@post.published_on)
           code.small = @post.full_pathname
         .col-sm-3.text-right
+          - if @deployment
+            => link_to @post.public_url(@deployment.url), target: :_blank, class: 'btn btn-default' do
+              ' Preview
+              = icon 'external-link'
           => link_to [:new, @website, @branch, @post, :move], class: 'btn btn-primary' do
             ' Rename
             = icon 'arrow-circle-o-right'

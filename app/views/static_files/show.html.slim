@@ -21,12 +21,16 @@
           code.small = @static_file.full_pathname
         .col-sm-4.text-right
           - if @static_file.preview?
-            => link_to [:preview, @website, @branch, @static_file], class: 'btn btn-success' do
+            => link_to [:preview, @website, @branch, @static_file], class: 'btn btn-default' do
               => icon 'eye'
               | Preview
-          => link_to [:download, @website, @branch, @static_file], class: 'btn btn-success' do
+          => link_to [:download, @website, @branch, @static_file], class: 'btn btn-default' do
             => icon 'cloud-download'
             | Download
+          - if @deployment
+            => link_to @static_file.public_url(@deployment.url), target: :_blank, class: 'btn btn-default' do
+              ' View Raw
+              = icon 'external-link'
           => link_to [:new, @website, @branch, @static_file, :move], class: 'btn btn-primary' do
             ' Rename
             = icon 'arrow-circle-o-right'

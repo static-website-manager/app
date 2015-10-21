@@ -122,6 +122,10 @@ module BlobConcern
     id.present?
   end
 
+  def public_url(host)
+    File.join([host, pathname, basename].reject(&:blank?)).to_s + '.html'
+  end
+
   def raw_content
     rugged_blob.content.force_encoding('utf-8')
   end
