@@ -21,10 +21,6 @@
           h1 = @draft.title
           code.small = @draft.full_pathname
         .col-sm-3.text-right
-          - if @deployment && @deployment.success?
-            => link_to @draft.public_url(@deployment.url), target: :_blank, class: 'btn btn-default' do
-              ' Preview
-              = icon 'external-link'
           => link_to [:new, @website, @branch, @draft, :publication], class: 'btn btn-success' do
             ' Publish
             = icon 'plus-circle'

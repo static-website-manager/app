@@ -7,7 +7,7 @@ class PostsController < ApplicationController
   before_action :set_return_to, only: %i[index show]
 
   before_action only: %i[new create] do
-    @post = Post.new(pathname: '_posts', rugged_repository: @repository.rugged_repository)
+    @post = Post.new(rugged_repository: @repository.rugged_repository)
   end
 
   before_action only: %i[show edit update delete destroy] do
@@ -19,9 +19,13 @@ class PostsController < ApplicationController
   end
 
   def create
-    @post.filename = [params[:post].try(:[], :basename).to_s.parameterize, params[:post].try(:[], :extension)].reject(&:blank?).join('.')
+    commit_message = params[:message].present? ? params[:message] : 'Add New Post'
+    publication_date = Date.new(params[:publication_year].to_i, params[:publication_month].to_i, params[:publication_day].to_i)
+    pathname = params[:post].try(:[], :basepath).to_s.split('/')[0..-2].join('/')
+    filename = [params[:post].try(:[], :basepath).to_s.split('/').last, params[:post].try(:[], :extension)].reject(&:blank?).join('.')
+    @post.full_pathname = ['_posts', pathname, [publication_date.strftime('%Y-%m-%d'), filename].reject(&:blank?).join('-')].reject(&:blank?).join('/')
 
-    if @post.save(@branch.name, current_user.email, current_user.name, params[:message])
+    if @post.save(@branch.name, current_user.email, current_user.name, commit_message, @deployment)
       redirect_to [:edit, @website, @branch, @post], notice: 'Great, we’ve committed your changes.'
     else
       flash.now.alert = 'There was a problem saving your changes.'
@@ -34,13 +38,13 @@ class PostsController < ApplicationController
   end
 
   def update
-    raw_content = @post.raw_content
+    commit_message = params[:message].present? ? params[:message] : "Save Changes to #{@post.full_pathname}"
     @post.content = params[:post].try(:[], :content)
     @post.metadata = params[:post].try(:[], :metadata)
 
-    if @post.raw_content == raw_content
+    if @post.unchanged?
       redirect_to [@website, @branch, @post], alert: 'No changes detected.'
-    elsif @post.save(@branch.name, current_user.email, current_user.name, params[:message])
+    elsif @post.save(@branch.name, current_user.email, current_user.name, commit_message, @deployment)
       redirect_to [@website, @branch, @post], notice: 'Great, we’ve committed your changes.'
     else
       flash.now.alert = 'There was a problem saving your changes.'
@@ -49,7 +53,9 @@ class PostsController < ApplicationController
   end
 
   def destroy
-    if @post.destroy(@branch.name, current_user.email, current_user.name, params[:message])
+    commit_message = params[:message].present? ? params[:message] : 'Remove Post'
+
+    if @post.destroy(@branch.name, current_user.email, current_user.name, commit_message, @deployment)
       redirect_to [@website, @branch, :posts], notice: 'Ok, we‘ve committed your changes.'
     else
       flash.now.alert = 'There was a problem saving your changes.'

@@ -3,6 +3,10 @@ module BlobConcern
 
   attr_accessor :filename, :id, :pathname, :rugged_blob, :rugged_repository
 
+  included do
+    define_attribute_methods :filename, :id, :pathname
+  end
+
   def basename
     filename.present? ? filename.split('.')[0..-2].join('.') : ''
   end
@@ -11,48 +15,9 @@ module BlobConcern
     File.join([pathname, basename].reject(&:blank?))
   end
 
-  def destroy(branch_name, author_email, author_name, commit_message)
-    clone_path = Rails.root.join('tmp', "clone_#{rand(1000)}_#{Time.now.to_i}")
-
-    FileUtils.rm_rf(clone_path)
-    FileUtils.mkdir(clone_path)
-
-    begin
-      cloned_repository = Rugged::Repository.clone_at(rugged_repository.path.to_s, clone_path.to_s)
-      cloned_repository.checkout('origin/' + branch_name)
-      cloned_branch = cloned_repository.branches['origin/' + branch_name]
-
-      cloned_index = cloned_repository.index
-      cloned_index.read_tree(cloned_branch.target.tree)
+  def destroy(*args)
+    perform_git_operation(*args) do |cloned_repository, cloned_index|
       cloned_index.remove(full_pathname)
-
-      author = {
-        email: author_email,
-        name: author_name,
-        time: Time.now,
-      }
-
-      Rugged::Commit.create(cloned_repository,
-        author: author,
-        committer: author,
-        message: commit_message.present? ? commit_message : "Remove #{self.class.name}",
-        parents: [cloned_branch.target],
-        tree: cloned_index.write_tree(cloned_repository),
-        update_ref: 'refs/heads/' + branch_name,
-      )
-
-      # rugged_repository.push('origin', [branch_name])
-
-      `
-        cd #{clone_path};
-        git push origin #{branch_name};
-      `
-      true
-    rescue
-      # Cleanup git object?
-      false
-    ensure
-      FileUtils.rm_rf(clone_path)
     end
   end
 
@@ -60,61 +25,56 @@ module BlobConcern
     filename.present? && filename.split('.').length > 1 ? filename.split('.').last : ''
   end
 
+  def filename=(value)
+    if value.try(:to_s) == @filename
+      @filename
+    else
+      filename_will_change!
+      @filename = value.try(:to_s)
+    end
+  end
+
   def full_pathname
     File.join([pathname, filename].reject(&:blank?))
   end
 
-  def move(new_full_pathname, branch_name, author_email, author_name, commit_message)
-    original_pathname = pathname
-    original_filename = filename
-    clone_path = Rails.root.join('tmp', "clone_#{rand(1000)}_#{Time.now.to_i}")
+  def full_pathname_was
+    File.join([pathname_was, filename_was].reject(&:blank?))
+  end
 
-    FileUtils.rm_rf(clone_path)
-    FileUtils.mkdir(clone_path)
+  def full_pathname=(value)
+    self.pathname = value.to_s.split('/')[0..-2].join('/')
+    self.filename = value.to_s.split('/').last
+  end
 
-    begin
-      cloned_repository = Rugged::Repository.clone_at(rugged_repository.path.to_s, clone_path.to_s)
-      cloned_repository.checkout('origin/' + branch_name)
-      cloned_branch = cloned_repository.branches['origin/' + branch_name]
+  def id=(value)
+    if value.try(:to_s) == @id
+      @id
+    else
+      id_will_change!
+      @id = value.try(:to_s)
+    end
+  end
 
-      cloned_index = cloned_repository.index
-      cloned_index.read_tree(cloned_branch.target.tree)
-      cloned_index.remove(full_pathname)
+  def initialize(*args)
+    super
+    clear_changes_information
+  end
 
-      @pathname = new_full_pathname.split('/')[0..-2].join('/')
-      @filename = new_full_pathname.split('/').last
-      # Check for validity?
-
+  def move(*args)
+    perform_git_operation(*args) do |cloned_repository, cloned_index|
+      # valid? full_pathname?
+      cloned_index.remove(full_pathname_was)
       cloned_index.add(path: full_pathname, oid: id, mode: 0100644)
+    end
+  end
 
-      author = {
-        email: author_email,
-        name: author_name,
-        time: Time.now,
-      }
-
-      Rugged::Commit.create(cloned_repository,
-        author: author,
-        committer: author,
-        message: commit_message.present? ? commit_message : "Move #{self.class.name}",
-        parents: [cloned_branch.target],
-        tree: cloned_index.write_tree(cloned_repository),
-        update_ref: 'refs/heads/' + branch_name,
-      )
-
-      # rugged_repository.push('origin', [branch_name])
-
-      `
-        cd #{clone_path};
-        git push origin #{branch_name};
-      `
-      true
-    rescue
-      @filename = original_filename
-      # Cleanup git object?
-      false
-    ensure
-      FileUtils.rm_rf(clone_path)
+  def pathname=(value)
+    if value.try(:to_s) == @pathname
+      @pathname
+    else
+      pathname_will_change!
+      @pathname = value.try(:to_s)
     end
   end
 
@@ -134,53 +94,11 @@ module BlobConcern
     rugged_blob.text.force_encoding('utf-8')
   end
 
-  def save(branch_name, author_email, author_name, commit_message)
-    # Check for validity?
-    original_id = id
-    clone_path = Rails.root.join('tmp', "clone_#{rand(1000)}_#{Time.now.to_i}")
-
-    FileUtils.rm_rf(clone_path)
-    FileUtils.mkdir(clone_path)
-
-    begin
-      cloned_repository = Rugged::Repository.clone_at(rugged_repository.path.to_s, clone_path.to_s)
-      cloned_repository.checkout('origin/' + branch_name)
-      cloned_branch = cloned_repository.branches['origin/' + branch_name]
-
-      @id = cloned_repository.write(raw_content, :blob)
-
-      cloned_index = cloned_repository.index
-      cloned_index.read_tree(cloned_branch.target.tree)
+  def save(*args)
+    perform_git_operation(*args) do |cloned_repository, cloned_index|
+      # valid?
+      self.id = cloned_repository.write(raw_content, :blob)
       cloned_index.add(path: full_pathname, oid: id, mode: 0100644)
-
-      author = {
-        email: author_email,
-        name: author_name,
-        time: Time.now,
-      }
-
-      Rugged::Commit.create(cloned_repository,
-        author: author,
-        committer: author,
-        message: commit_message.present? ? commit_message : (original_id.present? ? "Save changes to #{full_pathname}" : "Add New #{self.class.name}"),
-        parents: [cloned_branch.target],
-        tree: cloned_index.write_tree(cloned_repository),
-        update_ref: 'refs/heads/' + branch_name,
-      )
-
-      # rugged_repository.push('origin', [branch_name])
-
-      `
-        cd #{clone_path};
-        git push origin #{branch_name};
-      `
-      true
-    rescue
-      @id = original_id
-      # Cleanup git object?
-      false
-    ensure
-      FileUtils.rm_rf(clone_path)
     end
   end
 
@@ -193,6 +111,68 @@ module BlobConcern
       pretty_pathname
     else
       full_pathname
+    end
+  end
+
+  def unchanged?
+    !changed?
+  end
+
+  private
+
+  def perform_git_operation(branch_name, author_email, author_name, commit_message, deployment = nil)
+    raise ArgumentError unless rugged_repository.present?
+    raise ArgumentError unless branch_name.present?
+    raise ArgumentError unless author_name.present?
+    raise ArgumentError unless author_email.present?
+    raise ArgumentError unless commit_message.present?
+
+    clone_path = Pathname.new(File.join('/clones', "#{rand(1000)}_#{Time.now.to_i}"))
+
+    FileUtils.rm_rf(clone_path)
+    FileUtils.mkdir(clone_path)
+
+    begin
+      cloned_repository = Rugged::Repository.clone_at(rugged_repository.path.to_s, clone_path.to_s, checkout_branch: branch_name)
+      cloned_branch = cloned_repository.branches[branch_name]
+      cloned_index = cloned_repository.index
+      cloned_index.read_tree(cloned_branch.target.tree)
+
+      yield(cloned_repository, cloned_index)
+
+      author = {
+        email: author_email,
+        name: author_name,
+        time: Time.now,
+      }
+
+      Rugged::Commit.create(cloned_repository,
+        author: author,
+        committer: author,
+        message: commit_message,
+        parents: [cloned_branch.target],
+        tree: cloned_index.write_tree(cloned_repository),
+        update_ref: 'refs/heads/' + branch_name,
+      )
+
+      `
+        cd #{clone_path};
+        git push origin #{branch_name};
+      `
+
+      if deployment
+        JekyllBuildJob.perform_later(deployment)
+      end
+
+      changes_applied
+      true
+    rescue
+      @filename = filename_was
+      @id = id_was
+      @pathname = pathname_was
+      false
+    ensure
+      FileUtils.rm_rf(clone_path)
     end
   end
 end

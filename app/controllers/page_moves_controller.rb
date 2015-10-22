@@ -10,17 +10,14 @@ class PageMovesController < ApplicationController
   end
 
   def create
-    if @page.move(filename, @branch.name, current_user.email, current_user.name, params[:message])
+    commit_message = params[:message].present? ? params[:message] : 'Move Page'
+    @page.full_pathname = [params[:page].try(:[], :basepath), params[:page].try(:[], :extension)].reject(&:blank?).join('.')
+
+    if @page.move(@branch.name, current_user.email, current_user.name, commit_message, @deployment)
       redirect_to [@website, @branch, @page], notice: 'Great, we’ve committed your changes.'
     else
       flash.now.alert = 'There was a problem saving your changes.'
       render :new, status: 422
     end
-  end
-
-  private
-
-  def filename
-    [params[:page].try(:[], :basepath).to_s, params[:page].try(:[], :extension).to_s].reject(&:blank?).join('.')
   end
 end

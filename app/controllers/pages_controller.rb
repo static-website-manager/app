@@ -19,9 +19,10 @@ class PagesController < ApplicationController
   end
 
   def create
-    @page.filename = [params[:page].try(:[], :basename).to_s.parameterize, params[:page].try(:[], :extension)].reject(&:blank?).join('.')
+    commit_message = params[:message].present? ? params[:message] : 'Add New Page'
+    @page.full_pathname = [params[:page].try(:[], :basepath), params[:page].try(:[], :extension)].reject(&:blank?).join('.')
 
-    if @page.save(@branch.name, current_user.email, current_user.name, params[:message])
+    if @page.save(@branch.name, current_user.email, current_user.name, commit_message, @deployment)
       redirect_to [:edit, @website, @branch, @page], notice: 'Great, we’ve committed your changes.'
     else
       flash.now.alert = 'There was a problem saving your changes.'
@@ -34,13 +35,13 @@ class PagesController < ApplicationController
   end
 
   def update
-    raw_content = @page.raw_content
+    commit_message = params[:message].present? ? params[:message] : "Save Changes to #{@page.full_pathname}"
     @page.content = params[:page].try(:[], :content)
     @page.metadata = params[:page].try(:[], :metadata)
 
-    if @page.raw_content == raw_content
+    if @page.unchanged?
       redirect_to [@website, @branch, @page], alert: 'No changes detected.'
-    elsif @page.save(@branch.name, current_user.email, current_user.name, params[:message])
+    elsif @page.save(@branch.name, current_user.email, current_user.name, commit_message, @deployment)
       redirect_to [@website, @branch, @page], notice: 'Great, we’ve committed your changes.'
     else
       flash.now.alert = 'There was a problem saving your changes.'
@@ -49,7 +50,9 @@ class PagesController < ApplicationController
   end
 
   def destroy
-    if @page.destroy(@branch.name, current_user.email, current_user.name, params[:message])
+    commit_message = params[:message].present? ? params[:message] : 'Remove Page'
+
+    if @page.destroy(@branch.name, current_user.email, current_user.name, commit_message, @deployment)
       redirect_to [@website, @branch, :pages], notice: 'Ok, we‘ve committed your changes.'
     else
       flash.now.alert = 'There was a problem saving your changes.'

@@ -1,5 +1,6 @@
 class StaticFile
   include ActiveModel::Model
+  include ActiveModel::Dirty
   include BlobConcern
 
   attr_accessor :dirname, :objects

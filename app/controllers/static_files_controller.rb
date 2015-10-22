@@ -19,7 +19,9 @@ class StaticFilesController < ApplicationController
   end
 
   def destroy
-    if @static_file.destroy(@branch.name, current_user.email, current_user.name, params[:message])
+    commit_message = params[:message].present? ? params[:message] : 'Remove File'
+
+    if @static_file.destroy(@branch.name, current_user.email, current_user.name, commit_message, @deployment)
       redirect_to [@website, @branch, :static_files], notice: 'Ok, we‘ve committed your changes.'
     else
       flash.now.alert = 'There was a problem saving your changes.'

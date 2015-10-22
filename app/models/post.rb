@@ -1,5 +1,6 @@
 class Post
   include ActiveModel::Model
+  include ActiveModel::Dirty
   include BlobConcern
   include PageConcern
 
@@ -55,6 +56,14 @@ class Post
 
   def pretty_pathname
     full_pathname.gsub(/\A_posts\//, '')
+  end
+
+  def public_path
+    [pathname.sub(/\A_posts\//, ''), filename.match(/\A(\d{4})-(\d{2})-(\d{2})-(.+)\z/)[1..-1].join('/').split('.')[0..-2].join('.')].reject(&:blank?).join('/')
+  end
+
+  def public_url(host)
+    File.join([host, public_path].reject(&:blank?)).to_s + '.html'
   end
 
   def published_on

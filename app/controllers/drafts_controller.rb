@@ -7,7 +7,7 @@ class DraftsController < ApplicationController
   before_action :set_return_to, only: %i[index show]
 
   before_action only: %i[new create] do
-    @draft = Draft.new(pathname: '_drafts', rugged_repository: @repository.rugged_repository)
+    @draft = Draft.new(rugged_repository: @repository.rugged_repository)
   end
 
   before_action only: %i[show edit update delete destroy] do
@@ -19,9 +19,10 @@ class DraftsController < ApplicationController
   end
 
   def create
-    @draft.filename = [params[:draft].try(:[], :basename).to_s.parameterize, params[:draft].try(:[], :extension)].reject(&:blank?).join('.')
+    commit_message = params[:message].present? ? params[:message] : 'Add New Draft'
+    @draft.full_pathname = [['_drafts', params[:draft].try(:[], :basepath)].reject(&:blank?).join('/'), params[:draft].try(:[], :extension)].reject(&:blank?).join('.')
 
-    if @draft.save(@branch.name, current_user.email, current_user.name, params[:message])
+    if @draft.save(@branch.name, current_user.email, current_user.name, commit_message, @deployment)
       redirect_to [:edit, @website, @branch, @draft], notice: 'Great, we’ve committed your changes.'
     else
       flash.now.alert = 'There was a problem saving your changes.'
@@ -34,13 +35,13 @@ class DraftsController < ApplicationController
   end
 
   def update
-    raw_content = @draft.raw_content
+    commit_message = params[:message].present? ? params[:message] : "Save Changes to #{@draft.full_pathname}"
     @draft.content = params[:draft].try(:[], :content)
     @draft.metadata = params[:draft].try(:[], :metadata)
 
-    if @draft.raw_content == raw_content
+    if @draft.unchanged?
       redirect_to [@website, @branch, @draft], alert: 'No changes detected.'
-    elsif @draft.save(@branch.name, current_user.email, current_user.name, params[:message])
+    elsif @draft.save(@branch.name, current_user.email, current_user.name, commit_message, @deployment)
       redirect_to [@website, @branch, @draft], notice: 'Great, we’ve committed your changes.'
     else
       flash.now.alert = 'There was a problem saving your changes.'
@@ -49,7 +50,9 @@ class DraftsController < ApplicationController
   end
 
   def destroy
-    if @draft.destroy(@branch.name, current_user.email, current_user.name, params[:message])
+    commit_message = params[:message].present? ? params[:message] : 'Remove Draft'
+
+    if @draft.destroy(@branch.name, current_user.email, current_user.name, commit_message, @deployment)
       redirect_to [@website, @branch, :drafts], notice: 'Ok, we‘ve committed your changes.'
     else
       flash.now.alert = 'There was a problem saving your changes.'

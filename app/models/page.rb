@@ -1,5 +1,6 @@
 class Page
   include ActiveModel::Model
+  include ActiveModel::Dirty
   include BlobConcern
   include PageConcern
 
