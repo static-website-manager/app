@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+  has_one :authentication, dependent: :destroy
   has_many :authorizations, dependent: :destroy
   has_many :websites, through: :authorizations
 

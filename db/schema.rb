@@ -11,10 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 4) do
+ActiveRecord::Schema.define(version: 5) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "authentications", force: :cascade do |t|
+    t.integer  "user_id"
+    t.text     "public_key"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "authentications", ["user_id"], name: "index_authentications_on_user_id", using: :btree
 
   create_table "authorizations", force: :cascade do |t|
     t.integer  "role",       default: 0, null: false
@@ -61,6 +70,7 @@ ActiveRecord::Schema.define(version: 4) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "authentications", "users"
   add_foreign_key "authorizations", "users"
   add_foreign_key "authorizations", "websites"
   add_foreign_key "deployments", "websites"
