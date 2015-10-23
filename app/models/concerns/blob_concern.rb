@@ -127,7 +127,7 @@ module BlobConcern
     raise ArgumentError unless author_email.present?
     raise ArgumentError unless commit_message.present?
 
-    clone_path = Pathname.new(File.join('/clones', "#{rand(1000)}_#{Time.now.to_i}"))
+    clone_path = Pathname.new(File.join('/tmp', "clone_#{rand(1000)}_#{Time.now.to_i}"))
 
     FileUtils.rm_rf(clone_path)
     FileUtils.mkdir(clone_path)
