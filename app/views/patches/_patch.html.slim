@@ -1,23 +1,32 @@
 .panel.panel-default
   .panel-heading.panel-heading-sm
     h3.panel-title
-      span.code => patch.delta.new_file[:path]
       - case patch.delta.status
       - when :added
+        span.code => patch.delta.new_file[:path]
         span.diff-status.label.label-success Added
       - when :deleted
+        span.code => patch.delta.new_file[:path]
         span.diff-status.label.label-danger Deleted
       - when :modified
+        span.code => patch.delta.new_file[:path]
         span.diff-status.label.label-primary Modified
       - when :renamed
-        span.diff-status.label.label-default Renamed
+        span.code => patch.delta.old_file[:path]
+        => icon 'long-arrow-right'
+        span.code => patch.delta.new_file[:path]
+        span.diff-status.label.label-primary> Renamed
       - when :copied
+        span.code => patch.delta.new_file[:path]
         span.diff-status.label.label-default Copied
       - when :ignored
+        span.code => patch.delta.new_file[:path]
         span.diff-status.label.label-default Ignored
       - when :untracked
+        span.code => patch.delta.new_file[:path]
         span.diff-status.label.label-default Untracked
       - when :typechange
+        span.code => patch.delta.new_file[:path]
         span.diff-status.label.label-default Typechange
   .diff
     table.table
