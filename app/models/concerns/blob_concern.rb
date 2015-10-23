@@ -155,10 +155,7 @@ module BlobConcern
         update_ref: 'refs/heads/' + branch_name,
       )
 
-      `
-        cd #{clone_path};
-        git push origin #{branch_name};
-      `
+      system("git push origin #{branch_name}", chdir: clone_path.to_s)
 
       if deployment
         JekyllBuildJob.perform_later(deployment)

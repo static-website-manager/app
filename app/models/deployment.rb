@@ -64,7 +64,7 @@ class Deployment < ActiveRecord::Base
 
   def setup!
     FileUtils.mkdir(File.join('/sites', id.to_s))
-    `git clone -b #{branch_name} /repos/#{website_id}.git /sites/#{id}`
+    system("git clone -b #{branch_name} /repos/#{website_id}.git /sites/#{id}")
 
     Aws::S3::Client.new.tap do |client|
       client.create_bucket({
