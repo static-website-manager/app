@@ -17,6 +17,12 @@
             = form.text_field :name, class: 'form-control'
           hr
           .well.well-sm
+            = form.fields_for :authentication, form.object.authentication || form.object.build_authentication do |auth_form|
+              .form-group
+                => auth_form.label :public_key, class: 'control-label'
+                = auth_form.text_area :public_key, rows: 6, class: 'form-control'
+          hr
+          .well.well-sm
             .form-group
               => label_tag :password, 'Current Password', class: 'control-label'
               = password_field_tag :password, '', class: 'form-control'

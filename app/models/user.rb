@@ -5,6 +5,8 @@ class User < ActiveRecord::Base
 
   has_secure_password
 
+  accepts_nested_attributes_for :authentication, reject_if: :all_blank
+
   validates :email, presence: true, format: { with: /\A[^@]+@[^@]+\.[^@]+\z/ }
   validates :email_confirmation_token, uniqueness: true, allow_blank: true
   validates :name, presence: true

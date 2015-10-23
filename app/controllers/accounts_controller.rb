@@ -23,11 +23,19 @@ class AccountsController < ApplicationController
       params.require(:user).permit(
         :name,
         :password,
-        :password_confirmation
+        :password_confirmation,
+        authentication_attributes: [
+          :id,
+          :public_key,
+        ],
       )
     else
       params.require(:user).permit(
         :name,
+        authentication_attributes: [
+          :id,
+          :public_key,
+        ],
       )
     end
   end
