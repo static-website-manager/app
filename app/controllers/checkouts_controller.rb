@@ -18,11 +18,15 @@ class CheckoutsController < ApplicationController
     elsif @repository.local_branch?(params[:target])
       flash.now.alert = 'Target branch must not already be a local branch.'
       render :new, status: 422
-    elsif @repository.create_branch(@branch.name, params[:target])
-      redirect_to [@website, @repository.branch(params[:target])], notice: 'Ok, your new branch is ready to use.'
     else
-      flash.now.alert = 'There was a problem creating your branch.'
-      render :new, status: 422
+      begin
+        @repository.create_branch(@branch.name, params[:target])
+        redirect_to [@website, @repository.branch(params[:target])], notice: 'Ok, your new branch is ready to use.'
+      rescue Rugged::ReferenceError => e
+        @error_message = true
+        flash.now.alert = e.message
+        render :new, status: 422
+      end
     end
   end
 end

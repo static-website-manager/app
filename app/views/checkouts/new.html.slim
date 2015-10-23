@@ -27,7 +27,13 @@
                     li class=('active' if @branch.name == name) = link_to name, branch_id: @repository.branch(name)
             .col-sm-6
               .form-group
-                => label_tag :target, 'Your Custom Branch Name', class: 'control-label'
-                = text_field_tag :target, params[:target], class: 'form-control'
+                - if @error_message
+                  .has-error.has-feedback => label_tag :target, 'Your Custom Branch Name', class: 'control-label'
+                  .has-error.has-feedback
+                    => text_field_tag :target, params[:target], class: 'form-control'
+                    span.glyphicon.glyphicon-remove.form-control-feedback aria-hidden="true"
+                - else
+                  => label_tag :target, 'Your Custom Branch Name', class: 'control-label'
+                  = text_field_tag :target, params[:target], class: 'form-control'
         .panel-footer.text-center
           = button_tag 'Checkout Branch', class: 'btn btn-primary'
