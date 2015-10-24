@@ -1,11 +1,27 @@
-.website-title {
-  font-size: 0.9em;
-  margin: 0;
+.websites {
+  a {
+    display: block;
+    margin: 1em 0;
+    padding: 3em 1em 1em;
+    border: solid 1px rgba(0,0,0,0.1);
+    background: rgba(0,0,0,0.05);
+    text-align: center;
+  }
+  a:hover {
+    text-decoration: none;
+  }
+  h2 {
+    margin: 1em 0.5em 0.3em;
+    font-size: 1.8em;
+    line-height: 1.1;
+    height: 3em;
+    overflow: hidden;
+  }
 }
 
-.website-info {
-  float: right;
-  font-size: 0.5em;
-  margin-top: 0.6em;
-  font-weight: normal;
+.new-website {
+  a {
+    background: rgba(0,0,0,0.01);
+    border: dashed 1px rgba(0,0,0,0.25);
+  }
 }

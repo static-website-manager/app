@@ -1,5 +1,9 @@
 class SubscriptionsController < ApplicationController
-  before_action :require_guest
+  before_action do
+    if current_user
+      redirect_to :new_website
+    end
+  end
 
   def new
     @subscription = Subscription.new

@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   resource :session, only: %i[destroy], path: 'sign-out', as: :sign_out
   resources :subscriptions, only: %i[new create], path: 'subscribe', path_names: { new: '' }
 
-  resources :websites, only: %i[index show] do
+  resources :websites, only: %i[index new create show], path_names: { new: 'subscribe' } do
     resource :settings, only: %i[edit update], path_names: { edit: '' }
     resource :setup, only: %i[new], path_names: { new: '' } do
       get :check

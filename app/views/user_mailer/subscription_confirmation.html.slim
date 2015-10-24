@@ -1,3 +1,4 @@
 p This is a friendly notice to confirm that you have begun your free trial of Static Website Manager.
 
-p Please #{link_to 'click here to confirm your email address', email_confirmation_url(token: @user.email_confirmation_token!)}, thanks!
+- unless @user.confirmed?
+  p Please #{link_to 'click here to confirm your email address', email_confirmation_url(token: @user.email_confirmation_token!)}, thanks!

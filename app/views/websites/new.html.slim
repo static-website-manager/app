@@ -1,0 +1,45 @@
+- title 'Subscribe to Static Website Manager'
+
+.row
+  .col-sm-8.col-sm-offset-2.col-md-6.col-md-offset-3
+    .header.header-center
+      = link_to :websites, class: 'logo-large logo-back' do
+        => icon 'reply'
+        => image_tag 'logo-large.png', alt: ''
+        strong Static Website Manager
+    h1.h4.text-center: strong Subscribe your whole team for just $50 per website per month.
+    br
+    = errors_for @subscription
+    = form_for @subscription, url: :websites do |form|
+      .panel.panel-default
+        .panel-heading
+          p.h4.panel-title.text-center Free to try for 30 days – No committments, cancel anytime.
+        .panel-body
+          = form.fields_for :website do |f|
+            .form-group
+              => f.label :name, class: 'control-label'
+              = f.text_field :name, class: 'form-control'
+          hr
+          - if form.object.errors[:role].any?
+            .has-error.has-feedback: strong.control-label Your Content Role
+          - else
+            strong Your Content Role
+          = form.fields_for :authorization do |f|
+            .radio
+              = f.label :role_writer do
+                => f.radio_button :role, :writer
+                | Writer
+            .radio
+              = f.label :role_editor do
+                => f.radio_button :role, :editor
+                | Editor
+            .radio
+              = f.label :role_designer do
+                => f.radio_button :role, :designer
+                | Designer
+          hr
+          .well.well-sm.small Legal information goes here.
+        .panel-footer
+          .row
+            .col-lg-6.col-lg-offset-3
+              = form.button 'Subscribe', class: 'btn btn-block btn-lg btn-success'
