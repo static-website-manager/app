@@ -1,25 +1,32 @@
 - if form.object.errors[:content_role].any?
-  .has-error.has-feedback: strong.control-label Content Role
+  p.has-error.has-feedback: strong.control-label Content Role
 - else
-  strong Content Role
+  p: strong Website Role
 .radio
   = form.label :content_role_writer do
     => form.radio_button :content_role, :writer
     | Writer
+    small.help-block These users will only have access to Drafts and Posts.
 .radio
   = form.label :content_role_editor do
     => form.radio_button :content_role, :editor
     | Editor
+    small.help-block These users additionally have access to manage Pages and Collections.
 .radio
   = form.label :content_role_designer do
     => form.radio_button :content_role, :designer
     | Designer
-hr
-.checkbox
-  = form.label :owner do
-    => form.check_box :owner
-    | Account Owner
-.checkbox
-  = form.label :ssh_access do
-    => form.check_box :ssh_access
-    | SSH Access
+    small.help-block These users may have access to additional functionality in the future.
+- if defined?(advanced_options) && !!advanced_options
+  hr
+  p: strong Advanced Options
+  .checkbox
+    = form.label :owner do
+      => form.check_box :owner
+      | Account Owner
+      small.help-block These users can manage the Team and Website Settings.
+  .checkbox
+    = form.label :ssh_access do
+      => form.check_box :ssh_access
+      | SSH Access
+      small.help-block These users can push to the website repository over SSH. (Note: All operations are allowed when using SSH Access, regardless of Website Role.)

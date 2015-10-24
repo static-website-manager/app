@@ -17,6 +17,6 @@
             dt Email
             dd.well.well-sm = @authorization.user.email
           hr
-          = render form
+          = render partial: 'form', object: form, locals: { advanced_options: true }
         .panel-footer.text-center
           = form.button 'Save Changes', class: 'btn btn-primary'

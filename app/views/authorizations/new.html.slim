@@ -10,16 +10,16 @@
   .col-sm-8.col-sm-offset-2.col-md-6.col-md-offset-3
     = errors_for @authorization
     .panel.panel-default
-      = form_for [@website, @authorization] do |f|
+      = form_for [@website, @authorization] do |form|
         .panel-body
-          = f.fields_for :user do |ff|
+          = form.fields_for :user do |user_form|
             .form-group
-              => ff.label :name, class: 'control-label'
-              = ff.text_field :name, class: 'form-control'
+              => user_form.label :name, class: 'control-label'
+              = user_form.text_field :name, class: 'form-control'
             .form-group
-              => ff.label :email, class: 'control-label'
-              = ff.email_field :email, class: 'form-control'
+              => user_form.label :email, class: 'control-label'
+              = user_form.email_field :email, class: 'form-control'
           hr
-          = render form
+          = render partial: 'form', object: form, locals: { advanced_options: true }
         .panel-footer.text-center
-          = f.button 'Invite Team Member', class: 'btn btn-primary'
+          = form.button 'Invite Team Member', class: 'btn btn-primary'
