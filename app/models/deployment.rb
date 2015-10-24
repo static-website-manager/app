@@ -20,12 +20,12 @@ class Deployment < ActiveRecord::Base
       setup!
       JekyllBuildJob.perform_later(self)
     rescue Exception => e
-      cleanup!
+      teardown!
       raise e
     end
   end
 
-  after_destroy :cleanup!
+  after_destroy :teardown!
 
   def logging_bucket_name
     "#{host_prefix}.logs.staticwebsitemanager"
@@ -44,23 +44,6 @@ class Deployment < ActiveRecord::Base
   end
 
   private
-
-  def cleanup!
-    FileUtils.rm_rf(File.join('/sites', id.to_s))
-
-    Aws::S3::Bucket.new(logging_bucket_name).tap do |bucket|
-      if bucket.exists?
-        bucket.clear!
-        bucket.delete
-      end
-    end
-    Aws::S3::Bucket.new(website_bucket_name).tap do |bucket|
-      if bucket.exists?
-        bucket.clear!
-        bucket.delete
-      end
-    end
-  end
 
   def setup!
     FileUtils.mkdir(File.join('/sites', id.to_s))
@@ -108,6 +91,23 @@ class Deployment < ActiveRecord::Base
           },
         },
       })
+    end
+  end
+
+  def teardown!
+    FileUtils.rm_rf(File.join('/sites', id.to_s))
+
+    Aws::S3::Bucket.new(logging_bucket_name).tap do |bucket|
+      if bucket.exists?
+        bucket.clear!
+        bucket.delete
+      end
+    end
+    Aws::S3::Bucket.new(website_bucket_name).tap do |bucket|
+      if bucket.exists?
+        bucket.clear!
+        bucket.delete
+      end
     end
   end
 

@@ -12,8 +12,6 @@ class Repository
 
     if pathname.present? && pathname.exist?
       Rugged::Repository.new(pathname.to_s)
-    elsif pathname.present?
-      Rugged::Repository.init_at(pathname.to_s, :bare)
     else
       raise ActiveRecord::RecordNotFound
     end
