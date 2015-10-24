@@ -87,11 +87,11 @@ module BlobConcern
   end
 
   def raw_content
-    rugged_blob.content.force_encoding('utf-8')
+    rugged_blob.content.encode('utf-8', 'utf-8', invalid: :replace)
   end
 
   def raw_text
-    rugged_blob.text.force_encoding('utf-8')
+    rugged_blob.text.encode('utf-8', 'utf-8', invalid: :replace)
   end
 
   def save(*args)
