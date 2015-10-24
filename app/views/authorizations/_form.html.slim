@@ -1,18 +1,18 @@
-- if form.object.errors[:role].any?
+- if form.object.errors[:content_role].any?
   .has-error.has-feedback: strong.control-label Content Role
 - else
   strong Content Role
 .radio
-  = form.label :role_writer do
-    => form.radio_button :role, :writer
+  = form.label :content_role_writer do
+    => form.radio_button :content_role, :writer
     | Writer
 .radio
-  = form.label :role_editor do
-    => form.radio_button :role, :editor
+  = form.label :content_role_editor do
+    => form.radio_button :content_role, :editor
     | Editor
 .radio
-  = form.label :role_designer do
-    => form.radio_button :role, :designer
+  = form.label :content_role_designer do
+    => form.radio_button :content_role, :designer
     | Designer
 hr
 .checkbox

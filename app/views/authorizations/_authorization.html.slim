@@ -1,7 +1,7 @@
 tr
   td = authorization.user.name
   td = authorization.user.email
-  td = authorization.role.titleize
+  td = authorization.content_role.titleize
   td = authorization.owner ? content_tag(:strong, 'Yes') : 'No'
   td
     .btn-group.btn-group-sm

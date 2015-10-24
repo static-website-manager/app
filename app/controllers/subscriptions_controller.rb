@@ -27,7 +27,7 @@ class SubscriptionsController < ApplicationController
   def subscription_params
     params.require(:subscription).permit(
       authorization_attributes: [
-        :role,
+        :content_role,
       ],
       user_attributes: [
         :name,

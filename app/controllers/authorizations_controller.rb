@@ -63,16 +63,16 @@ class AuthorizationsController < ApplicationController
 
   def authorization_params
     params.require(:authorization).permit(
+      :content_role,
       :owner,
-      :role,
       :ssh_access,
     )
   end
 
   def authorization_user_params
     params.require(:authorization).permit(
+      :content_role,
       :owner,
-      :role,
       :ssh_access,
       user_attributes: [
         :name,

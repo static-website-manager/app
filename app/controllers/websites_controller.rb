@@ -38,7 +38,7 @@ class WebsitesController < ApplicationController
   def subscription_params
     params.require(:subscription).permit(
       authorization_attributes: [
-        :role,
+        :content_role,
       ],
       website_attributes: [
         :name,
