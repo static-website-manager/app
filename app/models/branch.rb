@@ -3,7 +3,7 @@ class Branch
 
   attr_accessor :name, :rugged_branch, :rugged_repository
 
-  def self.find(rugged_repository, name_or_user)
+  def self.find(rugged_repository, website_id, name_or_user)
     if name_or_user.blank?
       raise ActiveRecord::RecordNotFound
     elsif name_or_user.is_a?(User)
@@ -25,7 +25,23 @@ class Branch
         name: name,
         rugged_repository: rugged_repository,
         rugged_branch: rugged_repository.branches.create(name, 'master'),
-      )
+      ).tap do |branch|
+        website = Website.find_by_id(website_id)
+
+        if website
+          deployments = website.deployments.where(branch_name: name)
+
+          if website.auto_deploy_staging?
+            deployment = deployments.first_or_create
+          else
+            deployment = deployments.first
+          end
+
+          if deployment
+            JekyllBuildJob.perform_later(deployment)
+          end
+        end
+      end
     else
       raise ActiveRecord::RecordNotFound
     end

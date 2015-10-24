@@ -18,7 +18,7 @@ class Repository
   end
 
   def branch(*args)
-    Branch.find(rugged_repository, *args)
+    Branch.find(rugged_repository, website_id, *args)
   end
 
   def commit(*args)

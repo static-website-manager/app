@@ -66,9 +66,11 @@ ActiveRecord::Schema.define(version: 5) do
   add_index "users", ["session_token"], name: "index_users_on_session_token", unique: true, using: :btree
 
   create_table "websites", force: :cascade do |t|
-    t.text     "name",       null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.text     "name",                                  null: false
+    t.boolean  "auto_deploy_production", default: true, null: false
+    t.boolean  "auto_deploy_staging",    default: true, null: false
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
   end
 
   add_foreign_key "authentications", "users"

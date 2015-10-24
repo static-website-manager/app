@@ -15,5 +15,14 @@
           .form-group
             => f.label :name, class: 'control-label'
             = f.text_field :name, class: 'form-control'
+          hr
+          .checkbox
+            = f.label :auto_deploy_production
+              => f.check_box :auto_deploy_production
+              | Automatically deploy production branch to a public URL
+          .checkbox
+            = f.label :auto_deploy_staging
+              => f.check_box :auto_deploy_staging
+              | Automatically deploy user staging branches to public URLs
         .panel-footer.text-center
             = f.button 'Save Changes', class: 'btn btn-primary'
