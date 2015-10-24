@@ -25,14 +25,17 @@ class Website < ActiveRecord::Base
     @rugged_repository ||= Repository.rugged_repository(id)
   end
 
+  def update_post_receive!
+    File.open(repository_pathname.join('hooks/post-receive').to_s, 'w+', 0755) do |file|
+      file.write File.read(Rails.root.join('lib/post_receive.rb').to_s).sub(/WEBSITE_ID/, id.to_s)
+    end
+  end
+
   private
 
   def setup!
     Rugged::Repository.init_at(repository_pathname.to_s, :bare)
-
-    File.open(repository_pathname.join('hooks/post-receive').to_s, 'w+', 0755) do |file|
-      file.write File.read(Rails.root.join('lib/post_receive.rb').to_s).sub(/WEBSITE_ID/, id.to_s)
-    end
+    update_post_receive!
   end
 
   def teardown!

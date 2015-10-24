@@ -49,7 +49,7 @@ class ApplicationController < ActionController::Base
 
   # Find the current user‘s website.
   def require_website
-    @website = current_user.websites.find(params[:website_id])
+    @website = current_user.websites.find(controller_name == 'websites' ? params[:id] : params[:website_id])
   end
 
   # Set the current path as a return value for nested views.

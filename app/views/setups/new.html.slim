@@ -1,6 +1,6 @@
 - title 'Setup your Website'
 
-= render partial: 'websites/header', locals: { website: @website, setup: true }
+= render partial: 'websites/header', locals: { website: @website }
 hr
 #setup_check.text-center.text-muted data-url=url_for([:check, @website, :setup])
   div style="margin:4em 0"

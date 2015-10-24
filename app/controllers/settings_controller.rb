@@ -5,7 +5,7 @@ class SettingsController < ApplicationController
 
   def update
     if @website.update(settings_params)
-      redirect_to session[:return_to] || [@website, @repository.branch(current_user)], notice: 'Settings updated successfully.'
+      redirect_to session[:return_to] || @website, notice: 'Settings updated successfully.'
     else
       flash.now.alert = 'There was a problem saving your business settings.'
       render :edit, status: 422

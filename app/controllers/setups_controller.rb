@@ -2,6 +2,7 @@ class SetupsController < ApplicationController
   before_action :require_user
   before_action :require_website
   before_action :require_repository
+  before_action :set_return_to, only: %i[new]
 
   def new
     if @repository.setup?
