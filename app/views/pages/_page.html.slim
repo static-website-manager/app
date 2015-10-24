@@ -2,7 +2,10 @@ li
   = link_to [website, branch, page] do
     .panel.panel-default
       .panel-body
-        => icon 'file-text fa-3x pull-left'
+        - if page.markdown?(branch.markdown_extensions)
+          => icon 'file-text fa-3x pull-left'
+        - else
+          => icon 'file fa-3x pull-left'
         div style="padding-left: 3.5em"
           = content_tag "h#{level}" do
             = page.dirname.present? ? page.dirname.titleize : page.title(branch.markdown_extensions)
