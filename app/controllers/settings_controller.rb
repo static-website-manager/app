@@ -1,6 +1,7 @@
 class SettingsController < ApplicationController
   before_action :require_user
   before_action :require_website
+  before_action :require_owner
   before_action :require_repository
 
   def update

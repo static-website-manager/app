@@ -9,8 +9,10 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  # Expose the @current_user ivar to all controllers and views.
-  attr_reader :current_user ; helper_method :current_user
+  # Expose the @current_authorization and @current_user ivar to all controllers
+  # and views.
+  attr_reader :current_authorization, :current_user
+  helper_method :current_authorization, :current_user
 
   private
 
@@ -21,10 +23,24 @@ class ApplicationController < ActionController::Base
     @deployment = @website.deployments.find_by_branch_name(@branch.name)
   end
 
+  # Ensure non-designers are redirected back to the website.
+  def require_designer
+    unless current_authorization.designer?
+      redirect_to session[:return_to] || @website
+    end
+  end
+
   # Ensure current users are redirected to their website list.
   def require_guest
     if current_user
       redirect_to :websites
+    end
+  end
+
+  # Ensure non-owners are redirected back to the website.
+  def require_owner
+    unless current_authorization.owner?
+      redirect_to session[:return_to] || @website
     end
   end
 
@@ -49,7 +65,8 @@ class ApplicationController < ActionController::Base
 
   # Find the current user‘s website.
   def require_website
-    @website = current_user.websites.find(controller_name == 'websites' ? params[:id] : params[:website_id])
+    @current_authorization = current_user.authorizations.includes(:website).find_by_website_id!(controller_name == 'websites' ? params[:id] : params[:website_id])
+    @website = @current_authorization.website
   end
 
   # Set the current path as a return value for nested views.
