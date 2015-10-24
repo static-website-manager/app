@@ -26,7 +26,14 @@ class ApplicationController < ActionController::Base
   # Ensure non-designers are redirected back to the website.
   def require_designer
     unless current_authorization.designer?
-      redirect_to session[:return_to] || @website
+      redirect_to @website
+    end
+  end
+
+  # Ensure non-editors and non-designers are redirected back to the website.
+  def require_editor_or_designer
+    unless current_authorization.editor? || current_authorization.designer?
+      redirect_to @website
     end
   end
 
