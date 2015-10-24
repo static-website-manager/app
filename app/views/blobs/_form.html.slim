@@ -15,11 +15,12 @@
         .form-group
           => metadata.label :permalink, 'Permalink', class: 'control-label'
           = metadata.text_field :permalink, value: form.object.metadata.find { |key, _| key == 'permalink' }.try(:[], 1), class: 'form-control'
-        .form-group.
-          => metadata.label :date, 'Date', class: 'control-label'
-          .input-group.datetimepicker
-            => metadata.text_field :date, value: form.object.metadata.find { |key, _| key == 'date' }.try(:[], 1).try(:to_time).try(:strftime, '%m/%d/%Y %I:%M %p'), class: 'form-control'
-            span.input-group-addon = icon 'calendar'
+        - if form.object.is_a?(Draft) || form.object.is_a?(Post)
+          .form-group.
+            => metadata.label :date, 'Date', class: 'control-label'
+            .input-group.datetimepicker
+              => metadata.text_field :date, value: form.object.metadata.find { |key, _| key == 'date' }.try(:[], 1).try(:to_time).try(:strftime, '%m/%d/%Y %I:%M %p'), class: 'form-control'
+              span.input-group-addon = icon 'calendar'
         .form-group
           => metadata.label :categories, 'Categories', class: 'control-label'
           = metadata.text_field :categories, value: form.object.metadata.find { |key, _| key == 'categories' }.try(:[], 1), class: 'form-control'
@@ -32,7 +33,10 @@
           - unsupported_metadata_keys = []
           .well.well-sm
             - form.object.metadata.each do |key, value|
-              - next if %w[layout title excerpt permalink date categories tags].include?(key)
+              - if form.object.is_a?(Draft) || form.object.is_a?(Post)
+                - next if %w[layout title excerpt permalink date categories tags].include?(key)
+              - else
+                - next if %w[layout title excerpt permalink categories tags].include?(key)
               - if value.class == String && value.present? && !%w[true false].include?(value.downcase)
                 .form-group
                   => metadata.label key, key, class: 'control-label'
