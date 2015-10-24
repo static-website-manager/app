@@ -29,6 +29,7 @@ class Subscription
       @authorization.user = @user
       @authorization.website = @website
       @authorization.owner = true
+      @authorization.ssh_access = true
       @authorization.save
 
       @authorization.errors.each do |attribute, error|

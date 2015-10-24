@@ -5,6 +5,7 @@ class CreateAuthorizations < ActiveRecord::Migration
       t.references :website, index: true, foreign_key: true, null: false
       t.integer :role, null: false
       t.boolean :owner, default: false, null: false
+      t.boolean :ssh_access, default: false, null: false
       t.timestamps null: false
     end
   end

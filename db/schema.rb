@@ -30,6 +30,7 @@ ActiveRecord::Schema.define(version: 5) do
     t.integer  "website_id",                 null: false
     t.integer  "role",                       null: false
     t.boolean  "owner",      default: false, null: false
+    t.boolean  "ssh_access", default: false, null: false
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
   end

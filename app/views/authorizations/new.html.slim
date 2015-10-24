@@ -20,27 +20,6 @@
               => ff.label :email, class: 'control-label'
               = ff.email_field :email, class: 'form-control'
           hr
-          - if f.object.errors[:role].any?
-            .has-error.has-feedback: strong.control-label Content Role
-          - else
-            strong Content Role
-          .radio
-            = f.label :role_writer do
-              => f.radio_button :role, :writer
-              | Writer
-          .radio
-            = f.label :role_editor do
-              => f.radio_button :role, :editor
-              | Editor
-          .radio
-            = f.label :role_designer do
-              => f.radio_button :role, :designer
-              | Designer
-          hr
-          strong Account Owner
-          .checkbox
-            = f.label :owner do
-              => f.check_box :owner
-              | Yes
+          = render form
         .panel-footer.text-center
           = f.button 'Invite Team Member', class: 'btn btn-primary'

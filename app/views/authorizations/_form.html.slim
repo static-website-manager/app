@@ -1,0 +1,25 @@
+- if form.object.errors[:role].any?
+  .has-error.has-feedback: strong.control-label Content Role
+- else
+  strong Content Role
+.radio
+  = form.label :role_writer do
+    => form.radio_button :role, :writer
+    | Writer
+.radio
+  = form.label :role_editor do
+    => form.radio_button :role, :editor
+    | Editor
+.radio
+  = form.label :role_designer do
+    => form.radio_button :role, :designer
+    | Designer
+hr
+.checkbox
+  = form.label :owner do
+    => form.check_box :owner
+    | Account Owner
+.checkbox
+  = form.label :ssh_access do
+    => form.check_box :ssh_access
+    | SSH Access

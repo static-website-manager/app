@@ -63,7 +63,9 @@ class AuthorizationsController < ApplicationController
 
   def authorization_params
     params.require(:authorization).permit(
+      :owner,
       :role,
+      :ssh_access,
     )
   end
 
@@ -71,6 +73,7 @@ class AuthorizationsController < ApplicationController
     params.require(:authorization).permit(
       :owner,
       :role,
+      :ssh_access,
       user_attributes: [
         :name,
         :email,
