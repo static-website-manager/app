@@ -35,5 +35,10 @@
                 - else
                   => label_tag :target, 'Your Custom Branch Name', class: 'control-label'
                   = text_field_tag :target, params[:target], class: 'form-control'
+          hr
+          .checkbox
+            = label_tag :deploy do
+              => check_box_tag :deploy
+              | Deploy this branch to a public URL?
         .panel-footer.text-center
           = button_tag 'Checkout Branch', class: 'btn btn-primary'

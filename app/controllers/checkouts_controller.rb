@@ -21,6 +21,11 @@ class CheckoutsController < ApplicationController
     else
       begin
         @repository.create_branch(@branch.name, params[:target])
+
+        if params[:deploy]
+          @website.deployments.create(branch_name: params[:target])
+        end
+
         redirect_to [@website, @repository.branch(params[:target])], notice: 'Ok, your new branch is ready to use.'
       rescue Rugged::ReferenceError => e
         @error_message = true
