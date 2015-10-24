@@ -3,7 +3,9 @@ class Authorization < ActiveRecord::Base
   belongs_to :website
 
   enum role: {
-    full_access: 0,
+    designer: 0,
+    editor: 1,
+    writer: 2,
   }
 
   accepts_nested_attributes_for :user, reject_if: :all_blank

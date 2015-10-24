@@ -28,6 +28,7 @@ class Subscription
       @website.save
       @authorization.user = @user
       @authorization.website = @website
+      @authorization.owner = true
       @authorization.save
 
       @authorization.errors.each do |attribute, error|

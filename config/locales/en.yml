@@ -2,7 +2,8 @@ en:
   activerecord:
     attributes:
       authorization:
-        role: Permission
+        role: Content Role
+        owner: Account Owner
       user:
         password_confirmation: Password Confirmation
       website:

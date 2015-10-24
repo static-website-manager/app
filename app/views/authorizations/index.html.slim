@@ -15,7 +15,8 @@
             tr
               th Name
               th Email
-              th Permissions
+              th Content Role
+              th Account Owner
               th Actions
           tbody
             = render partial: 'authorization', collection: @authorizations, locals: { website: @website }

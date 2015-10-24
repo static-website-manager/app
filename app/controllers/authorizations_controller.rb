@@ -68,6 +68,7 @@ class AuthorizationsController < ApplicationController
 
   def authorization_user_params
     params.require(:authorization).permit(
+      :owner,
       :role,
       user_attributes: [
         :name,

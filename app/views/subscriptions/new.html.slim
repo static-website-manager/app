@@ -34,6 +34,24 @@
               => f.label :name, class: 'control-label'
               = f.text_field :name, class: 'form-control'
           hr
+          - if form.object.errors[:role].any?
+            .has-error.has-feedback: strong.control-label Your Content Role
+          - else
+            strong Your Content Role
+          = form.fields_for :authorization do |f|
+            .radio
+              = f.label :role_writer do
+                => f.radio_button :role, :writer
+                | Writer
+            .radio
+              = f.label :role_editor do
+                => f.radio_button :role, :editor
+                | Editor
+            .radio
+              = f.label :role_designer do
+                => f.radio_button :role, :designer
+                | Designer
+          hr
           .well.well-sm.small Legal information goes here.
         .panel-footer
           .row

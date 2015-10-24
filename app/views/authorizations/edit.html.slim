@@ -16,8 +16,28 @@
             dd.well.well-sm = @authorization.user.name
             dt Email
             dd.well.well-sm = @authorization.user.email
-          .form-group
-            => f.label :role, class: 'control-label'
-            = f.select :role, options_for_select(Authorization.roles.keys.map { |k| [k.titleize, k] }), {}, class: 'form-control'
+          hr
+          - if f.object.errors[:role].any?
+            .has-error.has-feedback: strong.control-label Content Role
+          - else
+            strong Content Role
+          .radio
+            = f.label :role_writer do
+              => f.radio_button :role, :writer
+              | Writer
+          .radio
+            = f.label :role_editor do
+              => f.radio_button :role, :editor
+              | Editor
+          .radio
+            = f.label :role_designer do
+              => f.radio_button :role, :designer
+              | Designer
+          hr
+          strong Account Owner
+          .checkbox
+            = f.label :owner do
+              => f.check_box :owner
+              | Yes
         .panel-footer.text-center
           = f.button 'Save Changes', class: 'btn btn-primary'
