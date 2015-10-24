@@ -5,4 +5,4 @@ hr
 #setup_check.text-center.text-muted data-url=url_for([:check, @website, :setup])
   div style="margin:4em 0"
     = icon 'spinner fa-spin fa-4x'
-  p.lead Waiting for your <b>master</b> branch to be pushed to the our git repository at <code>ssh://root@#{Rails.application.secrets.host}:222/repos/#{@website.id}.git</code>
+  p.lead Waiting for your <b>master</b> branch to be pushed to the our git repository at <code>ssh://root@#{Rails.application.secrets.host}:222/#{@website.id}.git</code>
