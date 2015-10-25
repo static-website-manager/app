@@ -9,6 +9,8 @@ class PostReceiveHooksController < ActionController::Base
       if params[:branch_name] == 'master' && website.auto_deploy_production?
         deployment = deployments.first_or_create
       elsif params[:branch_name].to_s.match(/\Astatic_user_\d{1,9}\z/) && website.auto_deploy_staging?
+        deployment = deployments.first_or_create
+      else
         deployment = deployments.first
       end
 
