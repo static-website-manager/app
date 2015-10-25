@@ -13,32 +13,40 @@
         .panel-body
           .row
             .col-sm-6
-              label Source
+              label Current Branch
               .btn-group style="display:block"
                 .btn.btn-block.btn-default.dropdown-toggle type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                   => @branch.title(current_user)
                   span.caret
                 ul.dropdown-menu style="margin-top:2.5em"
                   li class=('active' if @branch.production?) = link_to 'Production Branch', branch_id: @repository.branch('master')
-                  li class=('active' if @branch.staging?(current_user)) = link_to 'Your Staging Branch', branch_id: @repository.branch(current_user)
                   li.divider role="separator"
-                  li.dropdown-header Custom Branches
-                  - @repository.custom_branch_names.each do |name|
-                    li class=('active' if @branch.name == name) = link_to name, branch_id: @repository.branch(name)
+                  li.dropdown-header Staging Branches
+                  li class=('active' if @branch.staging?(current_user)) = link_to 'Your Staging Branch', branch_id: @repository.branch(current_user)
+                  - @website.users.where.not(users: { id: current_user.id }).each do |user|
+                    - user_branch = @repository.branch(user)
+                    li class=('active' if @branch.name == user_branch.name) = link_to branch_id: user_branch do
+                      => user.name
+                      small.text-muted = user.email
+                  - if @repository.custom_branch_names.any?
+                    li.divider role="separator"
+                    li.dropdown-header Custom Branches
+                    - @repository.custom_branch_names.each do |name|
+                      li class=('active' if @branch.name == name) = link_to name, branch_id: @repository.branch(name)
             .col-sm-6
               .form-group
                 - if @error_message
-                  .has-error.has-feedback => label_tag :target, 'Your Custom Branch Name', class: 'control-label'
+                  .has-error.has-feedback => label_tag :target, 'New Custom Branch Name', class: 'control-label'
                   .has-error.has-feedback
                     => text_field_tag :target, params[:target], class: 'form-control'
                     span.glyphicon.glyphicon-remove.form-control-feedback aria-hidden="true"
                 - else
-                  => label_tag :target, 'Your Custom Branch Name', class: 'control-label'
+                  => label_tag :target, 'New Custom Branch Name', class: 'control-label'
                   = text_field_tag :target, params[:target], class: 'form-control'
           hr
           .checkbox
             = label_tag :deploy do
-              => check_box_tag :deploy
+              => check_box_tag :deploy, '1', params[:deploy].nil? ? true : params[:deploy]
               | Deploy this branch to a public URL?
         .panel-footer.text-center
           = button_tag 'Checkout Branch', class: 'btn btn-primary'

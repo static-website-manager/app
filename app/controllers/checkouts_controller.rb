@@ -7,16 +7,16 @@ class CheckoutsController < ApplicationController
 
   def create
     if params[:target].blank?
-      flash.now.alert = 'Please provide a target branch.'
+      flash.now.alert = 'Please provide a custom branch name.'
       render :new, status: 422
     elsif !@repository.local_branch?(@branch.name)
       flash.now.alert = 'Source branch must already be a local branch.'
       render :new, status: 422
     elsif params[:target].match(/\A(static_user|master)/)
-      flash.now.alert = 'Target branch must not be the production branch (master) or a Static Website Manager staging branch.'
+      flash.now.alert = 'Custom branch must not be the production branch (master) or a Static Website Manager staging branch.'
       render :new, status: 422
     elsif @repository.local_branch?(params[:target])
-      flash.now.alert = 'Target branch must not already be a local branch.'
+      flash.now.alert = 'Custom branch must not already be a local branch.'
       render :new, status: 422
     else
       begin

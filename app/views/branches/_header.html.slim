@@ -8,7 +8,14 @@
       span.caret
     ul.dropdown-menu
       li class=('active' if branch.production?) = link_to 'Production Branch', (controller_name == 'branches' ? :id : :branch_id) => repository.branch('master')
+      li.divider role="separator"
+      li.dropdown-header Staging Branches
       li class=('active' if branch.staging?(current_user)) = link_to 'Your Staging Branch', (controller_name == 'branches' ? :id : :branch_id) => repository.branch(current_user)
+      - website.users.where.not(users: { id: current_user.id }).each do |user|
+        - user_branch = repository.branch(user)
+        li class=('active' if branch.name == user_branch.name) = link_to (controller_name == 'branches' ? :id : :branch_id) => user_branch do
+          => user.name
+          small.text-muted = user.email
       - if repository.custom_branch_names.any?
         li.divider role="separator"
         li.dropdown-header Custom Branches
@@ -16,5 +23,5 @@
           li class=('active' if branch.name == name) = link_to name, (controller_name == 'branches' ? :id : :branch_id) => repository.branch(name)
       li.divider role="separator"
       li = link_to [:new, website, branch, :checkout] do
-        => icon 'plus-circle'
-        | Create Custom Branch
+        => icon 'code-fork'
+        small Add Custom Branch

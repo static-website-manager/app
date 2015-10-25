@@ -95,13 +95,23 @@ class Branch
     rugged_branch.target.oid[0..6]
   end
 
-  def title(user)
+  def staging?(user = nil)
+    if user
+      name == "static_user_#{user.id}"
+    else
+      name.match(/\Astatic_user_\d{1,9}\z/)
+    end
+  end
+
+  def title(current_user)
     if production?
       'Production Branch'
-    elsif staging?(user)
+    elsif staging?(current_user)
       'Your Staging Branch'
+    elsif staging?
+      "#{user.name}’s Staging Branch"
     else
-      "Custom Branch “#{name}”"
+      "Custom Branch: #{name}"
     end
   end
 
@@ -109,7 +119,7 @@ class Branch
     name
   end
 
-  def staging?(user)
-    name == "static_user_#{user.id}"
+  def user
+    User.find_by_id(name.match(/\Astatic_user_(\d{1,9})\z/)[1])
   end
 end
