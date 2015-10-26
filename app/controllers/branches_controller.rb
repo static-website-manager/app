@@ -9,4 +9,17 @@ class BranchesController < ApplicationController
   def show
     @commits = Commit.all(@repository.rugged_repository, @branch.commit_id, per_page: 10)
   end
+
+  def destroy
+    begin
+      ActiveRecord::Base.transaction do
+        @deployment.destroy if @deployment
+        @repository.delete_branch(@branch.name)
+      end
+      redirect_to [@website, @repository.branch(current_user)], notice: 'Ok, we’ve removed the branch.'
+    rescue
+      flash.now.alert = 'There was a problem deleting this custom branch.'
+      render :delete, status: 422
+    end
+  end
 end

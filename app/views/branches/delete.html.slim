@@ -1,0 +1,18 @@
+- title "Delete Branch #{@branch.name}"
+
+.header.header-center
+  h1.lead
+    = link_to [@website, @branch], class: 'logo-small-back-container' do
+      => icon 'reply'
+      => image_tag 'logo-small.png', alt: 'Static Website Manager', class: 'logo-small'
+    ' | Delete Branch
+.row
+  .col-sm-8.col-sm-offset-2.col-md-6.col-md-offset-3
+    = form_for [@website, @branch], method: :delete do |form|
+      .panel.panel-default
+        .panel-heading
+          p.h4.panel-title = @branch.name
+        .panel-body
+          p: em Are you sure you want to delete this branch?
+        .panel-footer.text-center
+          = form.button 'Delete Branch', class: 'btn btn-danger'

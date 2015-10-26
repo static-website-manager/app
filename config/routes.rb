@@ -16,7 +16,8 @@ Rails.application.routes.draw do
       get :check
     end
     resources :authorizations, only: %i[index new create edit update destroy], path: 'team'
-    resources :branches, only: %i[show], path: '' do
+    resources :branches, only: %i[show destroy], path: '' do
+      get :delete, on: :member
       resource :checkout, only: %i[new create], path_names: { new: '' }
       resource :deployment, only: %i[new create destroy] do
         get :delete

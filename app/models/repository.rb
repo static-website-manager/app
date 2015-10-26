@@ -35,6 +35,10 @@ class Repository
     end
   end
 
+  def delete_branch(name)
+    rugged_repository.references.delete("refs/heads/#{name}")
+  end
+
   def local_branch?(branch_name)
     rugged_repository.branches.each_name(:local).include?(branch_name)
   end
@@ -43,8 +47,8 @@ class Repository
     rugged_repository.merge_base(*args)
   end
 
-  def move_branch(old, new)
-    rugged_repository.references.rename("refs/heads/#{old}", "refs/heads/#{new}")
+  def move_branch(old_name, new_name)
+    rugged_repository.references.rename("refs/heads/#{old_name}", "refs/heads/#{new_name}")
   end
 
   def rugged_repository
