@@ -6,7 +6,7 @@
 
 - if @pages.any?
   .pull-right style="position:relative; z-index:1"
-    = link_to [:new, @website, @branch, :page], class: 'btn btn-primary' do
+    = link_to [:new, @website, @branch, :page], class: 'btn btn-sm btn-primary' do
       => icon 'plus-circle'
       | Add Page
   ul.list-unstyled.pages
