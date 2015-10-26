@@ -4,5 +4,5 @@ tr
       h2 #{icon 'file-text'} #{post.title}
     - else
       h2 #{icon 'file'} #{post.title}
-  td = link_to localize(post.published_on), [:edit, website, branch, post]
-  td = link_to content_tag(:code, post.full_pathname, class: 'small'), [:edit, website, branch, post]
+  td = link_to localize(post.published_on), [website, branch, post]
+  td = link_to content_tag(:code, post.full_pathname, class: 'small'), [website, branch, post]
