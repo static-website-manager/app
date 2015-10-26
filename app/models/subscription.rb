@@ -28,7 +28,7 @@ class Subscription
       @website.save
       @authorization.user = @user
       @authorization.website = @website
-      @authorization.owner = true
+      @authorization.account_owner = true
       @authorization.ssh_access = true
       @authorization.save
 

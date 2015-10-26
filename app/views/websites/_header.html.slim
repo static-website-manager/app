@@ -1,6 +1,6 @@
 .header
   .pull-right
-    - if current_authorization.owner?
+    - if current_authorization.account_owner?
       .btn-group
         = link_to icon('users'), [website, :authorizations], class: 'btn btn-sm btn-default', title: 'Team Members'
         = link_to icon('gears'), [:edit, website, :settings], class: 'btn btn-sm btn-default', title: 'Website Settings'

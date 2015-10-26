@@ -1,5 +1,5 @@
 - if form.object.errors[:content_role].any?
-  p.has-error.has-feedback: strong.control-label Content Role
+  p.has-error.has-feedback: strong.control-label Website Role
 - else
   p: strong Website Role
 .radio
@@ -17,16 +17,34 @@
     => form.radio_button :content_role, :designer
     | Designer
     small.help-block These users may have access to additional functionality in the future.
+hr
+p: strong Branch Access
+p.text-muted style="margin-bottom:1em" All team members have access to their own staging branch. Users may be given access to other branches, including the production branch and other team members’ staging branches.
+.checkbox
+  = form.label :production_branch_access do
+    => form.check_box :production_branch_access
+    | Production Branch
+    small.help-block Access to the primary (master) production branch.
+.checkbox
+  = form.label :staging_branch_access do
+    => form.check_box :staging_branch_access
+    | Staging Branches
+    small.help-block Access to team staging branches.
+.checkbox
+  = form.label :custom_branch_access do
+    => form.check_box :custom_branch_access
+    | Custom Branches
+    small.help-block Includes the ability to add, rename and delete custom branches.
 - if defined?(advanced_options) && !!advanced_options
   hr
   p: strong Advanced Options
   .checkbox
-    = form.label :owner do
-      => form.check_box :owner
+    = form.label :account_owner do
+      => form.check_box :account_owner
       | Account Owner
       small.help-block These users can manage the Team and Website Settings.
   .checkbox
     = form.label :ssh_access do
       => form.check_box :ssh_access
       | SSH Access
-      small.help-block These users can push to the website repository over SSH. (Note: All operations are allowed when using SSH Access, regardless of Website Role.)
+      small.help-block These users can push to the website repository over SSH. (Note: All operations are allowed when using SSH Access, regardless of Website Role or Branch Access.)

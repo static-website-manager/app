@@ -1,7 +1,7 @@
 class AuthorizationsController < ApplicationController
   before_action :require_user
   before_action :require_website
-  before_action :require_owner
+  before_action :require_account_owner
 
   # Initialize a new authorization with user.
   before_action only: %i[new create] do
@@ -63,17 +63,23 @@ class AuthorizationsController < ApplicationController
 
   def authorization_params
     params.require(:authorization).permit(
+      :account_owner,
       :content_role,
-      :owner,
+      :custom_branch_access,
+      :production_branch_access,
       :ssh_access,
+      :staging_branch_access,
     )
   end
 
   def authorization_user_params
     params.require(:authorization).permit(
+      :account_owner,
       :content_role,
-      :owner,
+      :custom_branch_access,
+      :production_branch_access,
       :ssh_access,
+      :staging_branch_access,
       user_attributes: [
         :name,
         :email,

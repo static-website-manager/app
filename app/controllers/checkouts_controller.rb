@@ -5,6 +5,12 @@ class CheckoutsController < ApplicationController
   before_action :require_setup
   before_action :require_branch
 
+  before_action do
+    unless current_authorization.custom_branch_access?
+      redirect_to [@website, @branch]
+    end
+  end
+
   def create
     if params[:target].blank?
       flash.now.alert = 'Please provide a custom branch name.'

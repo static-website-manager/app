@@ -26,13 +26,16 @@ ActiveRecord::Schema.define(version: 5) do
   add_index "authentications", ["user_id"], name: "index_authentications_on_user_id", using: :btree
 
   create_table "authorizations", force: :cascade do |t|
-    t.integer  "user_id",                      null: false
-    t.integer  "website_id",                   null: false
-    t.integer  "content_role",                 null: false
-    t.boolean  "owner",        default: false, null: false
-    t.boolean  "ssh_access",   default: false, null: false
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
+    t.integer  "user_id",                                  null: false
+    t.integer  "website_id",                               null: false
+    t.integer  "content_role",                             null: false
+    t.boolean  "account_owner",            default: false, null: false
+    t.boolean  "ssh_access",               default: false, null: false
+    t.boolean  "production_branch_access", default: false, null: false
+    t.boolean  "staging_branch_access",    default: false, null: false
+    t.boolean  "custom_branch_access",     default: false, null: false
+    t.datetime "created_at",                               null: false
+    t.datetime "updated_at",                               null: false
   end
 
   add_index "authorizations", ["user_id"], name: "index_authorizations_on_user_id", using: :btree

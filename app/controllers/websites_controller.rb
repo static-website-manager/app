@@ -39,6 +39,9 @@ class WebsitesController < ApplicationController
     params.require(:subscription).permit(
       authorization_attributes: [
         :content_role,
+        :custom_branch_access,
+        :production_branch_access,
+        :staging_branch_access,
       ],
       website_attributes: [
         :name,

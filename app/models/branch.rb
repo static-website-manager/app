@@ -63,6 +63,10 @@ class Branch
     rugged_branch.target.oid
   end
 
+  def custom?
+    !production? && !staging?
+  end
+
   def html_extensions
     Branch.html_extensions
   end
@@ -120,6 +124,6 @@ class Branch
   end
 
   def user
-    User.find_by_id(name.match(/\Astatic_user_(\d{1,9})\z/)[1])
+    @user ||= User.find_by_id(name.match(/\Astatic_user_(\d{1,9})\z/)[1])
   end
 end

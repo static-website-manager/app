@@ -19,20 +19,23 @@
                   => @branch.title(current_user)
                   span.caret
                 ul.dropdown-menu style="margin-top:2.5em"
-                  li class=('active' if @branch.production?) = link_to 'Production Branch', branch_id: @repository.branch('master')
-                  li.divider role="separator"
+                  - if current_authorization.production_branch_access?
+                    li class=('active' if @branch.production?) = link_to 'Production Branch', branch_id: @repository.branch('master')
+                    li.divider role="separator"
                   li.dropdown-header Staging Branches
                   li class=('active' if @branch.staging?(current_user)) = link_to 'Your Staging Branch', branch_id: @repository.branch(current_user)
-                  - @website.users.where.not(users: { id: current_user.id }).each do |user|
-                    - user_branch = @repository.branch(user)
-                    li class=('active' if @branch.name == user_branch.name) = link_to branch_id: user_branch do
-                      => user.name
-                      small.text-muted = user.email
-                  - if @repository.custom_branch_names.any?
-                    li.divider role="separator"
-                    li.dropdown-header Custom Branches
-                    - @repository.custom_branch_names.each do |name|
-                      li class=('active' if @branch.name == name) = link_to name, branch_id: @repository.branch(name)
+                  - if current_authorization.staging_branch_access?
+                    - @website.users.where.not(users: { id: current_user.id }).each do |user|
+                      - user_branch = @repository.branch(user)
+                      li class=('active' if @branch.name == user_branch.name) = link_to branch_id: user_branch do
+                        => user.name
+                        small.text-muted = user.email
+                  - if current_authorization.custom_branch_access?
+                    - if @repository.custom_branch_names.any?
+                      li.divider role="separator"
+                      li.dropdown-header Custom Branches
+                      - @repository.custom_branch_names.each do |name|
+                        li class=('active' if @branch.name == name) = link_to name, branch_id: @repository.branch(name)
             .col-sm-6
               .form-group
                 - if @error_message

@@ -20,6 +20,15 @@ class ApplicationController < ActionController::Base
   def require_branch
     branch_param = controller_name == 'branches' ? params[:id] : params[:branch_id]
     @branch = @repository.branch(branch_param == 'staging' ? current_user : branch_param)
+
+    if @branch.production? && !current_authorization.production_branch_access?
+      raise ActiveRecord::RecordNotFound
+    elsif @branch.staging? && @branch.user != current_user && !current_authorization.staging_branch_access?
+      raise ActiveRecord::RecordNotFound
+    elsif @branch.custom? && !current_authorization.custom_branch_access?
+      raise ActiveRecord::RecordNotFound
+    end
+
     @deployment = @website.deployments.find_by_branch_name(@branch.name)
   end
 
@@ -44,9 +53,9 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  # Ensure non-owners are redirected back to the website.
-  def require_owner
-    unless current_authorization.owner?
+  # Ensure non-account-owners are redirected back to the website.
+  def require_account_owner
+    unless current_authorization.account_owner?
       redirect_to session[:return_to] || @website
     end
   end
