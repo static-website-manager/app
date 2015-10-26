@@ -36,7 +36,7 @@ class PagesController < ApplicationController
   end
 
   def update
-    commit_message = params[:message].present? ? params[:message] : "Save Changes to #{@page.full_pathname}"
+    commit_message = params[:message].present? ? params[:message] : "Save Changes to #{@page.filename}"
     @page.content = params[:page].try(:[], :content)
     @page.metadata = params[:page].try(:[], :metadata)
 

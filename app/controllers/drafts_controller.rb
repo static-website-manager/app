@@ -35,7 +35,7 @@ class DraftsController < ApplicationController
   end
 
   def update
-    commit_message = params[:message].present? ? params[:message] : "Save Changes to #{@draft.full_pathname}"
+    commit_message = params[:message].present? ? params[:message] : "Save Changes to #{@draft.filename}"
     @draft.content = params[:draft].try(:[], :content)
     @draft.metadata = params[:draft].try(:[], :metadata)
 

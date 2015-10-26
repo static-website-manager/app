@@ -38,7 +38,7 @@ class PostsController < ApplicationController
   end
 
   def update
-    commit_message = params[:message].present? ? params[:message] : "Save Changes to #{@post.full_pathname}"
+    commit_message = params[:message].present? ? params[:message] : "Save Changes to #{@post.filename}"
     @post.content = params[:post].try(:[], :content)
     @post.metadata = params[:post].try(:[], :metadata)
 
