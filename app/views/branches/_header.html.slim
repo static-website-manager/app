@@ -2,7 +2,7 @@
   => link_to [website, branch, branch.production? ? repository.branch(current_user) : repository.branch('master')], class: 'btn btn-default pull-right' do
     => icon 'random'
     | Compare and Merge
-  span.btn-group
+  span.btn-group> style="margin-right: 1em"
     span.btn.btn-default.dropdown-toggle type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
       => branch.title(current_user)
       span.caret
@@ -28,3 +28,12 @@
         li = link_to [:new, website, branch, :checkout] do
           => icon 'code-fork'
           small Add Custom Branch
+  - if deployment && deployment.success?
+    => link_to 'View Public Website', deployment.url, target: :_blank, class: 'small'
+    span.small.text-muted
+      ' – Branch Deployed
+      = localize deployment.updated_at, format: :short
+  - elsif deployment
+    span.small.text-danger Error Deploying Branch
+  - else
+    span.small.text-muted Private Branch

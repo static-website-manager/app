@@ -22,19 +22,19 @@
           code.small = @page.full_pathname
         .col-sm-3.text-right
           - if @deployment && @deployment.success?
-            => link_to @page.public_url(@deployment.url), target: :_blank, class: 'btn btn-default' do
-              ' Preview
+            => link_to @page.public_url(@deployment.url), target: :_blank, class: 'btn btn-sm btn-success' do
+              ' View Public Page
               = icon 'external-link'
-          => link_to [:new, @website, @branch, @page, :move], class: 'btn btn-primary' do
+          => link_to [:new, @website, @branch, @page, :move], class: 'btn btn-sm btn-primary' do
             ' Rename
             = icon 'arrow-circle-o-right'
-          = link_to [:delete, @website, @branch, @page], class: 'btn btn-danger' do
+          = link_to [:delete, @website, @branch, @page], class: 'btn btn-sm btn-danger' do
             => icon 'trash'
             | Delete
       .row
         .col-sm-7
           .column-header
-            h2 Recent Activity
+            h2 Public Activity
           .text-center style="background-color: #eee; height: 16em;"
         .col-sm-5
           .column-header

@@ -1,28 +1,44 @@
 - title @branch.title(current_user)
 
 = render partial: 'websites/header', locals: { website: @website }
-= render partial: 'branches/header', locals: { website: @website, repository: @repository, branch: @branch }
+= render partial: 'branches/header', locals: { website: @website, repository: @repository, branch: @branch, deployment: @deployment }
 = render partial: 'branches/nav', locals: { website: @website, branch: @branch }
 
-p.text-muted style="margin-bottom:2em"
-  - if @deployment
-    - if @deployment.success?
-      => link_to @deployment.url, target: :_blank, class: 'btn btn-sm btn-primary', style: 'margin-right: 0.5em' do
+.clearfix
+  - if @branch.custom? && current_authorization.custom_branch_access?
+    .pull-right
+      => link_to '#', class: 'btn btn-sm btn-primary' do
+        ' Rename Branch
+        = icon 'arrow-circle-o-right'
+      = link_to '#', class: 'btn btn-sm btn-danger' do
+        => icon 'trash'
+        | Delete
+  - if @deployment && @deployment.success?
+    p.text-muted style="margin: 0"
+      ' Branch successfully deployed
+      => time_ago_in_words @deployment.updated_at
+      ' ago
+      => link_to @deployment.url, target: :_blank, class: 'btn btn-sm btn-success', style: 'margin-left: 0.6em' do
         ' View Public Website
         = icon 'external-link'
-      code.code-text.small => @deployment.url
-      = link_to 'Remove', [:delete, @website, @branch, @deployment], class: 'btn btn-xs btn-danger', style: 'margin-left: 0.5em'
-    - else
-      strong.text-danger => @deployment.response_message
-      = link_to 'Remove', [:delete, @website, @branch, @deployment], class: 'btn btn-xs btn-danger', style: 'margin-left: 0.5em'
+      = link_to 'Make Branch Private', [:delete, @website, @branch, @deployment], class: 'btn btn-xs btn-link'
+  - elsif @deployment
+    p.text-muted style="margin: 0"
+      span.text-danger => @deployment.response_message
+      => link_to @deployment.url, target: :_blank, class: 'btn btn-sm btn-primary disabled', style: 'margin-left: 0.6em' do
+        ' View Public Website
+        = icon 'external-link'
+      = link_to 'Make Branch Private', [:delete, @website, @branch, @deployment], class: 'btn btn-sm btn-link'
   - else
-    ' No Public URL Attached
-    = link_to 'Publish Branch', [:new, @website, @branch, :deployment], class: 'btn btn-xs btn-success', style: 'margin-left: 0.5em'
+    p.text-muted style="margin:0"
+      ' This branch is not deployed to a public URL
+      = link_to [:new, @website, @branch, :deployment], class: 'btn btn-xs btn-success', style: 'margin-left: 0.6em'
+        | Publish Branch
 
-.row
+.row style="margin-top: 3em"
   .col-sm-7
     .column-header
-      h2 Recent Activity
+      h2 Public Activity
     .text-center style="background-color: #eee; height: 16em;"
   .col-sm-5
     .column-header

@@ -21,19 +21,19 @@
           h1 = @draft.title
           code.small = @draft.full_pathname
         .col-sm-3.text-right
-          => link_to [:new, @website, @branch, @draft, :publication], class: 'btn btn-success' do
+          => link_to [:new, @website, @branch, @draft, :publication], class: 'btn btn-sm btn-success' do
             ' Publish
             = icon 'plus-circle'
-          => link_to [:new, @website, @branch, @draft, :move], class: 'btn btn-primary' do
+          => link_to [:new, @website, @branch, @draft, :move], class: 'btn btn-sm btn-primary' do
             ' Rename
             = icon 'arrow-circle-o-right'
-          = link_to [:delete, @website, @branch, @draft], class: 'btn btn-danger' do
+          = link_to [:delete, @website, @branch, @draft], class: 'btn btn-sm btn-danger' do
             => icon 'trash'
             | Delete
       .row
         .col-sm-7
           .column-header
-            h2 Recent Activity
+            h2 Public Activity
           .text-center style="background-color: #eee; height: 16em;"
         .col-sm-5
           .column-header

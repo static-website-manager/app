@@ -1,7 +1,7 @@
 - title "Collections • #{@branch.name}"
 
 = render partial: 'websites/header', locals: { website: @website }
-= render partial: 'branches/header', locals: { website: @website, repository: @repository, branch: @branch }
+= render partial: 'branches/header', locals: { website: @website, repository: @repository, branch: @branch, deployment: @deployment }
 = render partial: 'branches/nav', locals: { website: @website, branch: @branch }
 
 .alert.alert-warning
