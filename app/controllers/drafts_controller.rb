@@ -15,7 +15,7 @@ class DraftsController < ApplicationController
   end
 
   def index
-    @drafts = Draft.all(@repository.rugged_repository, @branch.commit_id, @branch.page_extensions)
+    @drafts = Draft.all(@repository.rugged_repository, @branch.commit_id, @branch.page_extensions, page: params[:page], per_page: 12)
   end
 
   def create

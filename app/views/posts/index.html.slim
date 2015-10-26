@@ -4,15 +4,20 @@
 = render partial: 'branches/header', locals: { website: @website, repository: @repository, branch: @branch, deployment: @deployment }
 = render partial: 'branches/nav', locals: { website: @website, branch: @branch }
 
+div class=(@posts.any? ? 'clearfix' : '')
+  .pull-right style="position:relative; z-index:1"
+    => link_to '#', class: 'btn btn-sm btn-default' do
+      ' Help with Posts
+      = icon 'question-circle'
+    = link_to [:new, @website, @branch, :post], class: 'btn btn-sm btn-primary' do
+      => icon 'plus-circle'
+      | Add Post
+  - if @posts.any?
+    = page_entries_info @posts, entry_name: 'Post'
+
 - if @posts.any?
-  .table-responsive
+  .table-responsive style="margin-top:1em"
     table.table.table-bordered.table-striped.table-hover.posts
-      caption style="padding-top: 0.2em; padding-bottom: 0.2em; line-height:1"
-        .pull-right style="position:relative; z-index:1; top: -0.2em"
-          = link_to [:new, @website, @branch, :post], class: 'btn btn-sm btn-primary' do
-            => icon 'plus-circle'
-            | Add Post
-        = page_entries_info @posts, entry_name: 'post'
       thead
         tr
           th Title
@@ -22,10 +27,4 @@
         = render @posts, website: @website, branch: @branch
   = paginate @posts
 - else
-  p
-    ' No HTML, Text or Markdown posts found.
-    span.fa.fa-question-circle data-toggle="tooltip" data-placement="top" title="Accepted file extension include: .html .htm .text .txt .markdown .mdown .mkdn .mdk .md"
-  br
-  = link_to [:new, @website, @branch, :post], class: 'btn btn-primary' do
-    => icon 'plus-circle'
-    | Add Post
+  p No Posts Found

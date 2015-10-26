@@ -4,20 +4,22 @@ class Draft
   include BlobConcern
   include PageConcern
 
-  def self.all(rugged_repository, commit_id, page_extensions)
-    rugged_repository.lookup(commit_id).tree.walk(:postorder).select do |root, object|
-      if root.match(/\A_drafts/) && object[:name].match(/\A[\w\-]+\.(#{page_extensions.join('|')})\z/)
-        rugged_blob = rugged_repository.lookup(object[:oid])
-        rugged_blob && !rugged_blob.binary? && rugged_blob.text.match(FRONT_MATTER_REGEXP)
+  def self.all(rugged_repository, commit_id, page_extensions, page: 1, per_page: 20)
+    Kaminari.paginate_array(
+      rugged_repository.lookup(commit_id).tree.walk(:postorder).select do |root, object|
+        if root.match(/\A_drafts/) && object[:name].match(/\A[\w\-]+\.(#{page_extensions.join('|')})\z/)
+          rugged_blob = rugged_repository.lookup(object[:oid])
+          rugged_blob && !rugged_blob.binary? && rugged_blob.text.match(FRONT_MATTER_REGEXP)
+        end
+      end.map do |root, object|
+        new(
+          id: object[:oid],
+          filename: object[:name],
+          pathname: root,
+          rugged_repository: rugged_repository,
+        )
       end
-    end.map do |root, object|
-      new(
-        id: object[:oid],
-        filename: object[:name],
-        pathname: root,
-        rugged_repository: rugged_repository,
-      )
-    end
+    ).page(page).per(per_page)
   end
 
   def self.find(rugged_repository, commit_id, pathname, page_extensions)
