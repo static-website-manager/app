@@ -22,6 +22,7 @@ Rails.application.routes.draw do
         get :delete
       end
       resource :design, only: %i[show]
+      resource :move, only: %i[new create], controller: 'branch_moves', path: 'rename', path_names: { new: '' }
       resources :branches, only: %i[show], controller: 'comparisons', path: 'compare' do
         post :merge, on: :member
       end

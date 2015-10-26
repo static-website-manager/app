@@ -43,6 +43,10 @@ class Repository
     rugged_repository.merge_base(*args)
   end
 
+  def move_branch(old, new)
+    rugged_repository.references.rename("refs/heads/#{old}", "refs/heads/#{new}")
+  end
+
   def rugged_repository
     @rugged_repository ||= Repository.rugged_repository(website_id)
   end
