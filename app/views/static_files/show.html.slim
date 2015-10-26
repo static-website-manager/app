@@ -9,6 +9,8 @@
         => image_tag 'logo-small.png', alt: 'Static Website Manager', class: 'logo-small'
       ul.nav.nav-tabs
         li.active = link_to 'Overview', [@website, @branch, @static_file]
+        - if @static_file.preview?
+          li = link_to 'Preview', [:preview, @website, @branch, @static_file]
         li = link_to 'History', [@website, @branch, @static_file, :commits]
   .container-fluid
     .blob-content
@@ -20,10 +22,6 @@
           h1: code.code-text = @static_file.filename
           code.small = @static_file.full_pathname
         .col-sm-4.text-right
-          - if @static_file.preview?
-            => link_to [:preview, @website, @branch, @static_file], class: 'btn btn-sm btn-default' do
-              => icon 'eye'
-              | Preview
           - if @deployment && @deployment.success?
             => link_to @static_file.public_url(@deployment.url), target: :_blank, class: 'btn btn-sm btn-success' do
               ' Download File
