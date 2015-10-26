@@ -49,7 +49,7 @@
           hr
           .checkbox
             = label_tag :deploy do
-              => check_box_tag :deploy, '1', params[:deploy].nil? ? true : params[:deploy]
+              => check_box_tag :deploy, '1', params[:deploy]
               | Deploy this branch to a public URL?
         .panel-footer.text-center
           = button_tag 'Checkout Branch', class: 'btn btn-primary'
