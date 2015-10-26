@@ -53,7 +53,7 @@ class PostsController < ApplicationController
   end
 
   def destroy
-    commit_message = params[:message].present? ? params[:message] : 'Remove Post'
+    commit_message = params[:message].present? ? params[:message] : "Delete Post #{@post.pretty_pathname}"
 
     if @post.destroy(@branch.name, current_user.email, current_user.name, commit_message, @deployment)
       redirect_to [@website, @branch, :posts], notice: 'Ok, we‘ve committed your changes.'

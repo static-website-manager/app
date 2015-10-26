@@ -14,6 +14,8 @@
         .panel-heading
           p.h4.panel-title = @draft.title
         .panel-body
-          p: em Are you sure you want to delete this draft?
+          .form-group
+            = label_tag :message, 'Commit Message', class: 'control-label'
+            = text_field_tag :message, params[:message].nil? ? "Delete Draft #{@draft.pretty_pathname}" : params[:message], class: 'form-control'
         .panel-footer.text-center
             = form.button 'Delete Draft', class: 'btn btn-danger'

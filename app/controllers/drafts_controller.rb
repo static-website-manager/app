@@ -50,7 +50,7 @@ class DraftsController < ApplicationController
   end
 
   def destroy
-    commit_message = params[:message].present? ? params[:message] : 'Remove Draft'
+    commit_message = params[:message].present? ? params[:message] : "Delete Draft #{@draft.pretty_pathname}"
 
     if @draft.destroy(@branch.name, current_user.email, current_user.name, commit_message, @deployment)
       redirect_to [@website, @branch, :drafts], notice: 'Ok, we‘ve committed your changes.'

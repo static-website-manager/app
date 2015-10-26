@@ -14,6 +14,8 @@
         .panel-heading
           p.h4.panel-title = @page.title(@branch.markdown_extensions)
         .panel-body
-          p: em Are you sure you want to delete this page?
+          .form-group
+            = label_tag :message, 'Commit Message', class: 'control-label'
+            = text_field_tag :message, params[:message].nil? ? "Delete Page #{@page.full_pathname}" : params[:message], class: 'form-control'
         .panel-footer.text-center
             = form.button 'Delete Page', class: 'btn btn-danger'

@@ -20,7 +20,7 @@ class StaticFilesController < ApplicationController
   end
 
   def destroy
-    commit_message = params[:message].present? ? params[:message] : 'Remove File'
+    commit_message = params[:message].present? ? params[:message] : "Delete File #{@static_file.full_pathname}"
 
     if @static_file.destroy(@branch.name, current_user.email, current_user.name, commit_message, @deployment)
       redirect_to [@website, @branch, :static_files], notice: 'Ok, we‘ve committed your changes.'

@@ -51,7 +51,7 @@ class PagesController < ApplicationController
   end
 
   def destroy
-    commit_message = params[:message].present? ? params[:message] : 'Remove Page'
+    commit_message = params[:message].present? ? params[:message] : "Delete Page #{@page.full_pathnmame}"
 
     if @page.destroy(@branch.name, current_user.email, current_user.name, commit_message, @deployment)
       redirect_to [@website, @branch, :pages], notice: 'Ok, we‘ve committed your changes.'
