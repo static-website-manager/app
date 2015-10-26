@@ -10,7 +10,7 @@ class DraftMovesController < ApplicationController
   end
 
   def create
-    commit_message = params[:message].present? ? params[:message] : 'Move Draft'
+    commit_message = params[:message].present? ? params[:message] : "Move Draft #{@draft.filename}"
     @draft.full_pathname = [params[:draft].try(:[], :basepath), params[:draft].try(:[], :extension)].reject(&:blank?).join('.')
 
     if @draft.move(@branch.name, current_user.email, current_user.name, commit_message, @deployment)

@@ -10,7 +10,7 @@ class PostMovesController < ApplicationController
   end
 
   def create
-    commit_message = params[:message].present? ? params[:message] : 'Move Post'
+    commit_message = params[:message].present? ? params[:message] : "Move Post #{@post.filename}"
     @post.full_pathname = [params[:post].try(:[], :basepath), params[:post].try(:[], :extension)].reject(&:blank?).join('.')
 
     if @post.move(@branch.name, current_user.email, current_user.name, commit_message, @deployment)

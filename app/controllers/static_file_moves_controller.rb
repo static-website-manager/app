@@ -11,7 +11,7 @@ class StaticFileMovesController < ApplicationController
   end
 
   def create
-    commit_message = params[:message].present? ? params[:message] : 'Move File'
+    commit_message = params[:message].present? ? params[:message] : "Move File #{@static_file.filename}"
     @static_file.full_pathname = [params[:static_file].try(:[], :basepath), params[:static_file].try(:[], :extension)].reject(&:blank?).join('.')
 
     if @static_file.move(@branch.name, current_user.email, current_user.name, commit_message, @deployment)

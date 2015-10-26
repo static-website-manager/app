@@ -11,7 +11,7 @@ class PageMovesController < ApplicationController
   end
 
   def create
-    commit_message = params[:message].present? ? params[:message] : 'Move Page'
+    commit_message = params[:message].present? ? params[:message] : "Move Page #{@page.filename}"
     @page.full_pathname = [params[:page].try(:[], :basepath), params[:page].try(:[], :extension)].reject(&:blank?).join('.')
 
     if @page.move(@branch.name, current_user.email, current_user.name, commit_message, @deployment)
