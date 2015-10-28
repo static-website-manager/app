@@ -25,7 +25,9 @@ Rails.application.routes.draw do
         get :delete
       end
       resource :design, only: %i[show]
+      resource :merge, only: %i[new create], path_names: { new: '' }
       resource :move, only: %i[new create], controller: 'branch_moves', path: 'rename', path_names: { new: '' }
+      resource :rebase, only: %i[new create], path_names: { new: '' }
       resources :collections, only: %i[index]
       resources :commits, only: %i[index], controller: 'branch_commits', path: 'history'
     end

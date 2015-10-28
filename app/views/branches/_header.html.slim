@@ -1,4 +1,18 @@
 .branch-header
+  - unless branch.production?
+    - production_branch = repository.branch('master')
+    - if branch.rebase_required?(production_branch)
+      .pull-right
+        span.small.text-danger> This branch out of date with Production
+        = link_to [:new, website, branch, :rebase], class: 'btn btn-primary', style: 'margin-left: 0.5em' do
+          ' Pull Changes
+          = icon 'arrow-circle-down'
+    - elsif branch.merge_possible?(production_branch) && current_authorization.production_branch_access?
+      .pull-right
+        span.small.text-muted> This branch is ahead of Production
+        = link_to [:new, website, branch, :merge], class: 'btn btn-success', style: 'margin-left: 0.5em' do
+          ' Push Changes
+          = icon 'arrow-circle-right'
   span.btn-group> style="margin-right: 1em"
     span.btn.btn-default.dropdown-toggle type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
       => branch.title(current_user)

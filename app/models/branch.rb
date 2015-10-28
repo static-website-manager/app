@@ -1,3 +1,5 @@
+require 'open3'
+
 class Branch
   include ActiveModel::Model
 
@@ -59,12 +61,23 @@ class Branch
     html_extensions + markdown_extensions
   end
 
+  def commit
+    Commit.find(rugged_repository, commit_id)
+  end
+
   def commit_id
     rugged_branch.target.oid
   end
 
   def custom?
     !production? && !staging?
+  end
+
+  def diff(branch)
+    Diff.new(
+      page_extensions: page_extensions,
+      rugged_diff: rugged_repository.lookup(branch.commit_id).diff(rugged_repository.lookup(commit_id)).tap(&:find_similar!),
+    )
   end
 
   def html_extensions
@@ -83,6 +96,60 @@ class Branch
     Branch.markdown_extensions
   end
 
+  def merge(branch, user_email, user_name, commit_message, deployment = nil)
+    raise ArgumentError unless branch.present?
+    raise ArgumentError unless user_email.present?
+    raise ArgumentError unless user_name.present?
+    raise ArgumentError unless commit_message.present?
+    raise ArgumentError unless merge_possible?(branch)
+    merge_index = rugged_repository.merge_commits(commit_id, branch.commit_id)
+    raise ArgumentError if merge_index.conflicts?
+
+    commit_author = {
+      email: user_email,
+      name: user_name,
+      time: Time.now,
+    }
+
+    begin
+      merge_commit_id = Rugged::Commit.create(rugged_repository, {
+        parents: [branch.commit_id, commit_id],
+        tree: merge_index.write_tree(rugged_repository),
+        message: commit_message,
+        author: commit_author,
+        committer: commit_author,
+        update_ref: "refs/heads/#{branch.name}",
+      })
+    rescue
+      merge_commit_id = nil
+    end
+
+    if merge_commit_id.present?
+      if deployment
+        JekyllBuildJob.perform_later(deployment)
+      end
+    end
+
+    merge_commit_id.present?
+  end
+
+  def merge_base(branch)
+    rugged_repository.merge_base(commit_id, branch.commit_id)
+  end
+
+  def merge_commits(branch)
+    rugged_repository.merge_commits(commit_id, branch.commit_id)
+  end
+
+  def merge_possible?(branch)
+    common_commit = merge_base(branch)
+    commit_id != branch.commit_id && commit_id != common_commit && (common_commit == branch.commit_id || branch.commit.parent_ids[1] == common_commit)
+  end
+
+  def merge_potential?(branch)
+    commit_id != branch.commit_id && merge_base(branch) != commit_id
+  end
+
   def page_extensions
     html_extensions + markdown_extensions
   end
@@ -93,6 +160,36 @@ class Branch
 
   def persisted?
     true
+  end
+
+  def rebase(branch, user_email, user_name)
+    raise ArgumentError unless branch.present?
+    raise ArgumentError unless user_email.present?
+    raise ArgumentError unless user_name.present?
+    raise ArgumentError unless rebase_required?(branch)
+
+    clone_path = Pathname.new(File.join('/tmp', "clone_#{rand(1000)}_#{Time.now.to_i}"))
+
+    FileUtils.rm_rf(clone_path)
+    FileUtils.mkdir(clone_path)
+
+    begin
+      system("git clone #{rugged_repository.path} #{clone_path}") &&
+      system("git config user.email \"#{user_email}\"", chdir: clone_path.to_s) &&
+      system("git config user.name \"#{user_name}\"", chdir: clone_path.to_s) &&
+      system("git checkout #{name}", chdir: clone_path.to_s) &&
+      system("git rebase master", chdir: clone_path.to_s) &&
+      system("git push origin #{name} -f", chdir: clone_path.to_s)
+    rescue
+      false
+    ensure
+      FileUtils.rm_rf(clone_path)
+    end
+  end
+
+  def rebase_required?(branch)
+    common_commit = merge_base(branch)
+    commit_id != branch.commit_id && common_commit != branch.commit_id && !(common_commit == commit_id && branch.commit.parent_ids[1] == commit_id) && !(common_commit == branch.commit_id || branch.commit.parent_ids[1] == common_commit)
   end
 
   def short_id
@@ -115,7 +212,7 @@ class Branch
     elsif staging?
       "#{user.name}’s Staging Branch"
     else
-      "Custom Branch: #{name}"
+      "Custom Branch “#{name}”"
     end
   end
 

@@ -1,0 +1,24 @@
+- title "Pull from #{@source.title(current_user)}"
+
+.header.header-center
+  h1.lead
+    = link_to session[:return_to] || [@website, @branch], class: 'logo-small-back-container' do
+      => icon 'reply'
+      => image_tag 'logo-small.png', alt: 'Static Website Manager', class: 'logo-small'
+    | | Pull from #{@source.title(current_user)}
+.row
+  .col-sm-8.col-sm-offset-2.col-md-6.col-md-offset-3
+    = form_tag [@website, @branch, :rebase] do
+      - if @merge_index.conflicts?
+        .panel.panel-danger.text-center
+          .panel-body
+            p: span.label.label-danger> #{pluralize @merge_index.conflicts.count, 'Conflict'} Found
+            p We are unable to pull changes with conflicts at this time. Please perform an offline rebase or contact your designer.
+      - else
+        .text-center
+          .panel.panel-default
+            .panel-body
+              p Great, there were no conflicts found with #{@source.title(current_user)} and its changes can be safely pulled into this branch.
+            .panel-footer
+              = button_tag 'Pull Changes', class: 'btn btn-primary'
+          p.small.text-muted More specifically, we will checkout this branch and run <code>git rebase #{@source.name}</code>.

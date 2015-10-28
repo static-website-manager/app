@@ -43,10 +43,6 @@ class Repository
     rugged_repository.branches.each_name(:local).include?(branch_name)
   end
 
-  def merge_base(*args)
-    rugged_repository.merge_base(*args)
-  end
-
   def move_branch(old_name, new_name)
     rugged_repository.references.rename("refs/heads/#{old_name}", "refs/heads/#{new_name}")
   end
@@ -57,9 +53,5 @@ class Repository
 
   def setup?
     !rugged_repository.empty? && rugged_repository.branches['master']
-  end
-
-  def update_ref(*args)
-    rugged_repository.references.update(*args)
   end
 end
