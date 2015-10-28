@@ -9,29 +9,31 @@
 .row
   .col-sm-8.col-sm-offset-2.col-md-6.col-md-offset-3
     = errors_for current_user
-    .panel.panel-default
-      = form_for current_user, url: :account do |form|
+    = form_for current_user, url: :account do |form|
+      .panel.panel-default
         .panel-body
           .form-group
-            => form.label :name, class: 'control-label'
+            => form.label :name, class: 'control-label' do
+              ' Your Name
+              small.text-muted or nickname
             = form.text_field :name, class: 'form-control'
           hr
-          .well.well-sm
-            = form.fields_for :authentication, form.object.authentication || form.object.build_authentication do |auth_form|
-              .form-group
-                => auth_form.label :public_key, class: 'control-label'
-                = auth_form.text_area :public_key, rows: 6, class: 'form-control'
+          = form.fields_for :authentication, form.object.authentication || form.object.build_authentication do |auth_form|
+            .form-group
+              => auth_form.label :public_key, 'SSH Public Key', class: 'control-label'
+              = auth_form.text_area :public_key, rows: 6, class: 'form-control'
+              p.help-block For help generating your SSH key, see GitHub’s #{link_to 'helpful guide', 'https://help.github.com/articles/generating-ssh-keys/', target: :_blank}, but paste your key here instead of following Step 4.
           hr
           .well.well-sm
-            .form-group
-              => label_tag :password, 'Current Password', class: 'control-label'
-              = password_field_tag :password, '', class: 'form-control'
-              p.help-block Please verify your current password if you would like to change it.
             .form-group
               => form.label :password, 'New Password', class: 'control-label'
               = form.password_field :password, value: '', class: 'form-control'
             .form-group
               => form.label :password_confirmation, 'New Password Confirmation', class: 'control-label'
               = form.password_field :password_confirmation, value: '', class: 'form-control'
+            .form-group
+              => label_tag :password, 'Current Password', class: 'control-label'
+              = password_field_tag :password, '', class: 'form-control'
+              p.help-block Please verify your current password if you would like to change it.
         .panel-footer.text-center
           = button_tag 'Save Changes', class: 'btn btn-primary'
