@@ -18,8 +18,7 @@ class ApplicationController < ActionController::Base
 
   # Find the current website’s branch and deployment.
   def require_branch
-    branch_param = controller_name == 'branches' ? params[:id] : params[:branch_id]
-    @branch = @repository.branch(branch_param == 'staging' ? current_user : branch_param)
+    @branch = @repository.branch(controller_name == 'branches' ? params[:id] : params[:branch_id])
 
     if @branch.production? && !current_authorization.production_branch_access?
       raise ActiveRecord::RecordNotFound

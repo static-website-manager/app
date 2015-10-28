@@ -20,7 +20,7 @@ class Branch
         rugged_repository: rugged_repository,
         rugged_branch: rugged_branch,
       )
-    elsif name_or_user.is_a?(User)
+    elsif name.match(/\Astatic_user_\d{1,9}\z/)
       new(
         name: name,
         rugged_repository: rugged_repository,
