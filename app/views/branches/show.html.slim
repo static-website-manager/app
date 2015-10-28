@@ -14,26 +14,27 @@
         => icon 'trash'
         | Delete
   - if @deployment && @deployment.success?
-    p.text-muted style="margin: 0"
+    p.text-muted
       ' Branch successfully deployed
       => time_ago_in_words @deployment.updated_at
-      ' ago
-      => link_to @deployment.url, target: :_blank, class: 'btn btn-sm btn-success', style: 'margin-left: 0.6em' do
+      | ago
+    p
+      => link_to @deployment.url, target: :_blank, class: 'btn btn-xs btn-success' do
         ' View Public Website
         = icon 'external-link'
       = link_to 'Make Branch Private', [:delete, @website, @branch, @deployment], class: 'btn btn-xs btn-link'
   - elsif @deployment
-    p.text-muted style="margin: 0"
-      span.text-danger => @deployment.response_message
-      => link_to @deployment.url, target: :_blank, class: 'btn btn-sm btn-primary disabled', style: 'margin-left: 0.6em' do
+    p.text-muted
+      span.text-danger = @deployment.response_message
+    p
+      => link_to @deployment.url, target: :_blank, class: 'btn btn-xs btn-primary disabled' do
         ' View Public Website
         = icon 'external-link'
       = link_to 'Make Branch Private', [:delete, @website, @branch, @deployment], class: 'btn btn-sm btn-link'
   - else
-    p.text-muted style="margin:0"
+    p.text-muted
       ' This branch is not deployed to a public URL
-      = link_to [:new, @website, @branch, :deployment], class: 'btn btn-xs btn-success', style: 'margin-left: 0.6em'
-        | Publish Branch
+    p = link_to 'Publish Branch', [:new, @website, @branch, :deployment], class: 'btn btn-xs btn-success'
 
 .row style="margin-top: 3em"
   .col-sm-7
