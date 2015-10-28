@@ -1,7 +1,4 @@
 .branch-header
-  => link_to [website, branch, branch.production? ? repository.branch(current_user) : repository.branch('master')], class: 'btn btn-default pull-right' do
-    => icon 'random'
-    | Compare and Merge
   span.btn-group> style="margin-right: 1em"
     span.btn.btn-default.dropdown-toggle type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
       => branch.title(current_user)
