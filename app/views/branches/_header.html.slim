@@ -32,7 +32,8 @@
     => link_to 'View Public Website', deployment.url, target: :_blank, class: 'small'
     span.small.text-muted
       ' – Branch Deployed
-      = localize deployment.updated_at, format: :short
+      => time_ago_in_words deployment.updated_at
+      | ago
   - elsif deployment
     span.small.text-danger Error Deploying Branch
   - else
