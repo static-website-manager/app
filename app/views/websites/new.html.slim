@@ -20,9 +20,6 @@
               => f.label :name, class: 'control-label'
               = f.text_field :name, class: 'form-control'
           hr
-          = form.fields_for :authorization do |authorization_form|
-            = render partial: 'authorizations/form', object: authorization_form
-          hr
           .well.well-sm.small Legal information goes here.
         .panel-footer
           .row

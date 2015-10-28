@@ -68,7 +68,7 @@ class ApplicationController < ActionController::Base
   # Ensure the current repository is setup.
   def require_setup
     unless @repository.setup?
-      redirect_to [:new, @website, :setup], alert: 'Please complete your website setup to access those features.'
+      redirect_to [@website, :setup], alert: 'Please complete your website setup to access those features.'
     end
   end
 

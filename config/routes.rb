@@ -12,8 +12,10 @@ Rails.application.routes.draw do
 
   resources :websites, only: %i[index new create show], path_names: { new: 'subscribe' } do
     resource :settings, only: %i[edit update], path_names: { edit: '' }
-    resource :setup, only: %i[new], path_names: { new: '' } do
-      get :check
+    resource :setup, only: %i[show] do
+      resource :check, only: %i[show], controller: 'setup_checks'
+      resource :authentication, only: %i[create], controller: 'setup_authentications', path: 'ssh'
+      resources :authorizations, only: %i[new create], controller: 'setup_authorizations', path: 'team', path_names: { new: '' }
     end
     resources :authorizations, only: %i[index new create edit update destroy], path: 'team'
     resources :branches, only: %i[show destroy], path: '' do

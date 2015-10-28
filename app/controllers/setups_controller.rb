@@ -2,19 +2,18 @@ class SetupsController < ApplicationController
   before_action :require_user
   before_action :require_website
   before_action :require_repository
-  before_action :set_return_to, only: %i[new]
+  before_action :set_return_to
 
-  def new
+  before_action do
     if @repository.setup?
       redirect_to [@website, @repository.branch(current_user)]
     end
   end
 
-  def check
-    if @repository.setup?
-      render text: url_for([@website, @repository.branch(current_user)])
-    else
-      render text: ''
+  def show
+    if current_authorization.account_owner?
+      @authentication = current_user.authentication || current_user.build_authentication
+      @team_members = @website.users.where.not(id: current_user.id)
     end
   end
 end

@@ -26,12 +26,6 @@ class SubscriptionsController < ApplicationController
 
   def subscription_params
     params.require(:subscription).permit(
-      authorization_attributes: [
-        :content_role,
-        :custom_branch_access,
-        :production_branch_access,
-        :staging_branch_access,
-      ],
       user_attributes: [
         :name,
         :email,

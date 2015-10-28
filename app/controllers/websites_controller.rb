@@ -18,7 +18,7 @@ class WebsitesController < ApplicationController
 
     if @subscription.save
       UserMailer.subscription_confirmation(current_user).deliver_later
-      redirect_to [:new, @subscription.website, :setup], notice: 'Welcome to your new website!'
+      redirect_to [@subscription.website, :setup], notice: 'Welcome to your new website!'
     else
       flash.now.alert = 'There was adding your website.'
       render :new, status: 422
@@ -29,7 +29,7 @@ class WebsitesController < ApplicationController
     if @repository.setup?
       redirect_to [@website, @repository.branch(current_user)]
     else
-      redirect_to [:new, @website, :setup]
+      redirect_to [@website, :setup]
     end
   end
 
@@ -37,12 +37,6 @@ class WebsitesController < ApplicationController
 
   def subscription_params
     params.require(:subscription).permit(
-      authorization_attributes: [
-        :content_role,
-        :custom_branch_access,
-        :production_branch_access,
-        :staging_branch_access,
-      ],
       website_attributes: [
         :name,
       ],
