@@ -61,14 +61,6 @@ module BlobConcern
     clear_changes_information
   end
 
-  def move(*args)
-    perform_git_operation(*args) do |cloned_repository, cloned_index|
-      # valid? full_pathname?
-      cloned_index.remove(full_pathname_was)
-      cloned_index.add(path: full_pathname, oid: id, mode: 0100644)
-    end
-  end
-
   def pathname=(value)
     if value.try(:to_s) == @pathname
       @pathname
@@ -97,6 +89,7 @@ module BlobConcern
   def save(*args)
     perform_git_operation(*args) do |cloned_repository, cloned_index|
       # valid?
+      cloned_index.remove(full_pathname_was)
       self.id = cloned_repository.write(raw_content, :blob)
       cloned_index.add(path: full_pathname, oid: id, mode: 0100644)
     end

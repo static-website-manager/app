@@ -14,7 +14,7 @@ class DraftPublicationsController < ApplicationController
     publication_date = Date.new(params[:publication_year].to_i, params[:publication_month].to_i, params[:publication_day].to_i)
     @draft.full_pathname = ['_posts/', @draft.pathname.sub(/\A_drafts\//, ''), [publication_date.strftime('%Y-%m-%d'), @draft.filename].join('-')].reject(&:blank?).join('/')
 
-    if @draft.move(@branch.name, current_user.email, current_user.name, commit_message, @deployment)
+    if @draft.save(@branch.name, current_user.email, current_user.name, commit_message, @deployment)
       redirect_to website_branch_post_path(@website, @branch, @draft.pretty_post_pathname), notice: 'Great, we’ve committed your changes.'
     else
       flash.now.alert = 'There was a problem saving your changes.'

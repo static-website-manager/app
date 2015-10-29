@@ -14,7 +14,7 @@ class StaticFileMovesController < ApplicationController
     commit_message = params[:message].present? ? params[:message] : "Move File #{@static_file.filename}"
     @static_file.full_pathname = [params[:static_file].try(:[], :basepath), params[:static_file].try(:[], :extension)].reject(&:blank?).join('.')
 
-    if @static_file.move(@branch.name, current_user.email, current_user.name, commit_message, @deployment)
+    if @static_file.save(@branch.name, current_user.email, current_user.name, commit_message, @deployment)
       redirect_to [@website, @branch, @static_file], notice: 'Great, we’ve committed your changes.'
     else
       flash.now.alert = 'There was a problem saving your changes.'
