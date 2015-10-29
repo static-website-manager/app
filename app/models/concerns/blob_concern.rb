@@ -2,6 +2,7 @@ module BlobConcern
   extend ActiveSupport::Concern
   include ActiveModel::Model
   include ActiveModel::Dirty
+  include ActiveModel::Validations
 
   attr_accessor :filename, :id, :pathname, :rugged_blob, :rugged_repository
 
@@ -90,8 +91,10 @@ module BlobConcern
 
   def save(*args)
     perform_git_operation(*args) do |cloned_repository, cloned_index|
-      # valid?
-      cloned_index.remove(full_pathname_was)
+      if persisted?
+        cloned_index.remove(full_pathname_was)
+      end
+
       self.id = cloned_repository.write(raw_content, :blob)
       cloned_index.add(path: full_pathname, oid: id, mode: 0100644)
     end
@@ -102,10 +105,10 @@ module BlobConcern
   end
 
   def to_param
-    if defined?(pretty_pathname)
-      pretty_pathname
+    if defined?(pretty_pathname_was)
+      pretty_pathname_was
     else
-      full_pathname
+      full_pathname_was
     end
   end
 
@@ -121,6 +124,8 @@ module BlobConcern
     raise ArgumentError unless author_name.present?
     raise ArgumentError unless author_email.present?
     raise ArgumentError unless commit_message.present?
+
+    return false unless valid?
 
     clone_path = Pathname.new(File.join('/tmp', "clone_#{rand(1000)}_#{Time.now.to_i}"))
 

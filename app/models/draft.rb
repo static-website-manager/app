@@ -2,6 +2,9 @@ class Draft
   include BlobConcern
   include PageConcern
 
+  validates :pathname, format: { with: /\A_drafts(\/|\z)/ }
+  validates :filename, format: { with: /\A[\w\-]+\z/ }
+
   def self.all(rugged_repository, commit_id, page_extensions, page: 1, per_page: 20)
     Kaminari.paginate_array(
       rugged_repository.lookup(commit_id).tree.walk(:postorder).select do |root, object|
@@ -54,6 +57,10 @@ class Draft
 
   def pretty_pathname
     full_pathname.gsub(/\A_drafts\//, '')
+  end
+
+  def pretty_pathname_was
+    full_pathname_was.gsub(/\A_drafts\//, '')
   end
 
   def pretty_post_pathname

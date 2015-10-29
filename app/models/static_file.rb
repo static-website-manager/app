@@ -3,6 +3,9 @@ class StaticFile
 
   attr_accessor :dirname, :objects
 
+  validates :pathname, format: { without: HIDDEN_FILE_REGEXP }
+  validates :filename, format: { without: HIDDEN_FILE_REGEXP }
+
   def self.all(rugged_repository, commit_id, page_extensions)
     result_hash = {}
 
