@@ -1,5 +1,7 @@
 module BlobConcern
   extend ActiveSupport::Concern
+  include ActiveModel::Model
+  include ActiveModel::Dirty
 
   attr_accessor :filename, :id, :pathname, :rugged_blob, :rugged_repository
 
