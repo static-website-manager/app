@@ -3,20 +3,17 @@
 = layout :nest, heading: 'Edit Your Website Settings', size: :md, return_to: session[:return_to] || @website do
   = errors_for @website
   = form_for @website, url: [@website, :settings] do |f|
-    .panel.panel-default
-      .panel-body
-        .form-group
-          => f.label :name, class: 'control-label'
-          = f.text_field :name, class: 'form-control'
-        hr
-        p: strong Automatically Deploy Branches to Public URLs
-        .checkbox
-          = f.label :auto_deploy_production
-            => f.check_box :auto_deploy_production
-            | Production Branch
-        .checkbox
-          = f.label :auto_deploy_staging
-            => f.check_box :auto_deploy_staging
-            | Staging Branches
-      .panel-footer.text-center
-          = f.button 'Save Changes', class: 'btn btn-primary'
+    = layout :panel, button: 'Save Changes' do
+      .form-group
+        => f.label :name, class: 'control-label'
+        = f.text_field :name, class: 'form-control'
+      hr
+      p: strong Automatically Deploy Branches to Public URLs
+      .checkbox
+        = f.label :auto_deploy_production
+          => f.check_box :auto_deploy_production
+          | Production Branch
+      .checkbox
+        = f.label :auto_deploy_staging
+          => f.check_box :auto_deploy_staging
+          | Staging Branches

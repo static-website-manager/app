@@ -3,22 +3,15 @@
 = layout :nest, heading: 'Publish Draft', size: :md, return_to: [@website, @branch, @draft] do
   = errors_for @draft
   = form_for @draft, url: [@website, @branch, @draft, :publication], method: :post do |form|
-    .panel.panel-default
-      .panel-heading
-        p.h4.panel-title
-          => @draft.title
-          small = @draft.short_id
-      .panel-body
-        p: strong Publication Date
-        .row
-          .col-sm-4
-            .form-group
-              = number_field_tag :publication_year, params[:publication_year] || Time.zone.now.year, class: 'form-control'
-          .col-sm-4
-            .form-group
-              = select_tag :publication_month, options_for_select(Date::MONTHNAMES.compact.each_with_index.map { |month, i| [month, i + 1] }, params[:publication_month] || Time.zone.now.month), class: 'form-control'
-          .col-sm-4
-            .form-group
-              = number_field_tag :publication_day, params[:publication_day] || Time.zone.now.day, class: 'form-control'
-      .panel-footer.text-center
-        = form.button 'Publish Draft', class: 'btn btn-success'
+    = layout :panel, button: 'Publish Draft', success: true do
+      p: strong Publication Date
+      .row
+        .col-sm-4
+          .form-group
+            = number_field_tag :publication_year, params[:publication_year] || Time.zone.now.year, class: 'form-control'
+        .col-sm-4
+          .form-group
+            = select_tag :publication_month, options_for_select(Date::MONTHNAMES.compact.each_with_index.map { |month, i| [month, i + 1] }, params[:publication_month] || Time.zone.now.month), class: 'form-control'
+        .col-sm-4
+          .form-group
+            = number_field_tag :publication_day, params[:publication_day] || Time.zone.now.day, class: 'form-control'

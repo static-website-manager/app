@@ -5,19 +5,14 @@
     = link_to 'Resend Confirmation Email', :new_email_confirmation, class: 'btn btn-xs btn-success'
 
 = layout :nest do
-  .panel.panel-default
-    .panel-heading
-      h1.h4.panel-title Sign In
-    = form_tag :session do
-      .panel-body
-        .form-group
-          => label_tag :email, 'Email', class: 'control-label'
-          = email_field_tag :email, params[:email].to_s.downcase, class: 'form-control'
-        .form-group
-          => label_tag :password, 'Password', class: 'control-label'
-          = password_field_tag :password, nil, class: 'form-control'
-      .panel-footer.text-center
-        = button_tag 'Submit', class: 'btn btn-primary'
+  = form_tag :session do
+    = layout :panel, heading: 'Sign In', button: 'Submit' do
+      .form-group
+        => label_tag :email, 'Email', class: 'control-label'
+        = email_field_tag :email, params[:email].to_s.downcase, class: 'form-control'
+      .form-group
+        => label_tag :password, 'Password', class: 'control-label'
+        = password_field_tag :password, nil, class: 'form-control'
   br
   p.text-center.text-muted.small
     ' Need to confirm your email address?

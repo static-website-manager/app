@@ -3,30 +3,27 @@
 = layout :nest, heading: 'New Post', subheading: @branch.title(current_user), size: :md, return_to: [@website, @branch, :posts] do
   = errors_for @post
   = form_for [@website, @branch, @post] do |form|
-    .panel.panel-default
-      .panel-body
-        .row
-          .col-sm-9
-            => form.label :basepath, class: 'control-label'
-            = form.text_field :basepath, class: 'form-control'
-          .col-sm-3
-            => form.label :extension, class: 'control-label'
-            = form.select :extension, options_for_select([['Markdown', 'md'], ['HTML', 'html']], form.object.extension), {}, class: 'form-control'
-        hr
-        p: strong Publication Date
-        .row
-          .col-sm-4
-            .form-group
-              = number_field_tag :publication_year, params[:publication_year] || Time.zone.now.year, class: 'form-control'
-          .col-sm-4
-            .form-group
-              = select_tag :publication_month, options_for_select(Date::MONTHNAMES.compact.each_with_index.map { |month, i| [month, i + 1] }, params[:publication_month] || Time.zone.now.month), class: 'form-control'
-          .col-sm-4
-            .form-group
-              = number_field_tag :publication_day, params[:publication_day] || Time.zone.now.day, class: 'form-control'
-        hr
-        .form-group
-          = label_tag :message, 'Commit Message', class: 'control-label'
-          = text_field_tag :message, params[:message].nil? ? 'Add New Post' : params[:message], class: 'form-control'
-      .panel-footer.text-center
-        = form.button 'Save Post', class: 'btn btn-primary'
+    = layout :panel, button: 'Save Post' do
+      .row
+        .col-sm-9
+          => form.label :basepath, class: 'control-label'
+          = form.text_field :basepath, class: 'form-control'
+        .col-sm-3
+          => form.label :extension, class: 'control-label'
+          = form.select :extension, options_for_select([['Markdown', 'md'], ['HTML', 'html']], form.object.extension), {}, class: 'form-control'
+      hr
+      p: strong Publication Date
+      .row
+        .col-sm-4
+          .form-group
+            = number_field_tag :publication_year, params[:publication_year] || Time.zone.now.year, class: 'form-control'
+        .col-sm-4
+          .form-group
+            = select_tag :publication_month, options_for_select(Date::MONTHNAMES.compact.each_with_index.map { |month, i| [month, i + 1] }, params[:publication_month] || Time.zone.now.month), class: 'form-control'
+        .col-sm-4
+          .form-group
+            = number_field_tag :publication_day, params[:publication_day] || Time.zone.now.day, class: 'form-control'
+      hr
+      .form-group
+        = label_tag :message, 'Commit Message', class: 'control-label'
+        = text_field_tag :message, params[:message].nil? ? 'Add New Post' : params[:message], class: 'form-control'

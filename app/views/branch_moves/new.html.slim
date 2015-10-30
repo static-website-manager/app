@@ -2,12 +2,7 @@
 
 = layout :nest, heading: 'Rename Branch', size: :md, return_to: [@website, @branch] do
   = form_for @branch, url: [@website, @branch, :move], method: :post do |form|
-    .panel.panel-default
-      .panel-heading
-        h2.h4.panel-title = @branch.name
-      .panel-body
-        .form-group
-          => label_tag :name, 'New Branch Name', class: 'control-label'
-          = text_field_tag :name, params[:name], class: 'form-control'
-      .panel-footer.text-center
-        = form.button 'Rename Branch', class: 'btn btn-primary'
+    = layout :panel, subheading: @branch.name, button: 'Rename Branch' do
+      .form-group
+        => label_tag :name, 'New Branch Name', class: 'control-label'
+        = text_field_tag :name, params[:name], class: 'form-control'

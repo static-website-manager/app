@@ -3,14 +3,11 @@
 = layout :nest, heading: 'Edit Team Member', size: :md, return_to: [@website, :authorizations] do
   = errors_for @authorization
   = form_for [@website, @authorization] do |form|
-    .panel.panel-default
-      .panel-body
-        dl
-          dt Name
-          dd.well.well-sm = @authorization.user.name
-          dt Email
-          dd.well.well-sm = @authorization.user.email
-        hr
-        = render partial: 'form', object: form, locals: { advanced_options: true }
-      .panel-footer.text-center
-        = form.button 'Save Changes', class: 'btn btn-primary'
+    = layout :panel, button: 'Save Changes' do
+      dl
+        dt Name
+        dd.well.well-sm = @authorization.user.name
+        dt Email
+        dd.well.well-sm = @authorization.user.email
+      hr
+      = render partial: 'form', object: form, locals: { advanced_options: true }

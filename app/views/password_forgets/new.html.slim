@@ -1,13 +1,8 @@
 - title
 
 = layout :nest, return_to: :new_session do
-  .panel.panel-default
-    .panel-heading
-      h1.h4.panel-title Reset Your Password
-    = form_tag :password_forget do
-      .panel-body
-        .form-group
-          => label_tag :email, 'Email', class: 'control-label'
-          = email_field_tag :email, params[:email].to_s.downcase, class: 'form-control'
-      .panel-footer.text-center
-        = button_tag 'Submit', class: 'btn btn-primary'
+  = form_tag :password_forget do
+    = layout :panel, heading: 'Reset Your Password', button: 'Submit' do
+      .form-group
+        => label_tag :email, 'Email', class: 'control-label'
+        = email_field_tag :email, params[:email].to_s.downcase, class: 'form-control'

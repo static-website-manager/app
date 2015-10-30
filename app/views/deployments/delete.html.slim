@@ -2,15 +2,8 @@
 
 = layout :nest, heading: 'Delete Public Website', size: :md, return_to: [@website, @branch] do
   = form_tag [@website, @branch, :deployment], method: :delete do
-    .panel.panel-default
-      .panel-heading
-        h1.h4.panel-title
-          ' Branch Name
-          code = @branch.name
-      .panel-body
-        p
-          ' This action will remove the website from
-          = link_to content_tag(:code, @deployment.url), @deployment.url, target: :_blank
-          | and the delete the URL.
-      .panel-footer.text-center
-        = button_tag 'Delete Public Website', class: 'btn btn-danger'
+    = layout :panel, subheading: @branch.title(current_user), button: 'Delete Public Website', danger: true do
+      p
+        ' This action will remove the website from
+        = link_to content_tag(:code, @deployment.url), @deployment.url, target: :_blank
+        | and the delete the URL.

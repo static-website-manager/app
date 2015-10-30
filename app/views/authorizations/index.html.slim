@@ -1,16 +1,15 @@
 - title website_name: @website.name
 
 = layout :nest, heading: 'Manage Your Website Team', size: :lg, return_to: session[:return_to] || @website do
-  .panel.panel-default
-    .table-responsive
-      table.table.table-bordered.table-striped
-        thead
-          tr
-            th Name
-            th Email
-            th Content Role
-            th Account Owner
-            th Actions
-        tbody
-          = render partial: 'authorization', collection: @authorizations, locals: { website: @website }
+  .table-responsive
+    table.table.table-bordered.table-striped
+      thead
+        tr
+          th Name
+          th Email
+          th Content Role
+          th Account Owner
+          th Actions
+      tbody
+        = render partial: 'authorization', collection: @authorizations, locals: { website: @website }
   p.text-center = link_to icon('plus-circle', 'Invite Someone New'), [:new, @website, :authorization], class: 'btn btn-sm btn-default'

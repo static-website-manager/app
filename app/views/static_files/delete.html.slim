@@ -3,12 +3,7 @@
 = layout :nest, heading: 'Delete File', size: :md, return_to: [@website, @branch, @static_file] do
   = errors_for @static_file
   = form_for [@website, @branch, @static_file], method: :delete do |form|
-    .panel.panel-default
-      .panel-heading
-        p.h4.panel-title = @static_file.full_pathname
-      .panel-body
-        .form-group
-          = label_tag :message, 'Commit Message', class: 'control-label'
-          = text_field_tag :message, params[:message].nil? ? "Delete File #{@static_file.full_pathname}" : params[:message], class: 'form-control'
-      .panel-footer.text-center
-          = form.button 'Delete File', class: 'btn btn-danger'
+    = layout :panel, subheading: @static_file.full_pathname, button: 'Delete File', danger: true do
+      .form-group
+        = label_tag :message, 'Commit Message', class: 'control-label'
+        = text_field_tag :message, params[:message].nil? ? "Delete File #{@static_file.full_pathname}" : params[:message], class: 'form-control'

@@ -2,10 +2,5 @@
 
 = layout :nest, heading: 'Delete Branch', size: :md, return_to: [@website, @branch] do
   = form_for [@website, @branch], method: :delete do |form|
-    .panel.panel-default
-      .panel-heading
-        p.h4.panel-title = @branch.name
-      .panel-body
-        p: em Are you sure you want to delete this branch?
-      .panel-footer.text-center
-        = form.button 'Delete Branch', class: 'btn btn-danger'
+    = layout :panel, subheading: @branch.name, button: 'Delete Branch', danger: true do
+      p: em Are you sure you want to delete this branch?

@@ -3,12 +3,7 @@
 = layout :nest, heading: 'Delete Post', size: :md, return_to: [@website, @branch, @post] do
   = errors_for @post
   = form_for [@website, @branch, @post], method: :delete do |form|
-    .panel.panel-default
-      .panel-heading
-        p.h4.panel-title = @post.title
-      .panel-body
-        .form-group
-          = label_tag :message, 'Commit Message', class: 'control-label'
-          = text_field_tag :message, params[:message].nil? ? "Delete Post #{@post.pretty_pathname}" : params[:message], class: 'form-control'
-      .panel-footer.text-center
-          = form.button 'Delete Post', class: 'btn btn-danger'
+    = layout :panel, subheading: @post.title, button: 'Delete Post', danger: true do
+      .form-group
+        = label_tag :message, 'Commit Message', class: 'control-label'
+        = text_field_tag :message, params[:message].nil? ? "Delete Post #{@post.pretty_pathname}" : params[:message], class: 'form-control'

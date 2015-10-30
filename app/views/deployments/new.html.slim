@@ -2,12 +2,5 @@
 
 = layout :nest, heading: 'Publish Branch', size: :md, return_to: [@website, @branch] do
   = form_tag [@website, @branch, :deployment] do
-    .panel.panel-default
-      .panel-heading
-        h1.h4.panel-title
-          ' Branch Name
-          code = @branch.name
-      .panel-body
-        p This action will create a public URL at which this website can be viewed.
-      .panel-footer.text-center
-        = button_tag 'Publish Branch', class: 'btn btn-success'
+    = layout :panel, subheading: @branch.title(current_user), button: 'Publish Branch', success: true do
+      p This action will create a public URL at which this website can be viewed.

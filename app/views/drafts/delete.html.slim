@@ -3,12 +3,7 @@
 = layout :nest, heading: 'Delete Draft', size: :md, return_to: [@website, @branch, @draft] do
   = errors_for @draft
   = form_for [@website, @branch, @draft], method: :delete do |form|
-    .panel.panel-default
-      .panel-heading
-        p.h4.panel-title = @draft.title
-      .panel-body
-        .form-group
-          = label_tag :message, 'Commit Message', class: 'control-label'
-          = text_field_tag :message, params[:message].nil? ? "Delete Draft #{@draft.pretty_pathname}" : params[:message], class: 'form-control'
-      .panel-footer.text-center
-          = form.button 'Delete Draft', class: 'btn btn-danger'
+    = layout :panel, subheading: @draft.title, button: 'Delete Draft', danger: true do
+      .form-group
+        = label_tag :message, 'Commit Message', class: 'control-label'
+        = text_field_tag :message, params[:message].nil? ? "Delete Draft #{@draft.pretty_pathname}" : params[:message], class: 'form-control'

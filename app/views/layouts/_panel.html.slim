@@ -1,0 +1,17 @@
+.panel.panel-default
+  - if defined?(heading) && heading.present?
+    .panel-heading
+      h1.panel-title = heading
+  - elsif defined?(subheading) && subheading.present?
+    .panel-heading
+      h2.panel-title = subheading
+  .panel-body
+    = yield
+  - if defined?(button) && button.present?
+    .panel-footer.text-center
+      - if defined?(danger)
+        = button_tag button, class: 'btn btn-danger'
+      - elsif defined?(success)
+        = button_tag button, class: 'btn btn-success'
+      - else
+        = button_tag button, class: 'btn btn-primary'

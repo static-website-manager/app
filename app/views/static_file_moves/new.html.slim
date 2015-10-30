@@ -3,18 +3,15 @@
 = layout :nest, heading: 'Rename File', size: :md, return_to: [@website, @branch, @static_file] do
   = errors_for @static_file
   = form_for @static_file, url: [@website, @branch, @static_file, :move], method: :post do |form|
-    .panel.panel-default
-      .panel-body
-        .row
-          .col-sm-9
-            => form.label :basepath, class: 'control-label'
-            = form.text_field :basepath, class: 'form-control'
-          .col-sm-3
-            => form.label :extension, class: 'control-label'
-            = form.select :extension, options_for_select([form.object.extension], form.object.extension), {}, class: 'form-control'
-        hr
-        .form-group
-          = label_tag :message, 'Commit Message', class: 'control-label'
-          = text_field_tag :message, params[:message].nil? ? "Move File #{@static_file.filename}" : params[:message], class: 'form-control'
-      .panel-footer.text-center
-        = form.button 'Rename File', class: 'btn btn-primary'
+    = layout :panel, button: 'Rename File' do
+      .row
+        .col-sm-9
+          => form.label :basepath, class: 'control-label'
+          = form.text_field :basepath, class: 'form-control'
+        .col-sm-3
+          => form.label :extension, class: 'control-label'
+          = form.select :extension, options_for_select([form.object.extension], form.object.extension), {}, class: 'form-control'
+      hr
+      .form-group
+        = label_tag :message, 'Commit Message', class: 'control-label'
+        = text_field_tag :message, params[:message].nil? ? "Move File #{@static_file.filename}" : params[:message], class: 'form-control'

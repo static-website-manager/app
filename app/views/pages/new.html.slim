@@ -3,18 +3,15 @@
 = layout :nest, heading: 'New Page', subheading: @branch.title(current_user), size: :md, return_to: [@website, @branch, :pages] do
   = errors_for @page
   = form_for [@website, @branch, @page] do |form|
-    .panel.panel-default
-      .panel-body
-        .row
-          .col-sm-9
-            => form.label :basepath, class: 'control-label'
-            = form.text_field :basepath, class: 'form-control'
-          .col-sm-3
-            => form.label :extension, class: 'control-label'
-            = form.select :extension, options_for_select([['Markdown', 'md'], ['HTML', 'html']], form.object.extension), {}, class: 'form-control'
-        hr
-        .form-group
-          = label_tag :message, 'Commit Message', class: 'control-label'
-          = text_field_tag :message, params[:message].nil? ? 'Add New Page' : params[:message], class: 'form-control'
-      .panel-footer.text-center
-        = form.button 'Save Page', class: 'btn btn-primary'
+    = layout :panel, button: 'Save Page' do
+      .row
+        .col-sm-9
+          => form.label :basepath, class: 'control-label'
+          = form.text_field :basepath, class: 'form-control'
+        .col-sm-3
+          => form.label :extension, class: 'control-label'
+          = form.select :extension, options_for_select([['Markdown', 'md'], ['HTML', 'html']], form.object.extension), {}, class: 'form-control'
+      hr
+      .form-group
+        = label_tag :message, 'Commit Message', class: 'control-label'
+        = text_field_tag :message, params[:message].nil? ? 'Add New Page' : params[:message], class: 'form-control'

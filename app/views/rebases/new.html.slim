@@ -9,9 +9,6 @@
           p We are unable to pull changes with conflicts at this time. Please perform an offline rebase or contact your designer.
     - else
       .text-center
-        .panel.panel-default
-          .panel-body
-            p Great, there were no conflicts found with #{@source.title(current_user)} and its changes can be safely pulled into this branch.
-          .panel-footer
-            = button_tag 'Pull Changes', class: 'btn btn-primary'
+        = layout :panel, button: 'Pull Changes' do
+          p Great, there were no conflicts found with #{@source.title(current_user)} and its changes can be safely pulled into this branch.
         p.small.text-muted More specifically, we will checkout this branch and run <code>git rebase #{@source.name}</code>.
