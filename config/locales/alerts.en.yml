@@ -70,6 +70,10 @@ en:
     show:
       alert: We could not verify your account.
       notice: Thanks! We‘ve confirmed your email address.
+  git_post_receives:
+    create:
+      scheduled: Scheduled Website Build for %{branch_name} at %{deployment_url}
+      received: Received Website Branch %{branch_name} – No Deployment Found
   merges:
     create:
       conflict: We are unable to process merge conflicts at this time.
@@ -108,10 +112,6 @@ en:
       message: Move Post %{filename}
       alert: There was a problem saving your changes.
       notice: Great, we’ve committed your changes.
-  post_receives:
-    create:
-      schedule: Scheduling Website Build for %{branch_name} at %{deployment_url}
-      receive: Received Website Branch %{branch_name} – No Deployment Found
   posts:
     create:
       message: Add New Post

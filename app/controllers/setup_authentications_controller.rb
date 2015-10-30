@@ -2,11 +2,16 @@ class SetupAuthenticationsController < ApplicationController
   before_action :require_user
   before_action :require_website
   before_action :require_repository
-  before_action :require_account_owner
 
   before_action do
     if @repository.setup?
       redirect_to [@website, @repository.branch(current_user)]
+    end
+  end
+
+  before_action do
+    unless current_authorization.ssh_access?
+      redirect_to [@website, :setup]
     end
   end
 
@@ -19,20 +24,14 @@ class SetupAuthenticationsController < ApplicationController
   end
 
   def create
-    begin
-      ActiveRecord::Base.transaction do
-        @authentication.assign_attributes(authentication_params)
-        @authentication.save or raise StandardError
-        current_authorization.update(ssh_access: true) or raise StandardError
-      end
+    @authentication.assign_attributes(authentication_params)
+
+    if @authentication.save
       redirect_to [@website, :setup], notice: t('.notice')
-    rescue
-      if @authentication.errors[:public_key].any?
-        flash.alert = t('.alert_ssh', errors: @authentication.errors[:public_key].to_sentence)
-      else
-        flash.alert = t('.alert')
-      end
-      redirect_to [@website, :setup]
+    elsif @authentication.errors[:public_key].any?
+      redirect_to [@website, :setup], alert: t('.alert_ssh', errors: @authentication.errors[:public_key].to_sentence)
+    else
+      redirect_to [@website, :setup], alert: t('.alert')
     end
   end
 

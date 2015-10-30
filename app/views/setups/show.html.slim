@@ -5,7 +5,7 @@
     p#website_setup_check.text-muted data-url=url_for([@website, :setup_check])
       = icon 'spinner fa-spin fa-2x'
       span style="margin-left: 0.5em; vertical-align: 40%;" Waiting for your website to be pushed to the our git repository...
-    - if current_authorization.account_owner?
+    - if current_authorization.ssh_access?
       .row
         .col-sm-8.col-sm-offset-2.col-md-6.col-md-offset-3
           .panel.panel-default style="margin: 2em 0 4em"
@@ -37,19 +37,20 @@
                     span Push your existing git repository to Static Website Manager
                 pre
                   code = "git remote add static ssh://root@#{Rails.application.secrets.host}:222/#{@website.id}.git\ngit push -u static master".html_safe
-          h2.h5.text-muted
-            ' Need help? Ask a team member to help with the initial setup
-            = link_to 'Invite Team Member', [:new, @website, :setup_authorization], class: 'btn btn-xs btn-primary'
-          - if @team_members.any?
-            table.table.table-bordered.table-striped.text-left style="margin-top: 2em"
-              thead
-                tr
-                  th Team Member
-                  th Email Address
-                  th Confirmed?
-              tbody
-                - @team_members.each do |team_member|
+          - if current_authorization.account_owner?
+            h2.h5.text-muted
+              ' Need help? Ask a team member to help with the initial setup
+              = link_to 'Invite Team Member', [:new, @website, :setup_authorization], class: 'btn btn-xs btn-primary'
+            - if @team_members.any?
+              table.table.table-bordered.table-striped.text-left style="margin-top: 2em"
+                thead
                   tr
-                    td = team_member.name
-                    td = team_member.email
-                    td = team_member.confirmed? ? content_tag(:strong, 'Yes') : 'No'
+                    th Team Member
+                    th Email Address
+                    th Confirmed?
+                tbody
+                  - @team_members.each do |team_member|
+                    tr
+                      td = team_member.name
+                      td = team_member.email
+                      td = team_member.confirmed? ? content_tag(:strong, 'Yes') : 'No'

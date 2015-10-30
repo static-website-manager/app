@@ -27,7 +27,7 @@ class Website < ActiveRecord::Base
 
   def update_post_receive!
     File.open(repository_pathname.join('hooks/post-receive').to_s, 'w+', 0755) do |file|
-      file.write File.read(Rails.root.join('lib/post_receive.rb').to_s).sub(/WEBSITE_ID/, id.to_s)
+      file.write File.read(Rails.root.join('lib/post_receive.rb').to_s).sub(/WEBSITE_ID/, id.to_s).sub(/GIT_HOOK_TOKEN/, ENV['GIT_HOOK_TOKEN'])
     end
   end
 

@@ -12,8 +12,11 @@ class SetupsController < ApplicationController
 
   def show
     if current_authorization.account_owner?
-      @authentication = current_user.authentication || current_user.build_authentication
       @team_members = @website.users.where.not(id: current_user.id)
+    end
+
+    if current_authorization.ssh_access?
+      @authentication = current_user.authentication || current_user.build_authentication
     end
   end
 end

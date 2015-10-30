@@ -1,6 +1,7 @@
 class AuthorizationsController < ApplicationController
   before_action :require_user
   before_action :require_website
+  before_action :require_repository
   before_action :require_account_owner
 
   # Initialize a new authorization with user.
@@ -35,6 +36,13 @@ class AuthorizationsController < ApplicationController
     end
 
     if @authorization.save
+      if @repository.setup?
+        branch = @repository.branch(@authorization.user)
+        deployment = @website.deployment.where(branch_name: branch.name).send(@website.auto_deploy_staging? ? :first_or_create : :first)
+        if deployment && deployment.persisted?
+          JekyllBuildJob.perform_later(deployment)
+        end
+      end
       UserMailer.authorization_invitation(@authorization).deliver_later
       redirect_to [@website, :authorizations], notice: t('.notice_html', email: @authorization.user.email)
     else

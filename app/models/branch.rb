@@ -5,10 +5,8 @@ class Branch
 
   attr_accessor :name, :rugged_branch, :rugged_repository
 
-  def self.find(rugged_repository, website_id, name_or_user)
-    if name_or_user.blank?
-      raise ActiveRecord::RecordNotFound
-    elsif name_or_user.is_a?(User)
+  def self.find(rugged_repository, name_or_user)
+    if name_or_user.is_a?(User)
       name = "static_user_#{name_or_user.id}"
     else
       name = name_or_user.to_s
@@ -22,11 +20,11 @@ class Branch
         rugged_repository: rugged_repository,
         rugged_branch: rugged_branch,
       )
-    elsif name.match(/\Astatic_user_\d{1,9}\z/)
+    elsif name_or_user.is_a?(User)
       new(
         name: name,
         rugged_repository: rugged_repository,
-        rugged_branch: rugged_repository.branches.create(name, 'master'),
+        rugged_branch: rugged_repository.create_branch(name, 'master'),
       )
     else
       raise ActiveRecord::RecordNotFound
