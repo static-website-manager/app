@@ -1,22 +1,16 @@
 - title website_name: @website.name
 
-.header.header-center
-  h1.lead
-    = link_to [@website, :authorizations], class: 'logo-small-back-container' do
-      => icon 'reply'
-      => image_tag 'logo-small.png', alt: 'Static Website Manager', class: 'logo-small'
-    | | Edit Team Member
-.row
-  .col-sm-8.col-sm-offset-2.col-md-6.col-md-offset-3
+= layout :nest, heading: 'Edit Team Member', size: :md, return_to: [@website, :authorizations] do
+  = errors_for @authorization
+  = form_for [@website, @authorization] do |form|
     .panel.panel-default
-      = form_for [@website, @authorization] do |form|
-        .panel-body
-          dl
-            dt Name
-            dd.well.well-sm = @authorization.user.name
-            dt Email
-            dd.well.well-sm = @authorization.user.email
-          hr
-          = render partial: 'form', object: form, locals: { advanced_options: true }
-        .panel-footer.text-center
-          = form.button 'Save Changes', class: 'btn btn-primary'
+      .panel-body
+        dl
+          dt Name
+          dd.well.well-sm = @authorization.user.name
+          dt Email
+          dd.well.well-sm = @authorization.user.email
+        hr
+        = render partial: 'form', object: form, locals: { advanced_options: true }
+      .panel-footer.text-center
+        = form.button 'Save Changes', class: 'btn btn-primary'

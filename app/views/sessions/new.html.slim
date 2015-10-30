@@ -4,31 +4,24 @@
   - content_for :alert do
     = link_to 'Resend Confirmation Email', :new_email_confirmation, class: 'btn btn-xs btn-success'
 
-.header.header-center
-  = link_to '/', class: 'logo-large logo-back' do
-    => icon 'reply'
-    => image_tag 'logo-large.png', alt: ''
-    strong Static Website Manager
-.row
-  .col-sm-8.col-sm-offset-2.col-md-6.col-md-offset-3.col-lg-4.col-lg-offset-4
-    .panel.panel-default
-      .panel-heading
-        h1.h4.panel-title Sign In
-      = form_tag :session do
-        .panel-body
-          .form-group
-            => label_tag :email, 'Email', class: 'control-label'
-            = email_field_tag :email, params[:email].to_s.downcase, class: 'form-control'
-          .form-group
-            => label_tag :password, 'Password', class: 'control-label'
-            = password_field_tag :password, nil, class: 'form-control'
-        .panel-footer.text-center
-          = button_tag 'Submit', class: 'btn btn-primary'
-.row style="margin-top:2em"
-  .col-sm-8.col-sm-offset-2.col-md-6.col-md-offset-3
-    p.text-center.text-muted.small
-      ' Need to confirm your email address?
-      = link_to 'Resend Confirmation Email', :new_email_confirmation
-    p.text-center.text-muted.small
-      ' Forget your password?
-      = link_to 'Send Password Reset Email', :new_password_forget
+= layout :nest do
+  .panel.panel-default
+    .panel-heading
+      h1.h4.panel-title Sign In
+    = form_tag :session do
+      .panel-body
+        .form-group
+          => label_tag :email, 'Email', class: 'control-label'
+          = email_field_tag :email, params[:email].to_s.downcase, class: 'form-control'
+        .form-group
+          => label_tag :password, 'Password', class: 'control-label'
+          = password_field_tag :password, nil, class: 'form-control'
+      .panel-footer.text-center
+        = button_tag 'Submit', class: 'btn btn-primary'
+  br
+  p.text-center.text-muted.small
+    ' Need to confirm your email address?
+    = link_to 'Resend Confirmation Email', :new_email_confirmation
+  p.text-center.text-muted.small
+    ' Forget your password?
+    = link_to 'Send Password Reset Email', :new_password_forget

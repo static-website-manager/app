@@ -1,23 +1,16 @@
 - title website_name: @website.name
 
-.header.header-center
-  h1.lead
-    = link_to session[:return_to] || @website, class: 'logo-small-back-container' do
-      => icon 'reply'
-      => image_tag 'logo-small.png', alt: 'Static Website Manager', class: 'logo-small'
-    | | Manage Your Website Team
-.row
-  .col-sm-10.col-sm-offset-1.col-md-8.col-md-offset-2
-    .panel.panel-default
-      .table-responsive
-        table.table.table-bordered.table-striped
-          thead
-            tr
-              th Name
-              th Email
-              th Content Role
-              th Account Owner
-              th Actions
-          tbody
-            = render partial: 'authorization', collection: @authorizations, locals: { website: @website }
-    p.text-center = link_to icon('plus-circle', 'Invite Someone New'), [:new, @website, :authorization], class: 'btn btn-sm btn-default'
+= layout :nest, heading: 'Manage Your Website Team', size: :lg, return_to: session[:return_to] || @website do
+  .panel.panel-default
+    .table-responsive
+      table.table.table-bordered.table-striped
+        thead
+          tr
+            th Name
+            th Email
+            th Content Role
+            th Account Owner
+            th Actions
+        tbody
+          = render partial: 'authorization', collection: @authorizations, locals: { website: @website }
+  p.text-center = link_to icon('plus-circle', 'Invite Someone New'), [:new, @website, :authorization], class: 'btn btn-sm btn-default'

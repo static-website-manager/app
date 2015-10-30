@@ -1,40 +1,32 @@
 - title website_name: @website.name, branch_name: @branch.title(current_user)
 
-.header.header-center
-  h1.lead
-    = link_to session[:return_to] || [@website, @branch], class: 'logo-small-back-container' do
-      => icon 'reply'
-      => image_tag 'logo-small.png', alt: 'Static Website Manager', class: 'logo-small'
-    ' | New Post
-    small = @branch.title(current_user)
-.row
-  .col-sm-8.col-sm-offset-2.col-md-6.col-md-offset-3
-    = errors_for @post
-    = form_for [@website, @branch, @post] do |form|
-      .panel.panel-default
-        .panel-body
-          .row
-            .col-sm-9
-              => form.label :basepath, class: 'control-label'
-              = form.text_field :basepath, class: 'form-control'
-            .col-sm-3
-              => form.label :extension, class: 'control-label'
-              = form.select :extension, options_for_select([['Markdown', 'md'], ['HTML', 'html']], form.object.extension), {}, class: 'form-control'
-          hr
-          p: strong Publication Date
-          .row
-            .col-sm-4
-              .form-group
-                = number_field_tag :publication_year, params[:publication_year] || Time.zone.now.year, class: 'form-control'
-            .col-sm-4
-              .form-group
-                = select_tag :publication_month, options_for_select(Date::MONTHNAMES.compact.each_with_index.map { |month, i| [month, i + 1] }, params[:publication_month] || Time.zone.now.month), class: 'form-control'
-            .col-sm-4
-              .form-group
-                = number_field_tag :publication_day, params[:publication_day] || Time.zone.now.day, class: 'form-control'
-          hr
-          .form-group
-            = label_tag :message, 'Commit Message', class: 'control-label'
-            = text_field_tag :message, params[:message].nil? ? 'Add New Post' : params[:message], class: 'form-control'
-        .panel-footer.text-center
-          = form.button 'Save Post', class: 'btn btn-primary'
+= layout :nest, heading: 'New Post', subheading: @branch.title(current_user), size: :md, return_to: [@website, @branch, :posts] do
+  = errors_for @post
+  = form_for [@website, @branch, @post] do |form|
+    .panel.panel-default
+      .panel-body
+        .row
+          .col-sm-9
+            => form.label :basepath, class: 'control-label'
+            = form.text_field :basepath, class: 'form-control'
+          .col-sm-3
+            => form.label :extension, class: 'control-label'
+            = form.select :extension, options_for_select([['Markdown', 'md'], ['HTML', 'html']], form.object.extension), {}, class: 'form-control'
+        hr
+        p: strong Publication Date
+        .row
+          .col-sm-4
+            .form-group
+              = number_field_tag :publication_year, params[:publication_year] || Time.zone.now.year, class: 'form-control'
+          .col-sm-4
+            .form-group
+              = select_tag :publication_month, options_for_select(Date::MONTHNAMES.compact.each_with_index.map { |month, i| [month, i + 1] }, params[:publication_month] || Time.zone.now.month), class: 'form-control'
+          .col-sm-4
+            .form-group
+              = number_field_tag :publication_day, params[:publication_day] || Time.zone.now.day, class: 'form-control'
+        hr
+        .form-group
+          = label_tag :message, 'Commit Message', class: 'control-label'
+          = text_field_tag :message, params[:message].nil? ? 'Add New Post' : params[:message], class: 'form-control'
+      .panel-footer.text-center
+        = form.button 'Save Post', class: 'btn btn-primary'

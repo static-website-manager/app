@@ -1,39 +1,32 @@
 - title
 
-.header.header-center
-  h1.lead
-    = link_to session[:return_to] || :websites, class: 'logo-small-back-container' do
-      => icon 'reply'
-      => image_tag 'logo-small.png', alt: 'Static Website Manager', class: 'logo-small'
-    | | Account Information
-.row
-  .col-sm-8.col-sm-offset-2.col-md-6.col-md-offset-3
-    = errors_for current_user
-    = form_for current_user, url: :account do |form|
-      .panel.panel-default
-        .panel-body
+= layout :nest, heading: 'Account Information', size: :md, return_to: session[:return_to] || :websites do
+  = errors_for current_user
+  = form_for current_user, url: :account do |form|
+    .panel.panel-default
+      .panel-body
+        .form-group
+          => form.label :name, class: 'control-label' do
+            ' Your Name
+            small.text-muted or nickname
+          = form.text_field :name, class: 'form-control'
+        hr
+        = form.fields_for :authentication, form.object.authentication || form.object.build_authentication do |auth_form|
           .form-group
-            => form.label :name, class: 'control-label' do
-              ' Your Name
-              small.text-muted or nickname
-            = form.text_field :name, class: 'form-control'
-          hr
-          = form.fields_for :authentication, form.object.authentication || form.object.build_authentication do |auth_form|
-            .form-group
-              => auth_form.label :public_key, 'SSH Public Key', class: 'control-label'
-              = auth_form.text_area :public_key, rows: 6, class: 'form-control'
-              p.help-block For help generating your SSH key, see GitHub’s #{link_to 'helpful guide', 'https://help.github.com/articles/generating-ssh-keys/', target: :_blank}, but paste your key here instead of following Step 4.
-          hr
-          .well.well-sm
-            .form-group
-              => form.label :password, 'New Password', class: 'control-label'
-              = form.password_field :password, value: '', class: 'form-control'
-            .form-group
-              => form.label :password_confirmation, 'New Password Confirmation', class: 'control-label'
-              = form.password_field :password_confirmation, value: '', class: 'form-control'
-            .form-group
-              => label_tag :password, 'Current Password', class: 'control-label'
-              = password_field_tag :password, '', class: 'form-control'
-              p.help-block Please verify your current password if you would like to change it.
-        .panel-footer.text-center
-          = button_tag 'Save Changes', class: 'btn btn-primary'
+            => auth_form.label :public_key, 'SSH Public Key', class: 'control-label'
+            = auth_form.text_area :public_key, rows: 6, class: 'form-control'
+            p.help-block For help generating your SSH key, see GitHub’s #{link_to 'helpful guide', 'https://help.github.com/articles/generating-ssh-keys/', target: :_blank}, but paste your key here instead of following Step 4.
+        hr
+        .well.well-sm
+          .form-group
+            => form.label :password, 'New Password', class: 'control-label'
+            = form.password_field :password, value: '', class: 'form-control'
+          .form-group
+            => form.label :password_confirmation, 'New Password Confirmation', class: 'control-label'
+            = form.password_field :password_confirmation, value: '', class: 'form-control'
+          .form-group
+            => label_tag :password, 'Current Password', class: 'control-label'
+            = password_field_tag :password, '', class: 'form-control'
+            p.help-block Please verify your current password if you would like to change it.
+      .panel-footer.text-center
+        = button_tag 'Save Changes', class: 'btn btn-primary'

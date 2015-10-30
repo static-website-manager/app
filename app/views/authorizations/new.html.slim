@@ -1,25 +1,18 @@
 - title website_name: @website.name
 
-.header.header-center
-  h1.lead
-    = link_to [@website, :authorizations], class: 'logo-small-back-container' do
-      => icon 'reply'
-      => image_tag 'logo-small.png', alt: 'Static Website Manager', class: 'logo-small'
-    | | Invite Team Member
-.row
-  .col-sm-8.col-sm-offset-2.col-md-6.col-md-offset-3
-    = errors_for @authorization
+= layout :nest, heading: 'Invite Team Member', size: :md, return_to: [@website, :authorizations] do
+  = errors_for @authorization
+  = form_for [@website, @authorization] do |form|
     .panel.panel-default
-      = form_for [@website, @authorization] do |form|
-        .panel-body
-          = form.fields_for :user do |user_form|
-            .form-group
-              => user_form.label :name, class: 'control-label'
-              = user_form.text_field :name, class: 'form-control'
-            .form-group
-              => user_form.label :email, class: 'control-label'
-              = user_form.email_field :email, class: 'form-control'
-          hr
-          = render partial: 'form', object: form, locals: { advanced_options: true }
-        .panel-footer.text-center
-          = form.button 'Invite Team Member', class: 'btn btn-primary'
+      .panel-body
+        = form.fields_for :user do |user_form|
+          .form-group
+            => user_form.label :name, class: 'control-label'
+            = user_form.text_field :name, class: 'form-control'
+          .form-group
+            => user_form.label :email, class: 'control-label'
+            = user_form.email_field :email, class: 'form-control'
+        hr
+        = render partial: 'form', object: form, locals: { advanced_options: true }
+      .panel-footer.text-center
+        = form.button 'Invite Team Member', class: 'btn btn-primary'

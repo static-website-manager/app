@@ -1,29 +1,22 @@
 - title website_name: @website.name
 
-.header.header-center
-  h1.lead
-    = link_to session[:return_to] || @website, class: 'logo-small-back-container' do
-      => icon 'reply'
-      => image_tag 'logo-small.png', alt: 'Static Website Manager', class: 'logo-small'
-    | | Edit Your Website Settings
-.row
-  .col-sm-8.col-sm-offset-2.col-md-6.col-md-offset-3
-    = errors_for @website
-    = form_for @website, url: [@website, :settings] do |f|
-      .panel.panel-default
-        .panel-body
-          .form-group
-            => f.label :name, class: 'control-label'
-            = f.text_field :name, class: 'form-control'
-          hr
-          p: strong Automatically Deploy Branches to Public URLs
-          .checkbox
-            = f.label :auto_deploy_production
-              => f.check_box :auto_deploy_production
-              | Production Branch
-          .checkbox
-            = f.label :auto_deploy_staging
-              => f.check_box :auto_deploy_staging
-              | Staging Branches
-        .panel-footer.text-center
-            = f.button 'Save Changes', class: 'btn btn-primary'
+= layout :nest, heading: 'Edit Your Website Settings', size: :md, return_to: session[:return_to] || @website do
+  = errors_for @website
+  = form_for @website, url: [@website, :settings] do |f|
+    .panel.panel-default
+      .panel-body
+        .form-group
+          => f.label :name, class: 'control-label'
+          = f.text_field :name, class: 'form-control'
+        hr
+        p: strong Automatically Deploy Branches to Public URLs
+        .checkbox
+          = f.label :auto_deploy_production
+            => f.check_box :auto_deploy_production
+            | Production Branch
+        .checkbox
+          = f.label :auto_deploy_staging
+            => f.check_box :auto_deploy_staging
+            | Staging Branches
+      .panel-footer.text-center
+          = f.button 'Save Changes', class: 'btn btn-primary'

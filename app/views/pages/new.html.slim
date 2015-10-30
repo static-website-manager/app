@@ -1,28 +1,20 @@
 - title website_name: @website.name, branch_name: @branch.title(current_user)
 
-.header.header-center
-  h1.lead
-    = link_to session[:return_to] || [@website, @branch], class: 'logo-small-back-container' do
-      => icon 'reply'
-      => image_tag 'logo-small.png', alt: 'Static Website Manager', class: 'logo-small'
-    ' | New Page
-    small = @branch.title(current_user)
-.row
-  .col-sm-8.col-sm-offset-2.col-md-6.col-md-offset-3
-    = errors_for @page
-    = form_for [@website, @branch, @page] do |form|
-      .panel.panel-default
-        .panel-body
-          .row
-            .col-sm-9
-              => form.label :basepath, class: 'control-label'
-              = form.text_field :basepath, class: 'form-control'
-            .col-sm-3
-              => form.label :extension, class: 'control-label'
-              = form.select :extension, options_for_select([['Markdown', 'md'], ['HTML', 'html']], form.object.extension), {}, class: 'form-control'
-          hr
-          .form-group
-            = label_tag :message, 'Commit Message', class: 'control-label'
-            = text_field_tag :message, params[:message].nil? ? 'Add New Page' : params[:message], class: 'form-control'
-        .panel-footer.text-center
-          = form.button 'Save Page', class: 'btn btn-primary'
+= layout :nest, heading: 'New Page', subheading: @branch.title(current_user), size: :md, return_to: [@website, @branch, :pages] do
+  = errors_for @page
+  = form_for [@website, @branch, @page] do |form|
+    .panel.panel-default
+      .panel-body
+        .row
+          .col-sm-9
+            => form.label :basepath, class: 'control-label'
+            = form.text_field :basepath, class: 'form-control'
+          .col-sm-3
+            => form.label :extension, class: 'control-label'
+            = form.select :extension, options_for_select([['Markdown', 'md'], ['HTML', 'html']], form.object.extension), {}, class: 'form-control'
+        hr
+        .form-group
+          = label_tag :message, 'Commit Message', class: 'control-label'
+          = text_field_tag :message, params[:message].nil? ? 'Add New Page' : params[:message], class: 'form-control'
+      .panel-footer.text-center
+        = form.button 'Save Page', class: 'btn btn-primary'

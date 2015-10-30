@@ -1,32 +1,25 @@
 - title website_name: @website.name, branch_name: @branch.title(current_user)
 
-.header.header-center
-  h1.lead
-    = link_to session[:return_to] || [@website, @branch], class: 'logo-small-back-container' do
-      => icon 'reply'
-      => image_tag 'logo-small.png', alt: 'Static Website Manager', class: 'logo-small'
-    | | Push to #{@target.title(current_user)}
-.row
-  .col-sm-8.col-sm-offset-2.col-md-6.col-md-offset-3
-    = form_tag [@website, @branch, :merge] do
-      - if @merge_index.conflicts?
-        .panel.panel-danger.text-center
-          .panel-body
-            p: span.label.label-danger> #{pluralize @merge_index.conflicts.count, 'Merge Conflict'} Found
-            p We are unable to process merge conflicts at this time. Please perform an offline merge or contact your designer.
-      - else
-        .panel.panel-default
-          .panel-body
-            p This action will merge changes from your branch into #{@target.title(current_user)}.
-            hr
-            .form-group
-              = label_tag :message, 'Commit Message', class: 'control-label'
-              = text_field_tag :message, params[:message].present? ? params[:message] : "Merge #{@branch.title(current_user)} Changes", class: 'form-control'
-          .panel-footer.text-center
-            = button_tag 'Push Changes', class: 'btn btn-primary'
-        - @diff = @branch.diff(@target)
-        p.small style="margin: 4em 0 0.5em"
-          => pluralize @diff.rugged_diff.size, 'Change'
-          | Found
-        hr style="margin: 0 0 2em"
-        = render @diff
+= layout :nest, heading: "Push to #{@target.title(current_user)}", size: :md, return_to: session[:return_to] || [@website, @branch] do
+  = form_tag [@website, @branch, :merge] do
+    - if @merge_index.conflicts?
+      .panel.panel-danger.text-center
+        .panel-body
+          p: span.label.label-danger> #{pluralize @merge_index.conflicts.count, 'Merge Conflict'} Found
+          p We are unable to process merge conflicts at this time. Please perform an offline merge or contact your designer.
+    - else
+      .panel.panel-default
+        .panel-body
+          p This action will merge changes from your branch into #{@target.title(current_user)}.
+          hr
+          .form-group
+            = label_tag :message, 'Commit Message', class: 'control-label'
+            = text_field_tag :message, params[:message].present? ? params[:message] : "Merge #{@branch.title(current_user)} Changes", class: 'form-control'
+        .panel-footer.text-center
+          = button_tag 'Push Changes', class: 'btn btn-primary'
+      - @diff = @branch.diff(@target)
+      p.small style="margin: 4em 0 0.5em"
+        => pluralize @diff.rugged_diff.size, 'Change'
+        | Found
+      hr style="margin: 0 0 2em"
+      = render @diff

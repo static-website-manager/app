@@ -1,23 +1,17 @@
 - title
 
-.header.header-center
-  = link_to :new_session, class: 'logo-large logo-back' do
-    => icon 'reply'
-    => image_tag 'logo-large.png', alt: ''
-    strong Static Website Manager
-.row
-  .col-sm-8.col-sm-offset-2.col-md-6.col-md-offset-3.col-lg-4.col-lg-offset-4
-    = errors_for @user
+= layout :nest, return_to: :new_session do
+  = errors_for @user
+  = form_for @user, url: [:password_reset, token: params[:token]] do |form|
     .panel.panel-default
       .panel-heading
         h1.h4.panel-title Reset Your Password
-      = form_for @user, url: [:password_reset, token: params[:token]] do |form|
-        .panel-body
-          .form-group
-            => form.label :password, class: 'control-label'
-            = form.password_field :password, value: nil, class: 'form-control'
-          .form-group
-            => form.label :password_confirmation, class: 'control-label'
-            = form.password_field :password_confirmation, value: nil, class: 'form-control'
-        .panel-footer.text-center
-          = form.button 'Submit', class: 'btn btn-primary'
+      .panel-body
+        .form-group
+          => form.label :password, class: 'control-label'
+          = form.password_field :password, value: nil, class: 'form-control'
+        .form-group
+          => form.label :password_confirmation, class: 'control-label'
+          = form.password_field :password_confirmation, value: nil, class: 'form-control'
+      .panel-footer.text-center
+        = form.button 'Submit', class: 'btn btn-primary'
