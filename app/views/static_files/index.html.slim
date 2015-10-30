@@ -5,7 +5,7 @@
 = render partial: 'branches/nav', locals: { website: @website, branch: @branch }
 
 .pull-right style="position:relative; z-index:1"
-  => link_to '#', class: 'btn btn-sm btn-default' do
+  => link_to '/help#files', target: :_blank, class: 'btn btn-sm btn-default' do
     ' Help with Files
     = icon 'question-circle'
   = link_to '#', class: 'btn btn-sm btn-primary' do

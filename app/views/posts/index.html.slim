@@ -6,7 +6,7 @@
 
 div class=(@posts.any? ? 'clearfix' : '')
   .pull-right style="position:relative; z-index:1"
-    => link_to '#', class: 'btn btn-sm btn-default' do
+    => link_to '/help#posts', target: :_blank, class: 'btn btn-sm btn-default' do
       ' Help with Posts
       = icon 'question-circle'
     = link_to [:new, @website, @branch, :post], class: 'btn btn-sm btn-primary' do

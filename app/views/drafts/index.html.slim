@@ -6,7 +6,7 @@
 
 div class=(@drafts.any? ? 'clearfix' : '')
   .pull-right style="position:relative; z-index:1"
-    => link_to '#', class: 'btn btn-sm btn-default' do
+    => link_to '/help#drafts', target: :_blank, class: 'btn btn-sm btn-default' do
       ' Help with Drafts
       = icon 'question-circle'
     = link_to [:new, @website, @branch, :draft], class: 'btn btn-sm btn-primary' do
