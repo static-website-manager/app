@@ -10,13 +10,13 @@ class DraftMovesController < ApplicationController
   end
 
   def create
-    commit_message = params[:message].present? ? params[:message] : "Move Draft #{@draft.filename}"
+    commit_message = params[:message].present? ? params[:message] : t('.message', filename: @draft.filename_was)
     @draft.full_pathname = [params[:draft].try(:[], :basepath), params[:draft].try(:[], :extension)].reject(&:blank?).join('.')
 
     if @draft.save(@branch.name, current_user.email, current_user.name, commit_message, @deployment)
-      redirect_to [@website, @branch, @draft], notice: 'Great, we’ve committed your changes.'
+      redirect_to [@website, @branch, @draft], notice: t('.notice')
     else
-      flash.now.alert = 'There was a problem saving your changes.'
+      flash.now.alert = t('.alert')
       render :new, status: 422
     end
   end

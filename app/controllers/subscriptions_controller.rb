@@ -15,9 +15,9 @@ class SubscriptionsController < ApplicationController
     if @subscription.save
       sign_in(@subscription.user)
       UserMailer.subscription_confirmation(@subscription.user).deliver_later
-      redirect_to [@subscription.website, :setup], notice: 'Welcome to Static Website Manager!'
+      redirect_to [@subscription.website, :setup], notice: t('.notice')
     else
-      flash.now.alert = 'There was a problem subscribing your account.'
+      flash.now.alert = t('.alert')
       render :new, status: 422
     end
   end

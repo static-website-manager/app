@@ -19,16 +19,16 @@ class PostsController < ApplicationController
   end
 
   def create
-    commit_message = params[:message].present? ? params[:message] : 'Add New Post'
+    commit_message = params[:message].present? ? params[:message] : t('.message')
     publication_date = Date.new(params[:publication_year].to_i, params[:publication_month].to_i, params[:publication_day].to_i)
     pathname = params[:post].try(:[], :basepath).to_s.split('/')[0..-2].join('/')
     filename = [params[:post].try(:[], :basepath).to_s.split('/').last, params[:post].try(:[], :extension)].reject(&:blank?).join('.')
     @post.full_pathname = ['_posts', pathname, [publication_date.strftime('%Y-%m-%d'), filename].reject(&:blank?).join('-')].reject(&:blank?).join('/')
 
     if @post.save(@branch.name, current_user.email, current_user.name, commit_message, @deployment)
-      redirect_to [:edit, @website, @branch, @post], notice: 'Great, we’ve committed your changes.'
+      redirect_to [:edit, @website, @branch, @post], notice: t('.notice')
     else
-      flash.now.alert = 'There was a problem saving your changes.'
+      flash.now.alert = t('.alert')
       render :new, status: 422
     end
   end
@@ -38,27 +38,27 @@ class PostsController < ApplicationController
   end
 
   def update
-    commit_message = params[:message].present? ? params[:message] : "Save Changes to #{@post.filename}"
+    commit_message = params[:message].present? ? params[:message] : t('.message', filename: @post.pretty_pathname)
     @post.content = params[:post].try(:[], :content)
     @post.metadata = params[:post].try(:[], :metadata)
 
     if @post.unchanged?
-      redirect_to [@website, @branch, @post], alert: 'No changes detected.'
+      redirect_to [@website, @branch, @post], alert: t('.alert_unchanged')
     elsif @post.save(@branch.name, current_user.email, current_user.name, commit_message, @deployment)
-      redirect_to [@website, @branch, @post], notice: 'Great, we’ve committed your changes.'
+      redirect_to [@website, @branch, @post], notice: t('.notice')
     else
-      flash.now.alert = 'There was a problem saving your changes.'
+      flash.now.alert = t('.alert')
       render :edit, status: 422
     end
   end
 
   def destroy
-    commit_message = params[:message].present? ? params[:message] : "Delete Post #{@post.pretty_pathname}"
+    commit_message = params[:message].present? ? params[:message] : t('.message', filename: @post.pretty_pathname)
 
     if @post.destroy(@branch.name, current_user.email, current_user.name, commit_message, @deployment)
-      redirect_to [@website, @branch, :posts], notice: 'Ok, we‘ve committed your changes.'
+      redirect_to [@website, @branch, :posts], notice: t('.notice')
     else
-      flash.now.alert = 'There was a problem saving your changes.'
+      flash.now.alert = t('.alert')
       render :delete, status: 422
     end
   end

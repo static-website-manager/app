@@ -27,20 +27,20 @@ class MergesController < ApplicationController
 
   before_action only: %i[create] do
     if @merge_index.conflicts?
-      redirect_to [:new, @website, @branch, :merge], alert: 'We are unable to process merge conflicts at this time.'
+      redirect_to [:new, @website, @branch, :merge], alert: t('.conflict')
     end
   end
 
   def create
-    commit_message = params[:message].present? ? params[:message] : "Merge #{@branch.title(current_user)} Changes"
+    commit_message = params[:message].present? ? params[:message] : t('.message', branch_name: @branch.title(current_user))
 
     if @branch.merge(@target, current_user.email, current_user.name, commit_message)
       if deployment = @website.deployments.find_by_branch_name(@target.name)
         JekyllBuildJob.perform_later(deployment)
       end
-      redirect_to [@website, @branch], notice: "Great, we’ve successfully merged #{@branch.title(current_user)} changes."
+      redirect_to [@website, @branch], notice: t('.notice', branch_name: @branch.title(current_user))
     else
-      flash.now.alert = "There was a problem merging #{@branch.title(current_user)} changes."
+      flash.now.alert = t('.alert', branch_name: @branch.title(current_user))
     end
   end
 end

@@ -13,16 +13,16 @@ class CheckoutsController < ApplicationController
 
   def create
     if params[:target].blank?
-      flash.now.alert = 'Please provide a custom branch name.'
+      flash.now.alert = t('.alert_blank')
       render :new, status: 422
     elsif !@repository.local_branch?(@branch.name)
-      flash.now.alert = 'Source branch must already be a local branch.'
+      flash.now.alert = t('.alert_missing')
       render :new, status: 422
     elsif params[:target].match(/\A(static_user|master)/)
-      flash.now.alert = 'Custom branch must not be the production branch (master) or a Static Website Manager staging branch.'
+      flash.now.alert = t('.alert_ours')
       render :new, status: 422
     elsif @repository.local_branch?(params[:target])
-      flash.now.alert = 'Custom branch must not already be a local branch.'
+      flash.now.alert = t('.alert_same')
       render :new, status: 422
     else
       begin
@@ -32,7 +32,7 @@ class CheckoutsController < ApplicationController
           @website.deployments.create(branch_name: params[:target])
         end
 
-        redirect_to [@website, @repository.branch(params[:target])], notice: 'Ok, your new branch is ready to use.'
+        redirect_to [@website, @repository.branch(params[:target])], notice: t('.notice')
       rescue Rugged::ReferenceError => e
         @error_message = true
         flash.now.alert = e.message

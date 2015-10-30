@@ -18,9 +18,9 @@ class WebsitesController < ApplicationController
 
     if @subscription.save
       UserMailer.subscription_confirmation(current_user).deliver_later
-      redirect_to [@subscription.website, :setup], notice: 'Welcome to your new website!'
+      redirect_to [@subscription.website, :setup], notice: t('.notice')
     else
-      flash.now.alert = 'There was adding your website.'
+      flash.now.alert = t('.alert')
       render :new, status: 422
     end
   end

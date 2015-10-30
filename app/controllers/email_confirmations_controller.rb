@@ -5,12 +5,12 @@ class EmailConfirmationsController < ApplicationController
     user =  User.where(email: params[:email].to_s.downcase).first
 
     if user && user.confirmed?
-      redirect_to :new_session, notice: 'You’re already confirmed — sign in now.'
+      redirect_to :new_session, notice: t('.notice_already')
     elsif user
       UserMailer.email_confirmation(user).deliver_later
-      redirect_to :new_session, notice: 'Great! A confirmation email is on the way.'
+      redirect_to :new_session, notice: t('.notice')
     else
-      flash.now.alert = 'We could not find anyone with that email address.'
+      flash.now.alert = t('.alert')
       render :new, status: 422
     end
   end
@@ -21,9 +21,9 @@ class EmailConfirmationsController < ApplicationController
     if user
       user.update_columns confirmed: true, email_confirmation_token: nil
       sign_in(user)
-      redirect_to :websites, notice: 'Thanks! We‘ve confirmed your email address.'
+      redirect_to :websites, notice: t('.notice')
     else
-      redirect_to :new_session, alert: 'We could not verify your account.'
+      redirect_to :new_session, alert: t('.alert')
     end
   end
 end

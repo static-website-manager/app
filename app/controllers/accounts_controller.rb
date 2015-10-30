@@ -3,15 +3,15 @@ class AccountsController < ApplicationController
 
   def update
     if params[:password].present? && !current_user.authenticate(params[:password])
-      flash.now.alert = 'The current password you provided is incorrect.'
+      flash.now.alert = t('.alert_incorrect')
       render :edit, status: 422
     elsif current_user.update(account_params)
       if account_params[:password].present?
         UserMailer.password_update_confirmation(current_user).deliver_later
       end
-      redirect_to session[:return_to] || :websites, notice: 'Your Account Information was Saved.'
+      redirect_to session[:return_to] || :websites, notice: t('.title')
     else
-      flash.now.alert = 'There was a problem updating your account.'
+      flash.now.alert = t('.alert')
       render :edit, status: 422
     end
   end

@@ -10,13 +10,13 @@ class PostMovesController < ApplicationController
   end
 
   def create
-    commit_message = params[:message].present? ? params[:message] : "Move Post #{@post.filename}"
+    commit_message = params[:message].present? ? params[:message] : t('.message', filename: @post.filename_was)
     @post.full_pathname = [params[:post].try(:[], :basepath), params[:post].try(:[], :extension)].reject(&:blank?).join('.')
 
     if @post.save(@branch.name, current_user.email, current_user.name, commit_message, @deployment)
-      redirect_to [@website, @branch, @post], notice: 'Great, we’ve committed your changes.'
+      redirect_to [@website, @branch, @post], notice: t('.notice')
     else
-      flash.now.alert = 'There was a problem saving your changes.'
+      flash.now.alert = t('.alert')
       render :new, status: 422
     end
   end

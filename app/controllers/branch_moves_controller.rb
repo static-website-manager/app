@@ -16,9 +16,9 @@ class BranchMovesController < ApplicationController
       raise ArgumentError if params[:name] == 'master' || params[:name].to_s.match(/\Astatic_user_/)
       ref_name = @repository.move_branch(@branch.name, params[:name]).name.split('/').last
       @deployment.update_column :branch_name, ref_name if @deployment
-      redirect_to website_branch_path(@website, ref_name), notice: 'Great, we’ve committed your changes.'
+      redirect_to website_branch_path(@website, ref_name), notice: t('.notice')
     rescue
-      flash.now.alert = 'There was a problem saving your changes.'
+      flash.now.alert = t('.alert')
       render :new, status: 422
     end
   end

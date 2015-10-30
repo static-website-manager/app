@@ -11,13 +11,13 @@ class StaticFileMovesController < ApplicationController
   end
 
   def create
-    commit_message = params[:message].present? ? params[:message] : "Move File #{@static_file.filename}"
+    commit_message = params[:message].present? ? params[:message] : t('.message', filename: @static_file.filename_was)
     @static_file.full_pathname = [params[:static_file].try(:[], :basepath), params[:static_file].try(:[], :extension)].reject(&:blank?).join('.')
 
     if @static_file.save(@branch.name, current_user.email, current_user.name, commit_message, @deployment)
-      redirect_to [@website, @branch, @static_file], notice: 'Great, we’ve committed your changes.'
+      redirect_to [@website, @branch, @static_file], notice: t('.notice')
     else
-      flash.now.alert = 'There was a problem saving your changes.'
+      flash.now.alert = t('.alert')
       render :new, status: 422
     end
   end

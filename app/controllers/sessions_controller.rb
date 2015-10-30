@@ -7,19 +7,19 @@ class SessionsController < ApplicationController
 
     if user && !user.confirmed?
       @_user_confirmation_alert = true
-      flash.now.alert = 'We found your account, but need you to confirm your email address first.'
+      flash.now.alert = t('.alert_unconfirmed')
       render :new, status: 422
     elsif user && user.confirmed? && user.authenticate(params[:password])
       sign_in(user)
-      redirect_to :websites, notice: 'Welcome back!'
+      redirect_to :websites, notice: t('.notice')
     else
-      flash.now.alert = 'We could not find anyone with those credentials.'
+      flash.now.alert = t('.alert')
       render :new, status: 422
     end
   end
 
   def destroy
     sign_out
-    redirect_to '/', notice: 'Goodbye, and thanks for your business.'
+    redirect_to '/', notice: t('.notice')
   end
 end

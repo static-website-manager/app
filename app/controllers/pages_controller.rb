@@ -20,13 +20,13 @@ class PagesController < ApplicationController
   end
 
   def create
-    commit_message = params[:message].present? ? params[:message] : 'Add New Page'
+    commit_message = params[:message].present? ? params[:message] : t('.message')
     @page.full_pathname = [params[:page].try(:[], :basepath), params[:page].try(:[], :extension)].reject(&:blank?).join('.')
 
     if @page.save(@branch.name, current_user.email, current_user.name, commit_message, @deployment)
-      redirect_to [:edit, @website, @branch, @page], notice: 'Great, we’ve committed your changes.'
+      redirect_to [:edit, @website, @branch, @page], notice: t('.notice')
     else
-      flash.now.alert = 'There was a problem saving your changes.'
+      flash.now.alert = t('.alert')
       render :new, status: 422
     end
   end
@@ -36,27 +36,27 @@ class PagesController < ApplicationController
   end
 
   def update
-    commit_message = params[:message].present? ? params[:message] : "Save Changes to #{@page.filename}"
+    commit_message = params[:message].present? ? params[:message] : t('.message', filename: @page.full_pathname)
     @page.content = params[:page].try(:[], :content)
     @page.metadata = params[:page].try(:[], :metadata)
 
     if @page.unchanged?
-      redirect_to [@website, @branch, @page], alert: 'No changes detected.'
+      redirect_to [@website, @branch, @page], alert: t('.alert_unchanged')
     elsif @page.save(@branch.name, current_user.email, current_user.name, commit_message, @deployment)
-      redirect_to [@website, @branch, @page], notice: 'Great, we’ve committed your changes.'
+      redirect_to [@website, @branch, @page], notice: t('.notice')
     else
-      flash.now.alert = 'There was a problem saving your changes.'
+      flash.now.alert = t('.alert')
       render :edit, status: 422
     end
   end
 
   def destroy
-    commit_message = params[:message].present? ? params[:message] : "Delete Page #{@page.full_pathnmame}"
+    commit_message = params[:message].present? ? params[:message] : t('.message', filename: @page.full_pathname)
 
     if @page.destroy(@branch.name, current_user.email, current_user.name, commit_message, @deployment)
-      redirect_to [@website, @branch, :pages], notice: 'Ok, we‘ve committed your changes.'
+      redirect_to [@website, @branch, :pages], notice: t('.notice')
     else
-      flash.now.alert = 'There was a problem saving your changes.'
+      flash.now.alert = t('.alert')
       render :delete, status: 422
     end
   end

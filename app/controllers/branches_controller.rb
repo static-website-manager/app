@@ -16,9 +16,9 @@ class BranchesController < ApplicationController
         @deployment.destroy if @deployment
         @repository.delete_branch(@branch.name)
       end
-      redirect_to [@website, @repository.branch(current_user)], notice: 'Ok, we’ve removed the branch.'
+      redirect_to [@website, @repository.branch(current_user)], notice: t('.notice')
     rescue
-      flash.now.alert = 'There was a problem deleting this custom branch.'
+      flash.now.alert = t('.alert')
       render :delete, status: 422
     end
   end

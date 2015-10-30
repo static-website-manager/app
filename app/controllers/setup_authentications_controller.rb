@@ -25,12 +25,12 @@ class SetupAuthenticationsController < ApplicationController
         @authentication.save or raise StandardError
         current_authorization.update(ssh_access: true) or raise StandardError
       end
-      redirect_to [@website, :setup], notice: 'Great, we’ve saved your SSH key.'
+      redirect_to [@website, :setup], notice: t('.notice')
     rescue
       if @authentication.errors[:public_key].any?
-        flash.alert = 'Your SSH key ' + @authentication.errors[:public_key].to_sentence
+        flash.alert = t('.alert_ssh', errors: @authentication.errors[:public_key].to_sentence)
       else
-        flash.alert = 'There was a problem saving your SSH key.'
+        flash.alert = t('.alert')
       end
       redirect_to [@website, :setup]
     end

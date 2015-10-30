@@ -19,16 +19,16 @@ class RebasesController < ApplicationController
 
   before_action only: %i[create] do
     if @merge_index.conflicts?
-      redirect_to [:new, @website, @branch, :rebase], alert: 'We are unable to process changes with conflicts at this time.'
+      redirect_to [:new, @website, @branch, :rebase], alert: t('.conflict')
     end
   end
 
   def create
     if @branch.rebase(@source, current_user.email, current_user.name)
       JekyllBuildJob.perform_later(@deployment) if @deployment
-      redirect_to [@website, @branch], notice: "Great, we’ve successfully pulled in #{@source.title(current_user)} changes."
+      redirect_to [@website, @branch], notice: t('.notice', branch_name: @source.title(current_user))
     else
-      flash.now.alert = "There was a problem pulling #{@source.title(current_user)} changes."
+      flash.now.alert = t('.alert', branch_name: @source.title(current_user))
       render :new, status: 422
     end
   end

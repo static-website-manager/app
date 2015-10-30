@@ -9,9 +9,9 @@ class PasswordResetsController < ApplicationController
     if @user.update(password_params)
       UserMailer.password_update_confirmation(@user).deliver_later
       sign_in(@user)
-      redirect_to :websites, notice: 'Welcome back! Your password was updated successfully.'
+      redirect_to :websites, notice: t('.notice')
     else
-      flash.now.alert = 'There was a problem changing your password.'
+      flash.now.alert = t('.alert')
       render :edit, status: 422
     end
   end

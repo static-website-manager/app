@@ -16,9 +16,9 @@ class PostReceiveHooksController < ActionController::Base
 
       if deployment
         JekyllBuildJob.perform_later(deployment)
-        render text: "Scheduling Website Build: #{deployment.branch_name} — #{deployment.url}"
+        render text: t('.schedule', branch_name: params[:branch_name], deployment_url: deployment.url)
       else
-        render text: "Received Website Branch: #{deployment.branch_name}"
+        render text: t('.receive', branch_name: params[:branch_name])
       end
     end
   end

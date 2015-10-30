@@ -15,18 +15,18 @@ class DeploymentsController < ApplicationController
 
   def create
     if @deployment.save
-      redirect_to session[:return_to] || [@website, @branch], notice: 'Great, we’ve setup a public URL for this branch.'
+      redirect_to session[:return_to] || [@website, @branch], notice: t('.notice')
     else
-      flash.not.alert = 'There was a problem publishing this branch.'
+      flash.not.alert = t('.alert')
       render :new, status: 422
     end
   end
 
   def destroy
     if @deployment.destroy
-      redirect_to session[:return_to] || [@website, @branch], notice: 'Ok, we’ve removed the public URL for this branch.'
+      redirect_to session[:return_to] || [@website, @branch], notice: t('.notice')
     else
-      flash.not.alert = 'There was a problem removing the public URL for this branch.'
+      flash.not.alert = t('.alert')
       render :delete, status: 422
     end
   end

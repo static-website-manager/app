@@ -30,7 +30,7 @@ class SetupAuthorizationsController < ApplicationController
     end
 
     if @authorization.save
-      redirect_to [@website, :setup], notice: "<strong>#{@authorization.user.email}</strong> has been invited to help setup your website!"
+      redirect_to [@website, :setup], notice: t('.notice_html', email: @authorization.user.email)
     else
       flash.now.alert = 'There was a problem inviting your team member.'
       render :new, status: 422
