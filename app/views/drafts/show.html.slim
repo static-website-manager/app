@@ -1,46 +1,34 @@
-- @_body_container = false
 - title website_name: @website.name, branch_name: @branch.title(current_user), filename: @draft.pretty_pathname
 
-.blob-container
-  .blob-header
-    .container-fluid
-      => link_to [@website, @branch, :drafts], class: 'logo-small-back-container' do
-        => icon 'reply'
-        => image_tag 'logo-small.png', alt: 'Static Website Manager', class: 'logo-small'
-      ul.nav.nav-tabs
-        li.active = link_to 'Overview', [@website, @branch, @draft]
-        li = link_to 'Edit', [:edit, @website, @branch, @draft]
-        li = link_to 'History', [@website, @branch, @draft, :commits]
-  .container-fluid
-    .blob-content
-      .row
-        .col-sm-9
-          .blob-icon-lg
-            => icon 'file-o fa-4x'
-            span.label.label-primary DRAFT
-          h1 = @draft.title
-          code.small = @draft.full_pathname
-        .col-sm-3.text-right
-          => link_to [:new, @website, @branch, @draft, :publication], class: 'btn btn-sm btn-success' do
-            ' Publish
-            = icon 'plus-circle'
-          => link_to [:new, @website, @branch, @draft, :move], class: 'btn btn-sm btn-primary' do
-            ' Rename
-            = icon 'arrow-circle-o-right'
-          = link_to [:delete, @website, @branch, @draft], class: 'btn btn-sm btn-danger' do
-            => icon 'trash'
-            | Delete
-      .row
-        .col-sm-7
-          .column-header
-            h2 Public Activity
-          .text-center style="background-color: #eee; height: 16em;"
-        .col-sm-5
-          .column-header
-            h2 Commit History
-          ol.list-unstyled.commits
-            = render @commits, website: @website
-          .text-right style="margin-top:2em"
-            = link_to [@website, @branch, @draft, :commits], class: 'btn btn-sm btn-default' do
-              ' View Entire History
-              = icon 'angle-double-right'
+= layout :blob, website: @website, branch: @branch, blob: @draft do
+  .row
+    .col-sm-9
+      .blob-icon-lg
+        => icon 'file-o fa-4x'
+        span.label.label-primary DRAFT
+      h1 = @draft.title
+      code.small = @draft.full_pathname
+    .col-sm-3.text-right
+      => link_to [:new, @website, @branch, @draft, :publication], class: 'btn btn-sm btn-success' do
+        ' Publish
+        = icon 'plus-circle'
+      => link_to [:new, @website, @branch, @draft, :move], class: 'btn btn-sm btn-primary' do
+        ' Rename
+        = icon 'arrow-circle-o-right'
+      = link_to [:delete, @website, @branch, @draft], class: 'btn btn-sm btn-danger' do
+        => icon 'trash'
+        | Delete
+  .row
+    .col-sm-7
+      .column-header
+        h2 Public Activity
+      .text-center style="background-color: #eee; height: 16em;"
+    .col-sm-5
+      .column-header
+        h2 Commit History
+      ol.list-unstyled.commits
+        = render @commits, website: @website
+      .text-right style="margin-top:2em"
+        = link_to [@website, @branch, @draft, :commits], class: 'btn btn-sm btn-default' do
+          ' View Entire History
+          = icon 'angle-double-right'

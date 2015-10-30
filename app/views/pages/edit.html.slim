@@ -1,21 +1,5 @@
-- @_body_container = false
 - title website_name: @website.name, branch_name: @branch.title(current_user), filename: @page.full_pathname
 
-.blob-container
-  .blob-header
-    .container-fluid
-      => link_to [@website, @branch, :pages], class: 'logo-small-back-container' do
-        => icon 'reply'
-        => image_tag 'logo-small.png', alt: 'Static Website Manager', class: 'logo-small'
-      ul.nav.nav-tabs
-        li = link_to 'Overview', [@website, @branch, @page]
-        li.active = link_to 'Edit', [:edit, @website, @branch, @page]
-        li = link_to 'History', [@website, @branch, @page, :commits]
-  .container-fluid
-    .blob-content
-      .blob-icon-sm
-        span.label.label-primary PAGE
-      h1: code.code-text = @page.full_pathname
-      hr
-      = form_for [@website, @branch, @page] do |form|
-        = render partial: 'blobs/form', object: form, locals: { branch: @branch, placeholder: "Save changes to #{@page.full_pathname}" }
+= layout :blob, website: @website, branch: @branch, blob: @page, filename: @page.full_pathname do
+  = form_for [@website, @branch, @page] do |form|
+    = render partial: 'blobs/form', object: form, locals: { branch: @branch, placeholder: "Save changes to #{@page.full_pathname}" }

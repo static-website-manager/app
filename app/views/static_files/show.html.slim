@@ -1,52 +1,39 @@
-- @_body_container = false
 - title website_name: @website.name, branch_name: @branch.title(current_user), filename: @static_file.full_pathname
 
-.blob-container
-  .blob-header
-    .container-fluid
-      => link_to [@website, @branch, :static_files], class: 'logo-small-back-container' do
-        => icon 'reply'
-        => image_tag 'logo-small.png', alt: 'Static Website Manager', class: 'logo-small'
-      ul.nav.nav-tabs
-        li.active = link_to 'Overview', [@website, @branch, @static_file]
-        - if @static_file.preview?
-          li = link_to 'Preview', [:preview, @website, @branch, @static_file]
-        li = link_to 'History', [@website, @branch, @static_file, :commits]
-  .container-fluid
-    .blob-content
-      .row
-        .col-sm-8
-          .blob-icon-lg
-            => icon 'file-o fa-4x'
-            span.label.label-primary FILE
-          h1: code.code-text = @static_file.filename
-          code.small = @static_file.full_pathname
-        .col-sm-4.text-right
-          - if @deployment && @deployment.success?
-            => link_to @static_file.public_url(@deployment.url), target: :_blank, class: 'btn btn-sm btn-success' do
-              ' Download File
-              = icon 'external-link'
-          - else
-            => link_to [:download, @website, @branch, @static_file], class: 'btn btn-sm btn-success' do
-              => icon 'cloud-download'
-              | Download File
-          => link_to [:new, @website, @branch, @static_file, :move], class: 'btn btn-sm btn-primary' do
-            ' Rename
-            = icon 'arrow-circle-o-right'
-          = link_to [:delete, @website, @branch, @static_file], class: 'btn btn-sm btn-danger' do
-            => icon 'trash'
-            | Delete
-      .row
-        .col-sm-7
-          .column-header
-            h2 Public Activity
-          .text-center style="background-color: #eee; height: 16em;"
-        .col-sm-5
-          .column-header
-            h2 Commit History
-          ol.list-unstyled.commits
-            = render @commits, website: @website
-          .text-right style="margin-top:2em"
-            = link_to [@website, @branch, @static_file, :commits], class: 'btn btn-sm btn-default' do
-              ' View Entire History
-              = icon 'angle-double-right'
+= layout :blob, website: @website, branch: @branch, blob: @static_file do
+  .row
+    .col-sm-8
+      .blob-icon-lg
+        => icon 'file-o fa-4x'
+        span.label.label-primary FILE
+      h1: code.code-text = @static_file.filename
+      code.small = @static_file.full_pathname
+    .col-sm-4.text-right
+      - if @deployment && @deployment.success?
+        => link_to @static_file.public_url(@deployment.url), target: :_blank, class: 'btn btn-sm btn-success' do
+          ' Download File
+          = icon 'external-link'
+      - else
+        => link_to [:download, @website, @branch, @static_file], class: 'btn btn-sm btn-success' do
+          => icon 'cloud-download'
+          | Download File
+      => link_to [:new, @website, @branch, @static_file, :move], class: 'btn btn-sm btn-primary' do
+        ' Rename
+        = icon 'arrow-circle-o-right'
+      = link_to [:delete, @website, @branch, @static_file], class: 'btn btn-sm btn-danger' do
+        => icon 'trash'
+        | Delete
+  .row
+    .col-sm-7
+      .column-header
+        h2 Public Activity
+      .text-center style="background-color: #eee; height: 16em;"
+    .col-sm-5
+      .column-header
+        h2 Commit History
+      ol.list-unstyled.commits
+        = render @commits, website: @website
+      .text-right style="margin-top:2em"
+        = link_to [@website, @branch, @static_file, :commits], class: 'btn btn-sm btn-default' do
+          ' View Entire History
+          = icon 'angle-double-right'

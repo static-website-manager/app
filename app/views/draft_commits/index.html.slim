@@ -1,22 +1,6 @@
-- @_body_container = false
 - title website_name: @website.name, branch_name: @branch.title(current_user), filename: @draft.pretty_pathname
 
-.blob-container
-  .blob-header
-    .container-fluid
-      => link_to [@website, @branch, :drafts], class: 'logo-small-back-container' do
-        => icon 'reply'
-        => image_tag 'logo-small.png', alt: 'Static Website Manager', class: 'logo-small'
-      ul.nav.nav-tabs
-        li = link_to 'Overview', [@website, @branch, @draft]
-        li = link_to 'Edit', [:edit, @website, @branch, @draft]
-        li.active = link_to 'History', [@website, @branch, @draft, :commits]
-  .container-fluid
-    .blob-content
-      .blob-icon-sm
-        span.label.label-primary DRAFT
-      h1: code.code-text = @draft.pretty_pathname
-      hr
-      ol.list-unstyled.commits
-        = render @commits, website: @website
-      = render partial: 'pagination', object: @commits
+= layout :blob, website: @website, branch: @branch, blob: @draft, filename: @draft.pretty_pathname do
+  ol.list-unstyled.commits
+    = render @commits, website: @website
+  = render partial: 'pagination', object: @commits

@@ -1,0 +1,22 @@
+- @_body_container = false
+.blob-container
+  .blob-header
+    .container-fluid
+      => link_to [website, branch, blob.class.name.pluralize.underscore.to_sym], class: 'logo-small-back-container' do
+        => icon 'reply'
+        => image_tag 'logo-small.png', alt: 'Static Website Manager', class: 'logo-small'
+      ul.nav.nav-tabs
+        li class=('active' if current_page?([website, branch, blob])) = link_to 'Overview', [website, branch, blob]
+        - if blob.is_a?(StaticFile)
+          li class=('active' if current_page?([:preview, website, branch, blob])) = link_to 'Preview', [:preview, website, branch, blob]
+        - else
+          li class=('active' if current_page?([:edit, website, branch, blob])) = link_to 'Edit', [:edit, website, branch, blob]
+        li class=('active' if current_page?([website, branch, blob, :commits])) = link_to 'History', [website, branch, blob, :commits]
+  .container-fluid
+    .blob-content
+      - if defined?(filename) && filename.present?
+        .blob-icon-sm
+          span.label.label-primary = blob.class.name.upcase
+        h1: code.code-text = filename
+        hr
+      = yield

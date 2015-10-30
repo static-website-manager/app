@@ -1,26 +1,10 @@
-- @_body_container = false
 - title website_name: @website.name, branch_name: @branch.title(current_user), filename: @static_file.full_pathname
 
-.blob-container
-  .blob-header
-    .container-fluid
-      => link_to [@website, @branch, :static_files], class: 'logo-small-back-container' do
-        => icon 'reply'
-        => image_tag 'logo-small.png', alt: 'Static Website Manager', class: 'logo-small'
-      ul.nav.nav-tabs
-        li = link_to 'Overview', [@website, @branch, @static_file]
-        li.active = link_to 'Preview', [:preview, @website, @branch, @static_file]
-        li = link_to 'History', [@website, @branch, @static_file, :commits]
-  .container-fluid
-    .blob-content
-      .blob-icon-sm
-        span.label.label-primary FILE
-      h1: code.code-text = @static_file.full_pathname
-      hr
-      - if @static_file.image?
-        .text-center style="background: url('#{image_path('checkers.png')}') repeat; padding: 2em 0"
-          = image_tag "data:image/png;base64,#{Base64.strict_encode64(@static_file.raw_content)}", alt: ''
-      - else
-        css:
-          #{Rouge::Themes::Github.render(scope: '.highlight')}
-        = Rouge::Formatters::HTML.new(css_class: 'highlight').format(Rouge::Lexers::Shell.new.lex(@static_file.raw_text)).html_safe
+= layout :blob, website: @website, branch: @branch, blob: @static_file, filename: @static_file.full_pathname do
+  - if @static_file.image?
+    .text-center style="background: url('#{image_path('checkers.png')}') repeat; padding: 2em 0"
+      = image_tag "data:image/png;base64,#{Base64.strict_encode64(@static_file.raw_content)}", alt: ''
+  - else
+    css:
+      #{Rouge::Themes::Github.render(scope: '.highlight')}
+    = Rouge::Formatters::HTML.new(css_class: 'highlight').format(Rouge::Lexers::Shell.new.lex(@static_file.raw_text)).html_safe
