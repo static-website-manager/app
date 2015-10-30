@@ -1,30 +1,26 @@
 - title website_name: @website.name, branch_name: @branch.title(current_user)
 
-= render partial: 'websites/header', locals: { website: @website }
-= render partial: 'branches/header', locals: { website: @website, repository: @repository, branch: @branch, deployment: @deployment }
-= render partial: 'branches/nav', locals: { website: @website, branch: @branch }
-
-div class=(@posts.any? ? 'clearfix' : '')
-  .pull-right style="position:relative; z-index:1"
-    => link_to '/help#posts', target: :_blank, class: 'btn btn-sm btn-default' do
-      ' Help with Posts
-      = icon 'question-circle'
-    = link_to [:new, @website, @branch, :post], class: 'btn btn-sm btn-primary' do
-      => icon 'plus-circle'
-      | Add Post
+= layout :branch, website: @website, repository: @repository, branch: @branch, deployment: @deployment do
+  div class=(@posts.any? ? 'clearfix' : '')
+    .pull-right style="position:relative; z-index:1"
+      => link_to '/help#posts', target: :_blank, class: 'btn btn-sm btn-default' do
+        ' Help with Posts
+        = icon 'question-circle'
+      = link_to [:new, @website, @branch, :post], class: 'btn btn-sm btn-primary' do
+        => icon 'plus-circle'
+        | Add Post
+    - if @posts.any?
+      = page_entries_info @posts, entry_name: 'Post'
   - if @posts.any?
-    = page_entries_info @posts, entry_name: 'Post'
-
-- if @posts.any?
-  .table-responsive style="margin-top:1em"
-    table.table.table-bordered.table-striped.table-hover.posts
-      thead
-        tr
-          th Title
-          th Published
-          th Pathname
-      tbody
-        = render @posts, website: @website, branch: @branch
-  = paginate @posts
-- else
-  p No Posts Found
+    .table-responsive style="margin-top:1em"
+      table.table.table-bordered.table-striped.table-hover.posts
+        thead
+          tr
+            th Title
+            th Published
+            th Pathname
+        tbody
+          = render @posts, website: @website, branch: @branch
+    = paginate @posts
+  - else
+    p No Posts Found

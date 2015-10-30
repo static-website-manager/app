@@ -1,8 +1,5 @@
 - title website_name: @website.name, branch_name: @branch.title(current_user)
 
-= render partial: 'websites/header', locals: { website: @website }
-= render partial: 'branches/header', locals: { website: @website, repository: @repository, branch: @branch, deployment: @deployment }
-= render partial: 'branches/nav', locals: { website: @website, branch: @branch }
-
-.alert.alert-warning
-  h1.h5: em Layout &amp; Design Coming Soon
+= layout :branch, website: @website, repository: @repository, branch: @branch, deployment: @deployment do
+  .alert.alert-warning
+    h1.h5: em Layout &amp; Design Coming Soon

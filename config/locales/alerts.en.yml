@@ -162,7 +162,7 @@ en:
     create:
       alert: There was a problem subscribing your account.
       notice: Welcome to Static Website Manager!
-  subscriptions:
+  websites:
     create:
       alert: There was adding your website.
       notice: Welcome to your new website!

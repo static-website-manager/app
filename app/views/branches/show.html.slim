@@ -1,52 +1,48 @@
 - title website_name: @website.name, branch_name: @branch.title(current_user)
 
-= render partial: 'websites/header', locals: { website: @website }
-= render partial: 'branches/header', locals: { website: @website, repository: @repository, branch: @branch, deployment: @deployment }
-= render partial: 'branches/nav', locals: { website: @website, branch: @branch }
-
-.clearfix
-  - if @branch.custom? && current_authorization.custom_branch_access?
-    .pull-right
-      => link_to [:new, @website, @branch, :move], class: 'btn btn-sm btn-primary' do
-        ' Rename Branch
-        = icon 'arrow-circle-o-right'
-      = link_to [:delete, @website, @branch], class: 'btn btn-sm btn-danger' do
-        => icon 'trash'
-        | Delete
-  - if @deployment && @deployment.success?
-    p.text-muted
-      ' Branch successfully deployed
-      => time_ago_in_words @deployment.updated_at
-      | ago
-    p
-      => link_to @deployment.url, target: :_blank, class: 'btn btn-xs btn-success' do
-        ' View Public Website
-        = icon 'external-link'
-      = link_to 'Make Branch Private', [:delete, @website, @branch, @deployment], class: 'btn btn-xs btn-link'
-  - elsif @deployment
-    p.text-muted
-      span.text-danger = @deployment.response_message
-    p
-      => link_to @deployment.url, target: :_blank, class: 'btn btn-xs btn-primary disabled' do
-        ' View Public Website
-        = icon 'external-link'
-      = link_to 'Make Branch Private', [:delete, @website, @branch, @deployment], class: 'btn btn-sm btn-link'
-  - else
-    p.text-muted
-      ' This branch is not deployed to a public URL
-    p = link_to 'Publish Branch', [:new, @website, @branch, :deployment], class: 'btn btn-xs btn-success'
-
-.row style="margin-top: 3em"
-  .col-sm-7
-    .column-header
-      h2 Public Activity
-    .text-center style="background-color: #eee; height: 16em;"
-  .col-sm-5
-    .column-header
-      h2 Commit History
-    ol.list-unstyled.commits
-      = render @commits, website: @website
-    .text-right style="margin-top:2em"
-      = link_to [@website, @branch, :commits], class: 'btn btn-sm btn-default' do
-        ' View Entire History
-        = icon 'angle-double-right'
+= layout :branch, website: @website, repository: @repository, branch: @branch, deployment: @deployment do
+  .clearfix
+    - if @branch.custom? && current_authorization.custom_branch_access?
+      .pull-right
+        => link_to [:new, @website, @branch, :move], class: 'btn btn-sm btn-primary' do
+          ' Rename Branch
+          = icon 'arrow-circle-o-right'
+        = link_to [:delete, @website, @branch], class: 'btn btn-sm btn-danger' do
+          => icon 'trash'
+          | Delete
+    - if @deployment && @deployment.success?
+      p.text-muted
+        ' Branch successfully deployed
+        => time_ago_in_words @deployment.updated_at
+        | ago
+      p
+        => link_to @deployment.url, target: :_blank, class: 'btn btn-xs btn-success' do
+          ' View Public Website
+          = icon 'external-link'
+        = link_to 'Make Branch Private', [:delete, @website, @branch, @deployment], class: 'btn btn-xs btn-link'
+    - elsif @deployment
+      p.text-muted
+        span.text-danger = @deployment.response_message
+      p
+        => link_to @deployment.url, target: :_blank, class: 'btn btn-xs btn-primary disabled' do
+          ' View Public Website
+          = icon 'external-link'
+        = link_to 'Make Branch Private', [:delete, @website, @branch, @deployment], class: 'btn btn-sm btn-link'
+    - else
+      p.text-muted
+        ' This branch is not deployed to a public URL
+      p = link_to 'Publish Branch', [:new, @website, @branch, :deployment], class: 'btn btn-xs btn-success'
+  .row style="margin-top: 3em"
+    .col-sm-7
+      .column-header
+        h2 Public Activity
+      .text-center style="background-color: #eee; height: 16em;"
+    .col-sm-5
+      .column-header
+        h2 Commit History
+      ol.list-unstyled.commits
+        = render @commits, website: @website
+      .text-right style="margin-top:2em"
+        = link_to [@website, @branch, :commits], class: 'btn btn-sm btn-default' do
+          ' View Entire History
+          = icon 'angle-double-right'

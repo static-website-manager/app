@@ -1,55 +1,55 @@
 - title
 
-= render partial: 'websites/header', locals: { website: @website }
-.text-center
-  p#website_setup_check.text-muted data-url=url_for([@website, :setup_check])
-    = icon 'spinner fa-spin fa-2x'
-    span style="margin-left: 0.5em; vertical-align: 40%;" Waiting for your website to be pushed to the our git repository...
-  - if current_authorization.account_owner?
-    .row
-      .col-sm-8.col-sm-offset-2.col-md-6.col-md-offset-3
-        .panel.panel-default style="margin: 2em 0 4em"
-          .panel-heading
-            h1.panel-title How to Setup your Website
-          .panel-body
-            .text-left
-              - if @authentication.persisted?
-                p
-                  ' 1.
-                  span.text-success
-                  ' SSH Public Key Saved
-                  => icon 'check-circle text-success'
-                  span style="margin:0 0.3em" –
-                  = link_to 'Edit Key', :edit_account
-              - else
-                = form_for @authentication, url: [@website, :setup_authentication] do |form|
-                  .form-group
-                    = form.label :public_key, '1. Save Your SSH Public Key', class: 'control-label'
-                    = form.text_area :public_key, rows: 6, class: 'form-control'
-                    p.help-block For help generating your SSH key, see GitHub’s #{link_to 'helpful guide', 'https://help.github.com/articles/generating-ssh-keys/', target: :_blank}, but paste your key here instead of following Step 4.
-                  = form.button 'Save Key', class: 'btn btn-success'
-              hr
-              p
-                ' 2.
+= layout :website, website: @website do
+  .text-center
+    p#website_setup_check.text-muted data-url=url_for([@website, :setup_check])
+      = icon 'spinner fa-spin fa-2x'
+      span style="margin-left: 0.5em; vertical-align: 40%;" Waiting for your website to be pushed to the our git repository...
+    - if current_authorization.account_owner?
+      .row
+        .col-sm-8.col-sm-offset-2.col-md-6.col-md-offset-3
+          .panel.panel-default style="margin: 2em 0 4em"
+            .panel-heading
+              h1.panel-title How to Setup your Website
+            .panel-body
+              .text-left
                 - if @authentication.persisted?
-                  strong Push your existing git repository to Static Website Manager
+                  p
+                    ' 1.
+                    span.text-success
+                    ' SSH Public Key Saved
+                    => icon 'check-circle text-success'
+                    span style="margin:0 0.3em" –
+                    = link_to 'Edit Key', :edit_account
                 - else
-                  span Push your existing git repository to Static Website Manager
-              pre
-                code = "git remote add static ssh://root@#{Rails.application.secrets.host}:222/#{@website.id}.git\ngit push -u static master".html_safe
-        h2.h5.text-muted
-          ' Need help? Ask a team member to help with the initial setup
-          = link_to 'Invite Team Member', [:new, @website, :setup_authorization], class: 'btn btn-xs btn-primary'
-        - if @team_members.any?
-          table.table.table-bordered.table-striped.text-left style="margin-top: 2em"
-            thead
-              tr
-                th Team Member
-                th Email Address
-                th Confirmed?
-            tbody
-              - @team_members.each do |team_member|
+                  = form_for @authentication, url: [@website, :setup_authentication] do |form|
+                    .form-group
+                      = form.label :public_key, '1. Save Your SSH Public Key', class: 'control-label'
+                      = form.text_area :public_key, rows: 6, class: 'form-control'
+                      p.help-block For help generating your SSH key, see GitHub’s #{link_to 'helpful guide', 'https://help.github.com/articles/generating-ssh-keys/', target: :_blank}, but paste your key here instead of following Step 4.
+                    = form.button 'Save Key', class: 'btn btn-success'
+                hr
+                p
+                  ' 2.
+                  - if @authentication.persisted?
+                    strong Push your existing git repository to Static Website Manager
+                  - else
+                    span Push your existing git repository to Static Website Manager
+                pre
+                  code = "git remote add static ssh://root@#{Rails.application.secrets.host}:222/#{@website.id}.git\ngit push -u static master".html_safe
+          h2.h5.text-muted
+            ' Need help? Ask a team member to help with the initial setup
+            = link_to 'Invite Team Member', [:new, @website, :setup_authorization], class: 'btn btn-xs btn-primary'
+          - if @team_members.any?
+            table.table.table-bordered.table-striped.text-left style="margin-top: 2em"
+              thead
                 tr
-                  td = team_member.name
-                  td = team_member.email
-                  td = team_member.confirmed? ? content_tag(:strong, 'Yes') : 'No'
+                  th Team Member
+                  th Email Address
+                  th Confirmed?
+              tbody
+                - @team_members.each do |team_member|
+                  tr
+                    td = team_member.name
+                    td = team_member.email
+                    td = team_member.confirmed? ? content_tag(:strong, 'Yes') : 'No'

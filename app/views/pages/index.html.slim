@@ -1,19 +1,15 @@
 - title website_name: @website.name, branch_name: @branch.title(current_user)
 
-= render partial: 'websites/header', locals: { website: @website }
-= render partial: 'branches/header', locals: { website: @website, repository: @repository, branch: @branch, deployment: @deployment }
-= render partial: 'branches/nav', locals: { website: @website, branch: @branch }
-
-.pull-right style="position:relative; z-index:1"
-  => link_to '/help#pages', target: :_blank, class: 'btn btn-sm btn-default' do
-    ' Help with Pages
-    = icon 'question-circle'
-  = link_to [:new, @website, @branch, :page], class: 'btn btn-sm btn-primary' do
-    => icon 'plus-circle'
-    | Add Page
-
-- if @pages.any?
-  ul.list-unstyled.pages
-    = render @pages, website: @website, branch: @branch, level: 1
-- else
-  p No Pages Found
+= layout :branch, website: @website, repository: @repository, branch: @branch, deployment: @deployment do
+  .pull-right style="position:relative; z-index:1"
+    => link_to '/help#pages', target: :_blank, class: 'btn btn-sm btn-default' do
+      ' Help with Pages
+      = icon 'question-circle'
+    = link_to [:new, @website, @branch, :page], class: 'btn btn-sm btn-primary' do
+      => icon 'plus-circle'
+      | Add Page
+  - if @pages.any?
+    ul.list-unstyled.pages
+      = render @pages, website: @website, branch: @branch, level: 1
+  - else
+    p No Pages Found

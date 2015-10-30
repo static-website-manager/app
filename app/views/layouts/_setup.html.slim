@@ -1,0 +1,18 @@
+.header
+  .pull-right
+    - if current_authorization.account_owner?
+      .btn-group
+        = link_to icon('users'), [website, :authorizations], class: 'btn btn-sm btn-default', title: 'Team Members'
+        = link_to icon('gears'), [:edit, website, :settings], class: 'btn btn-sm btn-default', title: 'Website Settings'
+    .btn-group
+      = link_to icon('user'), :edit_account, class: 'btn btn-sm btn-default', title: 'Your Account'
+    .btn-group
+      = link_to icon('question-circle'), '/help', target: :_blank, class: 'btn btn-sm btn-default', title: 'Help &amp; Documentation'.html_safe
+    .btn-group
+      = form_tag :sign_out, method: :delete do
+        = button_tag icon('sign-out'), class: 'btn btn-sm btn-default', title: 'Sign Out'
+  => link_to :websites do
+    = image_tag 'logo-small.png', alt: 'Static Website Manager', class: 'logo-small'
+  => icon 'angle-double-right'
+  strong.lead = website.name
+= yield

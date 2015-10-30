@@ -1,23 +1,11 @@
 - title
 
-.header
-  .pull-right
-    .btn-group
-      = link_to icon('user'), :edit_account, class: 'btn btn-sm btn-default', title: 'Your Account'
-    .btn-group
-      = link_to icon('question-circle'), '/help', target: :_blank, class: 'btn btn-sm btn-default', title: 'Help &amp; Documentation'.html_safe
-    .btn-group
-      = form_tag :sign_out, method: :delete do
-        = button_tag icon('sign-out'), class: 'btn btn-sm btn-default', title: 'Sign Out'
-  h1.lead
-    => image_tag 'logo-small.png', alt: 'Static Website Manager', class: 'logo-small'
-    | Your Websites
-
-ul.list-unstyled.websites.row
-  = render @websites
-  li.col-sm-6.col-md-4.col-lg-3.new-website
-    = link_to :new_website do
-      => icon 'cube fa-4x'
-      h2
-        => icon 'plus-circle'
-        | New Website
+= layout :website do
+  ul.list-unstyled.websites.row
+    = render @websites
+    li.col-sm-6.col-md-4.col-lg-3.new-website
+      = link_to :new_website do
+        => icon 'cube fa-4x'
+        h2
+          => icon 'plus-circle'
+          | New Website
