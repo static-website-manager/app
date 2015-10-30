@@ -27,23 +27,7 @@ class Branch
         name: name,
         rugged_repository: rugged_repository,
         rugged_branch: rugged_repository.branches.create(name, 'master'),
-      ).tap do |branch|
-        website = Website.find_by_id(website_id)
-
-        if website
-          deployments = website.deployments.where(branch_name: name)
-
-          if website.auto_deploy_staging?
-            deployment = deployments.first_or_create
-          else
-            deployment = deployments.first
-          end
-
-          if deployment
-            JekyllBuildJob.perform_later(deployment)
-          end
-        end
-      end
+      )
     else
       raise ActiveRecord::RecordNotFound
     end
@@ -96,7 +80,7 @@ class Branch
     Branch.markdown_extensions
   end
 
-  def merge(branch, user_email, user_name, commit_message, deployment = nil)
+  def merge(branch, user_email, user_name, commit_message)
     raise ArgumentError unless branch.present?
     raise ArgumentError unless user_email.present?
     raise ArgumentError unless user_name.present?
@@ -122,12 +106,6 @@ class Branch
       })
     rescue
       merge_commit_id = nil
-    end
-
-    if merge_commit_id.present?
-      if deployment
-        JekyllBuildJob.perform_later(deployment)
-      end
     end
 
     merge_commit_id.present?

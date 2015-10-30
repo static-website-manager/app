@@ -25,7 +25,8 @@ class PostsController < ApplicationController
     filename = [params[:post].try(:[], :basepath).to_s.split('/').last, params[:post].try(:[], :extension)].reject(&:blank?).join('.')
     @post.full_pathname = ['_posts', pathname, [publication_date.strftime('%Y-%m-%d'), filename].reject(&:blank?).join('-')].reject(&:blank?).join('/')
 
-    if @post.save(@branch.name, current_user.email, current_user.name, commit_message, @deployment)
+    if @post.save(@branch.name, current_user.email, current_user.name, commit_message)
+      JekyllBuildJob.perform_later(@deployment) if @deployment
       redirect_to [:edit, @website, @branch, @post], notice: t('.notice')
     else
       flash.now.alert = t('.alert')
@@ -44,7 +45,8 @@ class PostsController < ApplicationController
 
     if @post.unchanged?
       redirect_to [@website, @branch, @post], alert: t('.alert_unchanged')
-    elsif @post.save(@branch.name, current_user.email, current_user.name, commit_message, @deployment)
+    elsif @post.save(@branch.name, current_user.email, current_user.name, commit_message)
+      JekyllBuildJob.perform_later(@deployment) if @deployment
       redirect_to [@website, @branch, @post], notice: t('.notice')
     else
       flash.now.alert = t('.alert')
@@ -55,7 +57,8 @@ class PostsController < ApplicationController
   def destroy
     commit_message = params[:message].present? ? params[:message] : t('.message', filename: @post.pretty_pathname)
 
-    if @post.destroy(@branch.name, current_user.email, current_user.name, commit_message, @deployment)
+    if @post.destroy(@branch.name, current_user.email, current_user.name, commit_message)
+      JekyllBuildJob.perform_later(@deployment) if @deployment
       redirect_to [@website, @branch, :posts], notice: t('.notice')
     else
       flash.now.alert = t('.alert')

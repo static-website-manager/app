@@ -29,6 +29,7 @@ en:
       alert_missing: Source branch must already be a local branch.
       alert_ours: Custom branch must not be the production branch (master) or a Static Website Manager staging branch.
       alert_same: Custom branch must not already exist.
+      alert: There was a problem creating your custom branch.
       notice: Ok, your new branch is ready to use.
   deployments:
     create:

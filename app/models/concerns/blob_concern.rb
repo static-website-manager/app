@@ -118,7 +118,7 @@ module BlobConcern
 
   private
 
-  def perform_git_operation(branch_name, author_email, author_name, commit_message, deployment = nil)
+  def perform_git_operation(branch_name, author_email, author_name, commit_message)
     raise ArgumentError unless rugged_repository.present?
     raise ArgumentError unless branch_name.present?
     raise ArgumentError unless author_name.present?
@@ -156,10 +156,6 @@ module BlobConcern
       )
 
       system("git push origin #{branch_name}", chdir: clone_path.to_s)
-
-      if deployment
-        JekyllBuildJob.perform_later(deployment)
-      end
 
       changes_applied
       true

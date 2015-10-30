@@ -15,6 +15,7 @@ class DeploymentsController < ApplicationController
 
   def create
     if @deployment.save
+      JekyllBuildJob.perform_later(@deployment)
       redirect_to session[:return_to] || [@website, @branch], notice: t('.notice')
     else
       flash.not.alert = t('.alert')

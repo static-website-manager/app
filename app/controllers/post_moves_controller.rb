@@ -13,7 +13,8 @@ class PostMovesController < ApplicationController
     commit_message = params[:message].present? ? params[:message] : t('.message', filename: @post.filename_was)
     @post.full_pathname = [params[:post].try(:[], :basepath), params[:post].try(:[], :extension)].reject(&:blank?).join('.')
 
-    if @post.save(@branch.name, current_user.email, current_user.name, commit_message, @deployment)
+    if @post.save(@branch.name, current_user.email, current_user.name, commit_message)
+      JekyllBuildJob.perform_later(@deployment) if @deployment
       redirect_to [@website, @branch, @post], notice: t('.notice')
     else
       flash.now.alert = t('.alert')

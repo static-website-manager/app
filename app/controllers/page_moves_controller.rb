@@ -14,7 +14,8 @@ class PageMovesController < ApplicationController
     commit_message = params[:message].present? ? params[:message] : t('.message', filename: @page.filename_was)
     @page.full_pathname = [params[:page].try(:[], :basepath), params[:page].try(:[], :extension)].reject(&:blank?).join('.')
 
-    if @page.save(@branch.name, current_user.email, current_user.name, commit_message, @deployment)
+    if @page.save(@branch.name, current_user.email, current_user.name, commit_message)
+      JekyllBuildJob.perform_later(@deployment) if @deployment
       redirect_to [@website, @branch, @page], notice: t('.notice')
     else
       flash.now.alert = t('.alert')

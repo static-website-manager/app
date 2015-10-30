@@ -22,7 +22,8 @@ class StaticFilesController < ApplicationController
   def destroy
     commit_message = params[:message].present? ? params[:message] : t('.message', filename: @static_file.full_pathname)
 
-    if @static_file.destroy(@branch.name, current_user.email, current_user.name, commit_message, @deployment)
+    if @static_file.destroy(@branch.name, current_user.email, current_user.name, commit_message)
+      JekyllBuildJob.perform_later(@deployment) if @deployment
       redirect_to [@website, @branch, :static_files], notice: t('.notice')
     else
       flash.now.alert = t('.alert')
