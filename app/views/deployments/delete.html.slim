@@ -1,11 +1,11 @@
-- title 'Remove Public URL'
+- title website_name: @website.name, branch_name: @branch.title(current_user)
 
 .header.header-center
   h1.lead
     = link_to session[:return_to] || [@website, @branch], class: 'logo-small-back-container' do
       => icon 'reply'
       => image_tag 'logo-small.png', alt: 'Static Website Manager', class: 'logo-small'
-    | | Remove Public URL
+    | | Delete Public Website
 .row
   .col-sm-8.col-sm-offset-2.col-md-6.col-md-offset-3
     = form_tag [@website, @branch, :deployment], method: :delete do
@@ -20,4 +20,4 @@
             = link_to content_tag(:code, @deployment.url), @deployment.url, target: :_blank
             | and the delete the URL.
         .panel-footer.text-center
-          = button_tag 'Remove Public URL', class: 'btn btn-danger'
+          = button_tag 'Delete Public Website', class: 'btn btn-danger'

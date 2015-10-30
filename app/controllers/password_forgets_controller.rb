@@ -6,7 +6,7 @@ class PasswordForgetsController < ApplicationController
 
     if user
       UserMailer.password_reset(user).deliver_later
-      redirect_to '/', notice: 'Great! A password reset email is on the way.'
+      redirect_to :new_session, notice: 'Great! A password reset email is on the way.'
     else
       flash.now.alert = 'We could not find anyone with that email address.'
       render :new, status: 422

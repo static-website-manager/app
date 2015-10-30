@@ -1,6 +1,6 @@
 module LayoutHelper
-  def title(*args)
-    content_for(:title, *args)
+  def title(locals = {})
+    content_for(:title, t('.title', locals))
   end
 
   def description(*args)

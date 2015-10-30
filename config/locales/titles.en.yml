@@ -1,0 +1,144 @@
+en:
+  accounts:
+    edit:
+      title: Edit Account Information • Static Website Manager
+  authorizations:
+    index:
+      title: Manage Team • %{website_name}
+    new:
+      title: Invite Team Member • %{website_name}
+    edit:
+      title: Edit Team Member Permissions • %{website_name}
+  branch_commits:
+    index:
+      title: History • %{branch_name} • %{website_name}
+  branch_moves:
+    new:
+      title: Rename Branch • %{branch_name} • %{website_name}
+  branches:
+    show:
+      title: '%{branch_name} • %{website_name}'
+    delete:
+      title: Delete • %{branch_name} • %{website_name}
+  checkouts:
+    new:
+      title: Checkout • %{branch_name} • %{website_name}
+  collections:
+    index:
+      title: Collections • %{branch_name} • %{website_name}
+  commits:
+    show:
+      title: Commit %{commit_id} • %{website_name}
+  deployments:
+    new:
+      title: Publish Branch • %{branch_name} • %{website_name}
+    delete:
+      title: Delete Published Website • %{branch_name} • %{website_name}
+  designs:
+    show:
+      title: Design • %{branch_name} • %{website_name}
+  draft_commits:
+    index:
+      title: Draft “%{filename}” History • %{branch_name} • %{website_name}
+  draft_moves:
+    new:
+      title: Rename Draft “%{filename}” • %{branch_name} • %{website_name}
+  draft_publications:
+    new:
+      title: Publish Draft “%{filename}” • %{branch_name} • %{website_name}
+  drafts:
+    index:
+      title: Drafts • %{branch_name} • %{website_name}
+    new:
+      title: New Draft • %{branch_name} • %{website_name}
+    show:
+      title: Draft “%{filename}” • %{branch_name} • %{website_name}
+    edit:
+      title: Edit Draft “%{filename}” • %{branch_name} • %{website_name}
+    delete:
+      title: Delete Draft “%{filename}” • %{branch_name} • %{website_name}
+  email_confirmations:
+    new:
+      title: Resend Confirmation Email • Static Website Manager
+  merges:
+    new:
+      title: Push Changes • %{branch_name} • %{website_name}
+  page_commits:
+    index:
+      title: Page “%{filename}” History • %{branch_name} • %{website_name}
+  page_moves:
+    new:
+      title: Rename Page “%{filename}” • %{branch_name} • %{website_name}
+  pages:
+    index:
+      title: Pages • %{branch_name} • %{website_name}
+    new:
+      title: New Page • %{branch_name} • %{website_name}
+    show:
+      title: Page “%{filename}” • %{branch_name} • %{website_name}
+    edit:
+      title: Edit Page “%{filename}” • %{branch_name} • %{website_name}
+    delete:
+      title: Delete Page “%{filename}” • %{branch_name} • %{website_name}
+  password_forgets:
+    new:
+      title: Reset Your Password • Static Website Manager
+  password_resets:
+    edit:
+      title: Reset Your Password • Static Website Manager
+  post_commits:
+    index:
+      title: Post “%{filename}” History • %{branch_name} • %{website_name}
+  post_moves:
+    new:
+      title: Rename Post “%{filename}” • %{branch_name} • %{website_name}
+  posts:
+    index:
+      title: Posts • %{branch_name} • %{website_name}
+    new:
+      title: New Post • %{branch_name} • %{website_name}
+    show:
+      title: Post “%{filename}” • %{branch_name} • %{website_name}
+    edit:
+      title: Edit Post “%{filename}” • %{branch_name} • %{website_name}
+    delete:
+      title: Delete Post “%{filename}” • %{branch_name} • %{website_name}
+  rebases:
+    new:
+      title: Pull Changes • %{branch_name} • %{website_name}
+  sessions:
+    new:
+      title: Sign In • Static Website Manager
+  settings:
+    edit:
+      title: Edit Settings • %{website_name}
+  setup_authorizations:
+    new:
+      title: Invite Team Member • Static Website Manager
+  setups:
+    show:
+      title: Setup Your Website • Static Website Manager
+  static_file_commits:
+    index:
+      title: File “%{filename}” History • %{branch_name} • %{website_name}
+  static_file_moves:
+    new:
+      title: Rename File “%{filename}” • %{branch_name} • %{website_name}
+  static_file_previews:
+    show:
+      title: Preview File “%{filename}” • %{branch_name} • %{website_name}
+  static_files:
+    index:
+      title: Files • %{branch_name} • %{website_name}
+    show:
+      title: File “%{filename}” • %{branch_name} • %{website_name}
+    delete:
+      title: Delete File “%{filename}” • %{branch_name} • %{website_name}
+  subscriptions:
+    new:
+      title: Subscribe • Static Website Manager
+  websites:
+    index:
+      title: Your Websites • Static Website Manager
+    new:
+      title: Subscribe • Static Website Manager

@@ -1,5 +1,5 @@
 - @_body_container = false
-- title "Draft History #{@draft.short_id} • #{@branch.title(current_user)}"
+- title website_name: @website.name, branch_name: @branch.title(current_user), filename: @draft.pretty_pathname
 
 .blob-container
   .blob-header
