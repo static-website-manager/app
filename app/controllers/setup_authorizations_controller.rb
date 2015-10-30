@@ -30,6 +30,7 @@ class SetupAuthorizationsController < ApplicationController
     end
 
     if @authorization.save
+      UserMailer.authorization_invitation(@authorization).deliver_later
       redirect_to [@website, :setup], notice: t('.notice_html', email: @authorization.user.email)
     else
       flash.now.alert = 'There was a problem inviting your team member.'

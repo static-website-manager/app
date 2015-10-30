@@ -1,0 +1,6 @@
+p Welcome! You have been invited to help manage the <strong>#{@website.name}</strong> website at Static Website Manager.
+
+- if @user.confirmed?
+  p = link_to 'Manage Website', website_url(@website)
+- else
+  p Please #{link_to 'click here to confirm your email address', email_confirmation_url(token: @user.email_confirmation_token!)} and get started, thanks!

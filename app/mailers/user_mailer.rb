@@ -1,4 +1,10 @@
 class UserMailer < ApplicationMailer
+  def authorization_invitation(authorization)
+    @user = authorization.user
+    @website = authorization.website
+    mail to: @user.email, subject: "You have been invited to manage “#{@website.name}”"
+  end
+
   def email_confirmation(user)
     @user = user
     mail to: user.email, subject: 'Please Confirm Your Email Address'

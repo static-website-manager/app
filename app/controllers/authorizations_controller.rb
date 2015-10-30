@@ -35,6 +35,7 @@ class AuthorizationsController < ApplicationController
     end
 
     if @authorization.save
+      UserMailer.authorization_invitation(@authorization).deliver_later
       redirect_to [@website, :authorizations], notice: t('.notice_html', email: @authorization.user.email)
     else
       flash.now.alert = t('.alert')
