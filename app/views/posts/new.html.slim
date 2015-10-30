@@ -3,7 +3,7 @@
 = layout :nest, heading: 'New Post', subheading: @branch.title(current_user), size: :md, return_to: [@website, @branch, :posts] do
   = errors_for @post
   = form_for [@website, @branch, @post] do |form|
-    = layout :panel, button: 'Save Post' do
+    = layout :panel, button: 'Save Post', commit_message: 'Add New Post' do
       .row
         .col-sm-9
           => form.label :basepath, class: 'control-label'
@@ -23,7 +23,3 @@
         .col-sm-4
           .form-group
             = number_field_tag :publication_day, params[:publication_day] || Time.zone.now.day, class: 'form-control'
-      hr
-      .form-group
-        = label_tag :message, 'Commit Message', class: 'control-label'
-        = text_field_tag :message, params[:message].nil? ? 'Add New Post' : params[:message], class: 'form-control'

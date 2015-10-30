@@ -3,7 +3,5 @@
 = layout :nest, heading: 'Delete Draft', size: :md, return_to: [@website, @branch, @draft] do
   = errors_for @draft
   = form_for [@website, @branch, @draft], method: :delete do |form|
-    = layout :panel, subheading: @draft.title, button: 'Delete Draft', danger: true do
-      .form-group
-        = label_tag :message, 'Commit Message', class: 'control-label'
-        = text_field_tag :message, params[:message].nil? ? "Delete Draft #{@draft.pretty_pathname}" : params[:message], class: 'form-control'
+    = layout :panel, subheading: @draft.title, button: 'Delete Draft', commit_message: "Delete Draft #{@draft.pretty_pathname}", danger: true do
+      p Are you sure?

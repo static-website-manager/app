@@ -3,7 +3,7 @@
 = layout :nest, heading: 'Publish Draft', size: :md, return_to: [@website, @branch, @draft] do
   = errors_for @draft
   = form_for @draft, url: [@website, @branch, @draft, :publication], method: :post do |form|
-    = layout :panel, button: 'Publish Draft', success: true do
+    = layout :panel, button: 'Publish Draft', commit_message: "Publish Draft #{@draft.filename}", success: true do
       p: strong Publication Date
       .row
         .col-sm-4

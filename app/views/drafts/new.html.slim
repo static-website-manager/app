@@ -3,7 +3,7 @@
 = layout :nest, heading: 'New Draft', subheading: @branch.title(current_user), size: :md, return_to: [@website, @branch, :drafts] do
   = errors_for @draft
   = form_for [@website, @branch, @draft] do |form|
-    = layout :panel, button: 'Save Draft' do
+    = layout :panel, button: 'Save Draft', commit_message: 'Add New Draft' do
       .row
         .col-sm-9
           => form.label :basepath, class: 'control-label'
@@ -11,7 +11,3 @@
         .col-sm-3
           => form.label :extension, class: 'control-label'
           = form.select :extension, options_for_select([['Markdown', 'md'], ['HTML', 'html']], form.object.extension), {}, class: 'form-control'
-      hr
-      .form-group
-        = label_tag :message, 'Commit Message', class: 'control-label'
-        = text_field_tag :message, params[:message].nil? ? 'Add New Draft' : params[:message], class: 'form-control'

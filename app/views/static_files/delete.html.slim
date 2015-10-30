@@ -3,7 +3,5 @@
 = layout :nest, heading: 'Delete File', size: :md, return_to: [@website, @branch, @static_file] do
   = errors_for @static_file
   = form_for [@website, @branch, @static_file], method: :delete do |form|
-    = layout :panel, subheading: @static_file.full_pathname, button: 'Delete File', danger: true do
-      .form-group
-        = label_tag :message, 'Commit Message', class: 'control-label'
-        = text_field_tag :message, params[:message].nil? ? "Delete File #{@static_file.full_pathname}" : params[:message], class: 'form-control'
+    = layout :panel, subheading: @static_file.full_pathname, button: 'Delete File', commit_message: "Delete File #{@static_file.full_pathname}", danger: true do
+      p Are you sure?

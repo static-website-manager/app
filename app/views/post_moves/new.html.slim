@@ -3,7 +3,7 @@
 = layout :nest, heading: 'Rename Post', size: :md, return_to: [@website, @branch, @post] do
   = errors_for @post
   = form_for @post, url: [@website, @branch, @post, :move], method: :post do |form|
-    = layout :panel, button: 'Rename Post' do
+    = layout :panel, button: 'Rename Post', commit_message: "Move Post #{@post.filename}" do
       .row
         .col-sm-9
           => form.label :basepath, class: 'control-label'
@@ -11,7 +11,3 @@
         .col-sm-3
           => form.label :extension, class: 'control-label'
           = form.select :extension, options_for_select([form.object.extension], form.object.extension), {}, class: 'form-control'
-      hr
-      .form-group
-        = label_tag :message, 'Commit Message', class: 'control-label'
-        = text_field_tag :message, params[:message].nil? ? "Move Post #{@post.filename}" : params[:message], class: 'form-control'

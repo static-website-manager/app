@@ -8,10 +8,25 @@
   .panel-body
     = yield
   - if defined?(button) && button.present?
-    .panel-footer.text-center
-      - if defined?(danger)
-        = button_tag button, class: 'btn btn-danger'
-      - elsif defined?(success)
-        = button_tag button, class: 'btn btn-success'
-      - else
-        = button_tag button, class: 'btn btn-primary'
+    - if defined?(commit_message) && commit_message.present?
+      .panel-footer.panel-footer-commit
+        .row
+          .col-sm-9
+            .form-group
+              = label_tag :message, 'Commit Message', class: 'control-label text-muted'
+              = text_field_tag :message, params[:message].present? ? params[:message] : commit_message, class: 'form-control'
+          .col-sm-3
+            - if defined?(danger)
+              = button_tag button, class: 'btn btn-block btn-danger'
+            - elsif defined?(success)
+              = button_tag button, class: 'btn btn-block btn-success'
+            - else
+              = button_tag button, class: 'btn btn-block btn-primary'
+    - else
+      .panel-footer.text-center
+        - if defined?(danger)
+          = button_tag button, class: 'btn btn-danger'
+        - elsif defined?(success)
+          = button_tag button, class: 'btn btn-success'
+        - else
+          = button_tag button, class: 'btn btn-primary'

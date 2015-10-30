@@ -8,12 +8,8 @@
           p: span.label.label-danger> #{pluralize @merge_index.conflicts.count, 'Merge Conflict'} Found
           p We are unable to process merge conflicts at this time. Please perform an offline merge or contact your designer.
     - else
-      = layout :panel, button: 'Push Changes' do
+      = layout :panel, button: 'Push Changes', commit_message: "Merge #{@branch.title(current_user)} Changes" do
         p This action will merge changes from your branch into #{@target.title(current_user)}.
-        hr
-        .form-group
-          = label_tag :message, 'Commit Message', class: 'control-label'
-          = text_field_tag :message, params[:message].present? ? params[:message] : "Merge #{@branch.title(current_user)} Changes", class: 'form-control'
       - @diff = @branch.diff(@target)
       p.small style="margin: 4em 0 0.5em"
         => pluralize @diff.rugged_diff.size, 'Change'
