@@ -132,7 +132,7 @@ en:
       notice: Great, we’ve successfully pulled in %{branch_name} changes.
   sessions:
     create:
-      alert_unchanged: We found your account, but need you to confirm your email address first.
+      alert_unconfirmed: We found your account, but need you to confirm your email address first.
       alert: We could not find anyone with those credentials.
       notice: Welcome back!
     destroy:

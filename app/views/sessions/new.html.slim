@@ -1,6 +1,6 @@
 - title
 
-- if @_user_confirmation_alert
+- if alert.present? && @user && !@user.confirmed?
   - content_for :alert do
     = link_to 'Resend Confirmation Email', :new_email_confirmation, class: 'btn btn-xs btn-success'
 
