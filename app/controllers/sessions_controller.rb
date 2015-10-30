@@ -20,6 +20,6 @@ class SessionsController < ApplicationController
 
   def destroy
     sign_out
-    redirect_to :root, notice: 'Goodbye, and thanks for your business.'
+    redirect_to '/', notice: 'Goodbye, and thanks for your business.'
   end
 end

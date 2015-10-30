@@ -8,7 +8,7 @@ class EmailConfirmationsController < ApplicationController
       redirect_to :new_session, notice: 'You’re already confirmed — sign in now.'
     elsif user
       UserMailer.email_confirmation(user).deliver_later
-      redirect_to :root, notice: 'Great! A confirmation email is on the way.'
+      redirect_to '/', notice: 'Great! A confirmation email is on the way.'
     else
       flash.now.alert = 'We could not find anyone with that email address.'
       render :new, status: 422
@@ -27,7 +27,7 @@ class EmailConfirmationsController < ApplicationController
     if current_user
       redirect_to :websites
     else
-      redirect_to :root
+      redirect_to '/'
     end
   end
 end

@@ -1,6 +1,4 @@
 Rails.application.routes.draw do
-  root to: 'marketings#root'
-
   resource :account, only: %i[edit update], path_names: { edit: '' }
   resource :email_confirmation, only: %i[new create show], path: 'confirm-email', path_names: { new: 'resend' }
   resource :password_reset, only: %i[edit update], path: 'reset-password', path_names: { edit: '' }
