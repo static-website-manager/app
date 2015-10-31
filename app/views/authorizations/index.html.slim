@@ -12,4 +12,8 @@
           th Actions
       tbody
         = render partial: 'authorization', collection: @authorizations, locals: { website: @website }
-  p.text-center = link_to icon('plus-circle', 'Invite Someone New'), [:new, @website, :authorization], class: 'btn btn-sm btn-default'
+  br
+  p.text-center.text-muted
+    span> Your subscription allows up to
+    strong> X users
+    = link_to icon('plus-circle', 'Invite Someone New'), [:new, @website, :authorization], class: 'btn btn-sm btn-primary', style: 'margin-left: 0.5em'

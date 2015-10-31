@@ -12,7 +12,7 @@
       code.small = @post.full_pathname
     .col-sm-3.text-right
       - if @deployment && @deployment.success?
-        => link_to @post.public_url(@deployment.url), target: :_blank, class: 'btn btn-sm btn-success' do
+        => link_to @post.public_url(@deployment.url), target: :_blank, class: 'btn btn-sm btn-default' do
           ' View Public Post
           = icon 'external-link'
       => link_to [:new, @website, @branch, @post, :move], class: 'btn btn-sm btn-primary' do

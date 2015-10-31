@@ -84,4 +84,4 @@
     .col-sm-9
       = text_field_tag :message, params[:message].nil? ? "Save Changes to #{form.object.filename}" : params[:message], class: 'form-control'
     .col-sm-3
-      = form.button 'Save Changes', class: 'btn btn-block btn-success'
+      = form.button 'Save Changes', class: 'btn btn-block btn-primary'

@@ -10,7 +10,7 @@
       code.small = @static_file.full_pathname
     .col-sm-4.text-right
       - if @deployment && @deployment.success?
-        => link_to @static_file.public_url(@deployment.url), target: :_blank, class: 'btn btn-sm btn-success' do
+        => link_to @static_file.public_url(@deployment.url), target: :_blank, class: 'btn btn-sm btn-default' do
           ' Download File
           = icon 'external-link'
       - else
