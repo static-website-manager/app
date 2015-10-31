@@ -39,27 +39,28 @@ module PageConcern
   end
 
   def metadata=(value)
-    hashed_value = value.try(:to_hash)
+    current_metadata = (@metadata.try(:to_hash) || {}).clone
+    proposed_metadata = (value.try(:to_hash) || {})
 
-    if hashed_value == @metadata
+    proposed_metadata.each do |key, value|
+      if value.blank?
+        current_metadata.delete(key)
+      else
+        current_metadata[key] = value
+      end
+    end
+
+    if current_metadata == @metadata
       @metadata
-    elsif hashed_value
+    else
       metadata_will_change!
-      @metadata = (@metadata || {}).merge(hashed_value)
+      @metadata = current_metadata
     end
   end
 
   def raw_content
     if metadata.kind_of?(Hash) && metadata.any?
-      cleaned_metadata = {}
-
-      metadata.each do |key, value|
-        if value.present?
-          cleaned_metadata[key] = value
-        end
-      end
-
-      [YAML.dump(cleaned_metadata.to_hash), content].join("---\n\n")
+      [YAML.dump(metadata.to_hash), content].join("---\n\n")
     else
       "---\n---\n\n#{content}"
     end

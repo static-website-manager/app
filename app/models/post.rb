@@ -3,7 +3,7 @@ class Post
   include PageConcern
 
   validates :pathname, format: { with: /\A_posts(\/|\z)/ }
-  validates :filename, format: { with: /\A\d{4}-\d{2}-\d{2}-[\w\-]+\z/ }
+  validates :filename, format: { with: /\A\d{4}-\d{2}-\d{2}-[\w\-]+\.(html|htm|markdown|mdown|mkdn|mkd|md)\z/ }
 
   def self.all(rugged_repository, commit_id, page_extensions, page: 1, per_page: 20)
     Kaminari.paginate_array(

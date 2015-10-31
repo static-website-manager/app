@@ -3,7 +3,7 @@ class Draft
   include PageConcern
 
   validates :pathname, format: { with: /\A_drafts(\/|\z)/ }
-  validates :filename, format: { with: /\A[\w\-]+\z/ }
+  validates :filename, format: { with: /\A[\w\-]+\.(html|htm|markdown|mdown|mkdn|mkd|md)\z/ }
 
   def self.all(rugged_repository, commit_id, page_extensions, page: 1, per_page: 20)
     Kaminari.paginate_array(

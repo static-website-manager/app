@@ -4,8 +4,8 @@ class Page
 
   attr_accessor :dirname, :objects
 
-  validates :pathname, format: { without: HIDDEN_FILE_REGEXP }
-  validates :filename, format: { without: HIDDEN_FILE_REGEXP }
+  validates :pathname, format: { without: HIDDEN_FILE_REGEXP }, allow_blank: true
+  validates :filename, format: { with: /\A[\w\-]+\.(html|htm|markdown|mdown|mkdn|mkd|md)\z/ }
 
   def self.all(rugged_repository, commit_id, page_extensions)
     result_hash = {}
