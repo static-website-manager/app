@@ -1,37 +1,28 @@
 - title
 
 = layout :nest, size: :md do
-  h1.h4.text-center: strong Subscribe your whole team for just $50 per website per month.
-  br
   = errors_for @subscription
-  .panel.panel-default
-    .panel-heading
-      p.h4.panel-title.text-center Free to try for 30 days – No committments, cancel anytime.
-    = form_for @subscription do |form|
-      .panel-body
-        = form.fields_for :user do |f|
-          .form-group
-            => f.label :name, class: 'control-label' do
-              ' Your Name
-              small.text-muted or nickname
-            = f.text_field :name, class: 'form-control'
-          .form-group
-            => f.label :email, 'Email Address', class: 'control-label'
-            = f.email_field :email, class: 'form-control'
-          .form-group
-            => f.label :password, class: 'control-label'
-            = f.password_field :password, class: 'form-control'
-          .form-group
-            => f.label :password_confirmation, class: 'control-label'
-            = f.password_field :password_confirmation, class: 'form-control'
-        hr
-        = form.fields_for :website do |f|
-          .form-group
-            => f.label :name, class: 'control-label'
-            = f.text_field :name, class: 'form-control'
-        hr
-        .well.well-sm.small Legal information goes here.
-      .panel-footer
-        .row
-          .col-lg-6.col-lg-offset-3
-            = form.button 'Subscribe', class: 'btn btn-block btn-lg btn-success'
+  = form_for @subscription do |form|
+    = layout :panel, heading: 'Subscribe to Static Website Manager', button: 'Subscribe', success: true, large: true
+      = form.fields_for :user do |f|
+        .form-group
+          => f.label :name, class: 'control-label' do
+            ' Your Name
+            small.text-muted or nickname
+          = f.text_field :name, class: 'form-control'
+        .form-group
+          => f.label :email, 'Email Address', class: 'control-label'
+          = f.email_field :email, class: 'form-control'
+        .form-group
+          => f.label :password, class: 'control-label'
+          = f.password_field :password, class: 'form-control'
+        .form-group
+          => f.label :password_confirmation, class: 'control-label'
+          = f.password_field :password_confirmation, class: 'form-control'
+      hr
+      = form.fields_for :website do |f|
+        .form-group
+          => f.label :name, class: 'control-label'
+          = f.text_field :name, class: 'form-control'
+      hr
+      .well.well-sm.small Private Alpha – No guarantees or warranties of any kind.

@@ -22,6 +22,16 @@
               = button_tag button, class: 'btn btn-block btn-success'
             - else
               = button_tag button, class: 'btn btn-block btn-primary'
+    - elsif defined?(large)
+      .panel-footer
+        .row
+          .col-lg-6.col-lg-offset-3
+            - if defined?(danger)
+              = button_tag button, class: 'btn btn-block btn-lg btn-danger'
+            - elsif defined?(success)
+              = button_tag button, class: 'btn btn-block btn-lg btn-success'
+            - else
+              = button_tag button, class: 'btn btn-block btn-lg btn-primary'
     - else
       .panel-footer.text-center
         - if defined?(danger)
