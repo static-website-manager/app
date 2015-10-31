@@ -37,10 +37,23 @@ class AuthorizationsController < ApplicationController
 
     if @authorization.save
       if @repository.setup?
-        branch = @repository.branch(@authorization.user)
-        deployment = @website.deployment.where(branch_name: branch.name).send(@website.auto_deploy_staging? ? :first_or_create : :first)
-        if deployment && deployment.persisted?
-          JekyllBuildJob.perform_later(deployment)
+        branch = @repository.branch(@authorization.user, auto_create_staging: false) rescue nil
+
+        if branch
+          production_branch = @repository.branch('master')
+
+          if @website.auto_rebase_staging_on_production_changes? && branch.rebase_required?(production_branch) && branch.rebase(production_branch)
+            if deployment = @website.deployments.where(branch_name: branch.name).first
+              JekyllBuildJob.perform_later(deployment)
+            end
+          end
+        else
+          branch = @repository.branch(@authorization.user)
+          deployment = @website.deployments.where(branch_name: branch.name).send(@website.auto_create_staging_deployment? ? :first_or_create : :first)
+
+          if deployment && deployment.persisted?
+            JekyllBuildJob.perform_later(deployment)
+          end
         end
       end
       UserMailer.authorization_invitation(@authorization).deliver_later

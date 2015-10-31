@@ -17,8 +17,9 @@ class SettingsController < ApplicationController
 
   def settings_params
     params.require(:website).permit(
-      :auto_deploy_production,
-      :auto_deploy_staging,
+      :auto_create_production_deployment,
+      :auto_create_staging_deployment,
+      :auto_rebase_staging_on_production_changes,
       :name,
     )
   end

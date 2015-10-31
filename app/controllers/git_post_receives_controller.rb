@@ -15,13 +15,21 @@ class GitPostReceivesController < ActionController::Base
     @messages = []
 
     if @branch.production?
-      deploy(@branch, force: @website.auto_deploy_production?)
+      deploy(@branch, force: @website.auto_create_production_deployment?)
 
       @website.users.each do |user|
-        deploy(@repository.branch(user), force: @website.auto_deploy_staging?)
+        branch = @repository.branch(user, auto_create_staging: false) rescue nil
+
+        if branch
+          if @website.auto_rebase_staging_on_production_changes? && branch.rebase_required?(@branch) && branch.rebase(@branch)
+            deploy(branch)
+          end
+        else
+          deploy(@repository.branch(user), force: @website.auto_create_staging_deployment?)
+        end
       end
     elsif @branch.staging?
-      deploy(@branch, force: @website.auto_deploy_staging?)
+      deploy(@branch, force: @website.auto_create_staging_deployment?)
     else
       deploy(@branch)
     end

@@ -5,7 +5,7 @@ class Branch
 
   attr_accessor :name, :rugged_branch, :rugged_repository
 
-  def self.find(rugged_repository, name_or_user)
+  def self.find(rugged_repository, name_or_user, auto_create_staging: true)
     if name_or_user.is_a?(User)
       name = "static_user_#{name_or_user.id}"
     else
@@ -20,7 +20,7 @@ class Branch
         rugged_repository: rugged_repository,
         rugged_branch: rugged_branch,
       )
-    elsif name_or_user.is_a?(User)
+    elsif auto_create_staging && name.match(/\Astatic_user_\d{1,9}\z/)
       new(
         name: name,
         rugged_repository: rugged_repository,
@@ -138,10 +138,8 @@ class Branch
     true
   end
 
-  def rebase(branch, user_email, user_name)
+  def rebase(branch)
     raise ArgumentError unless branch.present?
-    raise ArgumentError unless user_email.present?
-    raise ArgumentError unless user_name.present?
     raise ArgumentError unless rebase_required?(branch)
 
     clone_path = Pathname.new(File.join('/tmp', "clone_#{rand(1000)}_#{Time.now.to_i}"))
@@ -151,8 +149,8 @@ class Branch
 
     begin
       system("git clone #{rugged_repository.path} #{clone_path}") &&
-      system("git config user.email \"#{user_email}\"", chdir: clone_path.to_s) &&
-      system("git config user.name \"#{user_name}\"", chdir: clone_path.to_s) &&
+      system("git config user.email \"support@staticwebsitemanager.com\"", chdir: clone_path.to_s) &&
+      system("git config user.name \"Static Website Manager\"", chdir: clone_path.to_s) &&
       system("git checkout #{name}", chdir: clone_path.to_s) &&
       system("git rebase master", chdir: clone_path.to_s) &&
       system("git push origin #{name} -f", chdir: clone_path.to_s)

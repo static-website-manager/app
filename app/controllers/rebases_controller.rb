@@ -24,7 +24,7 @@ class RebasesController < ApplicationController
   end
 
   def create
-    if @branch.rebase(@source, current_user.email, current_user.name)
+    if @branch.rebase(@source)
       JekyllBuildJob.perform_later(@deployment) if @deployment
       redirect_to [@website, @branch], notice: t('.notice', branch_name: @source.title(current_user))
     else
