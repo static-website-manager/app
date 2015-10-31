@@ -72,6 +72,7 @@ en:
       notice: Thanks! We‘ve confirmed your email address.
   git_post_receives:
     create:
+      removed: Removed Website Build for %{branch_name} at %{deployment_url}
       scheduled: Scheduled Website Build for %{branch_name} at %{deployment_url}
       received: Received Website Branch %{branch_name} – No Deployment Found
   merges:

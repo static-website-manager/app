@@ -8,12 +8,21 @@ class GitPostReceivesController < ActionController::Base
   before_action do
     @website = Website.find(params[:website_id])
     @repository = Repository.new(website_id: @website.id)
-    @branch = @repository.branch(params[:branch_name])
+
+    begin
+      @branch = @repository.branch(params[:branch_name])
+    rescue
+      if deployment = @website.deployments.find_by_branch_name(params[:branch_name])
+        deployment.destroy
+        render text: t('.removed', branch_name: params[:branch_name], deployment_url: deployment.url)
+      else
+        render text: ''
+      end
+    end
   end
 
   def create
     @messages = []
-
     if @branch.production?
       deploy(@branch, force: @website.auto_create_production_deployment?)
 
