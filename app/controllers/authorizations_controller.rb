@@ -31,8 +31,6 @@ class AuthorizationsController < ApplicationController
 
     if existing_user = User.find_by_email(@authorization.user.email)
       @authorization.user = existing_user
-    else
-      @authorization.user.password = @authorization.user.password_confirmation = SecureRandom.base64
     end
 
     if @authorization.save

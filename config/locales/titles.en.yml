@@ -86,6 +86,9 @@ en:
   password_resets:
     edit:
       title: Reset Your Password • Static Website Manager
+  passwords:
+    new:
+      title: Set Your Password • Static Website Manager
   post_commits:
     index:
       title: Post “%{filename}” History • %{branch_name} • %{website_name}

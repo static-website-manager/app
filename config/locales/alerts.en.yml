@@ -69,6 +69,7 @@ en:
       notice: Great! A confirmation email is on the way.
     show:
       alert: We could not verify your account.
+      notice_password: Thanks! We‘ve confirmed your email address. Please set your password to continue.
       notice: Thanks! We‘ve confirmed your email address.
   git_post_receives:
     create:
@@ -108,6 +109,10 @@ en:
     update:
       alert: There was a problem changing your password.
       notice: Welcome back! Your password was updated successfully.
+  passwords:
+    create:
+      alert: There was a problem setting your password.
+      notice: Great, your password was set successfully.
   post_moves:
     create:
       message: Move Post %{filename}

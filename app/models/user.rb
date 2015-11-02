@@ -3,14 +3,14 @@ class User < ActiveRecord::Base
   has_many :authorizations, dependent: :destroy
   has_many :websites, through: :authorizations
 
-  has_secure_password
+  has_secure_password validations: false
 
   accepts_nested_attributes_for :authentication, reject_if: :all_blank
 
   validates :email, presence: true, format: { with: /\A[^@]+@[^@]+\.[^@]+\z/ }
   validates :email_confirmation_token, uniqueness: true, allow_blank: true
   validates :name, presence: true
-  validates :password, length: { minimum: 8 }, allow_nil: true
+  validates :password, length: { minimum: 8, maximum: 72 }, confirmation: true, allow_blank: true
   validates :password_confirmation, presence: true, if: -> { password.present? }
   validates :password_reset_token, uniqueness: true, allow_blank: true
   validates :session_token, uniqueness: true, allow_blank: true

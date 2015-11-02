@@ -2,6 +2,11 @@ class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   protect_from_forgery with: :exception
 
+  # Expose the @current_authorization and @current_user ivar to all controllers
+  # and views.
+  attr_reader :current_authorization, :current_user
+  helper_method :current_authorization, :current_user
+
   # Set the @current_user before every request.
   before_action do
     if session[:authentication].present?
@@ -9,12 +14,17 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  # Expose the @current_authorization and @current_user ivar to all controllers
-  # and views.
-  attr_reader :current_authorization, :current_user
-  helper_method :current_authorization, :current_user
+  # Ensure the current_user’s password is set.
+  before_action :ensure_current_user_password
 
   private
+
+  # Redirect to the new password path unless the current_user’s password is set.
+  def ensure_current_user_password
+    if current_user && !current_user.password_digest?
+      redirect_to :new_password
+    end
+  end
 
   # Find the current website’s branch and deployment.
   def require_branch

@@ -1,19 +1,28 @@
 .header.header-center
   - if defined?(heading) && heading.present?
     h1.lead
-      => link_to (defined?(return_to) && return_to.present? ? return_to : '/'), class: 'logo-small-back-container' do
-        => icon 'reply'
-        = image_tag 'logo-small.png', alt: 'Static Website Manager', class: 'logo-small'
+      - if defined?(return_to) && return_to.present?
+        => link_to return_to, class: 'logo-small-back-container' do
+          => icon 'reply'
+          = image_tag 'logo-small.png', alt: 'Static Website Manager', class: 'logo-small'
+      - else
+        span.logo-small-back-container>
+          = image_tag 'logo-small.png', alt: 'Static Website Manager', class: 'logo-small'
       - if defined?(subheading) && subheading.present?
         ' | #{heading}
         small = subheading
       - else
         | | #{heading}
   - else
-    = link_to (defined?(return_to) && return_to.present? ? return_to : '/'), class: 'logo-large logo-back' do
-      => icon 'reply'
-      => image_tag 'logo-large.png', alt: ''
-      strong Static Website Manager
+    - if defined?(return_to) && return_to.present?
+      = link_to return_to, class: 'logo-large logo-back' do
+        => icon 'reply'
+        => image_tag 'logo-large.png', alt: ''
+        strong Static Website Manager
+    - else
+      .logo-large
+        => image_tag 'logo-large.png', alt: ''
+        strong Static Website Manager
 .row
   - if defined?(size) && size == :md
     .col-sm-8.col-sm-offset-2.col-md-6.col-md-offset-3

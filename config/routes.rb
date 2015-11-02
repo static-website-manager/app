@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   resource :git_post_receive, only: %i[create]
   resource :password_reset, only: %i[edit update], path: 'reset-password', path_names: { edit: '' }
   resource :password_forget, only: %i[new create], path: 'forget-password', path_names: { new: '' }
+  resource :password, only: %i[new create], path: 'password', path_names: { new: 'set' }
   resource :session, only: %i[new create], path: 'sign-in', path_names: { new: '' }
   resource :session, only: %i[destroy], path: 'sign-out', as: :sign_out
   resources :subscriptions, only: %i[new create], path: 'subscribe', path_names: { new: '' }

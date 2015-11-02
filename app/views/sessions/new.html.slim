@@ -4,7 +4,7 @@
   - content_for :alert do
     = link_to 'Resend Confirmation Email', :new_email_confirmation, class: 'btn btn-xs btn-success'
 
-= layout :nest do
+= layout :nest, return_to: '/' do
   = form_tag :session do
     = layout :panel, heading: 'Sign In', button: 'Submit' do
       .form-group

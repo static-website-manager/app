@@ -1,0 +1,12 @@
+- title
+
+= layout :nest do
+  = errors_for current_user
+  = form_for current_user, url: :password, method: :post do |form|
+    = layout :panel, heading: 'Set Your Password', button: 'Submit' do
+      .form-group
+        => form.label :password, class: 'control-label'
+        = form.password_field :password, value: nil, class: 'form-control'
+      .form-group
+        => form.label :password_confirmation, class: 'control-label'
+        = form.password_field :password_confirmation, value: nil, class: 'form-control'

@@ -1,4 +1,5 @@
 class EmailConfirmationsController < ApplicationController
+  skip_before_action :ensure_current_user_password, only: %i[show]
   before_action :require_guest, only: %i[new create]
 
   def create
@@ -21,7 +22,12 @@ class EmailConfirmationsController < ApplicationController
     if user
       user.update_columns confirmed: true, email_confirmation_token: nil
       sign_in(user)
-      redirect_to :websites, notice: t('.notice')
+
+      if user.password_digest?
+        redirect_to :websites, notice: t('.notice')
+      else
+        redirect_to :new_password, notice: t('.notice_password')
+      end
     else
       redirect_to :new_session, alert: t('.alert')
     end
