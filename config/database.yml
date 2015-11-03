@@ -1,18 +1,4 @@
-development:
-  adapter: postgresql
-  encoding: unicode
-  host: postgres
-  database: static_website_manager_development
-  username: postgres
-  pool: 5
-test:
-  adapter: postgresql
-  encoding: unicode
-  host: postgres
-  database: static_website_manager_test
-  username: postgres
-  pool: 5
-production:
+default: &default
   adapter: postgresql
   encoding: unicode
   host: <%= ENV['DATABASE_HOST'] %>
@@ -20,3 +6,9 @@ production:
   username: <%= ENV['DATABASE_USERNAME'] %>
   password: <%= ENV['DATABASE_PASSWORD'] %>
   pool: <%= ENV['DATABASE_POOL'] || 5 %>
+development:
+  <<: *default
+test:
+  <<: *default
+production:
+  <<: *default
