@@ -1,3 +1,3 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: "support@#{Rails.application.secrets.host}"
+  default from: "support@#{ENV['HOST']}"
 end
