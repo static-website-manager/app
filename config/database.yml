@@ -5,7 +5,7 @@ default: &default
   database: <%= ENV['DATABASE_NAME'] %>
   username: <%= ENV['DATABASE_USERNAME'] %>
   password: <%= ENV['DATABASE_PASSWORD'] %>
-  pool: <%= ENV['DATABASE_POOL'] || 5 %>
+  pool: <%= ENV['MAX_THREADS'] || 5 %>
 development:
   <<: *default
 test:
