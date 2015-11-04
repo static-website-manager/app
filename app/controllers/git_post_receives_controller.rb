@@ -30,7 +30,11 @@ class GitPostReceivesController < ActionController::Base
         branch = @repository.branch(user, auto_create_staging: false) rescue nil
 
         if branch
-          if @website.auto_rebase_staging_on_production_changes? && branch.rebase_required?(@branch) && branch.rebase(@branch)
+          if @website.auto_rebase_staging_on_production_changes? && branch.rebase_required?(@branch)
+            if branch.rebase(@branch)
+              deploy(branch)
+            end
+          else
             deploy(branch)
           end
         else
