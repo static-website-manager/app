@@ -46,6 +46,10 @@
       ' – Branch Deployed
       => time_ago_in_words deployment.updated_at
       | ago
+  - elsif deployment && deployment.pending?
+    span.small.text-muted
+      => icon 'spinner fa-spin'
+      | Deploying Branch...
   - elsif deployment
     span.small.text-danger Error Deploying Branch
   - else

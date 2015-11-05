@@ -30,6 +30,10 @@ class Deployment < ActiveRecord::Base
     "#{host_prefix}.logs.staticwebsitemanager"
   end
 
+  def pending?
+    !response_status?
+  end
+
   def success?
     response_status == 200
   end

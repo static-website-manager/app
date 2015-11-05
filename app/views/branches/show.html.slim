@@ -20,6 +20,15 @@
           ' View Public Website
           = icon 'external-link'
         = link_to 'Make Branch Private', [:delete, @website, @branch, @deployment], class: 'btn btn-xs btn-link'
+    - elsif @deployment && @deployment.pending?
+      p.text-muted
+        => icon 'spinner fa-spin'
+        | Deploying Branch...
+      p
+        => link_to @deployment.url, target: :_blank, class: 'btn btn-xs btn-primary disabled' do
+          ' View Public Website
+          = icon 'external-link'
+        = link_to 'Make Branch Private', [:delete, @website, @branch, @deployment], class: 'btn btn-sm btn-link'
     - elsif @deployment
       p.text-muted
         span.text-danger = @deployment.response_message
