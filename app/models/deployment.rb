@@ -54,38 +54,22 @@ class Deployment < ActiveRecord::Base
 
     Aws::S3::Client.new.tap do |client|
       client.create_bucket({
-        acl: 'private',
+        acl: 'log-delivery-write',
         bucket: logging_bucket_name,
       })
       client.create_bucket({
         acl: 'private',
         bucket: website_bucket_name,
       })
-      #client.put_bucket_logging({
-      #  bucket: website_bucket_name,
-      #  bucket_logging_status: {
-      #    logging_enabled: {
-      #      target_bucket: logging_bucket_name,
-      #      target_prefix: '',
-      #      target_grants: [
-      #        {
-      #          grantee: {
-      #            type: 'Group',
-      #            uri: 'http://acs.amazonaws.com/groups/s3/LogDelivery',
-      #          },
-      #          permission: 'READ_ACP',
-      #        },
-      #        {
-      #          grantee: {
-      #            type: 'Group',
-      #            uri: 'http://acs.amazonaws.com/groups/s3/LogDelivery',
-      #          },
-      #          permission: 'WRITE',
-      #        },
-      #      ],
-      #    },
-      #  },
-      #})
+      client.put_bucket_logging({
+        bucket: website_bucket_name,
+        bucket_logging_status: {
+          logging_enabled: {
+            target_bucket: logging_bucket_name,
+            target_prefix: '',
+          },
+        },
+      })
       client.put_bucket_website({
         bucket: website_bucket_name,
         website_configuration: {
