@@ -2,7 +2,9 @@
 
 - if alert.present? && @user && !@user.confirmed?
   - content_for :alert do
-    = link_to 'Resend Confirmation Email', :new_email_confirmation, class: 'btn btn-xs btn-success'
+    = form_tag :email_confirmation, style: 'display:inline-block' do
+      = hidden_field_tag :email, @user.email
+      = button_tag 'Resend Confirmation Email', class: 'btn btn-xs btn-success'
 
 = layout :nest, return_to: '/' do
   = form_tag :session do
