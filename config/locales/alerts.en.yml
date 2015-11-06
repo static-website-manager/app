@@ -172,5 +172,6 @@ en:
       notice: Welcome to Static Website Manager!
   websites:
     create:
+      alert_not_invited: You are not invited to Subscribe at this time.
       alert: There was adding your website.
       notice: Welcome to your new website!

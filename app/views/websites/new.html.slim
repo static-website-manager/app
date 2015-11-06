@@ -9,4 +9,8 @@
           => f.label :name, class: 'control-label'
           = f.text_field :name, class: 'form-control'
       hr
+      .form-group
+        => label_tag :code, 'Invitation Code', class: 'control-label'
+        = text_field_tag :code, '', class: 'form-control'
+      hr
       .well.well-sm.small Private Alpha – No guarantees or warranties of any kind.
