@@ -58,6 +58,10 @@ module PageConcern
     end
   end
 
+  def public_url(host)
+    File.join([host, pathname, basename].reject(&:blank?)).to_s + '.html'
+  end
+
   def raw_content
     if metadata.kind_of?(Hash) && metadata.any?
       [YAML.dump(metadata.to_hash), content].join("---\n\n")

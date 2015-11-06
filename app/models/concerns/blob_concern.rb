@@ -78,7 +78,7 @@ module BlobConcern
   end
 
   def public_url(host)
-    File.join([host, pathname, basename].reject(&:blank?)).to_s + '.html'
+    File.join([host, pathname, filename].reject(&:blank?)).to_s
   end
 
   def raw_content
