@@ -167,6 +167,7 @@ en:
       notice: Ok, we’ve committed your changes.
   subscriptions:
     create:
+      alert_not_invited: You are not invited to Subscribe at this time.
       alert: There was a problem subscribing your account.
       notice: Welcome to Static Website Manager!
   websites:

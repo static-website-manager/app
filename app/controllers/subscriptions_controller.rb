@@ -5,6 +5,12 @@ class SubscriptionsController < ApplicationController
     end
   end
 
+  before_action only: :create do
+    unless params[:code] == ENV['INVITATION_CODE']
+      redirect_to :new_subscription, alert: t('.alert_not_invited')
+    end
+  end
+
   def new
     @subscription = Subscription.new
   end
