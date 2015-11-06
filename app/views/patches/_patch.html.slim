@@ -37,7 +37,8 @@
               td.diff-cell.diff-number = line.old_lineno == -1 ? '' : line.old_lineno
               td.diff-cell.diff-number = line.new_lineno == -1 ? '' : line.new_lineno
               td.diff-cell.diff-code
+                - content = line.content.encode('utf-8', 'utf-8', invalid: :replace).to_s
                 - if %i[addition deletion context].include?(line.line_origin)
-                  span.diff-pre = line.content.to_s.sub(/\s+\z/, '')
+                  span.diff-pre = content.sub(/\s+\z/, '')
                 - else
-                  span.diff-pre = line.content.to_s.sub(/\A\s+/, '').sub(/\s+\z/, '')
+                  span.diff-pre = content.sub(/\A\s+/, '').sub(/\s+\z/, '')
