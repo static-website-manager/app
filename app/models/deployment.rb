@@ -49,9 +49,6 @@ class Deployment < ActiveRecord::Base
   private
 
   def setup!
-    FileUtils.mkdir(File.join('/sites', id.to_s))
-    system("git clone -b #{branch_name} /repos/#{website_id}.git /sites/#{id}")
-
     Aws::S3::Client.new.tap do |client|
       client.create_bucket({
         acl: 'log-delivery-write',
@@ -82,8 +79,6 @@ class Deployment < ActiveRecord::Base
   end
 
   def teardown!
-    FileUtils.rm_rf(File.join('/sites', id.to_s))
-
     Aws::S3::Bucket.new(logging_bucket_name).tap do |bucket|
       if bucket.exists?
         bucket.clear!

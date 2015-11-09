@@ -6,7 +6,6 @@ class JekyllBuildJob < ActiveJob::Base
 
     data = {
       website_id: deployment.website_id,
-      deployment_id: deployment.id,
       branch_name: deployment.branch_name,
       bucket_name: deployment.website_bucket_name,
     }
