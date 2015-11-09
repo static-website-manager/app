@@ -35,6 +35,8 @@ en:
     create:
       alert: There was a problem publishing this branch.
       notice: Great, we’ve setup a public URL for this branch.
+    update:
+      notice: Ok, we’re trying to deployment your branch.
     destroy:
       alert: There was a problem removing the public URL for this branch.
       notice: Ok, we’ve removed the public URL for this branch.

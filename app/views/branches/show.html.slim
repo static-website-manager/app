@@ -32,10 +32,14 @@
     - elsif @deployment
       p.text-muted
         span.text-danger = @deployment.response_message
-      p
+      div
         => link_to @deployment.url, target: :_blank, class: 'btn btn-xs btn-primary disabled' do
           ' View Public Website
           = icon 'external-link'
+        => form_tag [@website, @branch, @deployment], method: :patch, style: 'display:inline-block' do
+          = button_tag class: 'btn btn-xs btn-default' do
+            => icon 'repeat'
+            ' Try Again
         = link_to 'Make Branch Private', [:delete, @website, @branch, @deployment], class: 'btn btn-sm btn-link'
     - else
       p.text-muted

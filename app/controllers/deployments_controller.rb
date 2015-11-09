@@ -9,7 +9,7 @@ class DeploymentsController < ApplicationController
     @deployment = @website.deployments.new(branch_name: @branch.name)
   end
 
-  before_action only: %i[delete destroy] do
+  before_action only: %i[update delete destroy] do
     @deployment = @website.deployments.find_by_branch_name!(@branch.name)
   end
 
@@ -21,6 +21,11 @@ class DeploymentsController < ApplicationController
       flash.not.alert = t('.alert')
       render :new, status: 422
     end
+  end
+
+  def update
+    JekyllBuildJob.perform_later(@deployment)
+    redirect_to session[:return_to] || [@website, @branch], notice: t('.notice')
   end
 
   def destroy
