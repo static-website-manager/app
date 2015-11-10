@@ -37,5 +37,8 @@ module StaticWebsiteManager
 
     # Use sequential migrations.
     config.active_record.timestamped_migrations = false
+
+    # Set Sidekiq as the ActiveJob queue adapter.
+    config.active_job.queue_adapter = :sidekiq
   end
 end
