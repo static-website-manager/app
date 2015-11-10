@@ -19,12 +19,13 @@ COPY Gemfile.lock /app/Gemfile.lock
 RUN bundle install
 COPY . /app
 
-RUN adduser --system --uid 1448 --ingroup root git
+RUN addgroup --system --gid 1448 git
+RUN adduser --system --uid 1448 --ingroup git git
 ENV HOME /home/git
 
 COPY entrypoint.sh /sbin/entrypoint.sh
 RUN chmod 755 /sbin/entrypoint.sh
 
-RUN chown -R git:root /app
+RUN chown -R git:git /app
 
 ENTRYPOINT ["/sbin/entrypoint.sh"]
