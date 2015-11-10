@@ -9,7 +9,7 @@ class AccountsController < ApplicationController
       if account_params[:password].present?
         UserMailer.password_update_confirmation(current_user).deliver_later
       end
-      redirect_to session[:return_to] || :websites, notice: t('.title')
+      redirect_to session[:return_to] || :websites, notice: t('.notice')
     else
       flash.now.alert = t('.alert')
       render :edit, status: 422
