@@ -9,6 +9,9 @@ Bundler.require(*Rails.groups)
 # Default to safe YAML.
 SafeYAML::OPTIONS[:default_mode] = :safe
 
+# Use bundled AWS certificate as git user is unable to access original. See https://github.com/aws/aws-sdk-core-ruby/issues/166
+Aws.use_bundled_cert!
+
 module StaticWebsiteManager
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
