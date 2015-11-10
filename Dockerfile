@@ -1,6 +1,6 @@
 FROM ruby:2.2.3
 
-RUN apt-get update -qq && apt-get install -y build-essential cmake nodejs
+RUN apt-get update -qq && apt-get install -y build-essential cmake git nodejs
 
 RUN gpg --keyserver pool.sks-keyservers.net --recv-keys B42F6819007F00F88E364FD4036A9C25BF357DD4
 RUN apt-get update && apt-get install -y --no-install-recommends ca-certificates wget && rm -rf /var/lib/apt/lists/* \
