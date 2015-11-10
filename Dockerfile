@@ -20,6 +20,7 @@ RUN bundle install
 COPY . /app
 
 RUN adduser --system --uid 1448 --ingroup root git
+ENV HOME /home/git
 
 COPY entrypoint.sh /sbin/entrypoint.sh
 RUN chmod 755 /sbin/entrypoint.sh
