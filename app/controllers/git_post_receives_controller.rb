@@ -1,7 +1,7 @@
 class GitPostReceivesController < ActionController::Base
   before_action do
     unless ENV['GIT_HOOK_TOKEN'] == params[:token]
-      raise ActionController::RoutingError.new("Unauthenticated Token – #{ENV['GIT_HOOK_TOKEN']} – #{params[:token]}")
+      raise ActionController::RoutingError.new('Unauthenticated Token')
     end
   end
 
