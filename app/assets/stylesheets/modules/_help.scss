@@ -1,0 +1,48 @@
+.help-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 23em;
+  height: 100%;
+  overflow-y: auto;
+  padding: 1em;
+  background-color: #f7f7f7;
+  border-right: solid 1px #ccc;
+  ul {
+    display: block;
+    margin: 2em -1em 0;
+    padding: 0;
+    list-style: none;
+    border-top: solid 1px #eee;
+  }
+  li {
+    display: block;
+    margin: 0;
+    padding: 0;
+    border-bottom: solid 1px #eee;
+    a, strong {
+      display: block;
+      margin: 0;
+      padding: 0.5em 1em;
+    }
+    a:hover {
+      background-color: #eee;
+      text-decoration: none;
+    }
+    strong {
+      background-color: #eee;
+      color: #000;
+    }
+  }
+}
+
+.help-content {
+  position: absolute;
+  top: 0.5em;
+  right: 0;
+  left: 25em;
+  padding: 1em;
+}
+
+.help-heading {
+}

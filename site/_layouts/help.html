@@ -1,0 +1,29 @@
+---
+---
+
+<!DOCTYPE html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="{% asset_path application.css %}">
+<title>{{ page.title }}</title>
+
+<div class="help-nav">
+  <a href="/help"><img src="{% asset_path logo-small.png %}" alt="Static Website Manager" class="logo-small" /></a>
+  <strong class="lead">Help &amp; Documentation</strong>
+  <ul>
+    <li>{% if page.url == '/help.html' %}<strong>Overview</strong>{% else %}<a href="/help">Overview</a>{% endif %}
+    <li>{% if page.url == '/help/getting-started.html' %}<strong>Getting Started</strong>{% else %}<a href="/help/getting-started">Getting Started</a>{% endif %}
+    <li>{% if page.url == '/help/content-management.html' %}<strong>Content Management</strong>{% else %}<a href="/help/content-management">Content Management</a>{% endif %}
+    <li>{% if page.url == '/help/deployments.html' %}<strong>Deployments</strong>{% else %}<a href="/help/deployments">Deployments</a>{% endif %}
+    <li>{% if page.url == '/help/forms.html' %}<strong>Forms</strong>{% else %}<a href="/help/forms">Forms</a>{% endif %}
+  </ul>
+</div>
+
+<div class="help-content">
+  <div class="small text-muted">
+    <p class="pull-right">Last Modified 11/05/2015</p>
+    <p><span class="fa fa-reply text-muted"></span> <a href="/">Return to Static Website Manager</a></p>
+  </div>
+  <hr />
+  {{ content }}
+</div>

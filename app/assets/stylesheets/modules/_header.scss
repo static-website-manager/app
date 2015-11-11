@@ -19,6 +19,22 @@
   }
 }
 
+.header-nav {
+  color: #ddd;
+  .btn-link {
+    padding: 0.2em 0.5em;
+  }
+  .btn-selected {
+    padding: 0.2em 0.5em;
+    background: #eee;
+    font-weight: normal;
+    color: #000;
+  }
+  .btn-primary {
+    margin-left: 1em;
+  }
+}
+
 .header-center {
   text-align: center;
   margin: 2em 0 4em;
