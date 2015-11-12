@@ -1,7 +1,7 @@
 - if form.object.errors[:content_role].any?
-  p.has-error.has-feedback: strong.control-label Website Role
+  p.has-error.has-feedback: strong.control-label Content Role
 - else
-  p: strong Website Role
+  p: strong Content Role
 .radio
   = form.label :content_role_writer do
     => form.radio_button :content_role, :writer
@@ -47,4 +47,4 @@ p.text-muted style="margin-bottom:1em" All team members have access to their own
     = form.label :ssh_access do
       => form.check_box :ssh_access
       | SSH Access
-      small.help-block These users can push to the website repository over SSH. (Note: All operations are allowed when using SSH Access, regardless of Website Role or Branch Access.)
+      small.help-block These users can push to the website repository over SSH. (Note: All operations are allowed when using SSH Access, regardless of Content Role or Branch Access.)
