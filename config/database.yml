@@ -1,14 +1,14 @@
 default: &default
   adapter: postgresql
   encoding: unicode
-  host: <%= ENV['DATABASE_HOST'] %>
-  database: <%= ENV['DATABASE_NAME'] %>
-  username: <%= ENV['DATABASE_USERNAME'] %>
-  password: <%= ENV['DATABASE_PASSWORD'] %>
-  pool: <%= ENV['MAX_THREADS'] || 5 %>
+  host: postgres
+  database: postgres
+  username: postgres
+  pool: 32
 development:
   <<: *default
 test:
   <<: *default
+  database: postgres_test
 production:
   <<: *default
