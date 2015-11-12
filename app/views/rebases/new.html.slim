@@ -6,9 +6,9 @@
       .panel.panel-danger.text-center
         .panel-body
           p: span.label.label-danger> #{pluralize @merge_index.conflicts.count, 'Conflict'} Found
-          p We are unable to pull changes with conflicts at this time. Please perform an offline rebase or contact your designer.
+          p Sorry, we‘re not yet capable of handling merge conflicts in app at this time. Please perform an offline rebase or contact your designer. <code>#{@branch.name}</code>
     - else
       .text-center
-        = layout :panel, button: 'Pull Changes' do
+        = layout :panel, button: 'Pull Changes', success: true do
           p Great, there were no conflicts found with #{@source.title(current_user)} and its changes can be safely pulled into this branch.
         p.small.text-muted More specifically, we will checkout this branch and run <code>git rebase #{@source.name}</code>.

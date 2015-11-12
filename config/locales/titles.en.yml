@@ -62,7 +62,7 @@ en:
       title: Resend Confirmation Email • Static Website Manager
   merges:
     new:
-      title: Push Changes • %{branch_name} • %{website_name}
+      title: Publish Changes • %{branch_name} • %{website_name}
   page_commits:
     index:
       title: Page “%{filename}” History • %{branch_name} • %{website_name}

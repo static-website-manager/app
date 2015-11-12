@@ -81,9 +81,9 @@ en:
   merges:
     create:
       conflict: We are unable to process merge conflicts at this time.
-      message: Merge %{branch_name} Changes
-      alert: There was a problem merging %{branch_name} changes.
-      notice: Great, we’ve successfully merged %{branch_name} changes.
+      message: Publish %{branch_name} Changes
+      alert: There was a problem publishing %{branch_name} changes.
+      notice: Great, we’ve successfully published %{branch_name} changes.
   page_moves:
     create:
       message: Move Page %{filename}
