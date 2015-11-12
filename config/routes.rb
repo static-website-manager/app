@@ -33,6 +33,7 @@ Rails.application.routes.draw do
       resource :rebase, only: %i[new create], path_names: { new: '' }
       resources :collections, only: %i[index]
       resources :commits, only: %i[index], controller: 'branch_commits', path: 'history'
+      resources :datasets, only: %i[index], path: 'data'
     end
     resources :commits, only: %i[show]
   end

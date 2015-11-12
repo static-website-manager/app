@@ -11,12 +11,12 @@
   = form.label :content_role_editor do
     => form.radio_button :content_role, :editor
     | Editor
-    small.help-block These users additionally have access to manage Pages and Collections.
+    small.help-block These users additionally have access to manage Pages, Collections and Data.
 .radio
   = form.label :content_role_designer do
     => form.radio_button :content_role, :designer
     | Designer
-    small.help-block These users may have access to additional functionality in the future.
+    small.help-block These users may have access to additional design functionality in the future.
 hr
 p: strong Branch Access
 p.text-muted style="margin-bottom:1em" All team members have access to their own staging branch. Users may be given access to other branches, including the production branch and other team members’ staging branches.

@@ -63,7 +63,8 @@ ul.nav.nav-tabs.branch-nav
   li class=('active' if current_page?([website, branch, :drafts])) = link_to 'Drafts', [website, branch, :drafts]
   li class=('active' if current_page?([website, branch, :posts])) = link_to 'Posts', [website, branch, :posts]
   - if current_authorization.editor? || current_authorization.designer?
-    li class=('active' if current_page?([website, branch, :static_files])) = link_to 'Files', [website, branch, :static_files]
     li class=('active' if current_page?([website, branch, :collections])) = link_to 'Collections', [website, branch, :collections]
+    li class=('active' if current_page?([website, branch, :datasets])) = link_to 'Data', [website, branch, :datasets]
+    li class=('active' if current_page?([website, branch, :static_files])) = link_to 'Files', [website, branch, :static_files]
   li class=('active' if current_page?([website, branch, :commits])) = link_to 'History', [website, branch, :commits]
 = yield
