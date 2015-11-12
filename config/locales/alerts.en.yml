@@ -1,9 +1,8 @@
 en:
   accounts:
     update:
-      alert_incorrect: The current password you provided is incorrect.
-      alert: There was a problem updating your account.
-      notice: Your Account Information was Saved.
+      alert: There was a problem updating your account information.
+      notice: Ok, your account information was saved.
   authorizations:
     create:
       alert: There was a problem sending the invite.
@@ -115,6 +114,10 @@ en:
     create:
       alert: There was a problem setting your password.
       notice: Great, your password was set successfully.
+    update:
+      alert_incorrect: The current password you provided is incorrect.
+      alert: There was a problem changing your password.
+      notice: Great, your password was changed successfully.
   post_moves:
     create:
       message: Move Post %{filename}
@@ -157,6 +160,10 @@ en:
   setup_authorizations:
     create:
       notice_html: <strong>%{email}</strong> has been invited to help setup your website!
+  ssh_keys:
+    update:
+      alert: There was a problem updating your SSH public keys.
+      notice: Ok, your SSH public keys were saved.
   static_file_moves:
     create:
       message: Move File %{filename}

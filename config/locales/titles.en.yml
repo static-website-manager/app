@@ -1,7 +1,7 @@
 en:
   accounts:
     edit:
-      title: Edit Account Information • Static Website Manager
+      title: Change Your Account Information • Static Website Manager
   authorizations:
     index:
       title: Manage Team • %{website_name}
@@ -89,6 +89,8 @@ en:
   passwords:
     new:
       title: Set Your Password • Static Website Manager
+    edit:
+      title: Change Your Password • Static Website Manager
   post_commits:
     index:
       title: Post “%{filename}” History • %{branch_name} • %{website_name}
@@ -121,6 +123,9 @@ en:
   setups:
     show:
       title: Setup Your Website • Static Website Manager
+  ssh_keys:
+    edit:
+      title: Change Your SSH Keys • Static Website Manager
   static_file_commits:
     index:
       title: File “%{filename}” History • %{branch_name} • %{website_name}

@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
-  resource :account, only: %i[edit update], path_names: { edit: '' }
+  resource :account, only: %i[edit update], path_names: { edit: '' } do
+    resource :password, only: %i[edit update], path: 'password', path_names: { edit: '' }
+    resource :ssh_keys, only: %i[edit update], path: 'ssh-keys', path_names: { edit: '' }
+  end
   resource :email_confirmation, only: %i[new create show], path: 'confirm-email', path_names: { new: 'resend' }
   resource :git_post_receive, only: %i[create]
   resource :password_reset, only: %i[edit update], path: 'reset-password', path_names: { edit: '' }

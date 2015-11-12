@@ -1,0 +1,8 @@
+- title
+
+= layout :account, path: :account_ssh_keys do |form|
+  = form.fields_for :authentication, form.object.authentication || form.object.build_authentication do |auth_form|
+    .form-group
+      => auth_form.label :public_key, 'SSH Public Key', class: 'control-label'
+      = auth_form.text_area :public_key, rows: 8, class: 'form-control'
+      p.help-block For help generating your SSH key, see GitHub’s #{link_to 'helpful guide', 'https://help.github.com/articles/generating-ssh-keys/', target: :_blank}, but paste your public key here instead of following Step 4.
