@@ -58,7 +58,7 @@ Rails.application.configure do
   config.logger = Logger.new(STDOUT)
 
   # Use a different cache store in production.
-  config.cache_store = :mem_cache_store, *ENV['MEMCACHED_HOSTS'].to_s.split(',')
+  config.cache_store = :mem_cache_store, %w[memcached]
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
   # config.action_controller.asset_host = 'http://assets.example.com'
