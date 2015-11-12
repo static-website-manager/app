@@ -1,0 +1,15 @@
+- title
+
+= layout :account, path: :account_email do |form|
+  .form-group
+    => label_tag :password, 'Current Password', class: 'control-label'
+    = password_field_tag :password, '', class: 'form-control'
+    p.help-block Please verify your current password if you would like to change it.
+  hr
+  .form-group
+    => form.label :email_update, 'Email Address', class: 'control-label'
+    = form.email_field :email_update, class: 'form-control'
+    - if current_user.pending_email?
+      p.help-block Pending email <code>#{current_user.pending_email}</code> awaiting confirmation.
+    - else
+      p.help-block Email changes must be confirmed before they become active.

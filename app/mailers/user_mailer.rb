@@ -7,7 +7,7 @@ class UserMailer < ApplicationMailer
 
   def email_confirmation(user)
     @user = user
-    mail to: user.email, subject: 'Please Confirm Your Email Address'
+    mail to: (user.pending_email? ? user.pending_email : user.email), subject: 'Please Confirm Your Email Address'
   end
 
   def password_reset(user)

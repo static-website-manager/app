@@ -20,11 +20,21 @@ class User < ActiveRecord::Base
   end
 
   def email_confirmation_token!
-    email_confirmation_token || generate_token!(:email_confirmation_token)
+    generate_token!(:email_confirmation_token)
+  end
+
+  def email_update
+    email
+  end
+
+  def email_update=(value)
+    value.to_s.downcase.tap do |value|
+      write_attribute(:pending_email, value) unless email == value
+    end
   end
 
   def password_reset_token!
-    password_reset_token || generate_token!(:password_reset_token)
+    generate_token!(:password_reset_token)
   end
 
   def session_token!

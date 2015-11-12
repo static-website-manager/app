@@ -2,6 +2,7 @@ class CreateUsers < ActiveRecord::Migration
   def change
     create_table :users do |t|
       t.text :email, null: false
+      t.text :pending_email
       t.text :password_digest
       t.text :name
       t.text :email_confirmation_token

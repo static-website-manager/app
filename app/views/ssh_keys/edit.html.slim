@@ -1,6 +1,11 @@
 - title
 
 = layout :account, path: :account_ssh_keys do |form|
+  .form-group
+    => label_tag :password, 'Current Password', class: 'control-label'
+    = password_field_tag :password, '', class: 'form-control'
+    p.help-block Please verify your current password if you would like to change it.
+  hr
   = form.fields_for :authentication, form.object.authentication || form.object.build_authentication do |auth_form|
     .form-group
       => auth_form.label :public_key, 'SSH Public Key', class: 'control-label'

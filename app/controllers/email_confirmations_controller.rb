@@ -20,7 +20,8 @@ class EmailConfirmationsController < ApplicationController
     user = User.find_by_email_confirmation_token(params[:token])
 
     if user
-      user.update_columns confirmed: true, email_confirmation_token: nil
+      email = user.pending_email? ? user.pending_email : user.email
+      user.update_columns confirmed: true, email_confirmation_token: nil, email: email, pending_email: nil
       sign_in(user)
 
       if user.password_digest?

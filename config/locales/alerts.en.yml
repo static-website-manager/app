@@ -63,6 +63,11 @@ en:
       message: Delete Draft %{filename}
       alert: There was a problem saving your changes.
       notice: Ok, we’ve committed your changes.
+  emails:
+    update:
+      alert_incorrect: The current password you provided is incorrect.
+      alert: There was a problem saving your new email address.
+      notice: Ok, your new email address is pending and a confirmation email is on it’s way.
   email_confirmations:
     create:
       alert: We could not find anyone with that email address.
@@ -162,6 +167,7 @@ en:
       notice_html: <strong>%{email}</strong> has been invited to help setup your website!
   ssh_keys:
     update:
+      alert_incorrect: The current password you provided is incorrect.
       alert: There was a problem updating your SSH public keys.
       notice: Ok, your SSH public keys were saved.
   static_file_moves:

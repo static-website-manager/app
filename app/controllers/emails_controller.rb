@@ -1,4 +1,4 @@
-class SshKeysController < ApplicationController
+class EmailsController < ApplicationController
   before_action :require_user
 
   before_action only: %i[update] do
@@ -9,8 +9,13 @@ class SshKeysController < ApplicationController
   end
 
   def update
-    if current_user.update(ssh_key_params)
-      redirect_to :edit_account_ssh_keys, notice: t('.notice')
+    value = current_user.email
+
+    if current_user.update(email_params)
+      if value != current_user.pending_email
+        UserMailer.email_confirmation(current_user).deliver_later
+      end
+      redirect_to :edit_account_email, notice: t('.notice_email')
     else
       flash.now.alert = t('.alert')
       render :edit, status: 422
@@ -19,12 +24,9 @@ class SshKeysController < ApplicationController
 
   private
 
-  def ssh_key_params
+  def email_params
     params.require(:user).permit(
-      authentication_attributes: [
-        :id,
-        :public_key,
-      ],
+      :email_update,
     )
   end
 end

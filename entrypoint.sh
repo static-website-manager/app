@@ -1,4 +1,9 @@
 #!/bin/bash
 set -e
 
-exec gosu git "$@"
+if [ "$ROOT_USER" = "true" ]
+then
+  exec "$@"
+else
+  exec gosu git "$@"
+fi

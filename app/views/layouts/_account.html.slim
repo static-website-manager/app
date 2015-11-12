@@ -5,6 +5,7 @@
       .panel-heading style="padding-bottom:0"
         ul.nav.nav-tabs style="margin-bottom:-1px"
           li class=('active' if controller_name == 'accounts') = link_to 'Basic Information', :edit_account
+          li class=('active' if controller_name == 'emails') = link_to 'Email Address', :edit_account_email
           li class=('active' if controller_name == 'passwords') = link_to 'Change Password', :edit_account_password
           li class=('active' if controller_name == 'ssh_keys') = link_to 'SSH Keys', :edit_account_ssh_keys
       .panel-body style="padding-top:2em"

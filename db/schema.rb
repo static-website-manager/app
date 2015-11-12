@@ -55,6 +55,7 @@ ActiveRecord::Schema.define(version: 5) do
 
   create_table "users", force: :cascade do |t|
     t.text     "email",                                    null: false
+    t.text     "pending_email"
     t.text     "password_digest"
     t.text     "name"
     t.text     "email_confirmation_token"
