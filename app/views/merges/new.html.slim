@@ -8,7 +8,7 @@
           p: span.label.label-danger> #{pluralize @merge_index.conflicts.count, 'Merge Conflict'} Found
           p We are unable to process merge conflicts at this time. Please perform an offline merge or contact your designer.
     - else
-      = layout :panel, button: 'Publish Changes', commit_message: "Merge #{@branch.title(current_user)} Changes" do
+      = layout :panel, button: 'Publish Changes', commit_message: "Publish #{@branch.title} Changes" do
         p This action will merge changes from your branch into #{@target.title(current_user)}.
       - @diff = @branch.diff(@target)
       p.small style="margin: 4em 0 0.5em"

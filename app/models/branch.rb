@@ -102,6 +102,7 @@ class Branch
         committer: commit_author,
         update_ref: "refs/heads/#{branch.name}",
       })
+      rugged_repository.references.update("refs/heads/#{name}", merge_commit_id)
     rescue
       merge_commit_id = nil
     end
@@ -178,10 +179,10 @@ class Branch
     end
   end
 
-  def title(current_user)
+  def title(current_user = nil)
     if production?
       'Production Branch'
-    elsif staging?(current_user)
+    elsif current_user && staging?(current_user)
       'Your Staging Branch'
     elsif staging?
       "#{user.name}’s Staging Branch"
