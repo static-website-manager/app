@@ -9,14 +9,9 @@
       h1: code.code-text = @static_file.filename
       code.small = @static_file.full_pathname
     .col-sm-4.text-right
-      - if @deployment && @deployment.success?
-        => link_to @static_file.public_url(@deployment.url), target: :_blank, class: 'btn btn-sm btn-default' do
-          ' Download File
-          = icon 'external-link'
-      - else
-        => link_to [:download, @website, @branch, @static_file], class: 'btn btn-sm btn-success' do
-          => icon 'cloud-download'
-          | Download File
+      => link_to (@deployment && @deployment.success? ? @static_file.public_url(@deployment.url) : [:download, @website, @branch, @static_file]), class: 'btn btn-sm btn-default' do
+        => icon 'cloud-download'
+        | Download File
       => link_to [:new, @website, @branch, @static_file, :move], class: 'btn btn-sm btn-primary' do
         ' Rename
         = icon 'arrow-circle-o-right'
@@ -26,8 +21,17 @@
   .row
     .col-sm-7
       .column-header
-        h2 Public Activity
-      .text-center style="background-color: #eee; height: 16em;"
+        h2 Preview File
+      - if @static_file.preview?
+        - if @static_file.image?
+          .text-center style="background: url('#{image_path('checkers.png')}') repeat; padding: 2em 0"
+            = image_tag "data:image/png;base64,#{Base64.strict_encode64(@static_file.raw_content)}", alt: ''
+        - else
+          css:
+            #{Rouge::Themes::Github.render(scope: '.highlight')}
+          = Rouge::Formatters::HTML.new(css_class: 'highlight').format(Rouge::Lexers::Shell.new.lex(@static_file.raw_text)).html_safe
+      - else
+        p: em No preview available for this file tyle.
     .col-sm-5
       .column-header
         h2 Commit History

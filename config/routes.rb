@@ -45,7 +45,6 @@ Rails.application.routes.draw do
         get :delete, on: :member
         resources :commits, only: %i[index], controller: 'static_file_commits', path: 'history'
         resource :move, only: %i[new create], controller: 'static_file_moves', path: 'rename'
-        resource :preview, only: %i[show], controller: 'static_file_previews'
       end
       resources :pages, id: /.+/ do
         get :delete, on: :member

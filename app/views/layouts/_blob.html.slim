@@ -7,9 +7,7 @@
         => image_tag 'logo-small.png', alt: 'Static Website Manager', class: 'logo-small'
       ul.nav.nav-tabs
         li class=('active' if current_page?([website, branch, blob])) = link_to 'Overview', [website, branch, blob]
-        - if blob.is_a?(StaticFile)
-          li class=('active' if current_page?([website, branch, blob, :preview])) = link_to 'Preview', [website, branch, blob, :preview]
-        - else
+        - unless blob.is_a?(StaticFile)
           li class=('active' if current_page?([:edit, website, branch, blob])) = link_to 'Edit', [:edit, website, branch, blob]
         li class=('active' if current_page?([website, branch, blob, :commits])) = link_to 'History', [website, branch, blob, :commits]
   .container-fluid

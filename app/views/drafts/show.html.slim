@@ -21,8 +21,9 @@
   .row
     .col-sm-7
       .column-header
-        h2 Public Activity
-      .text-center style="background-color: #eee; height: 16em;"
+        h2 Preview Page
+      .page-preview
+        = sanitize(markdown(@draft.content))
     .col-sm-5
       .column-header
         h2 Commit History
