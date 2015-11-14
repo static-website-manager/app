@@ -2,10 +2,13 @@
 
 = layout :branch, website: @website, repository: @repository, branch: @branch, deployment: @deployment do
   .clearfix
-    - if @branch.custom? && current_authorization.custom_branch_access?
-      .pull-right
+    .pull-right
+      => link_to [:edit, @website, @branch, :config], class: 'btn btn-sm btn-default' do
+        ' Configure Branch
+        = icon 'gear'
+      - if @branch.custom? && current_authorization.custom_branch_access?
         => link_to [:new, @website, @branch, :move], class: 'btn btn-sm btn-primary' do
-          ' Rename Branch
+          ' Rename
           = icon 'arrow-circle-o-right'
         = link_to [:delete, @website, @branch], class: 'btn btn-sm btn-danger' do
           => icon 'trash'

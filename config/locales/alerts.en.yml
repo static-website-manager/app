@@ -30,6 +30,12 @@ en:
       alert_same: Custom branch must not already exist.
       alert: There was a problem creating your custom branch.
       notice: Ok, your new branch is ready to use.
+  configs:
+    update: 
+      message: Update Website Configuration
+      alert_unchanged: No changes detected.
+      alert: There was a problem updating your website configuration.
+      notice: Great, we’ve commited your configuration changes.
   deployments:
     create:
       alert: There was a problem publishing this branch.

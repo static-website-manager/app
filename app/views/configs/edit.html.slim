@@ -1,0 +1,63 @@
+- title website_name: @website.name, branch_name: @branch.title(current_user)
+
+= layout :nest, heading: 'Configure Branch', size: :md, return_to: [@website, @branch] do
+  = form_for @config, url: [@website, @branch, :config], method: :patch do |form|
+    = layout :panel, button: 'Save Changes', commit_message: 'Update Website Configuration' do
+      = form.fields_for :config do |config|
+        .form-group
+          => config.label :title, 'Title', class: 'control-label'
+          = config.text_field :title, value: form.object.config.find { |key, _| key == 'title' }.try(:[], 1), class: 'form-control'
+        .form-group
+          => config.label :description, 'Description', class: 'control-label'
+          = config.text_area :description, value: form.object.config.find { |key, _| key == 'description' }.try(:[], 1), rows: 3, class: 'form-control'
+        .form-group
+          => config.label :timezone, 'Time Zone', class: 'control-label'
+          = config.select :timezone, time_zone_options_for_select(form.object.config.find { |key, _| key == 'timezone' }.try(:[], 1), ActiveSupport::TimeZone.us_zones), { include_blank: true }, class: 'form-control'
+          p.help-block The default Static Website Manager time zone is “Pacific Time (US &amp; Canada).”
+        - if (form.object.config.keys - %w[title description timezone]).any?
+          hr
+          p: strong Custom Configuration
+          - unsupported_config_keys = []
+          .well.well-sm
+            - form.object.config.each do |key, value|
+              - next if %w[title description timezone].include?(key)
+              - if value.class == String && value.present? && !%w[true false].include?(value.downcase)
+                .form-group
+                  => config.label key, key, class: 'control-label'
+                  = config.text_field key, value: value, class: 'form-control'
+              - elsif value.class == Time
+                .form-group
+                  => config.label key, key, class: 'control-label'
+                  .input-group.datetimepicker
+                    => config.text_field key, value: value.try(:strftime, '%m/%d/%Y %I:%M %p'), class: 'form-control datetimepicker'
+                    span.input-group-addon = icon 'calendar'
+              - elsif value.class == TrueClass || value.class == FalseClass || (value.class == String && %w[true false].include?(value.downcase))
+                .checkbox
+                  = config.label key do
+                    => config.check_box key, checked: value.class == String ? value.downcase == 'true' : value
+                    strong = key
+              - elsif value.class == Array && value.map(&:class).uniq == [String]
+                label.control-label = key
+                .well.well-sm
+                  - value.each_with_index do |value, i|
+                    .form-group
+                      = config.text_field key, multiple: true, value: value, class: 'form-control'
+              - elsif value.class == Hash && value.keys.map(&:class).uniq == [String] && value.values.map(&:class).uniq == [String]
+                label.control-label = key
+                .well.well-sm
+                  = config.fields_for key do |child|
+                    - value.each do |child_key, value|
+                      .form-group
+                        => child.label child_key, child_key, class: 'control-label'
+                        = child.text_field child_key, value: value, class: 'form-control'
+              - else
+                - unsupported_config_keys.push key
+            - if unsupported_config_keys.any?
+              hr
+              p.h5
+                ' Unsupported or
+                code> nil
+                | Keys
+              ul
+              - unsupported_config_keys.each do |key|
+                li: code.code-text = key

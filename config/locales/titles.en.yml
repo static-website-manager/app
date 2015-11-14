@@ -29,6 +29,9 @@ en:
   commits:
     show:
       title: Commit %{commit_id} • %{website_name}
+  configs:
+    edit:
+      title: Config • %{branch_name} • %{website_name}
   datasets:
     index:
       title: Data • %{branch_name} • %{website_name}

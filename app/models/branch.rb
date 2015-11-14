@@ -51,6 +51,24 @@ class Branch
     rugged_branch.target.oid
   end
 
+  def config
+    config_content = nil
+
+    result = rugged_repository.lookup(commit_id).tree.walk(:postorder).find do |root, object|
+      object[:type] == :blob && File.join([root, object[:name]].reject(&:blank?)) == '_config.yml'
+    end
+
+    if result
+      rugged_blob = rugged_repository.lookup(result[1][:oid])
+
+      if rugged_blob
+        config_content = rugged_blob.text
+      end
+    end
+
+    Config.new(branch_name: name, raw_content: config_content, rugged_repository: rugged_repository)
+  end
+
   def custom?
     !production? && !staging?
   end
