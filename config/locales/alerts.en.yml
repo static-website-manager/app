@@ -155,8 +155,9 @@ en:
     destroy:
       notice: Goodbye, and thanks for your business.
   settings:
-    alert: There was a problem saving your business settings.
-    notice: Settings updated successfully.
+    update:
+      alert: There was a problem saving your business settings.
+      notice: Settings updated successfully.
   setup_authentications:
     create:
       alert_ssh: Your SSH key %{errors}
@@ -180,6 +181,10 @@ en:
       message: Delete File %{filename}
       alert: There was a problem saving your changes.
       notice: Ok, we’ve committed your changes.
+  subscription_settings:
+    update:
+      alert: There was a problem changing your subscription settings.
+      notice: Ok, we’ve updated your subscription settings.
   subscriptions:
     create:
       alert_not_invited: You are not invited to Subscribe at this time.

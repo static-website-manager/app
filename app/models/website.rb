@@ -4,7 +4,23 @@ class Website < ActiveRecord::Base
 
   has_many :deployments, dependent: :destroy
 
+  enum subscription_plan: {
+    small: 0,
+    medium: 1,
+    large: 2,
+  }
+
+  enum subscription_status: {
+    trialing: 0,
+    active: 1,
+    past_due: 2,
+    canceled: 3,
+    unpaid: 4,
+  }
+
   validates :name, presence: true
+  validates :subscription_plan, presence: true
+  validates :subscription_status, presence: true
 
   after_create do
     begin
@@ -16,6 +32,10 @@ class Website < ActiveRecord::Base
   end
 
   after_destroy :teardown!
+
+  def account_owners
+    users.where(authorizations: { account_owner: true })
+  end
 
   def repository_pathname
     @rugged_pathname ||= Repository.pathname(id)

@@ -1,0 +1,32 @@
+- if form.object.errors[:subscription_plan].any?
+  p.has-error.has-feedback: strong.control-label Subscription Plan
+- else
+  p: strong Subscription Plan
+.row.text-center
+  .col-xs-4
+    .well.well-sm
+      .radio
+        = form.label :subscription_plan_small do
+          => form.radio_button :subscription_plan, :small
+          strong> Small
+          | – $35/mo
+  .col-xs-4
+    .well.well-sm
+      .radio
+        = form.label :subscription_plan_medium do
+          => form.radio_button :subscription_plan, :medium
+          strong> Medium
+          | – $85/mo
+  .col-xs-4
+    .well.well-sm
+      .radio
+        = form.label :subscription_plan_large do
+          => form.radio_button :subscription_plan, :large
+          strong> Large
+          | – $165/mo
+.checkbox style="margin:0"
+  = form.label :yearly_billing do
+    => form.check_box :yearly_billing
+    strong.bg-warning> Yes! Save 15%
+    | with yearly billing.
+hr

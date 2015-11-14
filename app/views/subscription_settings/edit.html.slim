@@ -1,0 +1,7 @@
+- title website_name: @website.name
+
+= layout :nest, heading: 'Edit Your Subscription Settings', size: :md, return_to: session[:return_to] || @website do
+  = errors_for @website
+  = form_for @website, url: [@website, :subscription_settings] do |f|
+    = layout :panel, button: 'Save Changes' do
+      = render partial: 'subscriptions/form', object: f

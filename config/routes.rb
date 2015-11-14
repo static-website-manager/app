@@ -20,6 +20,7 @@ Rails.application.routes.draw do
       resource :authentication, only: %i[create], controller: 'setup_authentications', path: 'ssh'
       resources :authorizations, only: %i[new create], controller: 'setup_authorizations', path: 'team', path_names: { new: '' }
     end
+    resource :subscription_settings, only: %i[edit update], path: 'subscription', path_names: { edit: '' }
     resources :authorizations, only: %i[index new create edit update destroy], path: 'team'
     resources :branches, only: %i[show destroy], path: '' do
       get :delete, on: :member

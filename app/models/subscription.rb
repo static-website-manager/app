@@ -25,11 +25,13 @@ class Subscription
   def save
     ActiveRecord::Base.transaction do
       @user.save
-      @website.save
 
       @user.errors.each do |attribute, error|
         errors.add attribute, error
       end
+
+      @website.subscription_status = :trialing
+      @website.save
 
       @website.errors.each do |attribute, error|
         errors.add attribute, error

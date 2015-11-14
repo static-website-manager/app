@@ -40,4 +40,12 @@ class UserMailerTest < ActionMailer::TestCase
     assert_equal ['support@staticwebsitemanager.test'], email.from
     assert_equal [user.email], email.to
   end
+
+  def test_subscription_update_confirmation
+    website = Website.first
+    email = UserMailer.subscription_update_confirmation(website).deliver_now
+    refute ActionMailer::Base.deliveries.empty?
+    assert_equal ['support@staticwebsitemanager.test'], email.from
+    assert_equal website.account_owners.map(&:email), email.to
+  end
 end

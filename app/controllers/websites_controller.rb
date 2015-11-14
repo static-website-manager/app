@@ -45,6 +45,8 @@ class WebsitesController < ApplicationController
     params.require(:subscription).permit(
       website_attributes: [
         :name,
+        :subscription_plan,
+        :yearly_billing,
       ],
     )
   end

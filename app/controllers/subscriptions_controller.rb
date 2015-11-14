@@ -40,6 +40,8 @@ class SubscriptionsController < ApplicationController
       ],
       website_attributes: [
         :name,
+        :subscription_plan,
+        :yearly_billing,
       ],
     )
   end

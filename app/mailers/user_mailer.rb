@@ -23,4 +23,9 @@ class UserMailer < ApplicationMailer
     @user = user
     mail to: user.email, subject: 'Thanks For Starting Your Trial Subscription'
   end
+
+  def subscription_update_confirmation(website)
+    @website = website
+    mail to: website.account_owners.map(&:email), subject: 'Your Website Subscription Was Changed'
+  end
 end

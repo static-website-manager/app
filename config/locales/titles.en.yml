@@ -145,6 +145,9 @@ en:
       title: File “%{filename}” • %{branch_name} • %{website_name}
     delete:
       title: Delete File “%{filename}” • %{branch_name} • %{website_name}
+  subscription_settings:
+    new:
+      title: Change Subscription • Static Website Manager
   subscriptions:
     new:
       title: Subscribe • Static Website Manager

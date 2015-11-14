@@ -1,0 +1,6 @@
+p This is a friendly notice to confirm that the subscription for <strong>#{@website.name}</strong> was changed.
+
+- if @website.yearly_billing?
+  p Your website is now subscribed to the <strong>#{@website.subscription_plan} plan</strong> with <strong>yearly billing</strong>.
+- else
+  p Your website is now subscribed to the <strong>#{@website.subscription_plan} plan</strong> with monthly billing.

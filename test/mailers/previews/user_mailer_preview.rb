@@ -18,4 +18,8 @@ class UserMailerPreview < ActionMailer::Preview
   def subscription_confirmation
     UserMailer.subscription_confirmation(User.first)
   end
+
+  def subscription_update_confirmation
+    UserMailer.subscription_update_confirmation(Website.first)
+  end
 end

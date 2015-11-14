@@ -71,12 +71,15 @@ ActiveRecord::Schema.define(version: 5) do
   add_index "users", ["session_token"], name: "index_users_on_session_token", unique: true, using: :btree
 
   create_table "websites", force: :cascade do |t|
-    t.text     "name",                                                     null: false
-    t.boolean  "auto_create_production_deployment",         default: true, null: false
-    t.boolean  "auto_create_staging_deployment",            default: true, null: false
-    t.boolean  "auto_rebase_staging_on_production_changes", default: true, null: false
-    t.datetime "created_at",                                               null: false
-    t.datetime "updated_at",                                               null: false
+    t.text     "name",                                                      null: false
+    t.integer  "subscription_plan",                                         null: false
+    t.integer  "subscription_status",                                       null: false
+    t.boolean  "yearly_billing",                            default: false, null: false
+    t.boolean  "auto_create_production_deployment",         default: true,  null: false
+    t.boolean  "auto_create_staging_deployment",            default: true,  null: false
+    t.boolean  "auto_rebase_staging_on_production_changes", default: true,  null: false
+    t.datetime "created_at",                                                null: false
+    t.datetime "updated_at",                                                null: false
   end
 
   add_foreign_key "authentications", "users"

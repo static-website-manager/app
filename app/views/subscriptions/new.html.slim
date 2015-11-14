@@ -4,6 +4,8 @@
   = errors_for @subscription
   = form_for @subscription do |form|
     = layout :panel, heading: 'Subscribe to Static Website Manager', button: 'Subscribe', success: true, large: true
+      = form.fields_for :website do |f|
+        = render f
       = form.fields_for :user do |f|
         .form-group
           => f.label :name, class: 'control-label' do
