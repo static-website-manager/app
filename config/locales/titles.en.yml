@@ -161,7 +161,7 @@ en:
     delete:
       title: Delete File “%{filename}” • %{branch_name} • %{website_name}
   subscription_settings:
-    new:
+    edit:
       title: Change Subscription • Static Website Manager
   subscriptions:
     new:
