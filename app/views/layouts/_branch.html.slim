@@ -40,20 +40,21 @@
         li = link_to [:new, website, branch, :checkout] do
           => icon 'code-fork'
           small Add Custom Branch
-  - if deployment && deployment.success?
-    => link_to 'View Public Website', deployment.url, target: :_blank, class: 'small'
-    span.small.text-muted
-      ' – Branch Deployed
-      => time_ago_in_words deployment.updated_at
-      | ago
-  - elsif deployment && deployment.pending?
-    span.small.text-muted
+  span.small.text-muted
+    - if deployment && deployment.success?
+      => link_to 'View Public Website', deployment.url, target: :_blank
+    - elsif deployment && deployment.pending?
       => icon 'spinner fa-spin'
-      | Deploying Branch...
-  - elsif deployment
-    span.small.text-danger Error Deploying Branch
-  - else
-    span.small.text-muted Private Branch
+      ' Deploying Branch...
+    - elsif deployment
+      ' Error Deploying Branch
+    - else
+      ' Private Branch
+    ' •
+    - if website.form_responders.active.any?
+      = pluralize website.form_responders.count, 'Active Form Responder'
+    - else
+      | No Active Form Responders
 ul.nav.nav-tabs.branch-nav
   li class=('active' if current_page?([website, branch])) = link_to 'Overview', [website, branch]
   - if current_authorization.designer?

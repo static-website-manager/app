@@ -21,12 +21,12 @@ Rails.application.routes.draw do
       resources :authorizations, only: %i[new create], controller: 'setup_authorizations', path: 'team', path_names: { new: '' }
     end
     resource :subscription_settings, only: %i[edit update], path: 'subscription', path_names: { edit: '' }
-    resources :authorizations, only: %i[index new create edit update destroy], path: 'team'
+    resources :authorizations, only: %i[index new create edit update destroy], path: 'team', path_names: { new: 'new' }
     resources :branches, only: %i[show destroy], path: '' do
       get :delete, on: :member
       resource :checkout, only: %i[new create], path_names: { new: '' }
       resource :config, only: %i[edit update], path_names: { edit: '' }
-      resource :deployment, only: %i[new create update destroy] do
+      resource :deployment, only: %i[new create update destroy], path: 'deploy', path_names: { new: '' } do
         get :delete
       end
       resource :design, only: %i[show]
@@ -36,26 +36,30 @@ Rails.application.routes.draw do
       resources :collections, only: %i[index]
       resources :commits, only: %i[index], controller: 'branch_commits', path: 'history'
       resources :datasets, only: %i[index show], id: /.+/, path: 'data'
-      resources :drafts, id: /.+/ do
+      resources :drafts, id: /.+/, path_names: { new: 'new' } do
         get :delete, on: :member
         resources :commits, only: %i[index], controller: 'draft_commits', path: 'history'
         resource :move, only: %i[new create], controller: 'draft_moves', path: 'rename', path_names: { new: '' }
         resource :publication, only: %i[new create], controller: 'draft_publications', path: 'publish', path_names: { new: '' }
       end
-      resources :static_files, id: /.+/, path: 'files' do
+      resources :form_responders, only: %i[new create edit update destroy], path: 'form-responders', path_names: { new: 'new' } do
+        get :delete, on: :member
+        resource :activation, only: %i[create destroy], controller: 'form_responder_activations'
+      end
+      resources :static_files, id: /.+/, path: 'files', path_names: { new: 'new' } do
         get :delete, on: :member
         resources :commits, only: %i[index], controller: 'static_file_commits', path: 'history'
-        resource :move, only: %i[new create], controller: 'static_file_moves', path: 'rename'
+        resource :move, only: %i[new create], controller: 'static_file_moves', path: 'rename', path_names: { new: '' }
       end
-      resources :pages, id: /.+/ do
+      resources :pages, id: /.+/, path_names: { new: 'new' } do
         get :delete, on: :member
         resources :commits, only: %i[index], controller: 'page_commits', path: 'history'
-        resource :move, only: %i[new create], controller: 'page_moves', path: 'rename'
+        resource :move, only: %i[new create], controller: 'page_moves', path: 'rename', path_names: { new: '' }
       end
-      resources :posts, id: /.+/ do
+      resources :posts, id: /.+/, path_names: { new: 'new' } do
         get :delete, on: :member
         resources :commits, only: %i[index], controller: 'post_commits', path: 'history'
-        resource :move, only: %i[new create], controller: 'post_moves', path: 'rename'
+        resource :move, only: %i[new create], controller: 'post_moves', path: 'rename', path_names: { new: '' }
       end
     end
     resources :commits, only: %i[show]

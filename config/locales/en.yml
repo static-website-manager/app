@@ -4,6 +4,8 @@ en:
       authorization:
         role: Content Role
         owner: Account Owner
+      form_responder:
+        dataset_pathname: Data Connection
       user:
         password_confirmation: Password Confirmation
       website:

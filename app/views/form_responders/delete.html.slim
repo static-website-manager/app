@@ -1,0 +1,7 @@
+- title website_name: @website.name, branch_name: @branch.title(current_user)
+
+= layout :nest, heading: 'Delete Form Responder', size: :md, return_to: [@website, @branch] do
+  = errors_for @form_responder
+  = form_for [@website, @branch, @form_responder], method: :delete do |form|
+    = layout :panel, heading: "Form Responder <code class=\"code-text\">#{@form_responder.path_id}</code> for #{@branch.title(current_user)}".html_safe, danger: true, button: 'Remove Form Responder' do
+      p Are your sure you want to remove this Form Responder?

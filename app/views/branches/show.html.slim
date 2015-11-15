@@ -22,7 +22,7 @@
         => link_to @deployment.url, target: :_blank, class: 'btn btn-xs btn-success' do
           ' View Public Website
           = icon 'external-link'
-        = link_to 'Make Branch Private', [:delete, @website, @branch, @deployment], class: 'btn btn-xs btn-link'
+        = link_to 'Make Branch Private', [:delete, @website, @branch, :deployment], class: 'btn btn-xs btn-link'
     - elsif @deployment && @deployment.pending?
       p.text-muted
         => icon 'spinner fa-spin'
@@ -31,7 +31,7 @@
         => link_to @deployment.url, target: :_blank, class: 'btn btn-xs btn-primary disabled' do
           ' View Public Website
           = icon 'external-link'
-        = link_to 'Make Branch Private', [:delete, @website, @branch, @deployment], class: 'btn btn-sm btn-link'
+        = link_to 'Make Branch Private', [:delete, @website, @branch, :deployment], class: 'btn btn-sm btn-link'
     - elsif @deployment
       p.text-muted
         span.text-danger = @deployment.response_message
@@ -51,8 +51,21 @@
   .row style="margin-top: 3em"
     .col-sm-7
       .column-header
-        h2 Public Activity
-      .text-center style="background-color: #eee; height: 16em;"
+        => link_to 'What are Form Responders?', '/help/form_responders', target: :_blank, class: 'pull-right small'
+        h2 Form Responders
+      - if @form_responders.any?
+        = render partial: 'form_responders/form_responder', collection: @form_responders, locals: { website: @website, branch: @branch }
+        - if @datasets.any?
+          p = link_to [:new, @website, @branch, :form_responder], class: 'btn btn-sm btn-primary' do
+            => icon 'plus'
+            | Add Form Responder
+      - else
+        p
+          ' No Form Responders Found.
+          - if @datasets.any?
+            = link_to [:new, @website, @branch, :form_responder], class: 'btn btn-xs btn-primary', style: 'margin-left:0.5em' do
+              => icon 'plus'
+              | Add Form Responder
     .col-sm-5
       .column-header
         h2 Commit History

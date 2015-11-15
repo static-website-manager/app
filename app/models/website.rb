@@ -3,6 +3,7 @@ class Website < ActiveRecord::Base
   has_many :users, through: :authorizations
 
   has_many :deployments, dependent: :destroy
+  has_many :form_responders, dependent: :destroy
 
   enum subscription_plan: {
     small: 0,

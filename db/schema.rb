@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 5) do
+ActiveRecord::Schema.define(version: 6) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -53,6 +53,18 @@ ActiveRecord::Schema.define(version: 5) do
 
   add_index "deployments", ["website_id"], name: "index_deployments_on_website_id", using: :btree
 
+  create_table "form_responders", force: :cascade do |t|
+    t.integer  "website_id",                      null: false
+    t.text     "branch_name",                     null: false
+    t.text     "dataset_pathname",                null: false
+    t.text     "path_id",                         null: false
+    t.boolean  "active",           default: true, null: false
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
+  end
+
+  add_index "form_responders", ["website_id"], name: "index_form_responders_on_website_id", using: :btree
+
   create_table "users", force: :cascade do |t|
     t.text     "email",                                    null: false
     t.text     "pending_email"
@@ -86,4 +98,5 @@ ActiveRecord::Schema.define(version: 5) do
   add_foreign_key "authorizations", "users"
   add_foreign_key "authorizations", "websites"
   add_foreign_key "deployments", "websites"
+  add_foreign_key "form_responders", "websites"
 end

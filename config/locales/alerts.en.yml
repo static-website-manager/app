@@ -83,6 +83,26 @@ en:
       alert: We could not verify your account.
       notice_password: Thanks! We‘ve confirmed your email address. Please set your password to continue.
       notice: Thanks! We‘ve confirmed your email address.
+  form_responder_activations:
+    create:
+      alert: There was a problem activating your Form Responder.
+      notice: Great, your Form Responder is now active.
+    destroy:
+      alert: There was a problem deactivating your Form Responder.
+      notice: Ok, your Form Responder was deactivated.
+  form_responders:
+    new:
+      alert_empty: No Data files were found.
+    create:
+      alert_empty: No Data files were found.
+      alert: There was a problem creating your Form Responder.
+      notice: Great, your Form Responder is setup and actively listening.
+    update:
+      alert: There was a problem updating your Form Responder.
+      notice: Ok, we‘ve updated your Form Responder settings.
+    destroy:
+      alert: There was a problem removing your Form Responder.
+      notice: Ok, we’ve removed your Form Responder.
   git_post_receives:
     create:
       removed: Removed Website Build for %{branch_name} at %{deployment_url}

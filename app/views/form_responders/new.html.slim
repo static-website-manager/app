@@ -1,0 +1,9 @@
+- title website_name: @website.name, branch_name: @branch.title(current_user)
+
+= layout :nest, heading: 'Add Form Responder', size: :md, return_to: [@website, @branch] do
+  = errors_for @form_responder
+  = form_for [@website, @branch, @form_responder] do |form|
+    = layout :panel, button: 'Add Form Responder' do
+      .form-group
+        => form.label :dataset_pathname, class: 'control-label'
+        = form.select :dataset_pathname, options_for_select(@dataset_pathnames, @form_responder.dataset_pathname), {}, class: 'form-control'
