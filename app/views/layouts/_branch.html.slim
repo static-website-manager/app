@@ -11,7 +11,7 @@
     - elsif branch.merge_possible?(production_branch) && current_authorization.production_branch_access?
       .pull-right
         span.small.text-muted> This branch is ahead of Production
-        = link_to [:new, website, branch, :merge], class: 'btn btn-primary', style: 'margin-left: 0.5em' do
+        = link_to [:new, website, branch, :merge], class: 'btn btn-info', style: 'margin-left: 0.5em' do
           ' Publish Changes
           = icon 'arrow-circle-right'
   span.btn-group> style="margin-right: 1em"
