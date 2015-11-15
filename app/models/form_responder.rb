@@ -18,4 +18,26 @@ class FormResponder < ActiveRecord::Base
   def self.active
     where(active: true)
   end
+
+  def append_data(*args)
+    dataset.append_data(*args, branch_name, "support@#{ENV['HOST']}", 'Static Website Manager', "Form Responder Update (#{path_id} => #{dataset_pathname})")
+  end
+
+  def update_data(*args)
+    dataset.update_data(*args, branch_name, "support@#{ENV['HOST']}", 'Static Website Manager', "Form Responder Update (#{path_id} => #{dataset_pathname})")
+  end
+
+  private
+
+  def branch
+    @branch ||= repository.branch(branch_name)
+  end
+
+  def dataset
+    @dataset ||= Dataset.find(repository.rugged_repository, branch.commit_id, dataset_pathname)
+  end
+
+  def repository
+    @repository ||= Repository.new(website_id: website_id)
+  end
 end

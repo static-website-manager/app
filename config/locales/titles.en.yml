@@ -68,6 +68,9 @@ en:
   email_confirmations:
     new:
       title: Resend Confirmation Email • Static Website Manager
+  form_responder_submissions:
+    invalid:
+      title: Invalid Form Submission • %{website_name}
   form_responders:
     new:
       title: New Form Responder • %{branch_name} • %{website_name}
