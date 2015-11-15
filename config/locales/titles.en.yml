@@ -35,6 +35,8 @@ en:
   datasets:
     index:
       title: Data • %{branch_name} • %{website_name}
+    show:
+      title: Data “%{filename}” • %{branch_name} • %{website_name}
   deployments:
     new:
       title: Publish Branch • %{branch_name} • %{website_name}

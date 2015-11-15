@@ -35,7 +35,7 @@ Rails.application.routes.draw do
       resource :rebase, only: %i[new create], path_names: { new: '' }
       resources :collections, only: %i[index]
       resources :commits, only: %i[index], controller: 'branch_commits', path: 'history'
-      resources :datasets, only: %i[index], path: 'data'
+      resources :datasets, only: %i[index show], id: /.+/, path: 'data'
       resources :drafts, id: /.+/ do
         get :delete, on: :member
         resources :commits, only: %i[index], controller: 'draft_commits', path: 'history'

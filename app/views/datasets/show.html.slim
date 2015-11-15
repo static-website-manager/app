@@ -1,0 +1,6 @@
+- title website_name: @website.name, branch_name: @branch.name, filename: @dataset.pretty_pathname
+
+= layout :nest, heading: 'View Data File', size: :md, return_to: [@website, @branch, :datasets] do
+  = layout :panel, heading: @dataset.pretty_pathname do
+    pre style="margin:0"
+      code = @dataset.content
