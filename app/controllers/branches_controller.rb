@@ -9,7 +9,7 @@ class BranchesController < ApplicationController
   def show
     @commits = Commit.all(@repository.rugged_repository, @branch.commit_id, per_page: 10)
     @datasets = Dataset.all(@repository.rugged_repository, @branch.commit_id, per_page: 1)
-    @form_responders = @website.form_responders
+    @form_responders = @website.form_responders.where(branch_name: @branch.name)
   end
 
   def destroy
