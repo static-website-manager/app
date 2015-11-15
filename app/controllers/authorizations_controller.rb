@@ -4,6 +4,12 @@ class AuthorizationsController < ApplicationController
   before_action :require_repository
   before_action :require_account_owner
 
+  before_action only: %i[new create] do
+    if @website.authorizations.count >= @website.allowed_users
+      redirect_to [@website, :authorizations], alert: t('.alert_exceeded')
+    end
+  end
+
   # Initialize a new authorization with user.
   before_action only: %i[new create] do
     @authorization = @website.authorizations.new

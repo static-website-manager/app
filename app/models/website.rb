@@ -23,6 +23,12 @@ class Website < ActiveRecord::Base
   validates :subscription_plan, presence: true
   validates :subscription_status, presence: true
 
+  validate do
+    if authorizations.count > allowed_users
+      errors.add(:subscription_plan, :users_exceeded, user_count: authorizations.count)
+    end
+  end
+
   after_create do
     begin
       setup!
@@ -36,6 +42,19 @@ class Website < ActiveRecord::Base
 
   def account_owners
     users.where(authorizations: { account_owner: true })
+  end
+
+  def allowed_users
+    case subscription_plan
+    when 'small'
+      3
+    when 'medium'
+      8
+    when 'large'
+      16
+    else
+      0
+    end
   end
 
   def repository_pathname

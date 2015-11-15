@@ -4,7 +4,10 @@ en:
       alert: There was a problem updating your account information.
       notice: Ok, your account information was saved.
   authorizations:
+    new:
+      alert_exceeded: Your website has reached its plan limit.
     create:
+      alert_exceeded: Your website has reached its plan limit.
       alert: There was a problem sending the invite.
       notice_html: <strong>%{email}</strong> has been invited to join the team!
     update:

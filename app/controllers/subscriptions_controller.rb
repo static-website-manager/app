@@ -1,7 +1,7 @@
 class SubscriptionsController < ApplicationController
   before_action do
     if current_user
-      redirect_to :new_website
+      redirect_to [:new_website, plan: params[:plan]]
     end
   end
 
@@ -12,7 +12,7 @@ class SubscriptionsController < ApplicationController
   end
 
   def new
-    @subscription = Subscription.new
+    @subscription = Subscription.new(website_attributes: { subscription_plan: params[:plan] })
   end
 
   def create

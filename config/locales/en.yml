@@ -10,6 +10,12 @@ en:
         password_confirmation: Password Confirmation
       website:
         name: Website Name
+    errors:
+      models:
+        website:
+          attributes:
+            subscription_plan:
+              users_exceeded: does not allow enough users to match your current team (%{user_count} users) - please downsize your team first
   date:
     formats:
       default: '%B %d, %Y'
