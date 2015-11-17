@@ -1,3 +1,7 @@
+- btn_class = 'btn '
+- btn_class << 'btn-danger' if defined?(danger)
+- btn_class << 'btn-success' if defined?(success)
+- btn_class << 'btn-primary' unless defined?(danger) || defined?(success)
 .panel.panel-default
   - if defined?(heading) && heading.present?
     .panel-heading
@@ -16,27 +20,12 @@
               = label_tag :message, 'Commit Message', class: 'control-label text-muted'
               = text_field_tag :message, params[:message].present? ? params[:message] : commit_message, class: 'form-control'
           .col-sm-3
-            - if defined?(danger)
-              = button_tag button, class: 'btn btn-block btn-danger'
-            - elsif defined?(success)
-              = button_tag button, class: 'btn btn-block btn-success'
-            - else
-              = button_tag button, class: 'btn btn-block btn-primary'
+            = button_tag button, class: btn_class + ' btn-block'
     - elsif defined?(large)
       .panel-footer
         .row
           .col-lg-6.col-lg-offset-3
-            - if defined?(danger)
-              = button_tag button, class: 'btn btn-block btn-lg btn-danger'
-            - elsif defined?(success)
-              = button_tag button, class: 'btn btn-block btn-lg btn-success'
-            - else
-              = button_tag button, class: 'btn btn-block btn-lg btn-primary'
+            = button_tag button, class: btn_class + ' btn-block'
     - else
       .panel-footer.text-center
-        - if defined?(danger)
-          = button_tag button, class: 'btn btn-danger'
-        - elsif defined?(success)
-          = button_tag button, class: 'btn btn-success'
-        - else
-          = button_tag button, class: 'btn btn-primary'
+        = button_tag button, class: btn_class

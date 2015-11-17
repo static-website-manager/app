@@ -2,17 +2,13 @@
 
 = layout :branch, website: @website, repository: @repository, branch: @branch, deployment: @deployment do
   div class=(@posts.any? ? 'clearfix' : '')
-    .pull-right style="position:relative; z-index:1"
-      => link_to '/help#posts', target: :_blank, class: 'btn btn-sm btn-default' do
-        ' Help with Posts
-        = icon 'question-circle'
-      = link_to [:new, @website, @branch, :post], class: 'btn btn-sm btn-primary' do
-        => icon 'plus-circle'
-        | Add Post
+    .pull-right.position-above
+      => link_to icor('Help with Posts', 'question-circle'), '/help#posts', target: :_blank, class: 'btn btn-sm btn-default'
+      = link_to icon('plus-circle', 'Add Post'), [:new, @website, @branch, :post], class: 'btn btn-sm btn-primary'
     - if @posts.any?
       = page_entries_info @posts, entry_name: 'Post'
   - if @posts.any?
-    .table-responsive style="margin-top:1em"
+    .table-responsive.m-t
       table.table.table-bordered.table-striped.table-hover.posts
         thead
           tr

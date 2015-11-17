@@ -7,6 +7,10 @@ module ApplicationHelper
     render partial: 'application/errors', locals: { messages:  models.map(&:errors).map(&:full_messages).flatten }
   end
 
+  def icor(*args)
+    (args[0] + ' ' + icon(*args[1..-1])).html_safe
+  end
+
   def layout(name, locals = {}, &block)
     render(layout: 'layouts/' + name.to_s, locals: locals, &block)
   end

@@ -1,3 +1,6 @@
+- standard_keys = %w[layout title excerpt permalink categories tags]
+- standard_keys.push('date') if form.object.is_a?(Draft) || form.object.is_a?(Post)
+
 .blob-editor
   .row
     .col-sm-4
@@ -6,9 +9,8 @@
           => metadata.label :layout, 'Layout', class: 'control-label'
           = metadata.select :layout, options_for_select(branch.layout_names, form.object.metadata.find { |key, _| key == 'layout' }.try(:[], 1)), {}, class: 'form-control'
         .form-group
-          - placeholder = form.object.is_a?(Page) ? form.object.title(branch.markdown_extensions) : form.object.title
           => metadata.label :title, 'Title', class: 'control-label'
-          = metadata.text_field :title, value: form.object.metadata.find { |key, _| key == 'title' }.try(:[], 1), placeholder: placeholder, class: 'form-control'
+          = metadata.text_field :title, value: form.object.metadata.find { |key, _| key == 'title' }.try(:[], 1), placeholder: form.object.is_a?(Page) ? form.object.title(branch.markdown_extensions) : form.object.title, class: 'form-control'
         .form-group
           => metadata.label :excerpt, 'Excerpt', class: 'control-label'
           = metadata.text_area :excerpt, value: form.object.metadata.find { |key, _| key == 'excerpt' }.try(:[], 1), rows: 4, placeholder: form.object.markdown?(branch.markdown_extensions) ? form.object.excerpt : '', class: 'form-control'
@@ -16,7 +18,7 @@
           => metadata.label :permalink, 'Permalink', class: 'control-label'
           = metadata.text_field :permalink, value: form.object.metadata.find { |key, _| key == 'permalink' }.try(:[], 1), class: 'form-control'
         - if form.object.is_a?(Draft) || form.object.is_a?(Post)
-          .form-group.
+          .form-group
             => metadata.label :date, 'Date', class: 'control-label'
             .input-group.datetimepicker
               => metadata.text_field :date, value: form.object.metadata.find { |key, _| key == 'date' }.try(:[], 1).try(:to_time).try(:strftime, '%m/%d/%Y %I:%M %p'), class: 'form-control'
@@ -27,16 +29,13 @@
         .form-group
           => metadata.label :tags, 'Tags', class: 'control-label'
           = metadata.text_field :tags, value: form.object.metadata.find { |key, _| key == 'tags' }.try(:[], 1), class: 'form-control'
-        - if (form.object.metadata.keys - %w[layout title excerpt permalink date categories tags]).any?
+        - if (form.object.metadata.keys - standard_keys).any?
           hr
           p.h5 Custom Variables
           - unsupported_metadata_keys = []
           .well.well-sm
             - form.object.metadata.each do |key, value|
-              - if form.object.is_a?(Draft) || form.object.is_a?(Post)
-                - next if %w[layout title excerpt permalink date categories tags].include?(key)
-              - else
-                - next if %w[layout title excerpt permalink categories tags].include?(key)
+              - next if standard_keys.include?(key)
               - if value.class == String && value.present? && !%w[true false].include?(value.downcase)
                 .form-group
                   => metadata.label key, key, class: 'control-label'
@@ -55,33 +54,32 @@
               - elsif value.class == Array && value.map(&:class).uniq == [String]
                 label.control-label = key
                 .well.well-sm
-                  - value.each_with_index do |value, i|
+                  - value.each do |value|
                     .form-group
                       = metadata.text_field key, multiple: true, value: value, class: 'form-control'
               - elsif value.class == Hash && value.keys.map(&:class).uniq == [String] && value.values.map(&:class).uniq == [String]
                 label.control-label = key
                 .well.well-sm
-                  = metadata.fields_for key do |child|
-                    - value.each do |child_key, value|
+                  = metadata.fields_for key do |child_fields|
+                    - value.each do |child_key, child_value|
                       .form-group
-                        => child.label child_key, child_key, class: 'control-label'
-                        = child.text_field child_key, value: value, class: 'form-control'
+                        => child_fields.label child_key, child_key, class: 'control-label'
+                        = child_fields.text_field child_key, value: child_value, class: 'form-control'
               - else
                 - unsupported_metadata_keys.push key
           - if unsupported_metadata_keys.any?
-            p.h5
-              ' Unsupported or
-              code> nil
-              | Keys
+            p.h5 Unsupported or <code>nil</code> Keys
             ul
             - unsupported_metadata_keys.each do |key|
               li: code.code-text = key
-    .col-sm-8
-      = form.label :content, class: 'hidden-lg'
+    .col-sm-8.m-b-lg
+      = form.label :content, class: 'hidden-md hidden-lg'
       = form.text_area :content, rows: 40, class: 'form-control'
 .blob-submit
   .row
-    .col-sm-9
-      = text_field_tag :message, params[:message].nil? ? "Save Changes to #{form.object.filename}" : params[:message], class: 'form-control'
-    .col-sm-3
-      = form.button 'Save Changes', class: 'btn btn-block btn-primary'
+    .col-sm-8.col-sm-offset-4
+      .row
+        .col-sm-9
+          = text_field_tag :message, params[:message].nil? ? "Save Changes to #{form.object.filename}" : params[:message], class: 'form-control'
+        .col-sm-3
+          = form.button 'Save Changes', class: 'btn btn-block btn-primary'

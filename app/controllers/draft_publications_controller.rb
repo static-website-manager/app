@@ -13,6 +13,7 @@ class DraftPublicationsController < ApplicationController
     commit_message = params[:message].present? ? params[:message] : t('.message', filename: @draft.filename_was)
     publication_date = Date.new(params[:publication_year].to_i, params[:publication_month].to_i, params[:publication_day].to_i)
     @draft.full_pathname = ['_posts/', @draft.pathname.sub(/\A_drafts\//, ''), [publication_date.strftime('%Y-%m-%d'), @draft.filename].join('-')].reject(&:blank?).join('/')
+    @draft.publishing = true
 
     if @draft.save(@branch.name, current_user.email, current_user.name, commit_message)
       JekyllBuildJob.perform_later(@deployment) if @deployment

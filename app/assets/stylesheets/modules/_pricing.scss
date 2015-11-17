@@ -1,0 +1,24 @@
+.pricing-heading {
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+.pricing-plan-heading {
+  margin-bottom: 1em;
+  .label {
+    font-size: 0.6em;
+  }
+}
+
+.pricing-icon-small {
+  position: relative;
+  top: -0.1em;
+  font-size: 0.7em;
+}
+
+.pricing-icon-large {
+  position: relative;
+  top: 0.1em;
+  margin-top: -0.3em;
+  font-size: 1.5em;
+}

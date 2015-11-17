@@ -11,8 +11,6 @@
       = layout :panel, button: 'Publish Changes', commit_message: "Publish #{@branch.title} Changes" do
         p This action will merge changes from your branch into #{@target.title(current_user)}.
       - @diff = @branch.diff(@target)
-      p.small style="margin: 4em 0 0.5em"
-        => pluralize @diff.rugged_diff.size, 'Change'
-        | Found
-      hr style="margin: 0 0 2em"
+      p.small.m-t-lg.m-b-sm #{pluralize @diff.rugged_diff.size, 'Change'} Found
+      hr.m-t-0.m-b-md
       = render @diff

@@ -1,7 +1,19 @@
+.panel-body > *:only-child {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
 .panel-heading-sm {
   padding: 0.5em;
   .panel-title {
     font-size: 1.2rem;
+  }
+}
+
+.panel-heading-nav-tabs {
+  padding-bottom: 0;
+  .nav-tabs {
+    margin-bottom: -1px;
   }
 }
 

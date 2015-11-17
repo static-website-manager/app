@@ -2,13 +2,13 @@
   = errors_for current_user
   = form_for current_user, url: path do |form|
     .panel.panel-default
-      .panel-heading style="padding-bottom:0"
-        ul.nav.nav-tabs style="margin-bottom:-1px"
+      .panel-heading.panel-heading-nav-tabs
+        ul.nav.nav-tabs
           li class=('active' if controller_name == 'accounts') = link_to 'Basic Information', :edit_account
           li class=('active' if controller_name == 'emails') = link_to 'Email Address', :edit_account_email
           li class=('active' if controller_name == 'passwords') = link_to 'Change Password', :edit_account_password
           li class=('active' if controller_name == 'ssh_keys') = link_to 'SSH Keys', :edit_account_ssh_keys
-      .panel-body style="padding-top:2em"
+      .panel-body.p-t-md
         = yield form
       .panel-footer.text-center
         = form.button 'Save Changes', class: 'btn btn-primary'

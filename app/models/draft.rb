@@ -2,8 +2,12 @@ class Draft
   include BlobConcern
   include PageConcern
 
-  validates :pathname, format: { with: /\A_drafts(\/|\z)/ }
-  validates :filename, format: { with: /\A[\w\-]+\.(html|htm|markdown|mdown|mkdn|mkd|md)\z/ }
+  attr_accessor :publishing
+
+  validates :pathname, format: { with: /\A_drafts(\/|\z)/ }, unless: :publishing
+  validates :filename, format: { with: /\A[\w\-]+\.(html|htm|markdown|mdown|mkdn|mkd|md)\z/ }, unless: :publishing
+  validates :pathname, format: { with: /\A_posts(\/|\z)/ }, if: :publishing
+  validates :filename, format: { with: /\A\d{4}-\d{2}-\d{2}-[\w\-]+\.(html|htm|markdown|mdown|mkdn|mkd|md)\z/ }, if: :publishing
 
   def self.all(rugged_repository, commit_id, page_extensions, page: 1, per_page: 20)
     Kaminari.paginate_array(

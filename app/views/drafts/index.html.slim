@@ -3,12 +3,8 @@
 = layout :branch, website: @website, repository: @repository, branch: @branch, deployment: @deployment do
   div class=(@drafts.any? ? 'clearfix' : '')
     .pull-right style="position:relative; z-index:1"
-      => link_to '/help#drafts', target: :_blank, class: 'btn btn-sm btn-default' do
-        ' Help with Drafts
-        = icon 'question-circle'
-      = link_to [:new, @website, @branch, :draft], class: 'btn btn-sm btn-primary' do
-        => icon 'plus-circle'
-        | Add Draft
+      => link_to icor('Help with Drafts', 'question-circle'), '/help#drafts', target: :_blank, class: 'btn btn-sm btn-default'
+      = link_to icon('plus-circle', 'Add Draft'), [:new, @website, @branch, :draft], class: 'btn btn-sm btn-primary'
     - if @drafts.any?
       = page_entries_info @drafts, entry_name: 'Draft'
   - if @drafts.any?

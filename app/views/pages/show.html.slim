@@ -10,19 +10,11 @@
       code.small = @page.full_pathname
     .col-sm-3.text-right
       - if @deployment && @deployment.success?
-        => link_to @page.public_url(@deployment.url), target: :_blank, class: 'btn btn-sm btn-default' do
-          ' View Public Page
-          = icon 'external-link'
-      => link_to [:new, @website, @branch, @page, :move], class: 'btn btn-sm btn-primary' do
-        ' Rename
-        = icon 'arrow-circle-o-right'
-      = link_to [:delete, @website, @branch, @page], class: 'btn btn-sm btn-danger' do
-        => icon 'trash'
-        | Delete
+        => link_to icor('View Public Page', 'external-link'), @page.public_url(@deployment.url), target: :_blank, class: 'btn btn-sm btn-default'
+      => link_to icor('Rename', 'arrow-circle-o-right'), [:new, @website, @branch, @page, :move], class: 'btn btn-sm btn-primary'
+      = link_to icon('trash', 'Delete'), [:delete, @website, @branch, @page], class: 'btn btn-sm btn-danger'
   .row
     .col-sm-7
-      .column-header
-        h2 Preview Page
       .page-preview
         = sanitize(markdown(@page.content))
     .col-sm-5
@@ -30,7 +22,5 @@
         h2 Commit History
       ol.list-unstyled.commits
         = render @commits, website: @website
-      .text-right style="margin-top:2em"
-        = link_to [@website, @branch, @page, :commits], class: 'btn btn-sm btn-default' do
-          ' View Entire History
-          = icon 'angle-double-right'
+      .text-right.m-t-md
+        = link_to icor('View Entire History', 'angle-double-right'), [@website, @branch, @page, :commits], class: 'btn btn-sm btn-default'

@@ -94,10 +94,7 @@ en:
       alert: There was a problem deactivating your Form Responder.
       notice: Ok, your Form Responder was deactivated.
   form_responders:
-    new:
-      alert_empty: No Data files were found.
     create:
-      alert_empty: No Data files were found.
       alert: There was a problem creating your Form Responder.
       notice: Great, your Form Responder is setup and actively listening.
     update:
@@ -139,7 +136,7 @@ en:
   password_forgets:
     create:
       alert: We could not find anyone with that email address.
-      notice: Great! A password reset email is on the way.
+      notice: Ok, A password reset email is on the way.
   password_resets:
     update:
       alert: There was a problem changing your password.

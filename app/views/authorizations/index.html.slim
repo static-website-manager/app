@@ -17,4 +17,4 @@
     span> Your subscription allows up to
     strong => pluralize @website.allowed_users, 'user'
     - if @authorizations.length < @website.allowed_users
-      = link_to icon('plus-circle', 'Invite Someone New'), [:new, @website, :authorization], class: 'btn btn-sm btn-primary', style: 'margin-left: 0.5em'
+      = link_to icon('plus-circle', 'Invite Someone New'), [:new, @website, :authorization], class: 'btn btn-sm btn-primary m-l-sm'

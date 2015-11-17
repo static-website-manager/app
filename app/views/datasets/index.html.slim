@@ -2,10 +2,8 @@
 
 = layout :branch, website: @website, repository: @repository, branch: @branch, deployment: @deployment do
   div class=(@datasets.any? ? 'clearfix' : '')
-    .pull-right style="position:relative; z-index:1"
-      = link_to '/help#data', target: :_blank, class: 'btn btn-sm btn-default' do
-        ' Help with Data
-        = icon 'question-circle'
+    .pull-right.position-above
+      = link_to icor('Help with Data Files', 'question-circle'), '/help#data', target: :_blank, class: 'btn btn-sm btn-default'
     - if @datasets.any?
       = page_entries_info @datasets, entry_name: 'Data File'
   - if @datasets.any?

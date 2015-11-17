@@ -2,12 +2,8 @@
 
 = layout :branch, website: @website, repository: @repository, branch: @branch, deployment: @deployment do
   .pull-right style="position:relative; z-index:1"
-    => link_to '/help#pages', target: :_blank, class: 'btn btn-sm btn-default' do
-      ' Help with Pages
-      = icon 'question-circle'
-    = link_to [:new, @website, @branch, :page], class: 'btn btn-sm btn-primary' do
-      => icon 'plus-circle'
-      | Add Page
+    => link_to icor('Help with Pages', 'question-circle'), '/help#pages', target: :_blank, class: 'btn btn-sm btn-default'
+    = link_to icon('plus-circle', 'Add Page'), [:new, @website, @branch, :page], class: 'btn btn-sm btn-primary'
   - if @pages.any?
     ul.list-unstyled.pages
       = render @pages, website: @website, branch: @branch, level: 1

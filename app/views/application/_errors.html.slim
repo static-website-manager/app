@@ -1,8 +1,8 @@
 - if messages.any?
   .panel.panel-danger
     .panel-heading
-      p.h4.panel-title Please correct the following errors:
+      p.panel-title Please correct the following errors:
     .panel-body
-      ul.list-unstyled style="margin:0"
+      ul.list-unstyled
         - messages.each do |message|
           li = message

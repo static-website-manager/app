@@ -17,12 +17,6 @@ class FormRespondersController < ApplicationController
     @dataset_pathnames = Dataset.all(@repository.rugged_repository, @branch.commit_id, per_page: 100).map(&:pretty_pathname)
   end
 
-  before_action only: %i[new create] do
-    if @dataset_pathnames.empty?
-      redirect_to [@website, @branch], notice: t('.alert_empty')
-    end
-  end
-
   def create
     @form_responder.assign_attributes(form_responder_params)
 

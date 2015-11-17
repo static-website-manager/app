@@ -1,8 +1,5 @@
 tr
   td = link_to [website, branch, post] do
-    - if post.markdown?(branch.markdown_extensions)
-      h2 #{icon 'file-text'} #{post.title}
-    - else
-      h2 #{icon 'file'} #{post.title}
+    h2 = icon post.markdown?(branch.markdown_extensions) ? 'file-text' : 'file', post.title
   td = link_to localize(post.published_on), [website, branch, post]
   td = link_to content_tag(:code, post.full_pathname, class: 'small'), [website, branch, post]

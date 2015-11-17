@@ -6,11 +6,11 @@
       .row
         .col-sm-6
           label Current Branch
-          .btn-group style="display:block"
+          .btn-group.display-block
             .btn.btn-block.btn-default.dropdown-toggle type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
               => @branch.title(current_user)
               span.caret
-            ul.dropdown-menu style="margin-top:2.5em"
+            ul.dropdown-menu.m-t-lg
               - if current_authorization.production_branch_access?
                 li class=('active' if @branch.production?) = link_to 'Production Branch', branch_id: @repository.branch('master')
                 li.divider role="separator"

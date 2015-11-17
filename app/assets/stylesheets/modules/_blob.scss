@@ -66,14 +66,11 @@
 }
 
 .blob-submit {
-  position: absolute;
-  top: 0.5em;
-  right: 0.5em;
-  min-width: 45em;
-  .col-sm-9 {
-    padding-right: 0.25em;
-  }
-  .col-sm-3 {
-    padding-left: 0.25em;
-  }
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 1em;
+  background-color: #f6f6f6;
+  border-top: solid 1px #eee;
 }

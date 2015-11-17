@@ -1,18 +1,10 @@
 .text-center
   - if pagination.prev_page.present? || pagination.next_page.present?
     - if pagination.prev_page.present?
-      => link_to Kaminari::Helpers::PrevPage.new(self, current_page: pagination.current_page).url, class: 'btn btn-default' do
-        => icon 'angle-double-left'
-        | Newer
+      => link_to icon('angle-double-left', 'Newer'), Kaminari::Helpers::PrevPage.new(self, current_page: pagination.current_page).url, class: 'btn btn-default'
     - else
-      => link_to '#', class: 'btn btn-default disabled' do
-        => icon 'angle-double-left'
-        | Newer
+      => link_to icon('angle-double-left', 'Newer'), '#', class: 'btn btn-default disabled'
     - if pagination.next_page.present?
-      = link_to Kaminari::Helpers::NextPage.new(self, current_page: pagination.current_page).url, class: 'btn btn-default', style: 'margin-left:0.5em' do
-        ' Older
-        = icon 'angle-double-right'
+      = link_to icor('Older', 'angle-double-right'), Kaminari::Helpers::NextPage.new(self, current_page: pagination.current_page).url, class: 'btn btn-default m-l-sm'
     - else
-      = link_to '#', class: 'btn btn-default disabled', style: 'margin-left:0.5em' do
-        ' Older
-        = icon 'angle-double-right'
+      = link_to icor('Older', 'angle-double-right'), '#', class: 'btn btn-default disabled m-l-sm'

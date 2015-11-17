@@ -6,7 +6,7 @@ li
           => icon 'file-text fa-3x pull-left'
         - else
           => icon 'file fa-3x pull-left'
-        div style="padding-left: 3.5em"
+        div style="padding-left:3.5em"
           = content_tag "h#{level}" do
             = page.dirname.present? ? page.dirname.titleize : page.title(branch.markdown_extensions)
           code.small = page.full_pathname

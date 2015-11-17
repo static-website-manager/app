@@ -9,19 +9,11 @@
       h1 = @draft.title
       code.small = @draft.full_pathname
     .col-sm-3.text-right
-      => link_to [:new, @website, @branch, @draft, :publication], class: 'btn btn-sm btn-success' do
-        ' Publish
-        = icon 'plus-circle'
-      => link_to [:new, @website, @branch, @draft, :move], class: 'btn btn-sm btn-primary' do
-        ' Rename
-        = icon 'arrow-circle-o-right'
-      = link_to [:delete, @website, @branch, @draft], class: 'btn btn-sm btn-danger' do
-        => icon 'trash'
-        | Delete
+      => link_to icor('Publish', 'plus-circle'), [:new, @website, @branch, @draft, :publication], class: 'btn btn-sm btn-success'
+      => link_to icor('Rename', 'arrow-circle-o-right'), [:new, @website, @branch, @draft, :move], class: 'btn btn-sm btn-primary'
+      = link_to icon('trash', 'Delete'), [:delete, @website, @branch, @draft], class: 'btn btn-sm btn-danger'
   .row
     .col-sm-7
-      .column-header
-        h2 Preview Page
       .page-preview
         = sanitize(markdown(@draft.content))
     .col-sm-5
@@ -29,7 +21,5 @@
         h2 Commit History
       ol.list-unstyled.commits
         = render @commits, website: @website
-      .text-right style="margin-top:2em"
-        = link_to [@website, @branch, @draft, :commits], class: 'btn btn-sm btn-default' do
-          ' View Entire History
-          = icon 'angle-double-right'
+      .text-right.m-t-md
+        = link_to icor('View Entire History', 'angle-double-right'), [@website, @branch, @draft, :commits], class: 'btn btn-sm btn-default'

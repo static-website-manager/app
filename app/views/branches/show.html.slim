@@ -3,75 +3,45 @@
 = layout :branch, website: @website, repository: @repository, branch: @branch, deployment: @deployment do
   .clearfix
     .pull-right
-      => link_to [:edit, @website, @branch, :config], class: 'btn btn-sm btn-default' do
-        ' Configure Branch
-        = icon 'gear'
+      => link_to icor('Configure Branch', 'gear'), [:edit, @website, @branch, :config], class: 'btn btn-sm btn-default'
       - if @branch.custom? && current_authorization.custom_branch_access?
-        => link_to [:new, @website, @branch, :move], class: 'btn btn-sm btn-primary' do
-          ' Rename
-          = icon 'arrow-circle-o-right'
-        = link_to [:delete, @website, @branch], class: 'btn btn-sm btn-danger' do
-          => icon 'trash'
-          | Delete
+        => link_to icor('Rename', 'arror-circle-o-right'), [:new, @website, @branch, :move], class: 'btn btn-sm btn-primary'
+        = link_to icon('trash', 'Delete'), [:delete, @website, @branch], class: 'btn btn-sm btn-danger'
     - if @deployment && @deployment.success?
-      p.text-muted
-        ' Branch successfully deployed
-        => time_ago_in_words @deployment.updated_at
-        | ago
+      p.text-muted Branch successfully deployed #{time_ago_in_words @deployment.updated_at} ago
       p
-        => link_to @deployment.url, target: :_blank, class: 'btn btn-xs btn-success' do
-          ' View Public Website
-          = icon 'external-link'
+        => link_to icor('View Public Website', 'external-link'), @deployment.url, target: :_blank, class: 'btn btn-xs btn-success'
         = link_to 'Make Branch Private', [:delete, @website, @branch, :deployment], class: 'btn btn-xs btn-link'
     - elsif @deployment && @deployment.pending?
-      p.text-muted
-        => icon 'spinner fa-spin'
-        | Deploying Branch...
+      p.text-muted = icon('spinner fa-spin', 'Deploying Branch...')
       p
-        => link_to @deployment.url, target: :_blank, class: 'btn btn-xs btn-primary disabled' do
-          ' View Public Website
-          = icon 'external-link'
+        => link_to icor('View Public Website', 'external-link'), @deployment.url, target: :_blank, class: 'btn btn-xs btn-primary disabled'
         = link_to 'Make Branch Private', [:delete, @website, @branch, :deployment], class: 'btn btn-sm btn-link'
     - elsif @deployment
-      p.text-muted
-        span.text-danger = @deployment.response_message
+      p.text-danger = @deployment.response_message
       div
-        => link_to @deployment.url, target: :_blank, class: 'btn btn-xs btn-primary disabled' do
-          ' View Public Website
-          = icon 'external-link'
+        => link_to icor('View Public Website', 'external-link'), @deployment.url, target: :_blank, class: 'btn btn-xs btn-primary disabled'
         => form_tag [@website, @branch, @deployment], method: :patch, style: 'display:inline-block' do
-          = button_tag class: 'btn btn-xs btn-default' do
-            => icon 'repeat'
-            ' Try Again
+          = button_tag icon('repeat', 'Try Again'), class: 'btn btn-xs btn-default'
         = link_to 'Make Branch Private', [:delete, @website, @branch, @deployment], class: 'btn btn-sm btn-link'
     - else
-      p.text-muted
-        ' This branch is not deployed to a public URL
+      p.text-muted This branch is not deployed to a public URL
       p = link_to 'Publish Branch', [:new, @website, @branch, :deployment], class: 'btn btn-xs btn-success'
-  .row style="margin-top: 3em"
+  .row.m-t-lg
     .col-sm-7
       .column-header
-        => link_to 'What are Form Responders?', '/help/form_responders', target: :_blank, class: 'pull-right small'
+        p.pull-right.small => link_to 'What are Form Responders?', '/help/form_responders', target: :_blank
         h2 Form Responders
       - if @form_responders.any?
         = render partial: 'form_responders/form_responder', collection: @form_responders, locals: { website: @website, branch: @branch }
         - if @datasets.any?
-          p = link_to [:new, @website, @branch, :form_responder], class: 'btn btn-sm btn-primary' do
-            => icon 'plus'
-            | Add Form Responder
+          p = link_to icon('plus', 'Add Form Responder'), [:new, @website, @branch, :form_responder], class: 'btn btn-sm btn-primary'
       - else
-        p
-          ' No Form Responders Found.
-          - if @datasets.any?
-            = link_to [:new, @website, @branch, :form_responder], class: 'btn btn-xs btn-primary', style: 'margin-left:0.5em' do
-              => icon 'plus'
-              | Add Form Responder
+        p No Form Responders Found. #{link_to icon('plus', 'Add Form Responder'), [:new, @website, @branch, :form_responder], class: 'btn btn-xs btn-primary m-l-sm'}
     .col-sm-5
       .column-header
         h2 Commit History
       ol.list-unstyled.commits
         = render @commits, website: @website
-      .text-right style="margin-top:2em"
-        = link_to [@website, @branch, :commits], class: 'btn btn-sm btn-default' do
-          ' View Entire History
-          = icon 'angle-double-right'
+      .text-right.m-t-md
+        = link_to icor('View Entire History', 'angle-dougle-right'), [@website, @branch, :commits], class: 'btn btn-sm btn-default'

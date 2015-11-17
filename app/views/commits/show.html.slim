@@ -2,20 +2,18 @@
 
 = layout :nest, heading: 'View Commit', size: :md, return_to: session[:return_to] || [@website, @repository.branch(current_user)] do
   .text-center
-    h1.h3 style="margin-top:0": strong = @commit.message.present? ? @commit.message : content_tag(:em, 'No message provided.', class: 'small')
+    h1.h3.m-t-0: strong = @commit.message.present? ? @commit.message : content_tag(:em, 'No message provided.', class: 'small')
     p
       span.commit-author data-toggle="popover" data-placement="bottom" data-trigger="click" data-html="true" data-content=content_tag(:code, @commit.author_email) => @commit.author_name
       ' authored
       - if @commit.time > 1.week.ago
-        => time_ago_in_words @commit.time
-        | ago
+        | #{time_ago_in_words @commit.time} ago
       - else
-        ' on
-        = localize @commit.time.to_date
-  .well.well-sm style="margin: 2em 0 4em"
+        | on #{localize @commit.time.to_date}
+  .well.well-sm.m-y-lg
     .row
       .col-sm-7
-        dl style="margin:0"
+        dl.m-a-0
           dt Commit ID
           dd: code.code-text = @commit.id
       .col-sm-5.text-right

@@ -5,11 +5,9 @@
     = form_tag [website, branch, form_responder, :activation], method: (form_responder.active? ? :delete : :post), style: 'display:inline; margin: 0 0.5em'
       = button_tag icon(form_responder.active? ? 'toggle-on' : 'toggle-off'), class: 'btn btn-sm btn-toggle btn-default'
     .btn-group
-      => link_to [:edit, website, branch, form_responder], class: 'btn btn-sm btn-default' do
-        = icon 'pencil', 'Edit'
-      => link_to [:delete, website, branch, form_responder], class: 'btn btn-sm btn-danger' do
-        = icon 'trash', 'Remove'
-  div style="margin-left: 3em"
+      => link_to icon('pencil', 'Edit'), [:edit, website, branch, form_responder], class: 'btn btn-sm btn-default'
+      = link_to icon('trash', 'Remove'), [:delete, website, branch, form_responder], class: 'btn btn-sm btn-danger'
+  div.m-t-lg
     p style="font-size: 1.2em; line-height:1.5; margin:0"
       code.code-text => form_responder.path_id
       span style="display:inline-block; margin:0 0.5em" => icon 'long-arrow-right'

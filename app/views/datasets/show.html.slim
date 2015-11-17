@@ -2,5 +2,5 @@
 
 = layout :nest, heading: 'View Data File', size: :md, return_to: [@website, @branch, :datasets] do
   = layout :panel, heading: @dataset.pretty_pathname do
-    pre style="margin:0"
+    pre.m-a-0
       code = @dataset.content

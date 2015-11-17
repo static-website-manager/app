@@ -54,10 +54,7 @@
                 - unsupported_config_keys.push key
             - if unsupported_config_keys.any?
               hr
-              p.h5
-                ' Unsupported or
-                code> nil
-                | Keys
+              p.h5 Unsupported or <code>nil</code> Keys
               ul
               - unsupported_config_keys.each do |key|
                 li: code.code-text = key
