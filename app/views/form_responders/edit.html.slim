@@ -3,7 +3,5 @@
 = layout :nest, heading: 'Edit Form Responder', size: :md, return_to: [@website, @branch] do
   = errors_for @form_responder
   = form_for [@website, @branch, @form_responder] do |form|
-    = layout :panel, heading: "Form Responder <code class=\"code-text\">#{@form_responder.path_id}</code> for #{@branch.title(current_user)}".html_safe, button: 'Save Changes' do
-      .form-group
-        => form.label :dataset_pathname, class: 'control-label'
-        = form.select :dataset_pathname, options_for_select(@dataset_pathnames, @form_responder.dataset_pathname), {}, class: 'form-control'
+    = layout :panel, button: 'Save Changes' do
+      = render partial: 'form', object: form, locals: { dataset_pathnames: @dataset_pathnames }

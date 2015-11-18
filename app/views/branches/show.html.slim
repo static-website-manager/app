@@ -29,7 +29,7 @@
       p = link_to 'Publish Branch', [:new, @website, @branch, :deployment], class: 'btn btn-xs btn-success'
   .row.m-t-lg
     .col-sm-7
-      .column-header
+      .column-header class=('column-header-media' if @form_responders.any?)
         p.pull-right.small => link_to 'What are Form Responders?', '/help/form_responders', target: :_blank
         h2 Form Responders
       - if @form_responders.any?

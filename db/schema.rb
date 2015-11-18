@@ -56,8 +56,9 @@ ActiveRecord::Schema.define(version: 6) do
   create_table "form_responders", force: :cascade do |t|
     t.integer  "website_id",                      null: false
     t.text     "branch_name",                     null: false
-    t.text     "dataset_pathname",                null: false
     t.text     "path_id",                         null: false
+    t.text     "dataset_pathname"
+    t.text     "email_addresses"
     t.boolean  "active",           default: true, null: false
     t.datetime "created_at",                      null: false
     t.datetime "updated_at",                      null: false

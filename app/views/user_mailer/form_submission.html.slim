@@ -1,0 +1,5 @@
+p Someone submitted a form to your website at #{@form_responder.website.name}. Here’s the information we received:
+dl
+  - @form_data.each do |key, value|
+    dt = key
+    dd = value

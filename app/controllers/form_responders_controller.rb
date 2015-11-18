@@ -51,6 +51,7 @@ class FormRespondersController < ApplicationController
   def form_responder_params
     params.require(:form_responder).permit(
       :dataset_pathname,
+      :email_addresses,
     )
   end
 end

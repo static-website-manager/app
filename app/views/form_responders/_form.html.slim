@@ -1,0 +1,22 @@
+P Form Responders provide a unique URL for your static webpage’s HTML forms.
+p Submissions to Form Responders can be forwarded to email addresses and/or recorded in one of this branch’s Data Files.
+- if form.object.new_record?
+  p.panel-ribbon.bg-warning: small Your unique URL will be generated after the Form Responder has been saved.
+- else
+  .panel-ribbon.bg-warning
+    dl.m-y-sm.small
+      dt Form Responder URL
+      dd: code.code-text http://www.#{ENV['HOST']}/form-responders/#{form.object.path_id}
+.form-group.m-t-md
+  => form.label :email_addresses, class: 'control-label'
+  = form.text_area :email_addresses, rows: 5, class: 'form-control'
+  p.help-block Add one email address per line. Limit 10 email addresses.
+hr
+- if dataset_pathnames.any?
+  p Link a Data File to capture and persist form data in your repository.
+  .form-group
+    => form.label :dataset_pathname, class: 'control-label'
+    = form.select :dataset_pathname, options_for_select(dataset_pathnames, form.object.dataset_pathname), { include_blank: true }, class: 'form-control'
+    p.help-block Learn more: #{link_to 'How Form Responders affect Data Files', '/help?data', target: :_blank} #{icon 'external-link'}
+- else
+  p Create a Data File to capture and persist form data in your repository.

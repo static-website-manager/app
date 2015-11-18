@@ -1,22 +1,20 @@
 .well.well.sm
   .pull-left
-    => icon 'server fa-2x', class: (form_responder.active? ? 'text-success' : 'text-muted'), style: 'margin-right: 0.5em'
+    => icon 'server m-r-sm fa-2x', class: (form_responder.active? ? 'text-success' : 'text-muted')
   .pull-right
-    = form_tag [website, branch, form_responder, :activation], method: (form_responder.active? ? :delete : :post), style: 'display:inline; margin: 0 0.5em'
+    = form_tag [website, branch, form_responder, :activation], method: (form_responder.active? ? :delete : :post), class: 'display-inline m-y-sm' do
       = button_tag icon(form_responder.active? ? 'toggle-on' : 'toggle-off'), class: 'btn btn-sm btn-toggle btn-default'
     .btn-group
       => link_to icon('pencil', 'Edit'), [:edit, website, branch, form_responder], class: 'btn btn-sm btn-default'
       = link_to icon('trash', 'Remove'), [:delete, website, branch, form_responder], class: 'btn btn-sm btn-danger'
-  div.m-t-lg
-    p style="font-size: 1.2em; line-height:1.5; margin:0"
-      code.code-text => form_responder.path_id
-      span style="display:inline-block; margin:0 0.5em" => icon 'long-arrow-right'
-      code.code-text = form_responder.dataset_pathname
-    p.small style="margin: 0.2em 0 0"
-      code.code-text> style="margin-right:0.5em"
-        | www.#{ENV['HOST']}/form-responders/
-        = form_responder.path_id
+  div.m-l-lg
+    p.m-a-0
+      code.code-text style="font-size:1.2em; line-height:1.5" => form_responder.path_id
       - if form_responder.active?
-        span.text-success ACTIVE
+        small.text-success.m-l-sm ACTIVE
       - else
-        span.text-muted INACTIVE
+        small.text-muted.m-l-sm INACTIVE
+    p.small.m-t-xs.m-b-0
+      code.code-text.m-r-sm>
+        | http://www.#{ENV['HOST']}/form-responders/
+        = form_responder.path_id

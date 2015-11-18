@@ -18,7 +18,8 @@ class FormResponderSubmissionsController < ActionController::Base
   end
 
   def create
-    if @form_responder.append_data(form_params)
+    if @form_responder.dataset_pathname.blank? || @form_responder.append_data(form_params)
+      UserMailer.form_submission(@form_responder, form_params).deliver_later if @form_responder.email_address_array.any?
       redirect_to success_redirect_uri.to_s
     else
       redirect_to fail_redirect_uri.to_s
@@ -26,7 +27,8 @@ class FormResponderSubmissionsController < ActionController::Base
   end
 
   def update
-    if @form_responder.update_data(params[:id], form_params)
+    if @form_responder.dataset_pathname.blank? || @form_responder.update_data(params[:id], form_params)
+      UserMailer.form_submission(@form_responder, form_params).deliver_later if @form_responder.email_address_array.any?
       redirect_to success_redirect_uri.to_s
     else
       redirect_to fail_redirect_uri.to_s
