@@ -2,7 +2,7 @@
 
 = layout :branch, website: @website, repository: @repository, branch: @branch, deployment: @deployment do
   .pull-right style="position:relative; z-index:1"
-    => link_to icor('Help with Pages', 'question-circle'), '/help#pages', target: :_blank, class: 'btn btn-sm btn-default'
+    => link_to icor('Help with Pages', 'question-circle'), '/help/content-management/pages', target: :_blank, class: 'btn btn-sm btn-default'
     = link_to icon('plus-circle', 'Add Page'), [:new, @website, @branch, :page], class: 'btn btn-sm btn-primary'
   - if @pages.any?
     ul.list-unstyled.pages

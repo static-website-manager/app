@@ -30,7 +30,7 @@
   .row.m-t-lg
     .col-sm-7
       .column-header class=('column-header-media' if @form_responders.any?)
-        p.pull-right.small => link_to 'What are Form Responders?', '/help/form_responders', target: :_blank
+        p.pull-right.small => link_to 'What are Form Responders?', '/help/form-responders', target: :_blank
         h2 Form Responders
       - if @form_responders.any?
         = render partial: 'form_responders/form_responder', collection: @form_responders, locals: { website: @website, branch: @branch }

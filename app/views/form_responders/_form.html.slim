@@ -17,6 +17,6 @@ hr
   .form-group
     => form.label :dataset_pathname, class: 'control-label'
     = form.select :dataset_pathname, options_for_select(dataset_pathnames, form.object.dataset_pathname), { include_blank: true }, class: 'form-control'
-    p.help-block Learn more: #{link_to 'How Form Responders affect Data Files', '/help?data', target: :_blank} #{icon 'external-link'}
+    p.help-block Learn more: #{link_to 'How Form Responders affect Data Files', '/help/form-responders/commit-to-repository', target: :_blank} #{icon 'external-link'}
 - else
   p Create a Data File to capture and persist form data in your repository.

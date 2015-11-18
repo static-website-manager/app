@@ -2,7 +2,7 @@
 
 = layout :branch, website: @website, repository: @repository, branch: @branch, deployment: @deployment do
   .pull-right.position-above
-    = link_to icor('Help with Files', 'question-circle'), '/help#files', target: :_blank, class: 'btn btn-sm btn-default'
+    = link_to icor('Help with Files', 'question-circle'), '/help/content-management/files', target: :_blank, class: 'btn btn-sm btn-default'
   - if @static_files.any?
     ul.list-unstyled.files
       = render @static_files, website: @website, branch: @branch, level: 1

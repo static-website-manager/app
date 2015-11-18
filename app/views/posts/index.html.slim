@@ -3,7 +3,7 @@
 = layout :branch, website: @website, repository: @repository, branch: @branch, deployment: @deployment do
   div class=(@posts.any? ? 'clearfix' : '')
     .pull-right.position-above
-      => link_to icor('Help with Posts', 'question-circle'), '/help#posts', target: :_blank, class: 'btn btn-sm btn-default'
+      => link_to icor('Help with Posts', 'question-circle'), '/help/content-management/posts', target: :_blank, class: 'btn btn-sm btn-default'
       = link_to icon('plus-circle', 'Add Post'), [:new, @website, @branch, :post], class: 'btn btn-sm btn-primary'
     - if @posts.any?
       = page_entries_info @posts, entry_name: 'Post'

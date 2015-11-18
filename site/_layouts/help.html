@@ -48,6 +48,7 @@
       {% if content_management_url == '/help/content-management' %}
       <strong>Content Management <span class="fa fa-caret-down"></strong>
       <ul>
+        <li>{% if page.url == '/help/content-management/design.html' %}<strong>Design</strong>{% else %}<a href="/help/content-management/design">Design</a>{% endif %}</li>
         <li>{% if page.url == '/help/content-management/pages.html' %}<strong>Pages</strong>{% else %}<a href="/help/content-management/pages">Pages</a>{% endif %}</li>
         <li>{% if page.url == '/help/content-management/drafts.html' %}<strong>Drafts</strong>{% else %}<a href="/help/content-management/drafts">Drafts</a>{% endif %}</li>
         <li>{% if page.url == '/help/content-management/posts.html' %}<strong>Posts</strong>{% else %}<a href="/help/content-management/posts">Posts</a>{% endif %}</li>
