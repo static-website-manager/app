@@ -10,12 +10,75 @@
 <div class="help-nav">
   <a href="/help"><img src="{% asset_path logo-small.png %}" alt="Static Website Manager" class="logo-small" /></a>
   <strong class="lead">Help &amp; Documentation</strong>
-  <ul>
-    <li>{% if page.url == '/help.html' %}<strong>Overview</strong>{% else %}<a href="/help">Overview</a>{% endif %}
-    <li>{% if page.url == '/help/getting-started.html' %}<strong>Getting Started</strong>{% else %}<a href="/help/getting-started">Getting Started</a>{% endif %}
-    <li>{% if page.url == '/help/content-management.html' %}<strong>Content Management</strong>{% else %}<a href="/help/content-management">Content Management</a>{% endif %}
-    <li>{% if page.url == '/help/deployments.html' %}<strong>Deployments</strong>{% else %}<a href="/help/deployments">Deployments</a>{% endif %}
-    <li>{% if page.url == '/help/forms.html' %}<strong>Forms</strong>{% else %}<a href="/help/forms">Forms</a>{% endif %}
+  <ul class="help-list">
+    <li>
+      {% if page.url == '/help.html' %}
+      <strong>Overview <span class="fa fa-caret-right"><span></strong>
+      {% else %}<a href="/help">Overview <span class="fa fa-caret-right"></span></a>
+      {% endif %}
+    </li>
+    <li>
+      {% capture getting_started_url %}{{ page.url | truncate: 21, '' }}{% endcapture %}
+      {% if getting_started_url == '/help/getting-started' %}
+      <strong>Getting Started <span class="fa fa-caret-down"><span></strong>
+      <ul>
+        <li>{% if page.url == '/help/getting-started/ssh-keys.html' %}<strong>SSH Keys</strong>{% else %}<a href="/help/getting-started/ssh-keys">SSH Keys</a>{% endif %}</li>
+      </ul>
+      {% else %}
+      <a href="/help/getting-started">Getting Started <span class="fa fa-caret-right"></span></a>
+      {% endif %}
+    </li>
+    <li>
+      {% capture version_control_url %}{{ page.url | truncate: 21, '' }}{% endcapture %}
+      {% if version_control_url == '/help/version-control' %}
+      <strong>Version Control <span class="fa fa-caret-down"></strong>
+      <ul>
+        <li>{% if page.url == '/help/version-control/production-branch.html' %}<strong>Production Branch</strong>{% else %}<a href="/help/version-control/production-branch">Production Branch</a>{% endif %}</li>
+        <li>{% if page.url == '/help/version-control/staging-branches.html' %}<strong>Staging Branches</strong>{% else %}<a href="/help/version-control/staging-branches">Staging Branches</a>{% endif %}</li>
+        <li>{% if page.url == '/help/version-control/custom-branches.html' %}<strong>Custom Branches</strong>{% else %}<a href="/help/version-control/custom-branches">Custom Branches</a>{% endif %}</li>
+        <li>{% if page.url == '/help/version-control/rebase.html' %}<strong>Rebase (Pull Production Changes)</strong>{% else %}<a href="/help/version-control/rebase">Rebase (Pull Production Changes)</a>{% endif %}</li>
+        <li>{% if page.url == '/help/version-control/merge.html' %}<strong>Merge (Push Production Changes)</strong>{% else %}<a href="/help/version-control/merge">Merge (Push Production Changes)</a>{% endif %}</li>
+      </ul>
+      {% else %}
+      <a href="/help/version-control">Version Control <span class="fa fa-caret-right"></span></a>
+      {% endif %}
+    </li>
+    <li>
+      {% capture content_management_url %}{{ page.url | truncate: 24, '' }}{% endcapture %}
+      {% if content_management_url == '/help/content-management' %}
+      <strong>Content Management <span class="fa fa-caret-down"></strong>
+      <ul>
+        <li>{% if page.url == '/help/content-management/pages.html' %}<strong>Pages</strong>{% else %}<a href="/help/content-management/pages">Pages</a>{% endif %}</li>
+        <li>{% if page.url == '/help/content-management/drafts.html' %}<strong>Drafts</strong>{% else %}<a href="/help/content-management/drafts">Drafts</a>{% endif %}</li>
+        <li>{% if page.url == '/help/content-management/posts.html' %}<strong>Posts</strong>{% else %}<a href="/help/content-management/posts">Posts</a>{% endif %}</li>
+        <li>{% if page.url == '/help/content-management/collections.html' %}<strong>Collections</strong>{% else %}<a href="/help/content-management/collections">Collections</a>{% endif %}</li>
+        <li>{% if page.url == '/help/content-management/data.html' %}<strong>Data</strong>{% else %}<a href="/help/content-management/data">Data</a>{% endif %}</li>
+        <li>{% if page.url == '/help/content-management/files.html' %}<strong>Files</strong>{% else %}<a href="/help/content-management/files">Files</a>{% endif %}</li>
+      </ul>
+      {% else %}
+      <a href="/help/content-management">Content Management <span class="fa fa-caret-right"></span></a>
+      {% endif %}
+    </li>
+    <li>
+      {% capture deployment_url %}{{ page.url | truncate: 17, '' }}{% endcapture %}
+      {% if deployment_url == '/help/deployments' %}
+      <strong>Deployments <span class="fa fa-caret-right"></strong>
+      {% else %}
+      <a href="/help/deployments">Deployments <span class="fa fa-caret-right"></span></a>
+      {% endif %}
+    </li>
+    <li>
+      {% capture form_responder_url %}{{ page.url | truncate: 21, '' }}{% endcapture %}
+      {% if form_responder_url == '/help/form-responders' %}
+      <strong>Form Responders <span class="fa fa-caret-down"></strong>
+      <ul>
+        <li>{% if page.url == '/help/form-responders/sending-emails.html' %}<strong>Sending Emails</strong>{% else %}<a href="/help/form-responders/sending-emails">Sending Emails</a>{% endif %}</li>
+        <li>{% if page.url == '/help/form-responders/commit-to-repository.html' %}<strong>Commit to Repository</strong>{% else %}<a href="/help/form-responders/commit-to-repository">Commit to Repository</a>{% endif %}</li>
+      </ul>
+      {% else %}
+      <a href="/help/form-responders">Form Responders <span class="fa fa-caret-right"></span></a>
+      {% endif %}
+    </li>
   </ul>
 </div>
 
