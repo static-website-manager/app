@@ -6,7 +6,7 @@ p Submissions to Form Responders can be forwarded to email addresses and/or reco
   .panel-ribbon.bg-warning
     dl.m-y-sm.small
       dt Form Responder URL
-      dd: code.code-text http://www.#{ENV['HOST']}/form-responders/#{form.object.path_id}
+      dd: code.code-text https://www.#{ENV['HOST']}/form-responders/#{form.object.path_id}
 .form-group.m-t-md
   => form.label :email_addresses, class: 'control-label'
   = form.text_area :email_addresses, rows: 5, class: 'form-control'

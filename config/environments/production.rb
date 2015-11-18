@@ -68,7 +68,7 @@ Rails.application.configure do
   # config.action_mailer.raise_delivery_errors = false
 
   # Set the default mailer host.
-  config.action_mailer.default_url_options = { host: ENV['HOST'] }
+  config.action_mailer.default_url_options = { host: ENV['HOST'], protocol: 'https' }
 
   # Set the mailer SMTP settings.
   config.action_mailer.smtp_settings = {
