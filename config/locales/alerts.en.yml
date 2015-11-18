@@ -81,7 +81,7 @@ en:
     create:
       alert: We could not find anyone with that email address.
       notice_already: You’re already confirmed — sign in now.
-      notice: Great! A confirmation email is on the way.
+      notice: Ok, a confirmation email is on the way.
     show:
       alert: We could not verify your account.
       notice_password: Thanks! We‘ve confirmed your email address. Please set your password to continue.
