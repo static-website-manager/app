@@ -15,6 +15,9 @@ en:
   branch_moves:
     new:
       title: Rename Branch • %{branch_name} • %{website_name}
+  branch_settings:
+    edit:
+      title: Edit Branch Settings • %{website_name}
   branches:
     show:
       title: '%{branch_name} • %{website_name}'

@@ -1,24 +1,6 @@
 - title website_name: @website.name
 
-= layout :nest, heading: 'Edit Your Website Settings', size: :md, return_to: session[:return_to] || @website do
-  = errors_for @website
-  = form_for @website, url: [@website, :settings] do |f|
-    = layout :panel, button: 'Save Changes' do
-      .form-group
-        => f.label :name, class: 'control-label'
-        = f.text_field :name, class: 'form-control'
-      hr
-      p: strong Automatically Deploy New Branches to Public URLs
-      .checkbox
-        = f.label :auto_create_production_deployment
-          => f.check_box :auto_create_production_deployment
-          | Production Branch
-      .checkbox
-        = f.label :auto_create_staging_deployment
-          => f.check_box :auto_create_staging_deployment
-          | Staging Branches
-      p: strong Automatically Rebase Branches in Response to Production Changes
-      .checkbox
-        = f.label :auto_rebase_staging_on_production_changes
-          => f.check_box :auto_rebase_staging_on_production_changes
-          | Staging Branches
+= layout :settings, website: @website, path: [@website, :settings] do |form|
+  .form-group
+    => form.label :name, class: 'control-label'
+    = form.text_field :name, class: 'form-control'

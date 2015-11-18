@@ -6,7 +6,7 @@ class SettingsController < ApplicationController
 
   def update
     if @website.update(settings_params)
-      redirect_to session[:return_to] || @website, notice: t('.notice')
+      redirect_to [:edit, @website, :settings], notice: t('.notice')
     else
       flash.now.alert = t('.alert')
       render :edit, status: 422
@@ -17,9 +17,6 @@ class SettingsController < ApplicationController
 
   def settings_params
     params.require(:website).permit(
-      :auto_create_production_deployment,
-      :auto_create_staging_deployment,
-      :auto_rebase_staging_on_production_changes,
       :name,
     )
   end

@@ -17,6 +17,7 @@ Rails.application.routes.draw do
   resources :subscriptions, only: %i[new create], path: 'subscribe', path_names: { new: '' }
 
   resources :websites, only: %i[index new create show], path_names: { new: 'subscribe' } do
+    resource :branch_settings, only: %i[edit update], path: 'settings/branches', path_names: { edit: '' }
     resource :settings, only: %i[edit update], path_names: { edit: '' }
     resource :setup, only: %i[show] do
       resource :check, only: %i[show], controller: 'setup_checks'

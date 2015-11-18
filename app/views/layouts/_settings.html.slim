@@ -1,0 +1,12 @@
+= layout :nest, heading: 'Website Settings', size: :md, return_to: session[:return_to] || website do
+  = errors_for website
+  = form_for website, url: path do |form|
+    .panel.panel-default
+      .panel-heading.panel-heading-nav-tabs
+        ul.nav.nav-tabs
+          li class=('active' if controller_name == 'settings') = link_to 'Basic Information', [:edit, website, :settings]
+          li class=('active' if controller_name == 'branch_settings') = link_to 'Branch Behavior', [:edit, website, :branch_settings]
+      .panel-body.p-t-md
+        = yield form
+      .panel-footer.text-center
+        = form.button 'Save Changes', class: 'btn btn-primary'

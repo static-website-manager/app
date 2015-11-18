@@ -21,6 +21,10 @@ en:
     create:
       alert: There was a problem saving your changes.
       notice: Great, we’ve committed your changes.
+  branch_settings:
+    update:
+      alert: There was a problem saving your branch settings.
+      notice: Settings updated successfully.
   branches:
     destroy:
       alert: There was a problem deleting this custom branch.
@@ -182,7 +186,7 @@ en:
       notice: Goodbye, and thanks for your business.
   settings:
     update:
-      alert: There was a problem saving your business settings.
+      alert: There was a problem saving your website settings.
       notice: Settings updated successfully.
   setup_authentications:
     create:
