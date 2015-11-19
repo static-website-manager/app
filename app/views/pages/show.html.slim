@@ -17,6 +17,7 @@
     .col-sm-7
       .page-preview
         = sanitize(markdown(@page.content))
+      p.m-t-sm.text-muted: small Previews are shown with limited styling and no embedded images or media.
     .col-sm-5
       .column-header
         h2 Commit History
