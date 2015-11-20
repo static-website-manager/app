@@ -18,11 +18,14 @@ module PageConcern
   end
 
   def content=(value)
-    if value.try(:to_s) == @content
+    # Ensure no carriage returns are used.
+    value = value.try(:to_s).gsub(/\r\n/, "\n")
+
+    if value == @content
       @content
     else
       content_will_change!
-      @content = value.try(:to_s)
+      @content = value
     end
   end
 
@@ -39,6 +42,7 @@ module PageConcern
   end
 
   def metadata=(value)
+    # TODO: Ensure no carriage returns are used.
     current_metadata = (@metadata.try(:to_hash) || {}).clone
     proposed_metadata = (value.try(:to_hash) || {})
 
