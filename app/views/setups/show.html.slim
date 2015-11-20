@@ -36,7 +36,7 @@
                   - else
                     span Push your existing git repository to Static Website Manager
                 pre
-                  code = "git remote add static git@#{ENV['HOST']}/#{@website.id}.git\ngit push -u static master".html_safe
+                  code = "git remote add static ssh://git@#{ENV['HOST']}/#{@website.id}.git\ngit push -u static master".html_safe
           - if current_authorization.account_owner?
             h2.h5.text-muted
               ' Need help? Ask a team member to help with the initial setup
