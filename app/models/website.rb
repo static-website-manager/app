@@ -40,8 +40,16 @@ class Website < ActiveRecord::Base
 
   after_destroy :teardown!
 
+  def self.bucket_allotment
+    small.count * 6 + medium.count * 14 + large.count * 27
+  end
+
+  def self.bucket_limit
+    100
+  end
+
   def self.requires_waiting_list?
-    true
+    bucket_allotment + 27 > bucket_limit
   end
 
   def account_owners
