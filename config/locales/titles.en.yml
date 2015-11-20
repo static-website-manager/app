@@ -169,6 +169,9 @@ en:
   subscriptions:
     new:
       title: Subscribe • Static Website Manager
+  waiting_lists:
+    new:
+      title: Join Waiting List • Static Website Manager
   websites:
     index:
       title: Your Websites • Static Website Manager

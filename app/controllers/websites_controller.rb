@@ -4,6 +4,12 @@ class WebsitesController < ApplicationController
   before_action :require_repository, only: %i[show]
   before_action :set_return_to, only: %i[index]
 
+  before_action only: %i[new create] do
+    if Website.requires_waiting_list?
+      redirect_to :new_waiting_list
+    end
+  end
+
   def index
     @websites = current_user.websites
   end

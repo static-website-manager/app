@@ -40,6 +40,10 @@ class Website < ActiveRecord::Base
 
   after_destroy :teardown!
 
+  def self.requires_waiting_list?
+    true
+  end
+
   def account_owners
     users.where(authorizations: { account_owner: true })
   end

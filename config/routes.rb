@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   resource :password, only: %i[new create], path: 'password', path_names: { new: 'set' }
   resource :session, only: %i[new create], path: 'sign-in', path_names: { new: '' }
   resource :session, only: %i[destroy], path: 'sign-out', as: :sign_out
+  resource :waiting_list, only: %i[new], path: 'waiting-list', path_names: { new: 'join' }
   resources :form_responders, only: [], path: 'form-responders' do
     resources :submissions, only: %i[create update], controller: 'form_responder_submissions', path: '', id: /.+/
   end

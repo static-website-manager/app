@@ -220,6 +220,9 @@ en:
       alert_not_invited: You are not invited to Subscribe at this time.
       alert: There was a problem subscribing your account.
       notice: Welcome to Static Website Manager!
+  waiting_lists:
+    new:
+      alert: We’re running at maximum capacity – please join our waiting list and get to the front of the line!
   websites:
     create:
       alert_not_invited: You are not invited to Subscribe at this time.

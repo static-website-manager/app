@@ -5,6 +5,12 @@ class SubscriptionsController < ApplicationController
     end
   end
 
+  before_action do
+    if Website.requires_waiting_list?
+      redirect_to :new_waiting_list
+    end
+  end
+
   def new
     @subscription = Subscription.new(website_attributes: { subscription_plan: params[:plan] })
   end

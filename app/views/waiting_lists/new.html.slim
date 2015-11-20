@@ -1,0 +1,11 @@
+- title
+
+= layout :nest, heading: 'Subsciption Waiting List', return_to: (current_user ? :websites : '/pricing') do
+  form action="//staticwebsitemanager.us11.list-manage.com/subscribe/post?u=d84b8a360c1472b20466ea10a&amp;id=b122ebedfc" method="post" name="mc-embedded-subscribe-form" novalidate="true"
+    = layout :panel, button: 'Join Waiting List', success: true do
+      .form-group
+        = label_tag 'mce-EMAIL', 'Your Email Address', class: 'control-label'
+        = email_field_tag 'EMAIL', '', id: 'mce-EMAIL', class: 'form-control'
+      div style="position: absolute; left: -5000px;" aria-hidden="true"
+        = text_field_tag 'b_d84b8a360c1472b20466ea10a_b122ebedfc', '', tabindex: '-1'
+    p.text-muted: small We #{link_to 'respect your privacy', '/privacy-policy', target: :_blank} and will never share, sell or give away your email address.
