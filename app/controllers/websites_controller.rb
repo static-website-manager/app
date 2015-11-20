@@ -15,7 +15,7 @@ class WebsitesController < ApplicationController
   end
 
   def new
-    @subscription = Subscription.new(website_attributes: { subscription_plan: params[:plan] })
+    @subscription = Subscription.new(website_attributes: { subscription_plan: params[:plan].blank? ? 'small' : params[:plan] })
   end
 
   def create
