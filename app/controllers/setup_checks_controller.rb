@@ -5,7 +5,7 @@ class SetupChecksController < ApplicationController
 
   def show
     if @repository.setup?
-      render text: url_for([@website, @repository.branch(current_user)])
+      render text: website_branch_path(@website, @repository.branch(current_user))
     else
       render text: ''
     end
