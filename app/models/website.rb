@@ -55,7 +55,8 @@ class Website < ActiveRecord::Base
   end
 
   def self.requires_waiting_list?
-    bucket_allotment + 27 > bucket_limit
+    # bucket_allotment + 27 > bucket_limit
+    true
   end
 
   def account_owners
