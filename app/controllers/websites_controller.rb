@@ -1,6 +1,6 @@
 class WebsitesController < ApplicationController
   before_action :require_user
-  before_action :require_website, only: %i[show]
+  before_action :require_website, only: %i[show delete destroy]
   before_action :require_repository, only: %i[show]
   before_action :set_return_to, only: %i[index]
 
@@ -36,6 +36,15 @@ class WebsitesController < ApplicationController
       redirect_to [@website, @repository.branch(current_user)]
     else
       redirect_to [@website, :setup]
+    end
+  end
+
+  def destroy
+    if @website.destroy
+      redirect_to :websites, notice: t('.notice')
+    else
+      flash.now.alert = t('.alert')
+      render :delete
     end
   end
 

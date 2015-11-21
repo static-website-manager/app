@@ -17,7 +17,8 @@ Rails.application.routes.draw do
   end
   resources :subscriptions, only: %i[new create], path: 'subscribe', path_names: { new: '' }
 
-  resources :websites, only: %i[index new create show], path_names: { new: 'subscribe' } do
+  resources :websites, only: %i[index new create show destroy], path_names: { new: 'subscribe' } do
+    get :delete, on: :member
     resource :branch_settings, only: %i[edit update], path: 'settings/branches', path_names: { edit: '' }
     resource :settings, only: %i[edit update], path_names: { edit: '' }
     resource :setup, only: %i[show] do

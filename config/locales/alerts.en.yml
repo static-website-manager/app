@@ -228,3 +228,6 @@ en:
       alert_not_invited: You are not invited to Subscribe at this time.
       alert: There was adding your website.
       notice: Welcome to your new website!
+    destroy:
+      alert: There was a problem closing your account.
+      notice: Ok, we’ve successfully closed your account.

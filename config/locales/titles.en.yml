@@ -177,3 +177,5 @@ en:
       title: Your Websites • Static Website Manager
     new:
       title: Subscribe • Static Website Manager
+    delete:
+      title: Close Account • %{website_name}

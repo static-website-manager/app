@@ -1,0 +1,5 @@
+- title website_name: @website.name
+
+= layout :settings, website: @website, path: @website, form_method: :delete, danger: true do |form|
+  p: strong Are you sure you want to close your account?
+  p.bg-warning.text-danger We will permanently delete all of your deployed websites, close any form responders and delete your website repository data.

@@ -43,6 +43,7 @@ class Website < ActiveRecord::Base
     end
   end
 
+  before_destroy :unsubscribe!
   after_destroy :teardown!
 
   def self.bucket_allotment
@@ -116,5 +117,11 @@ class Website < ActiveRecord::Base
 
   def teardown!
     FileUtils.rm_rf(repository_pathname.to_s)
+  end
+
+  def unsubscribe!
+    stripe_customer = Stripe::Customer.retrieve(stripe_customer_token)
+    stripe_subscription = stripe_customer.subscriptions.retrieve(stripe_subscription_token)
+    stripe_subscription.delete
   end
 end
