@@ -7,5 +7,4 @@ PartyFoul.configure do |config|
   config.api_endpoint = 'https://api.github.com'
   config.web_url = 'https://github.com'
   config.blacklisted_exceptions = ['ActiveRecord::RecordNotFound', 'ActionController::RoutingError']
-  config.processor = PartyFoul::Processors::Sidekiq
 end
