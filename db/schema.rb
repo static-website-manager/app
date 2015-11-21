@@ -85,6 +85,8 @@ ActiveRecord::Schema.define(version: 6) do
 
   create_table "websites", force: :cascade do |t|
     t.text     "name",                                                      null: false
+    t.text     "stripe_customer_token",                                     null: false
+    t.text     "stripe_subscription_token",                                 null: false
     t.integer  "subscription_plan",                                         null: false
     t.integer  "subscription_status",                                       null: false
     t.boolean  "yearly_billing",                            default: false, null: false

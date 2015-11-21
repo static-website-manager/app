@@ -1,0 +1,18 @@
+.credit_card-number {
+  position: relative;
+  p {
+    @extend .text-info;
+    position: absolute;
+    right: 0.5em;
+    margin-top: 1em;
+    font-size: 1.8em;
+  }
+  input[type="text"] {
+    padding-right: 12em;
+  }
+}
+
+.credit_card-expiration {
+  position: relative;
+  top: -1.5em;
+}

@@ -5,7 +5,7 @@ class SubscriptionSettingsController < ApplicationController
   before_action :require_repository
 
   def update
-    if @website.update(subscription_params)
+    if @website.update_stripe(subscription_params)
       UserMailer.subscription_update_confirmation(@website).deliver_later
       redirect_to [:edit, @website, :subscription_settings], notice: t('.notice')
     else

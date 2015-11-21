@@ -1,29 +1,61 @@
-- if form.object.errors[:subscription_plan].any?
-  p.has-error.has-feedback: strong.control-label Subscription Plan
-- else
-  p: strong Subscription Plan
-.row.text-center
-  .col-xs-4
-    = form.label :subscription_plan_small, class: 'display-block cursor-pointer font-normal' do
-      .well.well-sm.p-y data-input-checked-class="brand-primary"
-        => form.radio_button :subscription_plan, :small
-        strong.m-l-xs> Small
-        | – $35/mo
-  .col-xs-4
-    = form.label :subscription_plan_medium, class: 'display-block cursor-pointer font-normal' do
-      .well.well-sm.p-y data-input-checked-class="brand-primary"
-        => form.radio_button :subscription_plan, :medium
-        strong.m-l-xs> Medium
-        | – $85/mo
-  .col-xs-4
-    = form.label :subscription_plan_large, class: 'display-block cursor-pointer font-normal' do
-      .well.well-sm.p-y data-input-checked-class="brand-primary"
-        => form.radio_button :subscription_plan, :large
-        strong.m-l-xs> Large
-        | – $165/mo
-.checkbox.m-a-0
-  = form.label :yearly_billing do
-    => form.check_box :yearly_billing
-    strong.bg-warning> Yes! Save 15%
-    | with yearly billing.
+= form.fields_for :website do |form|
+  - if form.object.errors[:subscription_plan].any?
+    p.has-error.has-feedback: strong.control-label Subscription Plan
+  - else
+    p: strong Subscription Plan
+  .row.text-center
+    .col-xs-4
+      = form.label :subscription_plan_small, class: 'display-block cursor-pointer font-normal' do
+        .well.well-sm.p-y data-input-checked-class="brand-primary"
+          => form.radio_button :subscription_plan, :small
+          strong.m-l-xs> Small
+          | – $35/mo
+    .col-xs-4
+      = form.label :subscription_plan_medium, class: 'display-block cursor-pointer font-normal' do
+        .well.well-sm.p-y data-input-checked-class="brand-primary"
+          => form.radio_button :subscription_plan, :medium
+          strong.m-l-xs> Medium
+          | – $85/mo
+    .col-xs-4
+      = form.label :subscription_plan_large, class: 'display-block cursor-pointer font-normal' do
+        .well.well-sm.p-y data-input-checked-class="brand-primary"
+          => form.radio_button :subscription_plan, :large
+          strong.m-l-xs> Large
+          | – $165/mo
+  .checkbox.m-a-0
+    = form.label :yearly_billing do
+      => form.check_box :yearly_billing
+      strong.bg-warning> Yes! Save 15%
+      | with yearly billing.
 hr
+= yield
+hr
+.credit_card
+  = form.hidden_field :payment_information
+  .row
+    .col-sm-9
+      .form-group.credit_card-number
+        p
+          => icon 'cc-visa'
+          => icon 'cc-mastercard'
+          => icon 'cc-amex'
+          => icon 'cc-discover'
+        label.control-label> for="card_number" Card Number
+        input.form-control type="text" id="card_number"
+    .col-sm-3
+      .form-group
+        label.control-label> for="card_cvc" Security Code
+        input.form-control type="text" id="cvc"
+        p.help-block
+          => link_to 'Read More', 'https://en.wikipedia.org/wiki/Card_security_code', target: :_blank
+          = icon 'external-link'
+  .credit_card-expiration
+    label Expires
+    .form-group.display-inline-block.m-l-sm
+      label.sr-only> for="exp_month" Expiration Month
+      select.form-control id="exp_month" = options_for_select([['Month', nil], *(1..12).map { |n| ["#{n} - #{Date::MONTHNAMES[n]}", n] }])
+    .form-group.display-inline-block.m-l-sm
+      label.sr-only> for="exp_year" Expiration Year
+      select.form-control id="exp_year" = options_for_select([['Year', nil], *Time.now.year..(Time.now.year + 10)])
+hr
+.well.well-sm.small Private Alpha – No guarantees or warranties of any kind.

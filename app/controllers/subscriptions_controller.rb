@@ -32,6 +32,7 @@ class SubscriptionsController < ApplicationController
 
   def subscription_params
     params.require(:subscription).permit(
+      :payment_information,
       user_attributes: [
         :name,
         :email,

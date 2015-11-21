@@ -43,6 +43,7 @@ class WebsitesController < ApplicationController
 
   def subscription_params
     params.require(:subscription).permit(
+      :payment_information,
       website_attributes: [
         :name,
         :subscription_plan,

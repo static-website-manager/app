@@ -2,12 +2,15 @@
 
 = layout :nest, size: :md, return_to: :websites do
   = errors_for @subscription
-  = form_for @subscription, url: :websites do |form|
+  #credit_card-errors.panel.panel-danger style="display:none"
+    .panel-heading
+      p.panel-title Please correct the following errors:
+    .panel-body
+      ul.list-unstyled: li
+  = form_for @subscription, url: :websites, html: { id: 'credit_card' } do |form|
     = layout :panel, heading: 'Subscribe to Static Website Manager', button: 'Subscribe', success: true, large: true
-      = form.fields_for :website do |f|
-        = render partial: 'subscriptions/form', object: f
-        .form-group
-          => f.label :name, class: 'control-label'
-          = f.text_field :name, class: 'form-control'
-      hr
-      .well.well-sm.small Private Alpha – No guarantees or warranties of any kind.
+      = render layout: 'subscriptions/form', object: form do
+        = form.fields_for :website do |form|
+          .form-group
+            => form.label :name, class: 'control-label'
+            = form.text_field :name, class: 'form-control'
