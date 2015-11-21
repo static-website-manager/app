@@ -11,6 +11,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends ca-certificates
   && chmod +x /usr/local/bin/gosu \
   && apt-get purge -y --auto-remove ca-certificates wget
 
+RUN curl http://curl.haxx.se/ca/cacert.pem > /usr/lib/ssl/certs/cacert.pem
+
 RUN mkdir /app
 WORKDIR /app
 
