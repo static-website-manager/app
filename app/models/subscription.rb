@@ -61,14 +61,16 @@ class Subscription
           stripe_customer.source = payment_information
           stripe_customer.save
         else
-          stripe_customer = Stripe::Customer.create(source: payment_information)
+          stripe_customer = new_stripe_customer = Stripe::Customer.create(source: payment_information)
         end
 
         raise StandardError unless stripe_customer
       rescue Stripe::InvalidRequestError => e
+        new_stripe_customer.try(:delete)
         errors.add :base, e.message
         raise ActiveRecord::Rollback
       rescue
+        new_stripe_customer.try(:delete)
         errors.add :payment_information, :invalid
         raise ActiveRecord::Rollback
       end
