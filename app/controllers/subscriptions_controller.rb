@@ -18,7 +18,10 @@ class SubscriptionsController < ApplicationController
   def create
     @subscription = Subscription.new(subscription_params)
 
-    if @subscription.save
+    if params[:agree_to_terms] != '1'
+      flash.now.alert = t('.alert_disagree')
+      render :new, status: 422
+    elsif @subscription.save
       sign_in(@subscription.user)
       UserMailer.subscription_confirmation(@subscription.user).deliver_later
       redirect_to [@subscription.website, :setup], notice: t('.notice')

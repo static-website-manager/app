@@ -22,7 +22,10 @@ class WebsitesController < ApplicationController
     @subscription = Subscription.new(subscription_params)
     @subscription.user = current_user
 
-    if @subscription.save
+    if params[:agree_to_terms] != '1'
+      flash.now.alert = t('.alert_disagree')
+      render :new, status: 422
+    elsif @subscription.save
       UserMailer.subscription_confirmation(current_user).deliver_later
       redirect_to [@subscription.website, :setup], notice: t('.notice')
     else

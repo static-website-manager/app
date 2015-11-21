@@ -58,4 +58,8 @@ hr
       label.sr-only> for="exp_year" Expiration Year
       select.form-control id="exp_year" = options_for_select([['Year', nil], *Time.now.year..(Time.now.year + 10)])
 hr
-.well.well-sm.small Private Alpha – No guarantees or warranties of any kind.
+.well.well-sm
+  .checkbox.m-y-0
+    = label_tag :agree_to_terms do
+      => check_box_tag :agree_to_terms, '1', false
+      small I agree to the #{link_to 'Terms of Service', '/terms', target: :_blank} and the #{link_to 'Privacy Policy', '/privacy', target: :_blank}.

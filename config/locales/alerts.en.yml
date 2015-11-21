@@ -218,6 +218,7 @@ en:
   subscriptions:
     create:
       alert_not_invited: You are not invited to Subscribe at this time.
+      alert_disagree: You must first agree to the Terms of Service and Privacy Policy
       alert: There was a problem subscribing your account.
       notice: Welcome to Static Website Manager!
   waiting_lists:
@@ -226,6 +227,7 @@ en:
   websites:
     create:
       alert_not_invited: You are not invited to Subscribe at this time.
+      alert_disagree: You must first agree to the Terms of Service and Privacy Policy
       alert: There was adding your website.
       notice: Welcome to your new website!
     destroy:
