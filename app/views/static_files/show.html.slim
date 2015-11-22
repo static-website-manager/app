@@ -9,20 +9,16 @@
       h1: code.code-text = @static_file.filename
       code.small = @static_file.full_pathname
     .col-sm-4.text-right
-      => link_to icon('cloud-download', 'Download File'), (@deployment && @deployment.success? ? @static_file.public_url(@deployment.url) : [:download, @website, @branch, @static_file]), class: 'btn btn-sm btn-default'
+      => link_to icon('cloud-download', 'Download File'), (@deployment && @deployment.success? ? @static_file.public_url(@deployment.url) : [@website, @branch, @static_file, :download]), class: 'btn btn-sm btn-default'
       => link_to icor('Rename', 'arrow-circle-o-right'), [:new, @website, @branch, @static_file, :move], class: 'btn btn-sm btn-primary'
       = link_to icon('trash', 'Delete'), [:delete, @website, @branch, @static_file], class: 'btn btn-sm btn-danger'
   .row
     .col-sm-7
       - if @static_file.preview?
         - if @static_file.image?
-          .column-header
-            h2 Preview Image
-          .text-center.p-y-md style="background: url('#{image_path('checkers.png')}') repeat;"
+          .text-center.p-y-md style="background: url('#{image_path('checkers.png')}') repeat; border: solid 1px #eee; border-radius: 4px;"
             = image_tag "data:image/png;base64,#{Base64.strict_encode64(@static_file.raw_content)}", alt: ''
         - else
-          .column-header.column-header-media
-            h2 Preview File
           css:
             #{Rouge::Themes::Github.render(scope: '.highlight')}
           = Rouge::Formatters::HTML.new(css_class: 'highlight').format(Rouge::Lexers::Shell.new.lex(@static_file.raw_text)).html_safe

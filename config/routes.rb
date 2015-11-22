@@ -56,6 +56,7 @@ Rails.application.routes.draw do
         get :delete, on: :member
         resources :commits, only: %i[index], controller: 'static_file_commits', path: 'history'
         resource :move, only: %i[new create], controller: 'static_file_moves', path: 'rename', path_names: { new: '' }
+        resource :download, only: %i[show], controller: 'static_file_downloads'
       end
       resources :pages, id: /.+/, path_names: { new: 'new' } do
         get :delete, on: :member
