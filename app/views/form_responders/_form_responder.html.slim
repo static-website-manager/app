@@ -1,5 +1,5 @@
 .well.well.sm
-  .pull-left
+  .pull-left.m-t-xs
     => icon 'server m-r-sm fa-2x', class: (form_responder.active? ? 'text-success' : 'text-muted')
   .pull-right
     = form_tag [website, branch, form_responder, :activation], method: (form_responder.active? ? :delete : :post), class: 'display-inline m-y-sm' do
@@ -8,13 +8,13 @@
       => link_to icon('pencil', 'Edit'), [:edit, website, branch, form_responder], class: 'btn btn-sm btn-default'
       = link_to icon('trash', 'Remove'), [:delete, website, branch, form_responder], class: 'btn btn-sm btn-danger'
   div.m-l-lg
-    p.m-a-0
+    p.m-a-0.m-t-sm
       code.code-text style="font-size:1.2em; line-height:1.5" => form_responder.path_id
       - if form_responder.active?
         small.text-success.m-l-sm ACTIVE
       - else
         small.text-muted.m-l-sm INACTIVE
-    p.small.m-t-xs.m-b-0
+    p.small.m-t-sm.m-b-0
       code.code-text.m-r-sm>
         | https://www.#{ENV['HOST']}/form-responders/
         = form_responder.path_id

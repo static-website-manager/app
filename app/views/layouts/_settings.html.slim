@@ -1,6 +1,6 @@
 = layout :nest, heading: 'Website Settings', size: :md, return_to: session[:return_to] || website do
   = errors_for website
-  = form_for website, url: path, method: defined?(form_method) ? form_method : nil do |form|
+  = form_for website, url: path, method: defined?(form_method) ? form_method : :patch do |form|
     .panel.panel-default
       .panel-heading.panel-heading-nav-tabs
         ul.nav.nav-tabs

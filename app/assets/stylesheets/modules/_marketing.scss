@@ -2,6 +2,9 @@
   margin-top: 1em;
   font-size: 3em;
   font-family: $font-family-serif;
+  @include small {
+    font-size: 2em;
+  }
 }
 
 .marketing-description {
@@ -9,6 +12,9 @@
   margin: 1em auto;
   font-size: 1.35em;
   line-height: 1.35;
+  @include small {
+    font-size: 1.2em;
+  }
 }
 
 .marketing-heading {
