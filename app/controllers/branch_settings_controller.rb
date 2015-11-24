@@ -17,8 +17,6 @@ class BranchSettingsController < ApplicationController
 
   def branch_settings_params
     params.require(:website).permit(
-      :auto_create_production_deployment,
-      :auto_create_staging_deployment,
       :auto_rebase_staging_on_production_changes,
     )
   end

@@ -1,32 +1,34 @@
 - title website_name: @website.name, branch_name: @branch.title(current_user)
 
-= layout :branch, website: @website, repository: @repository, branch: @branch, deployment: @deployment do
+= layout :branch, website: @website, repository: @repository, branch: @branch do
   .clearfix
     .pull-right
       => link_to icor('Configure Branch', 'gear'), [:edit, @website, @branch, :config], class: 'btn btn-sm btn-default'
       - if @branch.custom? && current_authorization.custom_branch_access?
         => link_to icor('Rename', 'arror-circle-o-right'), [:new, @website, @branch, :move], class: 'btn btn-sm btn-primary'
         = link_to icon('trash', 'Delete'), [:delete, @website, @branch], class: 'btn btn-sm btn-danger'
-    - if @deployment && @deployment.success?
-      p.text-muted Branch successfully deployed #{time_ago_in_words @deployment.updated_at} ago
-      p
-        => link_to icor('View Public Website', 'external-link'), @deployment.url, target: :_blank, class: 'btn btn-xs btn-success'
-        = link_to 'Make Branch Private', [:delete, @website, @branch, :deployment], class: 'btn btn-xs btn-link'
-    - elsif @deployment && @deployment.pending?
-      p.text-muted = icon('spinner fa-spin', 'Deploying Branch...')
-      p
-        => link_to icor('View Public Website', 'external-link'), @deployment.url, target: :_blank, class: 'btn btn-xs btn-primary disabled'
-        = link_to 'Make Branch Private', [:delete, @website, @branch, :deployment], class: 'btn btn-sm btn-link'
-    - elsif @deployment
-      p.text-danger = @deployment.response_message
-      div
-        => link_to icor('View Public Website', 'external-link'), @deployment.url, target: :_blank, class: 'btn btn-xs btn-primary disabled'
-        => form_tag [@website, @branch, @deployment], method: :patch, style: 'display:inline-block' do
-          = button_tag icon('repeat', 'Try Again'), class: 'btn btn-xs btn-default'
-        = link_to 'Make Branch Private', [:delete, @website, @branch, @deployment], class: 'btn btn-sm btn-link'
+    - if @deployments.any?
+      - @deployments.each do |deployment|
+        - case deployment.type
+        - when 'Deployment::S3'
+          .btn-group.btn-group-sm
+            => link_to deployment.url, target: :_blank, class: 'btn btn-default' do
+              span.label.label-primary style="position: relative; top: 0.02em; left: -0.5em; font-size: 0.9em" => 'AWS S3'
+              strong = deployment.aws_s3_bucket
+            span.btn-group.btn-group-sm
+              span.btn.btn-default.dropdown-toggle type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                span.caret
+              ul.dropdown-menu
+                li = link_to 'Edit', [:edit, @website, @branch, deployment]
+                li = link_to 'Delete', [:delete, @website, @branch, deployment]
     - else
-      p.text-muted This branch is not deployed to a public URL
-      p = link_to 'Publish Branch', [:new, @website, @branch, :deployment], class: 'btn btn-xs btn-success'
+      small> No Deployments Found
+    span.btn-group.m-l
+      span.btn.btn-sm.btn-default.dropdown-toggle type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+        ' Add Deployment
+        span.caret
+      ul.dropdown-menu
+        li = link_to 'AWS S3 Deployment', [:new, @website, @branch, :deployment_s3]
   .row.m-t-lg
     .col-sm-7
       .column-header class=('column-header-media' if @form_responders.any?)

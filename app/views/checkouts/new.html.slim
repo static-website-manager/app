@@ -38,8 +38,3 @@
             - else
               => label_tag :target, 'New Custom Branch Name', class: 'control-label'
               = text_field_tag :target, params[:target], class: 'form-control'
-      hr
-      .checkbox
-        = label_tag :deploy do
-          => check_box_tag :deploy, '1', params[:deploy]
-          | Deploy this branch to a public URL?

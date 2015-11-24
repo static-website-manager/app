@@ -21,6 +21,10 @@ class Repository
     Branch.find(rugged_repository, *args)
   end
 
+  def branch_names
+    rugged_repository.branches.each_name(:local)
+  end
+
   def commit(*args)
     Commit.find(rugged_repository, *args)
   end
@@ -30,7 +34,7 @@ class Repository
   end
 
   def custom_branch_names
-    rugged_repository.branches.each_name(:local).sort.reject do |name|
+    branch_names.sort.reject do |name|
       name == 'master' || name.match(/\Astatic_user_\d+\z/)
     end
   end

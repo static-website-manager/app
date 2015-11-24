@@ -27,11 +27,6 @@ class CheckoutsController < ApplicationController
     else
       begin
         @repository.create_branch(@branch.name, params[:target])
-
-        if params[:deploy]
-          JekyllBuildJob.perform_later(@website.deployments.create!(branch_name: params[:target]))
-        end
-
         redirect_to [@website, @repository.branch(params[:target])], notice: t('.notice')
       rescue Rugged::ReferenceError => e
         @error_message = true

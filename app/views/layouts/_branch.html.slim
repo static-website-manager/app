@@ -37,14 +37,8 @@
           => icon 'code-fork'
           small Add Custom Branch
   span.small.text-muted
-    - if deployment && deployment.success?
-      => link_to 'View Public Website', deployment.url, target: :_blank
-    - elsif deployment && deployment.pending?
-      => icon 'spinner fa-spin', 'Deploying Branch...'
-    - elsif deployment
-      ' Error Deploying Branch
-    - else
-      ' Private Branch
+    => link_to 'Preview Branch', "//#{website.id}-#{Digest::SHA1.hexdigest(@branch.name)}.#{ENV['HOST']}/", target: :_blank
+    => icon 'external-link'
     ' •
     - if website.form_responders.active.any?
       = pluralize website.form_responders.count, 'Active Form Responder'

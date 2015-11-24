@@ -1,0 +1,6 @@
+- title website_name: @website.name, branch_name: @branch.title(current_user)
+
+= layout :nest, heading: 'Delete AWS S3 Deployment', size: :md, return_to: [@website, @branch] do
+  = form_tag [@website, @branch, @deployment], method: :delete do
+    = layout :panel, subheading: @branch.title(current_user), button: 'Delete Deployment', danger: true do
+      p This action will remove the deployment from this branch.

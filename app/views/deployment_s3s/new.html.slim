@@ -1,0 +1,7 @@
+- title website_name: @website.name, branch_name: @branch.title(current_user)
+
+= layout :nest, heading: 'Publish to AWS S3', size: :md, return_to: [@website, @branch] do
+  = errors_for @deployment
+  = form_for [@website, @branch, @deployment] do |form|
+    = layout :panel, subheading: @branch.title(current_user), button: 'Publish Branch', success: true do
+      = render form

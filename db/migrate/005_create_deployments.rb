@@ -3,9 +3,9 @@ class CreateDeployments < ActiveRecord::Migration
     create_table :deployments do |t|
       t.references :website, index: true, foreign_key: true, null: false
       t.text :branch_name, null: false
-      t.text :host_prefix, null: false
-      t.text :response_message
-      t.integer :response_status
+      t.text :type, null: false
+      t.text :settings
+      t.boolean :active, default: true, null: false
       t.timestamps null: false
     end
   end

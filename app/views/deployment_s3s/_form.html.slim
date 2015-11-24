@@ -1,0 +1,14 @@
+p Set your AWS credentials here and this branch will be deployed to the provided bucket.
+hr
+.form-group
+  => form.label :aws_s3_bucket, class: 'control-label'
+  = form.text_field :aws_s3_bucket, class: 'form-control'
+.form-group
+  => form.label :aws_region, class: 'control-label'
+  = form.text_field :aws_region, class: 'form-control'
+.form-group
+  => form.label :aws_access_key_id, class: 'control-label'
+  = form.text_field :aws_access_key_id, class: 'form-control'
+.form-group
+  => form.label :aws_secret_access_key, class: 'control-label'
+  = form.text_field :aws_secret_access_key, class: 'form-control'

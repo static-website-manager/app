@@ -14,7 +14,7 @@ class PostMovesController < ApplicationController
     @post.full_pathname = [params[:post].try(:[], :basepath), params[:post].try(:[], :extension)].reject(&:blank?).join('.')
 
     if @post.save(@branch.name, current_user.email, current_user.name, commit_message)
-      JekyllBuildJob.perform_later(@deployment) if @deployment
+      JekyllBuildJob.perform_later(@website.id, @branch.name, @branch.commit_id)
       redirect_to [@website, @branch, @post], notice: t('.notice')
     else
       flash.now.alert = t('.alert')

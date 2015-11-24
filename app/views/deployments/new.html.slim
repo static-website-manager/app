@@ -1,6 +1,0 @@
-- title website_name: @website.name, branch_name: @branch.title(current_user)
-
-= layout :nest, heading: 'Publish Branch', size: :md, return_to: [@website, @branch] do
-  = form_tag [@website, @branch, :deployment] do
-    = layout :panel, subheading: @branch.title(current_user), button: 'Publish Branch', success: true do
-      p This action will create a public URL at which this website can be viewed.

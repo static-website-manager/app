@@ -12,7 +12,7 @@ class Branch
       name = name_or_user.to_s
     end
 
-    rugged_branch = rugged_repository.branches[name]
+    rugged_branch = rugged_repository.branches[name] rescue raise(ActiveRecord::RecordNotFound)
 
     if rugged_branch
       new(

@@ -1,20 +1,17 @@
 class JekyllBuildJob < ActiveJob::Base
   queue_as :default
 
-  def perform(deployment)
+  def perform(website_id, branch_name, commit_id)
     uri = URI('http://build:9292/jekyll')
 
     data = {
-      website_id: deployment.website_id,
-      branch_name: deployment.branch_name,
-      bucket_name: deployment.website_bucket_name,
+      website_id: website_id,
+      branch_name: branch_name,
+      commit_id: commit_id,
     }
 
     response = Net::HTTP.post_form(uri, data)
 
-    deployment.update(
-      response_status: response.code,
-      response_message: response.body,
-    )
+    $stdout.puts response.body
   end
 end

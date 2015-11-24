@@ -24,7 +24,7 @@ class PagesController < ApplicationController
     @page.full_pathname = [params[:page].try(:[], :basepath), params[:page].try(:[], :extension)].reject(&:blank?).join('.')
 
     if @page.save(@branch.name, current_user.email, current_user.name, commit_message)
-      JekyllBuildJob.perform_later(@deployment) if @deployment
+      JekyllBuildJob.perform_later(@website.id, @branch.name, @branch.commit_id)
       redirect_to [:edit, @website, @branch, @page], notice: t('.notice')
     else
       flash.now.alert = t('.alert')
@@ -44,7 +44,7 @@ class PagesController < ApplicationController
     if @page.unchanged?
       redirect_to [@website, @branch, @page], alert: t('.alert_unchanged')
     elsif @page.save(@branch.name, current_user.email, current_user.name, commit_message)
-      JekyllBuildJob.perform_later(@deployment) if @deployment
+      JekyllBuildJob.perform_later(@website.id, @branch.name, @branch.commit_id)
       redirect_to [@website, @branch, @page], notice: t('.notice')
     else
       flash.now.alert = t('.alert')
@@ -56,7 +56,7 @@ class PagesController < ApplicationController
     commit_message = params[:message].present? ? params[:message] : t('.message', filename: @page.full_pathname)
 
     if @page.destroy(@branch.name, current_user.email, current_user.name, commit_message)
-      JekyllBuildJob.perform_later(@deployment) if @deployment
+      JekyllBuildJob.perform_later(@website.id, @branch.name, @branch.commit_id)
       redirect_to [@website, @branch, :pages], notice: t('.notice')
     else
       flash.now.alert = t('.alert')

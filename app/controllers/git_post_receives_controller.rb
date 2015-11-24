@@ -12,19 +12,15 @@ class GitPostReceivesController < ActionController::Base
     begin
       @branch = @repository.branch(params[:branch_name])
     rescue
-      if deployment = @website.deployments.find_by_branch_name(params[:branch_name])
-        deployment.destroy
-        render text: t('.removed', branch_name: params[:branch_name], deployment_url: deployment.url)
-      else
-        render text: ''
-      end
+      render text: ''
     end
   end
 
   def create
     @messages = []
+
     if @branch.production?
-      deploy(@branch, force: @website.auto_create_production_deployment?)
+      deploy(@branch)
 
       @website.users.each do |user|
         branch = @repository.branch(user, auto_create_staging: false) rescue nil
@@ -38,11 +34,11 @@ class GitPostReceivesController < ActionController::Base
             deploy(branch)
           end
         else
-          deploy(@repository.branch(user), force: @website.auto_create_staging_deployment?)
+          deploy(@repository.branch(user))
         end
       end
     elsif @branch.staging?
-      deploy(@branch, force: @website.auto_create_staging_deployment?)
+      deploy(@branch)
     else
       deploy(@branch)
     end
@@ -52,14 +48,7 @@ class GitPostReceivesController < ActionController::Base
 
   private
 
-  def deploy(branch, force: false)
-    deployment = @website.deployments.where(branch_name: branch.name).send(force ? :first_or_create : :first)
-
-    if deployment && deployment.persisted?
-      JekyllBuildJob.perform_later(deployment)
-      @messages << t('.scheduled', branch_name: branch.name, deployment_url: deployment.url)
-    else
-      @messages << t('.received', branch_name: branch.name)
-    end
+  def deploy(branch)
+    JekyllBuildJob.perform_later(@website.id, branch.name, branch.commit_id)
   end
 end

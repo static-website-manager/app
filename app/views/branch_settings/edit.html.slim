@@ -1,15 +1,6 @@
 - title website_name: @website.name
 
 = layout :settings, website: @website, path: [@website, :branch_settings] do |form|
-  p: strong Automatically Deploy New Branches to Public URLs
-  .checkbox
-    = form.label :auto_create_production_deployment
-      => form.check_box :auto_create_production_deployment
-      | Production Branch
-  .checkbox
-    = form.label :auto_create_staging_deployment
-      => form.check_box :auto_create_staging_deployment
-      | Staging Branches
   p: strong Automatically Rebase Branches in Response to Production Changes
   .checkbox
     = form.label :auto_rebase_staging_on_production_changes

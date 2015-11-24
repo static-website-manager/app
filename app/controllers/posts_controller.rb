@@ -26,7 +26,7 @@ class PostsController < ApplicationController
     @post.full_pathname = ['_posts', pathname, [publication_date.strftime('%Y-%m-%d'), filename].reject(&:blank?).join('-')].reject(&:blank?).join('/')
 
     if @post.save(@branch.name, current_user.email, current_user.name, commit_message)
-      JekyllBuildJob.perform_later(@deployment) if @deployment
+      JekyllBuildJob.perform_later(@website.id, @branch.name, @branch.commit_id)
       redirect_to [:edit, @website, @branch, @post], notice: t('.notice')
     else
       flash.now.alert = t('.alert')
@@ -46,7 +46,7 @@ class PostsController < ApplicationController
     if @post.unchanged?
       redirect_to [@website, @branch, @post], alert: t('.alert_unchanged')
     elsif @post.save(@branch.name, current_user.email, current_user.name, commit_message)
-      JekyllBuildJob.perform_later(@deployment) if @deployment
+      JekyllBuildJob.perform_later(@website.id, @branch.name, @branch.commit_id)
       redirect_to [@website, @branch, @post], notice: t('.notice')
     else
       flash.now.alert = t('.alert')
@@ -58,7 +58,7 @@ class PostsController < ApplicationController
     commit_message = params[:message].present? ? params[:message] : t('.message', filename: @post.pretty_pathname)
 
     if @post.destroy(@branch.name, current_user.email, current_user.name, commit_message)
-      JekyllBuildJob.perform_later(@deployment) if @deployment
+      JekyllBuildJob.perform_later(@website.id, @branch.name, @branch.commit_id)
       redirect_to [@website, @branch, :posts], notice: t('.notice')
     else
       flash.now.alert = t('.alert')

@@ -40,11 +40,13 @@ en:
       title: Data • %{branch_name} • %{website_name}
     show:
       title: Data “%{filename}” • %{branch_name} • %{website_name}
-  deployments:
+  deployment_s3s:
     new:
-      title: Publish Branch • %{branch_name} • %{website_name}
+      title: Publish to AWS S3 • %{branch_name} • %{website_name}
+    edit:
+      title: Edit AWS S3 Deployment • %{branch_name} • %{website_name}
     delete:
-      title: Delete Published Website • %{branch_name} • %{website_name}
+      title: Delete AWS S3 Deployment • %{branch_name} • %{website_name}
   designs:
     show:
       title: Design • %{branch_name} • %{website_name}

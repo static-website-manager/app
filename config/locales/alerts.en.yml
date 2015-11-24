@@ -43,15 +43,16 @@ en:
       alert_unchanged: No changes detected.
       alert: There was a problem updating your website configuration.
       notice: Great, we’ve commited your configuration changes.
-  deployments:
+  deployment_s3s:
     create:
       alert: There was a problem publishing this branch.
-      notice: Great, we’ve setup a public URL for this branch.
+      notice: Great, we’ve setup a deployment to AWS S3 for this branch.
     update:
-      notice: Ok, we’re trying to deployment your branch.
+      alert: There was a problem updating your deployment.
+      notice: Great, we’ve updated your AWS S3 deployment.
     destroy:
-      alert: There was a problem removing the public URL for this branch.
-      notice: Ok, we’ve removed the public URL for this branch.
+      alert: There was a problem removing your deployment.
+      notice: Ok, we’ve removed the AWS S3 deployment.
   draft_moves:
     create:
       message: Move Draft %{filename}

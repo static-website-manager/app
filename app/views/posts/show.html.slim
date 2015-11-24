@@ -11,8 +11,7 @@
         span.small = localize(@post.published_on)
       code.small = @post.full_pathname
     .col-sm-3.text-right
-      - if @deployment && @deployment.success?
-        => link_to icor('View Public Post', 'external-link'), @post.public_url(@deployment.url), target: :_blank, class: 'btn btn-sm btn-default'
+      => link_to icor('Preview Post', 'external-link'), "//#{website.id}-#{Digest::SHA1.hexdigest(@branch.name)}.#{ENV['HOST']}/#{@post.public_path}", target: :_blank, class: 'btn btn-sm btn-default'
       => link_to icor('Rename', 'arrow-circle-o-right'), [:new, @website, @branch, @post, :move], class: 'btn btn-sm btn-primary'
       = link_to icon('trash', 'Delete'), [:delete, @website, @branch, @post], class: 'btn btn-sm btn-danger'
   .row

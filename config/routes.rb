@@ -1,11 +1,14 @@
 Rails.application.routes.draw do
+  constraints host: 'hooks' do
+    resource :git_post_receive, only: %i[create]
+  end
+
   resource :account, only: %i[edit update], path_names: { edit: '' } do
     resource :email, only: %i[edit update], path_names: { edit: '' }
     resource :password, only: %i[edit update], path_names: { edit: '' }
     resource :ssh_keys, only: %i[edit update], path: 'ssh-keys', path_names: { edit: '' }
   end
   resource :email_confirmation, only: %i[new create show], path: 'confirm-email', path_names: { new: 'resend' }
-  resource :git_post_receive, only: %i[create]
   resource :password_reset, only: %i[edit update], path: 'reset-password', path_names: { edit: '' }
   resource :password_forget, only: %i[new create], path: 'forget-password', path_names: { new: '' }
   resource :password, only: %i[new create], path: 'password', path_names: { new: 'set' }
@@ -32,9 +35,6 @@ Rails.application.routes.draw do
       get :delete, on: :member
       resource :checkout, only: %i[new create], path_names: { new: '' }
       resource :config, only: %i[edit update], path_names: { edit: '' }
-      resource :deployment, only: %i[new create update destroy], path: 'deploy', path_names: { new: '' } do
-        get :delete
-      end
       resource :design, only: %i[show]
       resource :merge, only: %i[new create], path_names: { new: '' }
       resource :move, only: %i[new create], controller: 'branch_moves', path: 'rename', path_names: { new: '' }
@@ -56,7 +56,6 @@ Rails.application.routes.draw do
         get :delete, on: :member
         resources :commits, only: %i[index], controller: 'static_file_commits', path: 'history'
         resource :move, only: %i[new create], controller: 'static_file_moves', path: 'rename', path_names: { new: '' }
-        resource :download, only: %i[show], controller: 'static_file_downloads'
       end
       resources :pages, id: /.+/, path_names: { new: 'new' } do
         get :delete, on: :member
@@ -67,6 +66,9 @@ Rails.application.routes.draw do
         get :delete, on: :member
         resources :commits, only: %i[index], controller: 'post_commits', path: 'history'
         resource :move, only: %i[new create], controller: 'post_moves', path: 'rename', path_names: { new: '' }
+      end
+      resources :deployment_s3s, only: %i[new create show edit update destroy], path: 'deployments/s3' do
+        get :delete, on: :member
       end
     end
     resources :commits, only: %i[show]

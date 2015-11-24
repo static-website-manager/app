@@ -26,7 +26,7 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  # Find the current website’s branch and deployment.
+  # Find the current website’s branch.
   def require_branch
     @branch = @repository.branch(controller_name == 'branches' ? params[:id] : params[:branch_id])
 
@@ -37,8 +37,6 @@ class ApplicationController < ActionController::Base
     elsif @branch.custom? && !current_authorization.custom_branch_access?
       raise ActiveRecord::RecordNotFound
     end
-
-    @deployment = @website.deployments.find_by_branch_name(@branch.name)
   end
 
   # Ensure non-designers are redirected back to the website.

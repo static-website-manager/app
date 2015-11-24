@@ -4,6 +4,11 @@ en:
       authorization:
         role: Content Role
         owner: Account Owner
+      deployment/s3:
+        aws_s3_bucket: S3 Bucket Name
+        aws_region: Bucket Region
+        aws_access_key_id: AWS Access Key ID
+        aws_secret_access_key: AWS Secret Access Key
       form_responder:
         dataset_pathname: Data Connection
         email_addresses: Email Addresses

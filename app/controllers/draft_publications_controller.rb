@@ -16,7 +16,7 @@ class DraftPublicationsController < ApplicationController
     @draft.publishing = true
 
     if @draft.save(@branch.name, current_user.email, current_user.name, commit_message)
-      JekyllBuildJob.perform_later(@deployment) if @deployment
+      JekyllBuildJob.perform_later(@website.id, @branch.name, @branch.commit_id)
       redirect_to website_branch_post_path(@website, @branch, @draft.pretty_post_pathname), notice: t('.notice')
     else
       flash.now.alert = t('.alert')

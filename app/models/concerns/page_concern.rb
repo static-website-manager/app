@@ -62,8 +62,12 @@ module PageConcern
     end
   end
 
+  def public_path
+    File.join([(defined?(pretty_pathname) ? pretty_pathname : pathname), basename].reject(&:blank?)).to_s + '.html'
+  end
+
   def public_url(host)
-    File.join([host, pathname, basename].reject(&:blank?)).to_s + '.html'
+    File.join([host, (defined?(pretty_pathname) ? pretty_pathname : pathname), basename].reject(&:blank?)).to_s + '.html'
   end
 
   def raw_content

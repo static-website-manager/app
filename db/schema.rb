@@ -42,13 +42,13 @@ ActiveRecord::Schema.define(version: 6) do
   add_index "authorizations", ["website_id"], name: "index_authorizations_on_website_id", using: :btree
 
   create_table "deployments", force: :cascade do |t|
-    t.integer  "website_id",       null: false
-    t.text     "branch_name",      null: false
-    t.text     "host_prefix",      null: false
-    t.text     "response_message"
-    t.integer  "response_status"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
+    t.integer  "website_id",                 null: false
+    t.text     "branch_name",                null: false
+    t.text     "type",                       null: false
+    t.text     "settings"
+    t.boolean  "active",      default: true, null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
   end
 
   add_index "deployments", ["website_id"], name: "index_deployments_on_website_id", using: :btree

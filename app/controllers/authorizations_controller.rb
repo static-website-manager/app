@@ -47,17 +47,11 @@ class AuthorizationsController < ApplicationController
           production_branch = @repository.branch('master')
 
           if @website.auto_rebase_staging_on_production_changes? && branch.rebase_required?(production_branch) && branch.rebase(production_branch)
-            if deployment = @website.deployments.where(branch_name: branch.name).first
-              JekyllBuildJob.perform_later(deployment)
-            end
+            JekyllBuildJob.perform_later(@website.id, branch.name, branch.commit_id)
           end
         else
           branch = @repository.branch(@authorization.user)
-          deployment = @website.deployments.where(branch_name: branch.name).send(@website.auto_create_staging_deployment? ? :first_or_create : :first)
-
-          if deployment && deployment.persisted?
-            JekyllBuildJob.perform_later(deployment)
-          end
+          JekyllBuildJob.perform_later(@website.id, branch.name, branch.commit_id)
         end
       end
       UserMailer.authorization_invitation(@authorization).deliver_later

@@ -9,17 +9,15 @@ class BranchesController < ApplicationController
   def show
     @commits = Commit.all(@repository.rugged_repository, @branch.commit_id, per_page: 10)
     @datasets = Dataset.all(@repository.rugged_repository, @branch.commit_id, per_page: 1)
+    @deployments = @website.deployments.where(branch_name: @branch.name)
     @form_responders = @website.form_responders.where(branch_name: @branch.name)
   end
 
   def destroy
-    begin
-      ActiveRecord::Base.transaction do
-        @deployment.destroy if @deployment
-        @repository.delete_branch(@branch.name)
-      end
+    if @repository.delete_branch(@branch.name)
+      # TODO: Remove /website dir
       redirect_to [@website, @repository.branch(current_user)], notice: t('.notice')
-    rescue
+    else
       flash.now.alert = t('.alert')
       render :delete, status: 422
     end
