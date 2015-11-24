@@ -14,7 +14,7 @@ class DraftMovesController < ApplicationController
     @draft.full_pathname = [params[:draft].try(:[], :basepath), params[:draft].try(:[], :extension)].reject(&:blank?).join('.')
 
     if @draft.save(@branch.name, current_user.email, current_user.name, commit_message)
-      JekyllBuildJob.perform_later(@website.id, @branch.name, @branch.commit_id)
+      JekyllBuildJob.perform_later(@website, @branch.name, @branch.commit_id)
       redirect_to [@website, @branch, @draft], notice: t('.notice')
     else
       flash.now.alert = t('.alert')

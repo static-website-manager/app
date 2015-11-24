@@ -47,11 +47,11 @@ class AuthorizationsController < ApplicationController
           production_branch = @repository.branch('master')
 
           if @website.auto_rebase_staging_on_production_changes? && branch.rebase_required?(production_branch) && branch.rebase(production_branch)
-            JekyllBuildJob.perform_later(@website.id, branch.name, branch.commit_id)
+            JekyllBuildJob.perform_later(@website, branch.name, branch.commit_id)
           end
         else
           branch = @repository.branch(@authorization.user)
-          JekyllBuildJob.perform_later(@website.id, branch.name, branch.commit_id)
+          JekyllBuildJob.perform_later(@website, branch.name, branch.commit_id)
         end
       end
       UserMailer.authorization_invitation(@authorization).deliver_later

@@ -15,7 +15,7 @@ class StaticFileMovesController < ApplicationController
     @static_file.full_pathname = [params[:static_file].try(:[], :basepath), params[:static_file].try(:[], :extension)].reject(&:blank?).join('.')
 
     if @static_file.save(@branch.name, current_user.email, current_user.name, commit_message)
-      JekyllBuildJob.perform_later(@website.id, @branch.name, @branch.commit_id)
+      JekyllBuildJob.perform_later(@website, @branch.name, @branch.commit_id)
       redirect_to [@website, @branch, @static_file], notice: t('.notice')
     else
       flash.now.alert = t('.alert')

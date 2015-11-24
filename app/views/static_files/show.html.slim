@@ -2,13 +2,13 @@
 
 = layout :blob, website: @website, branch: @branch, blob: @static_file do
   .row
-    .col-sm-8
+    .col-sm-7
       .blob-icon-lg
         => icon 'file-o fa-4x'
         span.label.label-primary FILE
       h1: code.code-text = @static_file.filename
       code.small = @static_file.full_pathname
-    .col-sm-4.text-right.text-left-small
+    .col-sm-5.text-right.text-left-small
       => link_to icon('cloud-download', 'Download File'), "//#{@website.id}-#{Digest::SHA1.hexdigest(@branch.name)}.#{ENV['HOST']}/#{@static_file.public_path}", class: 'btn btn-sm btn-default'
       => link_to icor('Rename', 'arrow-circle-o-right'), [:new, @website, @branch, @static_file, :move], class: 'btn btn-sm btn-primary'
       = link_to icon('trash', 'Delete'), [:delete, @website, @branch, @static_file], class: 'btn btn-sm btn-danger'

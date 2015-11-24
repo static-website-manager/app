@@ -49,6 +49,6 @@ class GitPostReceivesController < ActionController::Base
   private
 
   def deploy(branch)
-    JekyllBuildJob.perform_later(@website.id, branch.name, branch.commit_id)
+    JekyllBuildJob.perform_later(@website, branch.name, branch.commit_id)
   end
 end

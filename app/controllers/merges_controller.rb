@@ -35,7 +35,7 @@ class MergesController < ApplicationController
     commit_message = params[:message].present? ? params[:message] : t('.message', branch_name: @branch.title(current_user))
 
     if @branch.merge(@target, current_user.email, current_user.name, commit_message)
-      JekyllBuildJob.perform_later(@website.id, @target.name, @target.commit_id)
+      JekyllBuildJob.perform_later(@website, @target.name, @target.commit_id)
       redirect_to [@website, @branch], notice: t('.notice', branch_name: @branch.title(current_user))
     else
       flash.now.alert = t('.alert', branch_name: @branch.title(current_user))

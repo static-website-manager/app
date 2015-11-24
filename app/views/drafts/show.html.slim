@@ -2,14 +2,14 @@
 
 = layout :blob, website: @website, branch: @branch, blob: @draft do
   .row
-    .col-sm-9
+    .col-sm-7
       .blob-icon-lg
         => icon 'file-o fa-4x'
         span.label.label-primary DRAFT
       h1 = @draft.title
       code.small = @draft.full_pathname
-    .col-sm-3.text-right.text-left-small
-      => link_to icor('Preview Draft', 'external-link'), "//#{website.id}-#{Digest::SHA1.hexdigest(@branch.name)}.#{ENV['HOST']}/#{@draft.public_path}", target: :_blank, class: 'btn btn-sm btn-default'
+    .col-sm-5.text-right.text-left-small
+      => link_to icor('Preview Draft', 'external-link'), "//#{@website.id}-#{Digest::SHA1.hexdigest(@branch.name)}.#{ENV['HOST']}/#{@draft.public_path}", target: :_blank, class: 'btn btn-sm btn-default'
       => link_to icor('Publish', 'plus-circle'), [:new, @website, @branch, @draft, :publication], class: 'btn btn-sm btn-success'
       => link_to icor('Rename', 'arrow-circle-o-right'), [:new, @website, @branch, @draft, :move], class: 'btn btn-sm btn-primary'
       = link_to icon('trash', 'Delete'), [:delete, @website, @branch, @draft], class: 'btn btn-sm btn-danger'

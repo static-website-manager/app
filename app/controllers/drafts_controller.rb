@@ -23,7 +23,7 @@ class DraftsController < ApplicationController
     @draft.full_pathname = [['_drafts', params[:draft].try(:[], :basepath)].reject(&:blank?).join('/'), params[:draft].try(:[], :extension)].reject(&:blank?).join('.')
 
     if @draft.save(@branch.name, current_user.email, current_user.name, commit_message)
-      JekyllBuildJob.perform_later(@website.id, @branch.name, @branch.commit_id)
+      JekyllBuildJob.perform_later(@website, @branch.name, @branch.commit_id)
       redirect_to [:edit, @website, @branch, @draft], notice: t('.notice')
     else
       flash.now.alert = t('.alert')
@@ -43,7 +43,7 @@ class DraftsController < ApplicationController
     if @draft.unchanged?
       redirect_to [@website, @branch, @draft], alert: t('.alert_unchanged')
     elsif @draft.save(@branch.name, current_user.email, current_user.name, commit_message)
-      JekyllBuildJob.perform_later(@website.id, @branch.name, @branch.commit_id)
+      JekyllBuildJob.perform_later(@website, @branch.name, @branch.commit_id)
       redirect_to [@website, @branch, @draft], notice: t('.notice')
     else
       flash.now.alert = t('.alert')
@@ -55,7 +55,7 @@ class DraftsController < ApplicationController
     commit_message = params[:message].present? ? params[:message] : t('.message', filename: @draft.pretty_pathname)
 
     if @draft.destroy(@branch.name, current_user.email, current_user.name, commit_message)
-      JekyllBuildJob.perform_later(@website.id, @branch.name, @branch.commit_id)
+      JekyllBuildJob.perform_later(@website, @branch.name, @branch.commit_id)
       redirect_to [@website, @branch, :drafts], notice: t('.notice')
     else
       flash.now.alert = t('.alert')

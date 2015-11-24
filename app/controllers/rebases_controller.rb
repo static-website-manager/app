@@ -25,7 +25,7 @@ class RebasesController < ApplicationController
 
   def create
     if @branch.rebase(@source)
-      JekyllBuildJob.perform_later(@website.id, @branch.name, @branch.commit_id)
+      JekyllBuildJob.perform_later(@website, @branch.name, @branch.commit_id)
       redirect_to [@website, @branch], notice: t('.notice', branch_name: @source.title(current_user))
     else
       flash.now.alert = t('.alert', branch_name: @source.title(current_user))

@@ -17,6 +17,7 @@ class DeploymentS3sController < ApplicationController
     @deployment.assign_attributes(s3_deployment_params)
 
     if @deployment.save
+      JekyllBuildJob.perform_later(@website, @branch.name, @branch.commit_id)
       redirect_to session[:return_to] || [@website, @branch], notice: t('.notice')
     else
       flash.now.alert = t('.alert')
@@ -26,6 +27,7 @@ class DeploymentS3sController < ApplicationController
 
   def update
     if @deployment.update(s3_deployment_params)
+      JekyllBuildJob.perform_later(@website, @branch.name, @branch.commit_id)
       redirect_to session[:return_to] || [@website, @branch], notice: t('.notice')
     else
       flash.now.alert = t('.alert')
