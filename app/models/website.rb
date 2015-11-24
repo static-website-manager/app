@@ -46,16 +46,8 @@ class Website < ActiveRecord::Base
   before_destroy :unsubscribe!
   after_destroy :teardown!
 
-  def self.bucket_allotment
-    small.count * 6 + medium.count * 14 + large.count * 27
-  end
-
-  def self.bucket_limit
-    100
-  end
-
   def self.requires_waiting_list?
-    ENV['FORCE_WAITING_LIST'] == 'true' || bucket_allotment + 27 > bucket_limit
+    ENV['FORCE_WAITING_LIST'] == 'true' || count > 500
   end
 
   def account_owners
