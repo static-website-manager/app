@@ -10,14 +10,14 @@
         => @post.title
         span.small = localize(@post.published_on)
       code.small = @post.full_pathname
-    .col-sm-3.text-right
+    .col-sm-3.text-right.text-left-small
       => link_to icor('Preview Post', 'external-link'), "//#{website.id}-#{Digest::SHA1.hexdigest(@branch.name)}.#{ENV['HOST']}/#{@post.public_path}", target: :_blank, class: 'btn btn-sm btn-default'
       => link_to icor('Rename', 'arrow-circle-o-right'), [:new, @website, @branch, @post, :move], class: 'btn btn-sm btn-primary'
       = link_to icon('trash', 'Delete'), [:delete, @website, @branch, @post], class: 'btn btn-sm btn-danger'
   .row
     .col-sm-7
       .page-preview
-        = sanitize(markdown(@post.content))
+        = sanitize(markdown(@post.content)) || content_tag(:em, 'No Content Found', class: 'bg-warning')
       p.m-t-sm.text-muted: small Previews are shown with limited styling and no embedded images or media.
     .col-sm-5
       .column-header

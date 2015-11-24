@@ -77,6 +77,10 @@ module BlobConcern
     id.present?
   end
 
+  def public_path
+    File.join([pathname, filename].reject(&:blank?)).to_s
+  end
+
   def public_url(host)
     File.join([host, pathname, filename].reject(&:blank?)).to_s
   end

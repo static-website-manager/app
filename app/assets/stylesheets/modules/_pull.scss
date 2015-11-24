@@ -1,0 +1,5 @@
+.pull-right-large {
+  @include large {
+    float: right;
+  }
+}

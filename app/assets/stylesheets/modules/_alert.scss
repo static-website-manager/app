@@ -19,4 +19,7 @@
     position: relative;
     top: -0.1em;
   }
+  @include small {
+    font-size: 1em;
+  }
 }

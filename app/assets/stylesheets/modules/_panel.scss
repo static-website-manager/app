@@ -15,6 +15,34 @@
   .nav-tabs {
     margin-bottom: -1px;
   }
+  @include small {
+    padding: 0.5em;
+    .nav-tabs {
+      padding: 0;
+      font-size: 0.9em;
+      background-color: #fff;
+      border: solid 1px #eee;
+      border-radius: 4px;
+      li {
+        display: block;
+        float: none;
+        margin: 0 !important;
+        border-bottom: solid 1px #eee;
+      }
+      a {
+        margin: 0 !important;
+        border: none !important;
+        border-radius: 0 !important;
+      }
+      a:hover {
+        background-color: #f8f8f8;
+      }
+      li.active a {
+        background-color: #f8f8f8;
+        font-weight: bold;
+      }
+    }
+  }
 }
 
 .panel-footer-commit {

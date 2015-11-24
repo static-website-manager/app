@@ -24,16 +24,30 @@
       outline: none;
     }
   }
+  @include small {
+    font-size: 0.9em;
+  }
 }
 
 .blob-content {
   h1 {
     margin: 0;
     font-size: 1.8em;
+    @include small {
+      font-size: 1.3em;
+    }
   }
   h1 + code {
     display: inline-block;
-    margin: 0.5em 0 3em;
+    margin: 0.5em 0 1em;
+  }
+  @include small {
+    .col-sm-9, .col-sm-8 {
+      margin-bottom: 1em;
+    }
+    .col-sm-3, .col-sm-4, .col-sm-7 {
+      margin-bottom: 2em;
+    }
   }
 }
 
@@ -42,9 +56,17 @@
   float: left;
   margin-right: 1em;
   .label {
-    position: absolute;
-    left: -0.6em;
-    bottom: 0.8em;
+    @include large {
+      position: absolute;
+      left: -0.6em;
+      bottom: 0.8em;
+    }
+  }
+  @include small {
+    margin-right: 0.5em;
+    .fa {
+      display: none;
+    }
   }
 }
 
@@ -56,12 +78,18 @@
 .blob-icon-sm + h1 {
   margin-bottom: 0.5em;
   font-size: 1.3em;
+  @include small {
+    font-size: 1.1em;
+  }
 }
 
 .blob-editor {
   .form-group:last-child,
   .well:last-child {
     margin-bottom: 0;
+  }
+  @include small {
+    margin-bottom: 5em;
   }
 }
 
@@ -73,4 +101,9 @@
   padding: 1em;
   background-color: #f6f6f6;
   border-top: solid 1px #eee;
+  @include small {
+    .col-sm-3 {
+      margin-bottom: 0;
+    }
+  }
 }

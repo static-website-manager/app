@@ -2,7 +2,7 @@
 
 = layout :branch, website: @website, repository: @repository, branch: @branch do
   div class=(@drafts.any? ? 'clearfix' : '')
-    .pull-right style="position:relative; z-index:1"
+    .text-right.pull-right-large.m-b.position-above
       => link_to icor('Help with Drafts', 'question-circle'), '/help/content-management/drafts', target: :_blank, class: 'btn btn-sm btn-default'
       = link_to icon('plus-circle', 'Add Draft'), [:new, @website, @branch, :draft], class: 'btn btn-sm btn-primary'
     - if @drafts.any?

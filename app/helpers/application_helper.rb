@@ -35,7 +35,11 @@ module ApplicationHelper
       end
     end
 
-    fragment.to_s.html_safe
+    if fragment.to_s.present?
+      fragment.to_s.html_safe
+    else
+      nil
+    end
   end
 
   def title(locals = {})

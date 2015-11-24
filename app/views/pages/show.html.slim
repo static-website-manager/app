@@ -8,14 +8,14 @@
         span.label.label-primary PAGE
       h1 = @page.title(@branch.markdown_extensions)
       code.small = @page.full_pathname
-    .col-sm-3.text-right
+    .col-sm-3.text-right.text-left-small
       => link_to icor('Preview Page', 'external-link'), "//#{@website.id}-#{Digest::SHA1.hexdigest(@branch.name)}.#{ENV['HOST']}/#{@page.public_path}", target: :_blank, class: 'btn btn-sm btn-default'
       => link_to icor('Rename', 'arrow-circle-o-right'), [:new, @website, @branch, @page, :move], class: 'btn btn-sm btn-primary'
       = link_to icon('trash', 'Delete'), [:delete, @website, @branch, @page], class: 'btn btn-sm btn-danger'
   .row
     .col-sm-7
       .page-preview
-        = sanitize(markdown(@page.content))
+        = sanitize(markdown(@page.content)) || content_tag(:em, 'No Content Found', class: 'bg-warning')
       p.m-t-sm.text-muted: small Previews are shown with limited styling and no embedded images or media.
     .col-sm-5
       .column-header

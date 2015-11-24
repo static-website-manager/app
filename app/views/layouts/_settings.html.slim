@@ -6,7 +6,7 @@
         ul.nav.nav-tabs
           li class=('active' if controller_name == 'settings') = link_to 'Basic Information', [:edit, website, :settings]
           li class=('active' if controller_name == 'branch_settings') = link_to 'Branch Behavior', [:edit, website, :branch_settings]
-          li.pull-right class=('active' if controller_name == 'websites') = link_to 'Close Account', [:delete, website], class: 'text-danger'
+          li.pull-right-large class=('active' if controller_name == 'websites') = link_to 'Close Account', [:delete, website], class: 'text-danger'
       .panel-body.p-t-md
         = yield form
       .panel-footer.text-center

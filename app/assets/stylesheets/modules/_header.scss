@@ -27,17 +27,43 @@
 
 .header-nav {
   color: #ddd;
-  .btn-link {
-    padding: 0.2em 0.5em;
+  .btn {
+    padding: 0.4em 0.8em;
   }
   .btn-selected {
-    padding: 0.2em 0.5em;
     background: #eee;
     font-weight: normal;
     color: #000;
   }
   .btn-primary {
     margin-left: 1em;
+  }
+  @include small {
+    margin-bottom: 1em;
+    padding-bottom: 0.5em;
+    border-bottom: solid 1px #eee;
+    text-align: right;
+    .btn {
+      padding: 0.3em 0.6em;
+      font-size: 0.9em;
+    }
+    .btn-primary {
+      margin-left: 0.5em;
+    }
+  }
+  @include large {
+    float: right;
+  }
+}
+
+.header-buttons {
+  float: right;
+  @include small {
+    float: none;
+    margin-bottom: 1em;
+    padding-bottom: 1em;
+    border-bottom: solid 1px #eee;
+    text-align: right;
   }
 }
 

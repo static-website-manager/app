@@ -14,7 +14,7 @@
     .blob-content
       - if defined?(filename) && filename.present?
         .blob-icon-sm
-          span.label.label-primary = blob.class.name.titleize.upcase
+          span.label.label-primary = blob.class.name.titleize.sub(/Static/, '').upcase
         h1: code.code-text = filename
         hr
       = yield

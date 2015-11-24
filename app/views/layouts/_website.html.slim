@@ -1,5 +1,5 @@
 .header
-  .pull-right
+  .header-buttons
     - if defined?(website) && website.present? && current_authorization.account_owner?
       .btn-group
         = link_to icon('users'), [website, :authorizations], class: 'btn btn-sm btn-default', title: 'Team Members'

@@ -1,7 +1,7 @@
 - title website_name: @website.name, branch_name: @branch.title(current_user)
 
 = layout :branch, website: @website, repository: @repository, branch: @branch do
-  .pull-right.position-above
+  .text-right.pull-right-large.position-above
     = link_to icor('Help with Files', 'question-circle'), '/help/content-management/files', target: :_blank, class: 'btn btn-sm btn-default'
   - if @static_files.any?
     ul.list-unstyled.files

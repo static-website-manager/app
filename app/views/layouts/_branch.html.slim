@@ -3,13 +3,15 @@
   - unless branch.production?
     - production_branch = repository.branch('master')
     - if branch.rebase_required?(production_branch)
-      .pull-right
+      .pull-right-large
         span.small.text-danger> This branch out of date with Production
         = link_to icor('Pull Changes', 'arrow-circle-down'), [:new, website, branch, :rebase], class: 'btn btn-success m-l-sm'
+      hr.m-y-sm
     - elsif branch.merge_possible?(production_branch) && current_authorization.production_branch_access?
-      .pull-right
+      .pull-right-large
         span.small.text-muted> This branch is ahead of Production
         = link_to icor('Publish Changes', 'arrow-circle-right'), [:new, website, branch, :merge], class: 'btn btn-info m-l-sm'
+      hr.m-y-sm
   span.btn-group.m-r
     span.btn.btn-default.dropdown-toggle type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
       => branch.title(current_user)
@@ -36,6 +38,7 @@
         li = link_to [:new, website, branch, :checkout] do
           => icon 'code-fork'
           small Add Custom Branch
+  hr.m-y-sm
   span.small.text-muted
     => link_to 'Preview Branch', "//#{website.id}-#{Digest::SHA1.hexdigest(@branch.name)}.#{ENV['HOST']}/", target: :_blank
     => icon 'external-link'

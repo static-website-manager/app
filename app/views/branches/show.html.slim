@@ -2,7 +2,7 @@
 
 = layout :branch, website: @website, repository: @repository, branch: @branch do
   .clearfix
-    .pull-right
+    .pull-right-large.m-b
       => link_to icor('Configure Branch', 'gear'), [:edit, @website, @branch, :config], class: 'btn btn-sm btn-default'
       - if @branch.custom? && current_authorization.custom_branch_access?
         => link_to icor('Rename', 'arror-circle-o-right'), [:new, @website, @branch, :move], class: 'btn btn-sm btn-primary'
@@ -30,7 +30,7 @@
       ul.dropdown-menu
         li = link_to 'AWS S3 Deployment', [:new, @website, @branch, :deployment_s3]
   .row.m-t-lg
-    .col-sm-7
+    .col-sm-7.m-b-lg
       .column-header class=('column-header-media' if @form_responders.any?)
         p.pull-right.small => link_to 'What are Form Responders?', '/help/form-responders', target: :_blank
         h2 Form Responders
