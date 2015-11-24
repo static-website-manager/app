@@ -2,9 +2,11 @@
 ---
 
 <!DOCTYPE html>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="{% asset_path application.css %}">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>{{ page.title }}</title>
+<link rel="stylesheet" href="{% asset_path application.css %}" />
+<link rel="shortcut icon" type="image/x-icon" href="{% asset_path favicon.png %}" />
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
     (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -13,7 +15,6 @@
   ga('create', 'UA-70651906-1', 'auto');
   ga('send', 'pageview');
 </script>
-<title>{{ page.title }}</title>
 
 <div class="container-fluid">
   <div class="header">
