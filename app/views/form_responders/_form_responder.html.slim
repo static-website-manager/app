@@ -2,7 +2,7 @@
   .pull-left.m-t-xs
     => icon 'server m-r-sm fa-2x', class: (form_responder.active? ? 'text-success' : 'text-muted')
   .pull-right
-    = form_tag [website, branch, form_responder, :activation], method: (form_responder.active? ? :delete : :post), class: 'display-inline m-y-sm' do
+    = form_tag [website, branch, form_responder, :activation], method: (form_responder.active? ? :delete : :post), class: 'display-inline m-x-sm' do
       = button_tag icon(form_responder.active? ? 'toggle-on' : 'toggle-off'), class: 'btn btn-sm btn-toggle btn-default'
     .btn-group
       => link_to icon('pencil', 'Edit'), [:edit, website, branch, form_responder], class: 'btn btn-sm btn-default'

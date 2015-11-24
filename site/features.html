@@ -9,6 +9,7 @@ title: Features • Static Website Manager
 <div class="marketing-feature">
   <h2>Collaboration Built-in with Git Version Control</h2>
   <p>Static Website Manager is special because it stores all of your website data in a git repository. Git repositories are a type of distributed version control – this makes collaboration easy because you can work on your website independently of other team members via branches, as well as view the project history to see all previous changes.</p>
+  <p><img src="{% asset_path screenshot-branches.png %}" alt="Easily switch between Production, Staging and Custom branches" class="center-block thumbnail" /></p>
   <h3>Production Branch</h3>
   <p>The production branch is the most important branch. We base it off of your repository’s <code>master</code> branch, but refer to it throughout the application as your “Production Branch.” Whenever the production branch is ahead of another branch (or they’ve diverged), we’ll prompt the user of the other branch to pull in the production changes (<code>git rebase master</code>); if the production branch is behind another branch, we’ll prompt the user of the other branch that they can push their changes to production (<code>git merge master</code>).</p>
   <h3>Staging and Custom Branches</h3>
@@ -20,6 +21,7 @@ title: Features • Static Website Manager
 <div class="marketing-feature">
   <h2>Blogging and Content Management</h2>
   <p>Static Website Manager’s CMS is easy to use while maintaining the full power of custom designs and Liquid tags. The Static Website Manager editor has support for both YAML Front-Matter and HTML/Markdown content. Any changes trigger a website build and your updates can be securely and privately previewed. Plus, built-in support for three roles makes it easy to invite collaborators: writers have access to drafts and posts; editors gain access to pages, collections, data and files; and designers additionally have access to layouts and include files.</p>
+  <p><img src="{% asset_path screenshot-content.png %}" alt="Manage all of your website content" class="center-block thumbnail" /></p>
   <h3>Design</h3>
   <p><span class="label label-warning">Coming Soon</span></p>
   <h3>Pages</h3>
@@ -37,6 +39,7 @@ title: Features • Static Website Manager
 <div class="marketing-feature">
   <h2>Deploy your Branches to your own External Accounts</h2>
   <p>Static Website Manager provides private previews of your compiled website branches through our web-based editor, but deployments let you link a branch to one or more external accounts. Every change made to a linked branch will trigger a new build of that branch’s website to be pushed to the linked account. The only currently supported deployment is Amazon AWS S3.</p>
+  <p><img src="{% asset_path screenshot-deployments.png %}" alt="Deploy your website to Amazon AWS S3" class="center-block thumbnail" /></p>
   <h3>Amazon AWS S3</h3>
   <p>Have an S3 bucket you’d like to deploy to? Just provide your bucket name, the AWS region and IAM credentials that have access to that bucket and we’ll deploy your compiled static website to that bucket any time a change on that branch is made.</p>
 </div>
@@ -44,6 +47,7 @@ title: Features • Static Website Manager
 <div class="marketing-feature">
   <h2>Animate your Website with Form Responders</h2>
   <p>Form Responders provide a unique way for you to capture data from your deployed website. Each Form Responder reveals a unique URL that you can point your HTML forms to, and then attach email addresses and data files!</p>
+  <p><img src="{% asset_path screenshot-form-responders.png %}" alt="Form Responders make it easy to animate your website" class="center-block thumbnail" /></p>
   <h3>Send Form Data Emails</h3>
   <p>Provide up to 10 email addresses and we’ll notify each recipient whenever a new form has been submitted. We’ll include the contents of the form submission in the email so you can react accordingly.</p>
   <h3>Commit to Data Files</h3>
