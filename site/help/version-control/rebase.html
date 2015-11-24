@@ -3,4 +3,5 @@ layout: help
 title: Rebase • Version Control • Help • Static Website Manager
 ---
 
-<h1>Rebase</h1>
+<h1 class="h3">Pull Production Changes (Rebase)</h1>
+<p>When utilizing this function, you are essentially rebasing. When team members update the Production Branch, Static Website Manager honors the integrity of the master branch and adapts the commit history of each Staging Branch to reflect the Production Branch history. Therefore, each user is notified when their Staging Branch is no longer up-to-date with production (e.g., unique changes were pushed to the live website and your version does not reflect the reality of the live site). The Pull Changes function allows each teammate to update their branch to match production. Because Static Website Manager uniquely allows multiple users to make changes to the Production Branch via their own Staging Branch, there is a built in safeguard for maintaining the site’s integrity. Before any Staging Branch is updated (rebased) to match production, the app will notify the user of any discrepancies or conflicts. If no conflicts are found it is safe to pull changes to the Staging Branch. If conflicts are found they will need to be rectified by the user before Static Website Manager will Pull Changes and update the Staging Branch.</p>

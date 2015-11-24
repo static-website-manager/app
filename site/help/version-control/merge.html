@@ -3,4 +3,5 @@ layout: help
 title: Merge • Version Control • Help • Static Website Manager
 ---
 
-<h1>Merge</h1>
+<h1 class="h3">Push Production Changes (Merge)</h1>
+<p>When using this function, you are essentially using <code>git merge master</code>. When a user’s Staging Branch is ahead of production (i.e., the most up-to-date version of the website is not the Production Branch) the app will prompt the user to publish the changes they’ve made, first checking that a rebase (i.e., “Pull Changes”) is not necessary. Static Website Manager publishes changes to production by finding the most common ancestor in the commit history of the Staging Branch being used, then it publishes all changes since that commit. Functionally, this aspect merges the changes from each Staging Branch to the Production Branch with safeguards in place to maintain the integrity of the live site.</p>

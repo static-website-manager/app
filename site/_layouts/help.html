@@ -63,7 +63,10 @@
     <li>
       {% capture deployment_url %}{{ page.url | truncate: 17, '' }}{% endcapture %}
       {% if deployment_url == '/help/deployments' %}
-      <strong>Deployments <span class="fa fa-caret-right"></strong>
+      <strong>Deployments <span class="fa fa-caret-down"></strong>
+      <ul>
+        <li>{% if page.url == '/help/deployments/aws-s3.html' %}<strong>Amazon AWS S3</strong>{% else %}<a href="/help/deployments/aws-s3">Amazon AWS S3</a>{% endif %}</li>
+      </ul>
       {% else %}
       <a href="/help/deployments">Deployments <span class="fa fa-caret-right"></span></a>
       {% endif %}
@@ -86,7 +89,7 @@
 <div class="help-content">
   <div class="small text-muted">
     <p class="pull-right"><a href="/">www.staticwebsitemanager.com</a></p>
-    <p>Last Modified 11/05/2015</p>
+    <p>Last Modified 11/24/2015</p>
   </div>
   <hr />
   {{ content }}

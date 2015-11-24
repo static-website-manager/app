@@ -3,4 +3,5 @@ layout: help
 title: Commit to Repository • Form Responders • Help • Static Website Manager
 ---
 
-<h1>Commit to Repository</h1>
+<h1 class="h3">Commit to Repository</h1>
+<p>Specify a data file and the form submission will be commited directly to that data file! If the data file is a CSV file or if it’s a JSON or YAML file and contains an array of data, then create forms that <code>POST</code> to the responder’s unique URL and the submitted data will be appended to the data file as a git commit in the branch the form responder was saved in. If the data file is a JSON or YAML file and you <code>POST</code> (or <code>PUT</code> or <code>PATCH</code>) to a path beyond the unique URL, then the key corresponding to the path will be set to the submitted form data (e.g. if the Form Responder URL is <code>https://www.staticwebsitemanager.com/form-responders/a4de51</code> and you point your form to <code>https://www.staticwebsitemanager.com/form-responders/a4de51/some/nested/key</code> then the nested key in the linked file (<code>[a4de51, some, nested]</code>) will be set to the submitted form data.</p>
