@@ -4,9 +4,9 @@ title: Features • Static Website Manager
 ---
 
 <h1 class="marketing-heading">Powerful Features to Help Your Team Collaborate and Publish Your Static Website</h1>
-<p>Access all of Static Website Manager’s features <span class="bg-warning">free for 14 days</span>. <a href="/subscribe">Subscribe</a></p>
+<p>Access all of Static Website Manager’s features <span class="bg-warning">free for 14 days</span>. <a href="/subscribe" class="btn btn-xs btn-success m-l-sm">Subscribe <span class="fa fa-angle-double-right"></span></a></p>
 
-<div class="feature">
+<div class="marketing-feature">
   <h2>Collaboration Built-in with Git Version Control</h2>
   <p>Static Website Manager is special because it stores all of your website data in a git repository. Git repositories are a type of distributed version control – this makes collaboration easy because you can work on your website independently of other team members via branches, as well as view the project history to see all previous changes.</p>
   <h3>Production Branch</h3>
@@ -17,35 +17,37 @@ title: Features • Static Website Manager
   <p>Everyone in your team has access to their own staging branch, but you can optionally grant team members access to the production branch, custom branches, or even other team member’s staging branches. All branch’s can pull in production changes, but only those users with production access will be able to push to production.</p>
 </div>
 
-<div class="feature">
+<div class="marketing-feature">
   <h2>Blogging and Content Management</h2>
   <p>Static Website Manager’s CMS is easy to use while maintaining the full power of custom designs and Liquid tags. The Static Website Manager editor has support for both YAML Front-Matter and HTML/Markdown content. Any changes trigger a website build and your updates can be securely and privately previewed. Plus, built-in support for three roles makes it easy to invite collaborators: writers have access to drafts and posts; editors gain access to pages, collections, data and files; and designers additionally have access to layouts and include files.</p>
   <h3>Design</h3>
-  <p>[Coming Soon]</p>
+  <p><span class="label label-warning">Coming Soon</span></p>
   <h3>Pages</h3>
   <p>Your homepage, about and contact pages are examples of common Pages. Add YAML Front-Matter to any HTML or Markdown page and unlock the power of Jekyll and Static Website Manager. </p>
   <h3>Drafts and Posts</h3>
   <p>These are the building blocks of your blogs. Start with a draft to capture your ideas and outlines. When you’re finished with your draft you can publish it as a post with a publication date.</p>
   <h3>Collections</h3>
-  <p>[Coming Soon]</p>
+  <p><span class="label label-warning">Coming Soon</span></p>
   <h3>Data</h3>
   <p>Data files allow you to save time by storing commonly used data in their own file. Supported file types include CSV, JSON and YAML.</p>
   <h3>Files</h3>
   <p>These static files do not fit into any of the above categories and will be simply copied over to your compiled website.</p>
 </div>
 
-<div class="feature">
+<div class="marketing-feature">
   <h2>Deploy your Branches to your own External Accounts</h2>
-  <p>Static Website Manager provides private previews of your compiled website branches through our web-based editor, but <strong>Deployments</strong> let you link a branch to one or more external accounts. Every change made to a linked branch will trigger a new build of that branch’s website to be pushed to the linked account. The only currently supported deployment is Amazon AWS S3.</p>
+  <p>Static Website Manager provides private previews of your compiled website branches through our web-based editor, but deployments let you link a branch to one or more external accounts. Every change made to a linked branch will trigger a new build of that branch’s website to be pushed to the linked account. The only currently supported deployment is Amazon AWS S3.</p>
   <h3>Amazon AWS S3</h3>
   <p>Have an S3 bucket you’d like to deploy to? Just provide your bucket name, the AWS region and IAM credentials that have access to that bucket and we’ll deploy your compiled static website to that bucket any time a change on that branch is made.</p>
 </div>
 
-<div class="feature">
+<div class="marketing-feature">
   <h2>Animate your Website with Form Responders</h2>
-  <p><strong>Form Responders</strong> provide a unique way for you to capture data from your deployed website. Each Form Responder reveals a unique URL that you can point your HTML forms to, and then attach email addresses and data files!</p>
+  <p>Form Responders provide a unique way for you to capture data from your deployed website. Each Form Responder reveals a unique URL that you can point your HTML forms to, and then attach email addresses and data files!</p>
   <h3>Send Form Data Emails</h3>
   <p>Provide up to 10 email addresses and we’ll notify each recipient whenever a new form has been submitted. We’ll include the contents of the form submission in the email so you can react accordingly.</p>
   <h3>Commit to Data Files</h3>
-  <p>Specify a data file and the form submission will be commited directly to that data file! If the data file is a CSV file or if it’s a JSON or YAML file and contains an array of data, then create forms that POST to the responder’s unique URL and the submitted data will be appended to the data file as a git commit in the branch the form responder was saved in. If the data file is a JSON or YAML file and you POST (or PUT or PATCH) to a path beyond the unique URL, then the key corresponding to the path will be set to the submitted form data (e.g. if the Form Responder URL is “https://www.staticwebsitemanager.com/form-responders/a4de51” and you point your form to “https://www.staticwebsitemanager.com/form-responders/a4de51/some/nested/key” then any submitted data will be set to the key “[a4de51, some, nested]” in the linked data file).</p>
+  <p>Specify a data file and the form submission will be commited directly to that data file! If the data file is a CSV file or if it’s a JSON or YAML file and contains an array of data, then create forms that <code>POST</code> to the responder’s unique URL and the submitted data will be appended to the data file as a git commit in the branch the form responder was saved in. If the data file is a JSON or YAML file and you <code>POST</code> (or <code>PUT</code> or <code>PATCH</code>) to a path beyond the unique URL, then the key corresponding to the path will be set to the submitted form data (e.g. if the Form Responder URL is <code>https://www.staticwebsitemanager.com/form-responders/a4de51</code> and you point your form to <code>https://www.staticwebsitemanager.com/form-responders/a4de51/some/nested/key</code> then the nested key in the linked file (<code>[a4de51, some, nested]</code>) will be set to the submitted form data.</p>
 </div>
+
+<p class="lead text-center m-y-lg"><a href="/subscribe" class="btn btn-lg btn-success">Try Static Website Manager Free for 14 Days</a></p>
