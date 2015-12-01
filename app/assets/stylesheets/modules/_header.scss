@@ -35,6 +35,11 @@
     font-weight: normal;
     color: #000;
   }
+  .fa {
+    position: relative;
+    top: 0.1em;
+    left: -0.75em;
+  }
   @include small {
     margin-bottom: 1em;
     padding-bottom: 0.5em;
