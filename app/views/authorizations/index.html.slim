@@ -14,7 +14,11 @@
         = render partial: 'authorization', collection: @authorizations, locals: { website: @website }
   br
   p.text-center.text-muted
-    span> Your subscription allows up to
+    ' You can #{'only' unless @website.allowed_users > @authorizations.length} have up to
     strong => pluralize @website.allowed_users, 'user'
+    ' in your team
     - if @authorizations.length < @website.allowed_users
-      = link_to icon('plus-circle', 'Invite Someone New'), [:new, @website, :authorization], class: 'btn btn-sm btn-primary m-l-sm'
+      = link_to icon('plus-circle', 'Invite Someone New'), [:new, @website, :authorization], class: 'btn btn-xs btn-primary m-l-sm'
+    - else
+      span.display-inline-block title="There is no more room left in your team" data-toggle="tooltip"
+        = link_to icon('plus-circle', 'Invite Someone New'), [:new, @website, :authorization], class: 'btn btn-xs btn-primary m-l-sm disabled'

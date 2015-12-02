@@ -5,6 +5,7 @@ class SetupChecksController < ApplicationController
 
   def show
     if @repository.setup?
+      flash.notice = t('.notice')
       render text: website_branch_path(@website, @repository.branch(current_user))
     else
       render text: ''

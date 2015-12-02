@@ -1,5 +1,4 @@
 .marketing-lead {
-  margin-top: 1em;
   font-size: 3em;
   font-family: $font-family-serif;
   @include small {
@@ -18,8 +17,12 @@
 }
 
 .marketing-heading {
-  font-size: 1.2em;
+  font-size: 1.4em;
   font-weight: bold;
+}
+
+.marketing-subheading {
+  font-size: 1em;
 }
 
 .marketing-feature {

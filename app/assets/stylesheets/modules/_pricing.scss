@@ -1,19 +1,25 @@
-.pricing-plan-heading {
-  margin-bottom: 1em;
-  .label {
-    font-size: 0.6em;
+.pricing-heading {
+  font-size: 3em;
+}
+
+.pricing-items {
+  margin: 0;
+  .col-sm-6 {
+    padding: 0;
   }
-}
-
-.pricing-icon-small {
-  position: relative;
-  top: -0.1em;
-  font-size: 0.7em;
-}
-
-.pricing-icon-large {
-  position: relative;
-  top: 0.1em;
-  margin-top: -0.3em;
-  font-size: 1.5em;
+  ul {
+    display: block;
+    margin: 0;
+    padding: 0;
+    border-left: solid 1px #eee;
+    list-style: none;
+  }
+  li {
+    display: block;
+    margin: 0;
+    padding: 0.5em;
+    &:not(:first-child) {
+      border-top: solid 1px #eee;
+    }
+  }
 }

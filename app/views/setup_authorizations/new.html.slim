@@ -5,13 +5,15 @@
   = form_for [@website, :setup, @authorization] do |form|
     = layout :panel, button: 'Invite Team Member' do
       = form.fields_for :user do |user_form|
-        .form-group
-          => user_form.label :name, class: 'control-label'
-          = user_form.text_field :name, class: 'form-control'
-        .form-group
-          => user_form.label :email, class: 'control-label'
-          = user_form.email_field :email, class: 'form-control'
-      hr
+        .row
+          .col-sm-6
+            .form-group
+              => user_form.label :name, class: 'control-label'
+              = user_form.text_field :name, class: 'form-control'
+          .col-sm-6
+            .form-group
+              => user_form.label :email, 'Email Address', class: 'control-label'
+              = user_form.email_field :email, class: 'form-control'
       .checkbox
         = form.label :account_owner do
           => form.check_box :account_owner

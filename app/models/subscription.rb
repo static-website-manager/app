@@ -34,6 +34,7 @@ class Subscription
         raise ActiveRecord::Rollback
       end
 
+      @website.subscription_plan = 'simple'
       @website.subscription_status = :trialing
 
       unless @website.valid?
@@ -76,7 +77,7 @@ class Subscription
       end
 
       stripe_subscription = stripe_customer.subscriptions.create(
-        plan: [@website.subscription_plan, @website.yearly_billing? ? 'yearly' : 'monthly'].join('_'),
+        plan: @website.yearly_billing? ? 'simple_yearly' : 'simple_monthly',
       )
 
       @website.stripe_customer_token = stripe_customer.id

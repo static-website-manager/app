@@ -1,6 +1,12 @@
 - title
 
 = layout :nest, size: :md, return_to: '/' do
+  .text-center.m-b-md
+    h1.h3.m-y-0 Try Static Website Manager Free for 14 Days
+    h2.h4.m-t.m-b-lg
+      ' then only
+      span.bg-warning' $15 per month
+      | per website
   = errors_for @subscription
   #credit_card-errors.panel.panel-danger style="display:none"
     .panel-heading
@@ -8,25 +14,30 @@
     .panel-body
       ul.list-unstyled: li
   = form_for @subscription, html: { id: 'credit_card' } do |form|
-    = layout :panel, heading: 'Subscribe to Static Website Manager', button: 'Subscribe', success: true, large: true
-      = render layout: 'subscriptions/form', object: form do
-        = form.fields_for :user do |form|
-          .form-group
-            => form.label :name, class: 'control-label' do
-              ' Your Name
-              small.text-muted or nickname
-            = form.text_field :name, required: true, class: 'form-control'
-          .form-group
-            => form.label :email, 'Email Address', class: 'control-label'
-            = form.email_field :email, required: true, class: 'form-control'
-          .form-group
-            => form.label :password, class: 'control-label'
-            = form.password_field :password, required: true, class: 'form-control'
-          .form-group
-            => form.label :password_confirmation, class: 'control-label'
-            = form.password_field :password_confirmation, required: true, class: 'form-control'
-        hr
-        = form.fields_for :website do |form|
-          .form-group
-            => form.label :name, class: 'control-label'
-            = form.text_field :name, required: true, class: 'form-control'
+    = layout :panel, button: 'Start 14-day Free Trial', success: true, large: true do
+      = form.fields_for :user do |form|
+        .row
+          .col-sm-6
+            .form-group
+              => form.label :name, class: 'control-label' do
+                ' Your Name
+                small.text-muted or nickname
+              = form.text_field :name, class: 'form-control'
+          .col-sm-6
+            .form-group
+              => form.label :email, 'Your Email Address', class: 'control-label'
+              = form.email_field :email, class: 'form-control'
+        .row
+          .col-sm-6
+            .form-group
+              => form.label :password, class: 'control-label'
+              = form.password_field :password, class: 'form-control'
+          .col-sm-6
+            .form-group
+              => form.label :password_confirmation, class: 'control-label'
+              = form.password_field :password_confirmation, class: 'form-control'
+      = form.fields_for :website do |form|
+        .form-group.m-t-md
+          => form.label :name, 'What’s the name of your website?', class: 'control-label'
+          = form.text_field :name, class: 'form-control'
+      = render partial: 'subscriptions/form', object: form

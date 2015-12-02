@@ -6,9 +6,7 @@ class Website < ActiveRecord::Base
   has_many :form_responders, dependent: :destroy
 
   enum subscription_plan: {
-    small: 0,
-    medium: 1,
-    large: 2,
+    simple: 0,
   }
 
   enum subscription_status: {
@@ -55,16 +53,7 @@ class Website < ActiveRecord::Base
   end
 
   def allowed_users
-    case subscription_plan
-    when 'small'
-      3
-    when 'medium'
-      8
-    when 'large'
-      16
-    else
-      0
-    end
+    15
   end
 
   def repository_pathname

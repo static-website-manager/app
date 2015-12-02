@@ -12,7 +12,7 @@ class SubscriptionsController < ApplicationController
   end
 
   def new
-    @subscription = Subscription.new(website_attributes: { subscription_plan: params[:plan].blank? ? 'small' : params[:plan] })
+    @subscription = Subscription.new
   end
 
   def create
@@ -44,7 +44,6 @@ class SubscriptionsController < ApplicationController
       ],
       website_attributes: [
         :name,
-        :subscription_plan,
         :yearly_billing,
       ],
     )

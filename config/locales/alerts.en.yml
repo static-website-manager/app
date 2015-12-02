@@ -197,6 +197,9 @@ en:
   setup_authorizations:
     create:
       notice_html: <strong>%{email}</strong> has been invited to help setup your website!
+  setup_checks:
+    show:
+      notice: Welcome to your new website!
   ssh_keys:
     update:
       alert_incorrect: The current password you provided is incorrect.
@@ -230,7 +233,7 @@ en:
       alert_not_invited: You are not invited to Subscribe at this time.
       alert_disagree: You must first agree to the Terms of Service and Privacy Policy
       alert: There was adding your website.
-      notice: Welcome to your new website!
+      notice: Great, let’s get started with your website!
     destroy:
       alert: There was a problem closing your account.
       notice: Ok, we’ve successfully closed your account.

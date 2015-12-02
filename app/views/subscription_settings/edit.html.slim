@@ -4,32 +4,8 @@
   = errors_for @website
   = form_for @website, url: [@website, :subscription_settings] do |form|
     = layout :panel, button: 'Save Changes' do
-      - if form.object.errors[:subscription_plan].any?
-        p.has-error.has-feedback: strong.control-label Subscription Plan
-      - else
-        p: strong Subscription Plan
-      .row.text-center
-        .col-xs-4
-          = form.label :subscription_plan_small, class: 'display-block cursor-pointer font-normal' do
-            .well.well-sm.p-y data-input-checked-class="brand-primary"
-              => form.radio_button :subscription_plan, :small
-              strong.m-l-xs> Small
-              | – $35/mo
-        .col-xs-4
-          = form.label :subscription_plan_medium, class: 'display-block cursor-pointer font-normal' do
-            .well.well-sm.p-y data-input-checked-class="brand-primary"
-              => form.radio_button :subscription_plan, :medium
-              strong.m-l-xs> Medium
-              | – $85/mo
-        .col-xs-4
-          = form.label :subscription_plan_large, class: 'display-block cursor-pointer font-normal' do
-            .well.well-sm.p-y data-input-checked-class="brand-primary"
-              => form.radio_button :subscription_plan, :large
-              strong.m-l-xs> Large
-              | – $165/mo
-      .checkbox.m-a-0
+      .checkbox.m-t-0.m-b
         = form.label :yearly_billing do
           => form.check_box :yearly_billing
-          strong.bg-warning> Yes! Save 15%
-          | with yearly billing.
-
+          strong.bg-warning> Save over 15% with yearly billing
+          small at $150 per year.

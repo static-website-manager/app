@@ -1,6 +1,12 @@
 - title
 
 = layout :nest, size: :md, return_to: :websites do
+  .text-center.m-b-md
+    h1.h3.m-y-0 Try Static Website Manager Free for 14 Days
+    h2.h4.m-t.m-b-lg
+      ' then only
+      span.bg-warning' $15 per month
+      | per website
   = errors_for @subscription
   #credit_card-errors.panel.panel-danger style="display:none"
     .panel-heading
@@ -8,9 +14,9 @@
     .panel-body
       ul.list-unstyled: li
   = form_for @subscription, url: :websites, html: { id: 'credit_card' } do |form|
-    = layout :panel, heading: 'Subscribe to Static Website Manager', button: 'Subscribe', success: true, large: true
-      = render layout: 'subscriptions/form', object: form do
-        = form.fields_for :website do |form|
-          .form-group
-            => form.label :name, class: 'control-label'
-            = form.text_field :name, required: true, class: 'form-control'
+    = layout :panel, button: 'Start 14-day Free Trial', success: true, large: true do
+      = form.fields_for :website do |form|
+        .form-group
+          => form.label :name, 'What’s the name of your website?', class: 'control-label'
+          = form.text_field :name, class: 'form-control'
+      = render partial: 'subscriptions/form', object: form
