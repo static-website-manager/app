@@ -26,19 +26,20 @@
 }
 
 .marketing-feature {
-  margin: 4em auto 2em;
-  max-width: 60em;
-  padding-top: 1em;
+  margin: 4em auto;
+  max-width: 80em;
+  padding-top: 2em;
   border-top: solid 2px #f6f6f6;
   text-align: left;
   h2 {
-    margin: 0.2em 0 1em;
-    font-size: 2em;
+    margin: 0 0 1em;
     font-family: $font-family-serif;
+    font-size: 2.5em;
+    text-align: center;
   }
-  h3 {
-    margin: 1em 0 0.5em;
+  p {
+    margin: 0 0 2em;
     font-size: 1.15em;
-    font-weight: bold;
+    line-height: 1.5;
   }
 }
