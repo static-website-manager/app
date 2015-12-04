@@ -3,13 +3,17 @@ layout: default
 title: Blog • Static Website Manager
 ---
 
-<h1 class="marketing-heading">Recent News from the Blog</h1>
+<h1 class="marketing-heading">Recent Product and Business News from Static Website Manager</h1>
 
-<div class="row m-y-lg text-left">
+<div class="row">
   <div class="col-sm-8 col-sm-offset-2">
     {% for post in site.posts %}
-      <h2 class="h3"><a href="{{ post.url }}">{{ post.title }}</a></h2>
-      <p><em>Published {{ post.date | date: "%b %-d, %Y" }} by {{ post.author }}</em></p>
+      <div class="blog-post-preview">
+	<p class="blog-post-meta">Published {{ post.date | date: "%b %-d, %Y" }} by {{ post.author }}</p>
+	<hr class="m-t-xs m-b-sm" />
+	<h2><a href="{{ post.url }}">{{ post.title }}</a></h2>
+	<p class="blog-post-excerpt">{{ post.excerpt }}</p>
+      </div>
     {% endfor %}
   </div>
 </div>

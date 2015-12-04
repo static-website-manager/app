@@ -1,9 +1,58 @@
 .blog-post {
-  margin: 2em 0;
+  margin: 4em 0;
   text-align: left;
   h1 {
-    margin: 0 0 1em;
-    font-size: 1.6em;
+    margin: 0 0 0.5em;
+    font-size: 2em;
+    line-height: 1.25;
+  }
+  h2 {
+    margin: 2em 0 1em;
+    font-size: 1.4em;
     font-weight: bold;
+  }
+  @include small {
+    h1 {
+      font-size: 1.4em;
+    }
+  }
+}
+
+.blog-post-preview {
+  margin: 4em 0;
+  text-align: left;
+  h2 {
+    margin: 0 0 0.5em;
+    font-size: 2em;
+    line-height: 1.25;
+  }
+  @include small {
+    h2 {
+      font-size: 1.4em;
+    }
+  }
+}
+
+.blog-post-meta {
+  margin: 0;
+  font-size: 0.85em;
+  color: #555;
+}
+
+.blog-post-excerpt {
+  margin-bottom: 2em;
+  font-size: 1.2em;
+  line-height: 1.5;
+  @include small {
+    font-size: 1.1em;
+  }
+}
+
+.blog-post-back {
+  @include small {
+    display: block;
+  }
+  @include large {
+    float: left;
   }
 }

@@ -2,10 +2,14 @@
 layout: default
 ---
 
-<div class="blog-post row">
+<div class="row">
   <div class="col-sm-8 col-sm-offset-2">
-    <p><a href="/blog">&laquo; View Blog</a></p>
-    <hr>
-    {{ content }}
+    <div class="blog-post">
+      <p class="blog-post-meta text-right">Published {{ page.date | date: "%b %-d, %Y" }} by {{ page.author }} <span class="blog-post-back"><span class="fa fa-angle-double-left"></span> <a href="/blog">Static Website Manager Blog</a></span></p>
+      <hr class="m-t-xs m-b-lg" />
+      <h1>{{ page.title }}</h1>
+      <p class="blog-post-excerpt">{{ page.excerpt }}</p>
+      {{ content }}
+    </div>
   </div>
 </div>
