@@ -42,4 +42,14 @@
     font-size: 1.15em;
     line-height: 1.5;
   }
+  img {
+    display: inline-block;
+    margin: 0 0 2em;
+    max-width: 100%;
+  }
+  &:nth-child(odd) {
+    .row > div:first-child {
+      float: right;
+    }
+  }
 }
