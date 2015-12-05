@@ -36,4 +36,4 @@ Our new pricing plan is $15 per month per website and is designed to be all that
 
 If you’re looking for larger capacity or require an on-site installation, please <a href="mailto:theodore@staticwebsitemanager.com?subject=Enterprise+Sales">contact us about enterprise sales</a>. For more information about our pricing details please refer to our <a href="/pricing">pricing page</a>.
 
-<p class="lead m-y-lg"><a href="/subscribe" class="btn btn-lg btn-success">Try <span class="hidden-xs">Static Website Manager</span> Free for 14 Days</a></p>
+<p class="lead text-center m-y-lg"><a href="/subscribe" class="btn btn-lg btn-success">Try <span class="hidden-xs">Static Website Manager</span> Free for 14 Days</a></p>

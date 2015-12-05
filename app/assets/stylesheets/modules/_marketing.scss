@@ -1,8 +1,8 @@
 .marketing-lead {
-  font-size: 3em;
+  font-size: 4em;
   font-family: $font-family-serif;
   @include small {
-    font-size: 2em;
+    font-size: 2.5em;
   }
 }
 
@@ -10,9 +10,49 @@
   max-width: 40em;
   margin: 1em auto;
   font-size: 1.35em;
-  line-height: 1.35;
+  line-height: 1.5;
   @include small {
     font-size: 1.2em;
+  }
+}
+
+.marketing-background {
+  overflow: hidden;
+  .marketing-background-container {
+    position: relative;
+    right: -1em;
+    height: 466px;
+    img {
+      position: absolute;
+      top: 0;
+      left: -1em;
+    }
+  }
+}
+
+.marketing-jumbotron {
+  margin: 4em 0;
+  padding: 0;
+  background-color: #100D4A;
+  color: #eee;
+  text-shadow: #000;
+  .panel {
+    margin: 2em 0;
+  }
+  .panel-body {
+    min-height: 400px;
+  }
+}
+
+.marketing-jumbotron-feature {
+  margin: 2em 0;
+  h2 {
+    margin: 0;
+    font-size: 1.35em;
+  }
+  p {
+    margin: 0;
+    font-size: 1em;
   }
 }
 
