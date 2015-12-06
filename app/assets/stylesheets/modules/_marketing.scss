@@ -17,42 +17,54 @@
 }
 
 .marketing-background {
-  overflow: hidden;
-  .marketing-background-container {
-    position: relative;
-    right: -1em;
-    height: 466px;
-    img {
-      position: absolute;
-      top: 0;
-      left: -1em;
-    }
+  img {
+    max-width: 100%;
   }
 }
 
 .marketing-jumbotron {
   margin: 4em 0;
-  padding: 0;
+  padding: 4em 0;
   background-color: #100D4A;
   color: #eee;
   text-shadow: #000;
   .panel {
-    margin: 2em 0;
+    margin: 0;
+    max-width: 1000px;
   }
-  .panel-body {
-    min-height: 400px;
+  .panel-heading {
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+  }
+  img {
+    max-width: 100%;
   }
 }
 
 .marketing-jumbotron-feature {
-  margin: 2em 0;
+  margin: 0;
+  padding: 1em;
+  border-radius: 3px;
+  cursor: pointer;
+  &:hover {
+    background-color: rgba(255,255,255,0.05);
+  }
+  &.active {
+    background-color: rgba(255,255,255,0.2);
+  }
   h2 {
     margin: 0;
     font-size: 1.35em;
   }
   p {
-    margin: 0;
-    font-size: 1em;
+    margin: 0.5em 0 0;
+    font-size: 0.85em;
+  }
+  &:not(.active) {
+    color: rgba(255,255,255,0.5);
+    h2 {
+      color: rgba(255,255,255,0.7);
+    }
   }
 }
 
