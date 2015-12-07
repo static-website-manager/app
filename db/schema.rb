@@ -18,7 +18,7 @@ ActiveRecord::Schema.define(version: 6) do
 
   create_table "authentications", force: :cascade do |t|
     t.integer  "user_id"
-    t.text     "public_key"
+    t.text     "public_key", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
