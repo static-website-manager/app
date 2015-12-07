@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   end
 
   resource :account, only: %i[edit update], path_names: { edit: '' } do
-    resource :email, only: %i[edit update], path_names: { edit: '' }
+    resource :email, only: %i[edit update destroy], path_names: { edit: '' }
     resource :password, only: %i[edit update], path_names: { edit: '' }
     resource :ssh_keys, only: %i[edit update], path: 'ssh-keys', path_names: { edit: '' }
   end

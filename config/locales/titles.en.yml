@@ -73,6 +73,9 @@ en:
   email_confirmations:
     new:
       title: Resend Confirmation Email • Static Website Manager
+  emails:
+    edit:
+      title: Change Your Email Address • Static Website Manager
   form_responder_submissions:
     invalid:
       title: Invalid Form Submission • %{website_name}

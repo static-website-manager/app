@@ -82,6 +82,8 @@ en:
       alert_incorrect: The current password you provided is incorrect.
       alert: There was a problem saving your new email address.
       notice: Ok, your new email address is pending and a confirmation email is on it’s way.
+    destroy:
+      notice: Ok, we’ve removed your email change request.
   email_confirmations:
     create:
       alert: We could not find anyone with that email address.

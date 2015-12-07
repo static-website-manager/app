@@ -14,12 +14,18 @@ class EmailsController < ApplicationController
     if current_user.update(email_params)
       if value != current_user.pending_email
         UserMailer.email_confirmation(current_user).deliver_later
+	flash.notice = t('.notice')
       end
-      redirect_to :edit_account_email, notice: t('.notice_email')
+      redirect_to :edit_account_email
     else
       flash.now.alert = t('.alert')
       render :edit, status: 422
     end
+  end
+
+  def destroy
+    current_user.update_column :pending_email, nil
+    redirect_to :edit_account_email, notice: t('.notice')
   end
 
   private

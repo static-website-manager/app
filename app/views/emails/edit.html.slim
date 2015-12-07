@@ -10,6 +10,6 @@
     => form.label :email_update, 'Email Address', class: 'control-label'
     = form.email_field :email_update, class: 'form-control'
     - if current_user.pending_email?
-      p.help-block Pending email <code>#{current_user.pending_email}</code> awaiting confirmation.
+      p.help-block Pending email <code>#{current_user.pending_email}</code> awaiting confirmation. Resubmit your pending email to send a new confirmation email. #{link_to 'Clear Pending Email', :account_email, method: :delete, class: 'small'}
     - else
       p.help-block Email changes must be confirmed before they become active.
