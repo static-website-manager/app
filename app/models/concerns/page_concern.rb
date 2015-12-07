@@ -30,11 +30,9 @@ module PageConcern
   end
 
   def excerpt
-    if content.to_s.match("\n\n")
-      content.to_s.split("\n\n").first
-    else
-      content.to_s.split("\r\n\r\n").first
-    end
+    Nokogiri::HTML.fragment(Redcarpet::Markdown.new(Redcarpet::Render::HTML).render(content.to_s)).css('p').find do |node|
+      node.text.present?
+    end.try(:text)
   end
 
   def markdown?(markdown_extensions)
