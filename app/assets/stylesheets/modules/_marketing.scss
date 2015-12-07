@@ -74,8 +74,30 @@
 }
 
 .marketing-subheading {
-  margin: 0.5em 0;
-  font-size: 1.25em;
+  margin: 1em 0;
+  font-size: 0.9em;
+}
+
+.marketing-subheading-content {
+  display: inline-block;
+  padding: 0.5em 2em;
+  padding-left: 6.25em;
+  position: relative;
+  color: #000;
+  color: rgba(0,0,0,0.5);
+  line-height: 1.3;
+  text-align: left;
+  strong {
+    position: absolute;
+    left: 0.25em;
+    color: #000;
+    font-size: 2.5em;
+  }
+  span {
+    display: block;
+    color: #000;
+    font-size: 1.25em;
+  }
 }
 
 .marketing-feature {
