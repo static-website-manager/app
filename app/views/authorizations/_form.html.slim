@@ -6,17 +6,17 @@
   = form.label :content_role_writer do
     => form.radio_button :content_role, :writer
     | Writer
-    small.help-block These users will only have access to Drafts and Posts.
+    small.help-block These users can only write Drafts and Posts.
 .radio
   = form.label :content_role_editor do
     => form.radio_button :content_role, :editor
     | Editor
-    small.help-block These users additionally have access to manage Pages, Collections and Data.
+    small.help-block These users can additionally manage Pages, Collections, Data and Files.
 .radio
   = form.label :content_role_designer do
     => form.radio_button :content_role, :designer
     | Designer
-    small.help-block These users may have access to additional design functionality in the future.
+    small.help-block These users can additionally manage Design files, as well as setup external Deployments and Form Responders.
 hr
 p: strong Branch Access
 p.text-muted.m-b All team members have access to their own staging branch. Users may be given access to other branches, including the production branch and other team members’ staging branches.
@@ -42,7 +42,7 @@ p.text-muted.m-b All team members have access to their own staging branch. Users
     = form.label :account_owner do
       => form.check_box :account_owner
       | Account Owner
-      small.help-block These users can manage the Team and Website Settings.
+      small.help-block These users can manage the Team Roster and the basic Website Settings, including the website’s subscription with Static Website Manager.
   .checkbox
     = form.label :ssh_access do
       => form.check_box :ssh_access

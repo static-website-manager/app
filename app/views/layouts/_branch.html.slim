@@ -42,11 +42,12 @@
   span.small.text-muted
     => link_to 'Preview Branch', "//#{website.id}-#{Digest::SHA1.hexdigest(@branch.name)}.#{ENV['HOST']}/", target: :_blank
     => icon 'external-link'
-    ' •
-    - if website.form_responders.active.any?
-      = pluralize website.form_responders.count, 'Active Form Responder'
-    - else
-      | No Active Form Responders
+    - if current_authorization.designer?
+      ' •
+      - if website.form_responders.active.any?
+        = pluralize website.form_responders.count, 'Active Form Responder'
+      - else
+        | No Active Form Responders
 ul.nav.nav-tabs.branch-nav
   li class=('active' if current_page?([website, branch])) = link_to 'Overview', [website, branch]
   - if current_authorization.designer?
