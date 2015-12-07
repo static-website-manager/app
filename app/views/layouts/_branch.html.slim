@@ -1,6 +1,8 @@
 = render partial: 'layouts/website', locals: { website: website }
 .branch-header
-  - unless branch.production?
+  - if branch.production?
+    .branch-production-bar
+  - else
     - production_branch = repository.branch('master')
     - if branch.rebase_required?(production_branch)
       .pull-right-large
