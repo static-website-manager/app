@@ -27,7 +27,9 @@ class CheckoutsController < ApplicationController
     else
       begin
         @repository.create_branch(@branch.name, params[:target])
-        redirect_to [@website, @repository.branch(params[:target])], notice: t('.notice')
+	@target = @repository.branch(params[:target])
+	JekyllBuildJob.perform_later(@website, @target.name, @target.commit_id)
+        redirect_to [@website, @target], notice: t('.notice')
       rescue Rugged::ReferenceError => e
         @error_message = true
         flash.now.alert = e.message
