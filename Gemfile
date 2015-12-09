@@ -29,7 +29,6 @@ gem 'sass-rails'
 gem 'sidekiq'
 gem 'slim-rails'
 gem 'stripe'
-gem 'turbolinks'
 gem 'uglifier'
 
 group :development, :test do

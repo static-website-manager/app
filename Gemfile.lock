@@ -263,8 +263,6 @@ GEM
       hitimes
     toml (0.1.2)
       parslet (~> 1.5.0)
-    turbolinks (2.5.3)
-      coffee-rails
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
     uglifier (2.7.2)
@@ -307,7 +305,6 @@ DEPENDENCIES
   slim-rails
   spring
   stripe
-  turbolinks
   uglifier
 
 BUNDLED WITH
