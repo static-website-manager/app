@@ -3,7 +3,7 @@ $(document).ready ->
     $.get $('#website_setup_check').data('url'), (data) ->
       if data.length
         clearPolling()
-        Turbolinks.visit(data)
+        window.location.replace(data)
 
   clearPolling = ->
     if setupCheckInterval
