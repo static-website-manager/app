@@ -1,4 +1,4 @@
-$(document).on 'page:change', ->
+$(document).ready ->
   checkSetup = ->
     $.get $('#website_setup_check').data('url'), (data) ->
       if data.length

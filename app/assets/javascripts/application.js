@@ -17,7 +17,7 @@
 //= require bootstrap-datetimepicker
 //= require_tree .
 
-$(document).on('page:change', function(event) {
+$(document).ready(function() {
   $('[data-toggle="popover"]').popover();
   $('[data-toggle="tooltip"]').tooltip();
   $('.datetimepicker').datetimepicker();

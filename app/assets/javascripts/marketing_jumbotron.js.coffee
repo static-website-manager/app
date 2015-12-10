@@ -1,4 +1,4 @@
-$(document).on 'page:change', ->
+$(document).ready ->
   $('.marketing-jumbotron .panel').hide()
   $('.marketing-jumbotron .panel#product-screenshot-pages-layout').show()
   $('.marketing-jumbotron-feature').removeClass('active')

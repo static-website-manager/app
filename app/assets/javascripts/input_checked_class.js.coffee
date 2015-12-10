@@ -1,4 +1,4 @@
-$(document).on 'page:change', ->
+$(document).ready ->
   $('[data-input-checked-class] input[type="radio"]:checked').each (i, input) ->
     container = $(input).closest('[data-input-checked-class]')
     container.addClass(container.data('inputCheckedClass'))
