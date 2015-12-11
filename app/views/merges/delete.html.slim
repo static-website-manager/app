@@ -1,0 +1,12 @@
+- title website_name: @website.name, branch_name: @branch.title(current_user)
+
+= layout :nest, heading: "Scrap #{@branch.title(current_user)} Changes", size: :md, return_to: session[:return_to] || [@website, @branch] do
+  = form_tag [@website, @branch, :merge], method: :delete do
+    = layout :panel, button: 'Scrap Changes', danger: true do
+      p
+        ' Are you sure you want to permanently scrap these changes?
+        strong.text-danger This action cannot be undone and will permanently modify your commit history.
+    - @diff = @branch.diff(@target)
+    p.small.m-t-lg.m-b-sm #{pluralize @diff.rugged_diff.size, 'Change'} Found
+    hr.m-t-0.m-b-md
+    = render @diff

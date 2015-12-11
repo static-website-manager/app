@@ -10,9 +10,13 @@
         = link_to icor('Pull Changes', 'arrow-circle-down'), [:new, website, branch, :rebase], class: 'btn btn-success m-l-sm'
       hr.m-y-sm
     - elsif branch.merge_possible?(production_branch) && current_authorization.production_branch_access?
-      .pull-right-large
-        span.small.text-muted> This branch is ahead of Production
-        = link_to icor('Publish Changes', 'arrow-circle-right'), [:new, website, branch, :merge], class: 'btn btn-info m-l-sm'
+      span.btn-group.pull-right-large
+        span.btn.btn-info.dropdown-toggle type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+          ' This branch is ahead of Production
+          span.caret
+        ul.dropdown-menu
+          li = link_to icor('Publish Changes', 'arrow-circle-right pull-right m-t-xs p-l-lg'), [:new, website, branch, :merge]
+          li = link_to icor('Scrap Changes', 'trash pull-right m-t-xs p-l-lg'), [:delete, website, branch, :merge]
       hr.m-y-sm
   span.btn-group.m-r
     span.btn.btn-default.dropdown-toggle type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"

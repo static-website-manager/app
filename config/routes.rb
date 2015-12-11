@@ -36,7 +36,9 @@ Rails.application.routes.draw do
       resource :checkout, only: %i[new create], path_names: { new: '' }
       resource :config, only: %i[edit update], path_names: { edit: '' }
       resource :design, only: %i[show]
-      resource :merge, only: %i[new create], path_names: { new: '' }
+      resource :merge, only: %i[new create destroy], path_names: { new: '' } do
+        get :delete, on: :member, path: 'scrap'
+      end
       resource :move, only: %i[new create], controller: 'branch_moves', path: 'rename', path_names: { new: '' }
       resource :rebase, only: %i[new create], path_names: { new: '' }
       resources :collections, only: %i[index]

@@ -211,6 +211,26 @@ class Branch
     end
   end
 
+  def remove_since(commit_id)
+    clone_path = Pathname.new(File.join('/tmp', "clone_#{rand(1000)}_#{Time.now.to_i}"))
+
+    FileUtils.rm_rf(clone_path)
+    FileUtils.mkdir(clone_path)
+
+    begin
+      system("git clone #{rugged_repository.path} #{clone_path}") &&
+      system("git config user.email \"support@staticwebsitemanager.com\"", chdir: clone_path.to_s) &&
+      system("git config user.name \"Static Website Manager\"", chdir: clone_path.to_s) &&
+      system("git checkout #{name}", chdir: clone_path.to_s) &&
+      system("git reset --hard #{commit_id}", chdir: clone_path.to_s) &&
+      system("git push origin #{name} -f", chdir: clone_path.to_s)
+    rescue
+      false
+    ensure
+      FileUtils.rm_rf(clone_path)
+    end
+  end
+
   def restore(commit_id, user_email, user_name, commit_message)
     clone_path = Pathname.new(File.join('/tmp', "clone_#{rand(1000)}_#{Time.now.to_i}"))
 
