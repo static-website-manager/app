@@ -64,7 +64,7 @@ class Post
   end
 
   def public_path
-    [pathname.sub(/\A_posts\//, ''), filename.match(/\A(\d{4})-(\d{2})-(\d{2})-(.+)\z/)[1..-1].join('/').split('.')[0..-2].join('.')].reject(&:blank?).join('/')
+    [pathname.sub(/\A_posts\//, ''), filename.match(/\A(\d{4})-(\d{2})-(\d{2})-(.+)\z/)[1..-1].join('/').split('.')[0..-2].join('.')].reject(&:blank?).join('/') + '.html'
   end
 
   def public_url(host)
