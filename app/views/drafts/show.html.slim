@@ -22,6 +22,6 @@
       .column-header
         h2 Commit History
       ol.list-unstyled.commits
-        = render @commits, website: @website
+        = render @commits, website: @website, branch: @branch
       .text-right.m-t-md
         = link_to icor('View Entire History', 'angle-double-right'), [@website, @branch, @draft, :commits], class: 'btn btn-sm btn-default'

@@ -17,6 +17,10 @@ en:
       alert_self: You cannot delete yourself.
       alert: There was a problem removing the team member.
       notice_html: <strong>%{email}</strong> has been removed from the team.
+  branch_commits:
+    destroy:
+      alert: There was a problem removing your commit.
+      notice: Great, we’ve successfully removed your commit.
   branch_moves:
     create:
       alert: There was a problem saving your changes.
@@ -180,6 +184,11 @@ en:
       conflict: We are unable to process changes with conflicts at this time.
       alert: There was a problem pulling %{branch_name} changes.
       notice: Great, we’ve successfully pulled in %{branch_name} changes.
+  restores:
+    create:
+      message: Revert to Commit %{commit_id}
+      alert: There was a problem restoring your commit.
+      notice: Great, we’ve successfully restored your commit.
   sessions:
     create:
       alert_unconfirmed: We found your account, but need you to confirm your email address first.

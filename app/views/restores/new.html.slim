@@ -1,0 +1,9 @@
+- title website_name: @website.name, branch_name: @branch.title(current_user), commit_id: @commit.id
+
+= layout :nest, heading: 'Restore Commit', size: :md, return_to: session[:return_to] || [@website, @branch, @commit] do
+  = errors_for @commit
+  = form_for @commit, url: [@website, @branch, @commit, :restore], method: :post do |form|
+    = layout :panel, subheading: ('Commit ' + content_tag(:code, @commit.id[0..6])).html_safe, commit_message: "Restore Commit #{@commit.id[0..6]}", button: 'Restore Commit' do
+      h2.h4.m-t-0.m-b “#{@commit.message}”
+      p Restoring commits is a safe operation that preserves your history. A new commit will added that restores your branch to the same state as this commit.
+  p.small.text-muted More specifically, we will run <code>git revert --no-commit #{@commit.id[0..6]}..HEAD</code>

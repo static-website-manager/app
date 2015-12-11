@@ -2,5 +2,5 @@
 
 = layout :blob, website: @website, branch: @branch, blob: @page, filename: @page.full_pathname do
   ol.list-unstyled.commits
-    = render @commits, website: @website
+    = render @commits, website: @website, branch: @branch
   = render partial: 'pagination', object: @commits

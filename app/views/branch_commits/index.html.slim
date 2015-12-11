@@ -2,5 +2,5 @@
 
 = layout :branch, website: @website, repository: @repository, branch: @branch do
   ol.list-unstyled.commits
-    = render @commits, website: @website
+    = render @commits, website: @website, branch: @branch
   = render partial: 'pagination', object: @commits

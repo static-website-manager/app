@@ -185,6 +185,53 @@ class Branch
     commit_id != branch.commit_id && common_commit != branch.commit_id && !(common_commit == commit_id && branch.commit.parent_ids[1] == commit_id) && !(common_commit == branch.commit_id || branch.commit.parent_ids[1] == common_commit)
   end
 
+  def remove(commit_id)
+    clone_path = Pathname.new(File.join('/tmp', "clone_#{rand(1000)}_#{Time.now.to_i}"))
+
+    FileUtils.rm_rf(clone_path)
+    FileUtils.mkdir(clone_path)
+
+    begin
+      system("git clone #{rugged_repository.path} #{clone_path}") &&
+      system("git config user.email \"support@staticwebsitemanager.com\"", chdir: clone_path.to_s) &&
+      system("git config user.name \"Static Website Manager\"", chdir: clone_path.to_s) &&
+      system("git checkout #{name}", chdir: clone_path.to_s) &&
+
+      (if commit_id == self.commit_id
+        system("git reset --hard HEAD~1", chdir: clone_path.to_s)
+      else
+	system("GIT_SEQUENCE_EDITOR=\"sed -i -e '/pick #{commit_id[0..6]}/s/^/#/'\" git rebase -i #{commit_id}~1", chdir: clone_path.to_s)
+      end) &&
+
+      system("git push origin #{name} -f", chdir: clone_path.to_s)
+    rescue
+      false
+    ensure
+      FileUtils.rm_rf(clone_path)
+    end
+  end
+
+  def restore(commit_id, user_email, user_name, commit_message)
+    clone_path = Pathname.new(File.join('/tmp', "clone_#{rand(1000)}_#{Time.now.to_i}"))
+
+    FileUtils.rm_rf(clone_path)
+    FileUtils.mkdir(clone_path)
+
+    begin
+      system("git clone #{rugged_repository.path} #{clone_path}") &&
+      system("git config user.email \"#{user_email}\"", chdir: clone_path.to_s) &&
+      system("git config user.name \"#{user_name}\"", chdir: clone_path.to_s) &&
+      system("git checkout #{name}", chdir: clone_path.to_s) &&
+      system("git revert --no-commit #{commit_id}..HEAD", chdir: clone_path.to_s) &&
+      system("git commit -m \"#{commit_message}\"", chdir: clone_path.to_s) &&
+      system("git push origin #{name}", chdir: clone_path.to_s)
+    rescue
+      false
+    ensure
+      FileUtils.rm_rf(clone_path)
+    end
+  end
+
   def short_id
     rugged_branch.target.oid[0..6]
   end

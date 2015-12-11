@@ -1,13 +1,17 @@
 li
-  span.pull-left => icon 'dot-circle-o'
-  span.pull-right>
-    code.code-text.pull-right>
-      strong = commit.short_id
-    br>
-    small.text-muted #{commit.time.strftime('%D')}
-  p
-    span => link_to commit.message.present? ? commit.message : content_tag(:em, 'No message provided.', class: 'small'), [website, commit]
-    br>
-    small.text-muted
-      span.commit-author data-toggle="popover" data-placement="bottom" data-trigger="click" data-html="true" data-content=content_tag(:code, commit.author_email) => commit.author_name
-      | authored #{time_ago_in_words commit.time} ago
+  .row
+    .col-xs-8
+      span.pull-left => icon 'dot-circle-o'
+      p
+        span => link_to commit.message.present? ? commit.message : content_tag(:em, 'No message provided.', class: 'small'), [website, branch, commit]
+        br>
+        small.text-muted
+          span.commit-author data-toggle="popover" data-placement="bottom" data-trigger="click" data-html="true" data-content=content_tag(:code, commit.author_email) => commit.author_name
+          | authored #{commit.time.strftime('%B %d, %Y at %r')}
+    .col-xs-4.text-right
+      code.code-text>
+        strong = commit.short_id
+      br>
+      span.btn-group.btn-group-xs.m-t-xs
+        = link_to icon('undo', 'Restore'), [:new, website, branch, commit, :restore], class: 'btn btn-default commit-link' unless branch.commit_id == commit.id
+        = link_to icon('times-circle', 'Remove'), [:delete, website, branch, commit], class: 'btn btn-default commit-link'

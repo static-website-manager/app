@@ -1,0 +1,11 @@
+- title website_name: @website.name, branch_name: @branch.title(current_user), commit_id: @commit.id
+
+= layout :nest, heading: 'Remove Commit', size: :md, return_to: session[:return_to] || [@website, @branch, @commit] do
+  = errors_for @commit
+  = form_for [@website, @branch, @commit], method: :delete do |form|
+    = layout :panel, subheading: ('Commit ' + content_tag(:code, @commit.id[0..6])).html_safe, button: 'Remove Commit', danger: true do
+      h2.h4.m-t-0.m-b “#{@commit.message}”
+      p
+        ' Are you sure you want to permanently remove this commit?
+        strong.text-danger This action cannot be undone and will permanently modify your commit history.
+  p.small.text-muted More specifically we will run <code>git rebase -i #{@commit.id[0..6]}~1</code> and comment out the first line (this commit). If the rebase does not succeed automatically we will abort and return an error message.

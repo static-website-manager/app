@@ -24,3 +24,11 @@
   border-bottom: 1px dotted #999;
   cursor: pointer;
 }
+
+.commit-link {
+  color: #777;
+  font-size: 0.8em !important;
+  &:hover {
+    color: #000;
+  }
+}

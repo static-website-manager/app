@@ -12,6 +12,10 @@ en:
   branch_commits:
     index:
       title: History • %{branch_name} • %{website_name}
+    show:
+      title: Commit %{commit_id} • %{branch_name} • %{website_name}
+    delete:
+      title: Delete Commit %{commit_id} • %{branch_name} • %{website_name}
   branch_moves:
     new:
       title: Rename Branch • %{branch_name} • %{website_name}
@@ -29,9 +33,6 @@ en:
   collections:
     index:
       title: Collections • %{branch_name} • %{website_name}
-  commits:
-    show:
-      title: Commit %{commit_id} • %{website_name}
   configs:
     edit:
       title: Config • %{branch_name} • %{website_name}
@@ -137,6 +138,9 @@ en:
   rebases:
     new:
       title: Pull Changes • %{branch_name} • %{website_name}
+  restores:
+    new:
+      title: Restore Commit %{commit_id} • %{branch_name} • %{website_name}
   sessions:
     new:
       title: Sign In • Static Website Manager
