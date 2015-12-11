@@ -16,6 +16,8 @@ class BranchCommitsController < ApplicationController
 
   def destroy
     if @branch.remove(@commit.id)
+      @branch = @repository.branch(@branch.name)
+      JekyllBuildJob.perform_later(@website, @branch.name, @branch.commit_id)
       redirect_to session[:return_to] || [@website, @branch], notice: t('.notice')
     else
       flash.now.alert = t('.alert')
