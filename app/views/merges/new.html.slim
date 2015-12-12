@@ -9,7 +9,16 @@
           p We are unable to process merge conflicts at this time. Please perform an offline merge or contact your designer.
     - else
       = layout :panel, button: 'Publish Changes', commit_message: "Publish #{@branch.title} Changes" do
-        p This action will merge changes from your branch into #{@target.title(current_user)}.
+        p This action will merge changes from your branch into #{@target.title(current_user)}. Select your preferred merge behavior.
+        hr.m-y
+        .radio
+          = label_tag :merge_behavior_keep_and_merge do
+            => radio_button_tag :merge_behavior, :keep_and_merge, params[:merge_behavior] != 'squash_and_set'
+            span.small Keep existing unmerged commits</strong> and <strong>add a new merge commit</strong> to both branches.
+        .radio
+          = label_tag :merge_behavior_squash_and_set do
+            => radio_button_tag :merge_behavior, :squash_and_set, params[:merge_behavior] == 'squash_and_set'
+            span.small <strong>Squash unmerged commits</strong> and set #{@target.title(current_user)}’s HEAD to that new commit.
       - @diff = @branch.diff(@target)
       p.small.m-t-lg.m-b-sm #{pluralize @diff.rugged_diff.size, 'Change'} Found
       hr.m-t-0.m-b-md

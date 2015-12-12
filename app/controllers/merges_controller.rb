@@ -35,13 +35,15 @@ class MergesController < ApplicationController
 
   def create
     commit_message = params[:message].present? ? params[:message] : t('.message', branch_name: @branch.title(current_user))
+    merge_behavior = %w[squash_and_set].include?(params[:merge_behavior]) ? params[:merge_behavior] : 'keep_and_merge'
 
-    if @branch.merge(@target, current_user.email, current_user.name, commit_message)
+    if @branch.merge(@target, merge_behavior, current_user.email, current_user.name, commit_message)
       @target = @repository.branch(@target.name)
       JekyllBuildJob.perform_later(@website, @target.name, @target.commit_id)
       redirect_to [@website, @branch], notice: t('.notice', branch_name: @branch.title(current_user))
     else
       flash.now.alert = t('.alert', branch_name: @branch.title(current_user))
+      render :new
     end
   end
 
@@ -52,6 +54,7 @@ class MergesController < ApplicationController
       redirect_to [@website, @branch], notice: t('.notice', branch_name: @branch.title(current_user))
     else
       flash.now.alert = t('.alert', branch_name: @branch.title(current_user))
+      render :delete
     end
   end
 end

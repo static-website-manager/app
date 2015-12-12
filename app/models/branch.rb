@@ -96,8 +96,9 @@ class Branch
     Branch.markdown_extensions
   end
 
-  def merge(branch, user_email, user_name, commit_message)
+  def merge(branch, merge_behavior, user_email, user_name, commit_message)
     raise ArgumentError unless branch.present?
+    raise ArgumentError unless %w[keep_and_merge squash_and_set].include?(merge_behavior)
     raise ArgumentError unless user_email.present?
     raise ArgumentError unless user_name.present?
     raise ArgumentError unless commit_message.present?
@@ -105,27 +106,48 @@ class Branch
     merge_index = rugged_repository.merge_commits(commit_id, branch.commit_id)
     raise ArgumentError if merge_index.conflicts?
 
-    commit_author = {
-      email: user_email,
-      name: user_name,
-      time: Time.now,
-    }
+    if merge_behavior == 'keep_and_merge'
+      begin
+	commit_author = {
+	  email: user_email,
+	  name: user_name,
+	  time: Time.now,
+	}
 
-    begin
-      merge_commit_id = Rugged::Commit.create(rugged_repository, {
-        parents: [branch.commit_id, commit_id],
-        tree: merge_index.write_tree(rugged_repository),
-        message: commit_message,
-        author: commit_author,
-        committer: commit_author,
-        update_ref: "refs/heads/#{branch.name}",
-      })
-      rugged_repository.references.update("refs/heads/#{name}", merge_commit_id)
-    rescue
-      merge_commit_id = nil
+	merge_commit_id = Rugged::Commit.create(rugged_repository, {
+	  parents: [branch.commit_id, commit_id],
+	  tree: merge_index.write_tree(rugged_repository),
+	  message: commit_message,
+	  author: commit_author,
+	  committer: commit_author,
+	  update_ref: "refs/heads/#{branch.name}",
+	})
+
+	rugged_repository.references.update("refs/heads/#{name}", merge_commit_id)
+	merge_commit_id.present?
+      rescue
+	merge_commit_id = nil
+      end
+    elsif merge_behavior == 'squash_and_set'
+      begin
+	clone_path = Pathname.new(File.join('/tmp', "clone_#{rand(1000)}_#{Time.now.to_i}"))
+	FileUtils.rm_rf(clone_path)
+	FileUtils.mkdir(clone_path)
+
+	system("git clone #{rugged_repository.path} #{clone_path}") &&
+	system("git config user.email \"#{user_email}\"", chdir: clone_path.to_s) &&
+	system("git config user.name \"#{user_name}\"", chdir: clone_path.to_s) &&
+	system("git checkout #{name}", chdir: clone_path.to_s) &&
+	system("git reset --soft #{merge_base(branch)}", chdir: clone_path.to_s) &&
+	system("git commit -m \"#{commit_message}\"", chdir: clone_path.to_s) &&
+	system("git push origin #{name} -f", chdir: clone_path.to_s) &&
+	rugged_repository.references.update("refs/heads/#{branch.name}", rugged_repository.branches[name].target.oid)
+      rescue
+	false
+      ensure
+	FileUtils.rm_rf(clone_path)
+      end
     end
-
-    merge_commit_id.present?
   end
 
   def merge_base(branch)
